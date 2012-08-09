@@ -90,6 +90,7 @@
     <Compile Include="Manual_NativeTwitterTest.cs" />
     <Compile Include="Manual_Twitter5Test.cs" />
     <Compile Include="Auto_Twitter5Test.cs" />
+    <Compile Include="Manual_FacebookTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 
+#if PLATFORM_IOS
+using UIContext = MonoTouch.UIKit.UIViewController;
+#else
+using UIContext = System.Object;
+#endif
+
 namespace Xamarin.Social
 {
 	/// <summary>

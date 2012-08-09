@@ -47,7 +47,7 @@ namespace Xamarin.Social
 			}
 		}
 
-		public override Authenticator GetAuthenticator ()
+		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)
 		{
 			throw new NotImplementedException ();
 		}

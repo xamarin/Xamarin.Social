@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#if PLATFORM_IOS
+using UIContext = MonoTouch.UIKit.UIViewController;
+#else
+using UIContext = System.Object;
+#endif
+
 namespace Xamarin.Social
 {
 	/// <summary>
@@ -68,7 +74,12 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The authenticator or null if authentication is not supported.
 		/// </returns>
-		public virtual Authenticator GetAuthenticator ()
+		/// <param name='parameters'>
+		/// Set of keys and values required by the authenticator. If required parameters
+		/// are not supplied, an exception will be thrown detailing which ones need to be
+		/// provided.
+		/// </param>
+		protected virtual Authenticator GetAuthenticator (IDictionary<string, string> parameters)
 		{
 			return null;
 		}
@@ -79,13 +90,13 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task that will complete when they have signed in.
 		/// </returns>
-		public virtual Task<AuthenticationResult> AddAccountAsync ()
+		public virtual Task<AuthenticationResult> AddAccountAsync (UIContext context, IDictionary<string, string> authenticaionParameters)
 		{
-			var auth = GetAuthenticator ();
+			var auth = GetAuthenticator (authenticaionParameters);
 			if (auth == null) {
 				throw new NotSupportedException ("Account sign in is not supported.");
 			}
-			return auth.AuthenticateAsync ().ContinueWith (task => {
+			return auth.AuthenticateAsync (context).ContinueWith (task => {
 				return task.Result;
 			});
 		}
@@ -152,7 +163,7 @@ namespace Xamarin.Social
 		{
 			registry = new Dictionary<string, Service> ();
 
-			//RegisterService (Facebook = new FacebookService ());
+			RegisterService (Facebook = new FacebookService ());
 			//RegisterService (new GoogleService ());
 
 
@@ -189,10 +200,11 @@ namespace Xamarin.Social
 			}
 		}
 
-		//public static Service Facebook { get; private set; }
+		public static Service Twitter { get; private set; }
+		public static Service Facebook { get; private set; }
 		//public static Service Google { get; private set; }
 		//public static Service SinaWeibo { get; private set; }
-		public static Service Twitter { get; private set; }
+
 
 		#endregion
 	}

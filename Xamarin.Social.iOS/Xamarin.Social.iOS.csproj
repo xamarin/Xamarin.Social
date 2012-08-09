@@ -80,5 +80,9 @@
     <Compile Include="..\Xamarin.Social\WebAuthenticator.cs">
       <Link>WebAuthenticator.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\FacebookService.cs">
+      <Link>FacebookService.cs</Link>
+    </Compile>
+    <Compile Include="WebAuthenticatorController.cs" />
   </ItemGroup>
 </Project>
