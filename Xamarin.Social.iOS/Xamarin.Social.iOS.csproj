@@ -43,20 +43,8 @@
     <Compile Include="..\Xamarin.Social\Account.cs">
       <Link>Account.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\AccountCredential.cs">
-      <Link>AccountCredential.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\AccountCredentialField.cs">
-      <Link>AccountCredentialField.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\IncompleteCredentialException.cs">
-      <Link>IncompleteCredentialException.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\IncorrectCredentialException.cs">
-      <Link>IncorrectCredentialException.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\Item.cs">
       <Link>Item.cs</Link>
@@ -80,5 +68,17 @@
     <Compile Include="UIHelper.cs" />
     <Compile Include="ACAccountWrapper.cs" />
     <Compile Include="FoundationResponse.cs" />
+    <Compile Include="..\Xamarin.Social\AuthenticationResult.cs">
+      <Link>AuthenticationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\Authenticator.cs">
+      <Link>Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\FormAuthenticator.cs">
+      <Link>FormAuthenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\WebAuthenticator.cs">
+      <Link>WebAuthenticator.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

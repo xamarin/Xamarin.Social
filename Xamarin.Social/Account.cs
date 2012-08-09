@@ -3,10 +3,12 @@ using System;
 namespace Xamarin.Social
 {
 	/// <summary>
-	/// An Account for accessing a social network service.
+	/// An Account that reprents and authenticated user of a social network.
 	/// </summary>
-	public class Account
+	public abstract class Account
 	{
+		public abstract string Username { get; }
+
 		public Account ()
 		{
 		}

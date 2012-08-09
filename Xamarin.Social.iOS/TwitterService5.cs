@@ -6,6 +6,7 @@ using System.Threading;
 using MonoTouch.UIKit;
 using System.IO;
 using System.Collections.Generic;
+using MonoTouch.Accounts;
 
 namespace Xamarin.Social
 {
@@ -18,21 +19,23 @@ namespace Xamarin.Social
 
 		#region Share
 
-		public override Task<ShareResult> ShareAsync (Item item, Account account = null)
+		public override Task<ShareResult> ShareAsync (Item item)
 		{
-			if (OSAccount == null) {
-				throw new InvalidOperationException ("No OS Account available for Twitter");
-			}
-
+			//
+			// Validate
+			//
 			if (item.Files.Count > 0) {
 				throw new NotSupportedException ("Twitter does not support uploading arbitrary files.");
 			}
 
 			var rootVC = UIHelper.RootViewController;
 			if (rootVC == null) {
-
+				throw new InvalidOperationException ("Could not locate app root view controller.");
 			}
 
+			//
+			// Present the native UI
+			//
 			var completedEvent = new ManualResetEvent (false);
 			var shareResult = ShareResult.Done;
 
@@ -40,6 +43,7 @@ namespace Xamarin.Social
 			vc.SetCompletionHandler (result => {
 
 				shareResult = result == TWTweetComposeViewControllerResult.Done ? ShareResult.Done : ShareResult.Cancelled;
+				vc.DismissModalViewControllerAnimated (true);
 				completedEvent.Set ();
 
 			});
@@ -54,9 +58,11 @@ namespace Xamarin.Social
 				vc.AddUrl (new NSUrl (link.AbsoluteUri));
 			}
 
-
 			rootVC.PresentModalViewController (vc, true);
 
+			//
+			// Wait for it to finish
+			//
 			return Task.Factory.StartNew (delegate {
 				completedEvent.WaitOne ();
 				return shareResult;
@@ -102,7 +108,7 @@ namespace Xamarin.Social
 
 			public override Account Account {
 				get {
-					return ACAccountWrapper.GetForAccount (request.Account);
+					return new ACAccountWrapper (request.Account);
 				}
 				set {
 					if (value == null) {
@@ -155,31 +161,43 @@ namespace Xamarin.Social
 
 		#region Authentication
 
-		class Account5 : Account {
-		}
-
-		Account5 account = null;
-
-		public override Account OSAccount {
+		public override bool HasSavedAccounts {
 			get {
-				if (TWTweetComposeViewController.CanSendTweet) {
-					if (account == null) {
-						account = new Account5 ();
-					}
-				}
-				else {
-					account = null;
-				}
-				return account;
+				return TWTweetComposeViewController.CanSendTweet;
 			}
 		}
 
-		public override Task<Account> AuthenticateAsync (AccountCredential credential)
+		ACAccountStore accountStore; // Save this reference since ACAccounts are only good so long as it's alive
+
+		public override Task<IEnumerable<Account>> GetSavedAccountsAsync ()
 		{
-			throw new NotSupportedException ("Only OS accounts are supported");
+			if (accountStore == null) {
+				accountStore = new ACAccountStore ();
+			}
+			var store = new ACAccountStore ();
+			var at = store.FindAccountType (ACAccountType.Twitter);
+
+			var r = new List<Account> ();
+
+			var completedEvent = new ManualResetEvent (false);
+
+			store.RequestAccess (at, (granted, error) => {
+				if (granted) {
+					var accounts = store.FindAccounts (at);
+					foreach (var a in accounts) {
+						r.Add (new ACAccountWrapper (a));
+					}
+				}
+				completedEvent.Set ();
+			});
+
+			return Task.Factory.StartNew (delegate {
+				completedEvent.WaitOne ();
+				return (IEnumerable<Account>)r;
+			}, TaskCreationOptions.LongRunning);
 		}
 
-		public override AccountCredential GetBlankCredential ()
+		public override Authenticator GetAuthenticator ()
 		{
 			throw new NotSupportedException ("Only OS accounts are supported");
 		}

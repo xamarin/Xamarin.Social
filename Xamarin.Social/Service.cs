@@ -48,33 +48,47 @@ namespace Xamarin.Social
 		#region Authentication
 
 		/// <summary>
-		/// Gets the OS account associated with this service
+		/// Whether this instance has any saved accounts.
 		/// </summary>
-		/// <value>
-		/// The OS account or null if there is no OS account.
-		/// </value>
-		public virtual Account OSAccount { get { return null; } }
+		public virtual bool HasSavedAccounts { get { return false; } }
 
 		/// <summary>
-		/// Gets a blank credential that the user can fill in to authenticate this service.
+		/// Gets the saved accounts associated with this service.
 		/// </summary>
-		/// <returns>
-		/// The credential with blank fields.
-		/// </returns>
-		public abstract AccountCredential GetBlankCredential ();
+		public virtual Task<IEnumerable<Account>> GetSavedAccountsAsync ()
+		{
+			return Task.Factory.StartNew (() => Enumerable.Empty<Account> ());
+		}
 
 		/// <summary>
-		/// Authenticates the passed in credential.
+		/// Gets the authenticator for this service. The authenticator will present
+		/// the user interface needed to authenticate a new account for the service.
+		/// This account will then be saved.
 		/// </summary>
 		/// <returns>
-		/// The authenticated Account. Throws IncompleteCredentialException is the credential
-		/// is not completely filled out. Throws IncorrectCredentialException if authentication
-		/// failed.
+		/// The authenticator or null if authentication is not supported.
 		/// </returns>
-		/// <param name='credential'>
-		/// Credential used to authenticate the account.
-		/// </param>
-		public abstract Task<Account> AuthenticateAsync (AccountCredential credential);
+		public virtual Authenticator GetAuthenticator ()
+		{
+			return null;
+		}
+
+		/// <summary>
+		/// Presents the necessary UI for the user to sign in to their account.
+		/// </summary>
+		/// <returns>
+		/// The task that will complete when they have signed in.
+		/// </returns>
+		public virtual Task<AuthenticationResult> AddAccountAsync ()
+		{
+			var auth = GetAuthenticator ();
+			if (auth == null) {
+				throw new NotSupportedException ("Account sign in is not supported.");
+			}
+			return auth.AuthenticateAsync ().ContinueWith (task => {
+				return task.Result;
+			});
+		}
 
 		#endregion
 
@@ -90,19 +104,22 @@ namespace Xamarin.Social
 #endif
 
 		/// <summary>
-		/// Shares the passed-in object using the given account.
+		/// <para>
+		/// Shares the passed-in object by presenting the necessary UI to the user.
+		/// </para>
+		/// <para>
+		/// If there are saved accounts, then the composer will allow the user to choose
+		/// which account to send to. If there are no accounts, then a sign in dialog will
+		/// be presented followed by the compose view.
+		/// </para>
 		/// </summary>
 		/// <remarks>
-		/// Must be called from the UI thread because this will cause a dialog to be displayed
-		/// allowing the user to edit the item before it is .
+		/// Must be called from the UI thread because this will cause dialogs to be displayed.
 		/// </remarks>			
 		/// <param name='item'>
-		/// The item to share.
+		/// The item to share. It may be edited by the user.
 		/// </param>
-		/// <param name='account'>
-		/// The account that is sharing the item. Pass null to use the OS's builtin account.
-		/// </param>
-		public abstract Task<ShareResult> ShareAsync (Item item, Account account = null);
+		public abstract Task<ShareResult> ShareAsync (Item item);
 
 		//
 		// More options:

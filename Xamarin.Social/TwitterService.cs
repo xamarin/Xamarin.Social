@@ -47,20 +47,12 @@ namespace Xamarin.Social
 			}
 		}
 
-		public override AccountCredential GetBlankCredential ()
+		public override Authenticator GetAuthenticator ()
 		{
-			var c = new AccountCredential ();
-			c.Fields.Add (new AccountCredentialField ("username", "User Name", Xamarin.Social.AccountCredentialFieldType.PlainText, "@name", ""));
-			c.Fields.Add (new AccountCredentialField ("password", "Password", Xamarin.Social.AccountCredentialFieldType.Password, "Required", ""));
-			return c;
+			throw new NotImplementedException ();
 		}
 
-		public override Task<Account> AuthenticateAsync (AccountCredential credential)
-		{
-			throw new System.NotImplementedException ();
-		}
-
-		public override Task<ShareResult> ShareAsync (Item item, Account account)
+		public override Task<ShareResult> ShareAsync (Item item)
 		{
 			throw new System.NotImplementedException ();
 		}

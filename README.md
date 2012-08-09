@@ -18,16 +18,22 @@ Version 1 of this API focuses on getting authentication and sharing right. It al
 
 ### Find out if we have OS authentication
 
-    var twitterIsReady = Service.Twitter.OSAccount != null;
+    var twitterIsReady = Service.Twitter.HasSavedAccounts;
 
-### Authenticate a different account if we don't have 
+### Authenticate a new account
 
     var pinterest = Service.GetService ("Pinterest");
-    var creds = pinterest.GetBlankCredentials ();
-    // Force user to fill in creds
-    var account = pinterest.AuthenticateAsync (creds).Result;
-    pinterest.ShareAsync (new Item ("Is this really as elegant as possible?", account));
+    var account = pinterest.GetAuthenticator ().AuthenticateAsync ().Result;
 
-(Pinterest support is incomplete/nonexistent/will never happen)
+### Get a user's timeline from Twitter
 
+    var ps = new Dictionary<string,string> {
+    	{ "screen_name", "theSeanCook" },
+    	{ "count", "5" },
+    	{ "include_entities", "1" },
+    	{ "incode_rts", "1" },
+    };
+    var req = Service.Twitter.CreateRequest ("GET", new Uri ("http://api.twitter.com/1/statuses/user_timeline.json"), ps);
+    var res = req.GetResponseAsync ().Result;
+    var timeLineContent = new StreamReader (res.GetResponseStream ()).ReadToEnd ();
 

@@ -13,7 +13,7 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void HasAccount ()
 		{
-			Assert.NotNull (Service.Twitter.OSAccount);
+			Assert.True (Service.Twitter.HasSavedAccounts);
 		}
 
 		[Test]

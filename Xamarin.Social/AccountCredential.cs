@@ -6,13 +6,17 @@ namespace Xamarin.Social
 	/// <summary>
 	/// Account credential.
 	/// </summary>
-	public class AccountCredential
+	public abstract class Authenticator
 	{
-		public IList<AccountCredentialField> Fields { get; private set; }
-
-		public AccountCredential ()
+		/// <summary>
+		/// Implementations should call this method when they have succeeded
+		/// or failed at authenticating.
+		/// </summary>
+		/// <param name='account'>
+		/// Account.
+		/// </param>
+		protected virtual void Save (Account account)
 		{
-			Fields = new List<AccountCredentialField> ();
 		}
 	}
 }

@@ -45,13 +45,13 @@
     <Compile Include="Request.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="IncompleteCredentialException.cs" />
-    <Compile Include="IncorrectCredentialException.cs" />
-    <Compile Include="AccountCredential.cs" />
-    <Compile Include="AccountCredentialField.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="TwitterService.cs" />
     <Compile Include="ShareResult.cs" />
+    <Compile Include="AuthenticationResult.cs" />
+    <Compile Include="WebAuthenticator.cs" />
+    <Compile Include="FormAuthenticator.cs" />
+    <Compile Include="Authenticator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

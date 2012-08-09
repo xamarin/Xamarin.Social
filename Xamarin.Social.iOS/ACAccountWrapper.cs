@@ -3,9 +3,11 @@ using MonoTouch.Accounts;
 
 namespace Xamarin.Social
 {
-	public class ACAccountWrapper : Account
+	class ACAccountWrapper : Account
 	{
 		public ACAccount ACAccount { get; private set; }
+
+		public override string Username { get { return ACAccount.Username; } }
 
 		public ACAccountWrapper (ACAccount account)
 		{
@@ -13,16 +15,6 @@ namespace Xamarin.Social
 				throw new ArgumentNullException ("account");
 			}
 			this.ACAccount = account;
-		}
-
-		public static ACAccountWrapper GetForAccount (ACAccount account)
-		{
-			if (account == null) {
-				return null;
-			}
-			else {
-				return new ACAccountWrapper (account);
-			}
 		}
 	}
 }

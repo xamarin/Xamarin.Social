@@ -9,12 +9,6 @@ namespace Xamarin.Social.iOS.Test
 	public class Manual_Twitter5Test
 	{
 		[Test]
-		public void HasAccount ()
-		{
-			Assert.NotNull (Service.Twitter.OSAccount);
-		}
-
-		[Test]
 		public void BlankTweet ()
 		{
 			Service.Twitter.ShareAsync (new Item ()).ContinueWith (task => {
