@@ -10,21 +10,6 @@ Version 1 of this API focuses on getting authentication and sharing right. It al
 
     Service.Twitter.ShareAsync (new Item ("This is a great example!"))
 
-### Find all the services that images can be uploaded to
-
-    var imageServices = from s in Service.GetServices ()
-                        where s.CanShareImages
-                        select s;
-
-### Find out if we have OS authentication
-
-    var twitterIsReady = Service.Twitter.HasSavedAccounts;
-
-### Authenticate a new account
-
-    var pinterest = Service.GetService ("Pinterest");
-    var account = pinterest.GetAuthenticator ().AuthenticateAsync ().Result;
-
 ### Get a user's timeline from Twitter
 
     var ps = new Dictionary<string,string> {
@@ -36,4 +21,24 @@ Version 1 of this API focuses on getting authentication and sharing right. It al
     var req = Service.Twitter.CreateRequest ("GET", new Uri ("http://api.twitter.com/1/statuses/user_timeline.json"), ps);
     var res = req.GetResponseAsync ().Result;
     var timeLineContent = new StreamReader (res.GetResponseStream ()).ReadToEnd ();
+
+### Find all the services that images can be uploaded to
+
+    var imageServices = from s in Service.GetServices ()
+                        where s.CanShareImages
+                        select s;
+
+### Register a new service
+
+    var pinterest = new PinterestService ();
+    Service.RegisterService (pinterest);
+
+### Find out if we have OS authentication
+
+    var twitterIsReady = Service.Twitter.HasSavedAccounts;
+
+### Authenticate and save a new account
+
+    var pinterest = Service.GetService ("Pinterest");
+    var account = pinterest.AddAccountAsync ().Result;
 
