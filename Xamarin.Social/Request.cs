@@ -10,7 +10,7 @@ namespace Xamarin.Social
 	/// <summary>
 	/// An HTTP request that provides a convenient way to make requests to the social network.
 	/// </summary>
-	public abstract class Request
+	public class Request
 	{
 		HttpWebRequest request;
 

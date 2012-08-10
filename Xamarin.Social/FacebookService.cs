@@ -19,17 +19,16 @@ namespace Xamarin.Social
 			}
 		}
 
+		public override Uri SignUpLink {
+			get {
+				return new Uri ("https://www.facebook.com");
+			}
+		}
+
 		public override bool CanShareText {
 			get {
 				return true;
 			}
-		}
-
-		public override Task<Account[]> GetSavedAccountsAsync ()
-		{
-			return Task.Factory.StartNew (delegate {
-				return AccountStore.Create ().FindAccountsForService (ServiceId);
-			});
 		}
 
 		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)

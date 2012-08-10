@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #if PLATFORM_IOS
 using UIContext = MonoTouch.UIKit.UIViewController;
@@ -12,11 +13,31 @@ namespace Xamarin.Social
 	/// <summary>
 	/// An authenticator that presents a form to the user.
 	/// </summary>
-	public abstract class FormAuthenticator
+	public abstract class FormAuthenticator : Authenticator
 	{
-		protected IList<FormAuthenticatorField> Fields { get; private set; }
+		public IList<FormAuthenticatorField> Fields { get; private set; }
 
-		protected abstract Account OnSignIn ();
+		public FormAuthenticator ()
+		{
+			Fields = new List<FormAuthenticatorField> ();
+		}
+
+		public string GetFieldValue (string key) {
+			var f = Fields.FirstOrDefault (x => x.Key == key);
+			return (f != null) ? f.Value : null;
+		}
+
+		public abstract void OnSignIn ();
+
+		protected override void PresentUI (UIContext context)
+		{
+#if PLATFORM_IOS
+			context.PresentModalViewController (new MonoTouch.UIKit.UINavigationController (
+				new FormAuthenticatorController (this)), true);
+#else
+			throw new System.NotImplementedException ("This platform does not support web authentication.");
+#endif
+		}
 	}
 
 	/// <summary>
@@ -24,7 +45,7 @@ namespace Xamarin.Social
 	/// </summary>
 	public class FormAuthenticatorField
 	{
-		public string Key { get; private set; }
+		public string Key { get; set; }
 		public string DisplayName { get; set; }
 		public string Placeholder { get; set; }
 		public string Value { get; set; }
@@ -32,7 +53,6 @@ namespace Xamarin.Social
 		public FormAuthenticatorField (string key, string displayName, FormAuthenticatorFieldType fieldType, string placeholder = "", string defaultValue = "")
 		{
 			if (string.IsNullOrWhiteSpace (key)) {
-				throw new ArgumentException ("key must not be blank", "key");
 			}
 			Key = key;
 

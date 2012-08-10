@@ -16,11 +16,13 @@ namespace Xamarin.Social
 	/// </summary>
 	public abstract class Authenticator
 	{
-		Service service;
+		public Service Service { get; private set; }
 
 		ManualResetEvent completedEvent;
 		Exception error;
 		AuthenticationResult? result;
+
+		public abstract string Title { get; }
 
 		/// <summary>
 		/// Authenticates the user using an approprate GUI.
@@ -30,7 +32,7 @@ namespace Xamarin.Social
 		/// </returns>
 		public Task<AuthenticationResult> AuthenticateAsync (UIContext context, Service service)
 		{
-			this.service = service;
+			Service = service;
 
 			completedEvent = new ManualResetEvent (false);
 
@@ -69,7 +71,7 @@ namespace Xamarin.Social
 			//
 			// Store the account
 			//
-			AccountStore.Create ().Save (new Account (username, accountProperties), service.ServiceId);
+			AccountStore.Create ().Save (new Account (username, accountProperties), Service.ServiceId);
 
 			//
 			// Notify the work

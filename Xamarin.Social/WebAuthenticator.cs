@@ -16,7 +16,6 @@ namespace Xamarin.Social
 	/// </summary>
 	public abstract class WebAuthenticator : Authenticator
 	{
-		public abstract string Title { get; }
 		public abstract Uri InitialUrl { get; }
 
 		public abstract void OnPageLoaded (Uri url);

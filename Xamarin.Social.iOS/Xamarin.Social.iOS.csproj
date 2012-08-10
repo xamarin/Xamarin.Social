@@ -88,5 +88,12 @@
       <Link>AccountStore.cs</Link>
     </Compile>
     <Compile Include="KeyChainAccountStore.cs" />
+    <Compile Include="..\Xamarin.Social\PinterestService.cs">
+      <Link>PinterestService.cs</Link>
+    </Compile>
+    <Compile Include="FormAuthenticatorController.cs" />
+    <Compile Include="..\Xamarin.Social\HttpHelper.cs">
+      <Link>HttpHelper.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

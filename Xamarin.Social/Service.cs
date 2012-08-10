@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.IO;
 
 #if PLATFORM_IOS
 using UIContext = MonoTouch.UIKit.UIViewController;
@@ -36,17 +38,17 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Description of the social network service.
 		/// </summary>
-		public virtual string Description { get { return ""; } }
+		public abstract string Description { get; }
 
 		/// <summary>
 		/// Text to display on the button to sign up.
 		/// </summary>
-		public virtual string SignUpTitle { get { return ""; } }
+		public virtual string SignUpTitle { get { return "Sign Up"; } }
 
 		/// <summary>
 		/// Link to sign up.
 		/// </summary>
-		public virtual Uri SignUpLink { get { return null; } }
+		public abstract Uri SignUpLink { get; }
 
 		#endregion
 
@@ -56,14 +58,16 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Whether this instance has any saved accounts.
 		/// </summary>
-		public virtual bool HasSavedAccounts { get { return false; } }
+		public virtual bool HasSavedAccounts { get { return GetSavedAccountsAsync ().Result.Length > 0; } }
 
 		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
 		public virtual Task<Account[]> GetSavedAccountsAsync ()
 		{
-			return Task.Factory.StartNew (() => new Account[0]);
+			return Task.Factory.StartNew (delegate {
+				return AccountStore.Create ().FindAccountsForService (ServiceId);
+			});
 		}
 
 		/// <summary>
@@ -79,10 +83,7 @@ namespace Xamarin.Social
 		/// are not supplied, an exception will be thrown detailing which ones need to be
 		/// provided.
 		/// </param>
-		protected virtual Authenticator GetAuthenticator (IDictionary<string, string> parameters)
-		{
-			return null;
-		}
+		protected abstract Authenticator GetAuthenticator (IDictionary<string, string> parameters);
 
 		/// <summary>
 		/// Presents the necessary UI for the user to sign in to their account.
@@ -147,10 +148,10 @@ namespace Xamarin.Social
 		/// Creates a base request to access the service. This is a low-level entrypoint for those
 		/// who need to access resources that are not covered by this class.
 		/// </summary>
-		/// <param name='account'>
-		/// The optional Account to associate with the request.
-		/// </param>
-		public abstract Request CreateRequest (string method, Uri url, IDictionary<string, string> paramters = null);
+		public virtual Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters = null)
+		{
+			return new Request (method, url, parameters);
+		}
 
 		#endregion
 
@@ -204,6 +205,12 @@ namespace Xamarin.Social
 		public static Service Facebook { get; private set; }
 		//public static Service Google { get; private set; }
 		//public static Service SinaWeibo { get; private set; }
+
+		#endregion
+
+
+		#region HTTP Helpers
+
 
 
 		#endregion
