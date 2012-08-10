@@ -16,6 +16,8 @@ namespace Xamarin.Social
 	/// </summary>
 	public abstract class Authenticator
 	{
+		Service service;
+
 		ManualResetEvent completedEvent;
 		Exception error;
 		AuthenticationResult? result;
@@ -26,8 +28,10 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task notifying the completion (good or bad) of the authentication process.
 		/// </returns>
-		public Task<AuthenticationResult> AuthenticateAsync (UIContext context)
+		public Task<AuthenticationResult> AuthenticateAsync (UIContext context, Service service)
 		{
+			this.service = service;
+
 			completedEvent = new ManualResetEvent (false);
 
 			PresentUI (context);
@@ -54,14 +58,22 @@ namespace Xamarin.Social
 		/// <param name='username'>
 		/// User name of the account.
 		/// </param>
-		/// <param name='accountData'>
+		/// <param name='accountProperties'>
 		/// Additional data, such as access tokens, that need to be stored with the account. This
 		/// information is secured.
 		/// </param>
-		public void OnSuccess (string username, IDictionary<string, string> accountData)
+		public void OnSuccess (string username, IDictionary<string, string> accountProperties)
 		{
 			this.result = AuthenticationResult.Success;
 
+			//
+			// Store the account
+			//
+			AccountStore.Create ().Save (new Account (username, accountProperties), service.ServiceId);
+
+			//
+			// Notify the work
+			//
 			var ev = Success;
 			if (ev != null) {
 				ev (this, EventArgs.Empty);

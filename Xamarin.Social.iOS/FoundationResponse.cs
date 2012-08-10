@@ -2,6 +2,7 @@ using System;
 using MonoTouch.Foundation;
 using System.IO;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Xamarin.Social
 {
@@ -11,9 +12,9 @@ namespace Xamarin.Social
 		Dictionary<string, string> headers;
 		int statusCode;
 
-		public override int StatusCode {
+		public override HttpStatusCode StatusCode {
 			get {
-				return statusCode;
+				return (HttpStatusCode)statusCode;
 			}
 		}
 

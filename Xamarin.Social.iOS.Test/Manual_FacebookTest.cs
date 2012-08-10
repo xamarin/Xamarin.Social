@@ -23,6 +23,9 @@ namespace Xamarin.Social.iOS.Test
 				}
 				else {
 					Console.WriteLine ("RESULT " + task.Result);
+					Service.Facebook.GetSavedAccountsAsync ().ContinueWith (accountsTask => {
+						Console.WriteLine ("ACCOUNTS = " + accountsTask.Result.Length);
+					});
 				}
 			});
 		}

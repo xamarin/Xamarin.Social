@@ -41,8 +41,29 @@ namespace Xamarin.Social
 			View = webView;
 
 			//
-			// Load the initial URL
+			// Delete cookies so we can work with multiple accounts
 			//
+			DeleteCookies ();
+
+			//
+			// Begin displaying the page
+			//
+			LoadInitialUrl ();
+		}
+
+		void DeleteCookies ()
+		{
+			var url = authenticator.InitialUrl;
+			var cookiesUrl = url.Scheme + "://" + url.Host;
+			var store = NSHttpCookieStorage.SharedStorage;
+			var cookies = store.CookiesForUrl (new NSUrl (cookiesUrl));
+			foreach (var c in cookies) {
+				store.DeleteCookie (c);
+			}
+		}
+
+		void LoadInitialUrl ()
+		{
 			var request = new NSUrlRequest (new NSUrl (authenticator.InitialUrl.AbsoluteUri));
 			NSUrlCache.SharedCache.RemoveCachedResponse (request); // Always try
 			webView.LoadRequest (request);

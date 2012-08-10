@@ -79,7 +79,7 @@ namespace Xamarin.Social
 			TWRequest request;
 
 			public TwitterRequest (string method, Uri url, IDictionary<string, string> paramters)
-				: base (method, url)
+				: base (method, url, paramters)
 			{
 				var ps = new NSMutableDictionary ();
 				if (paramters != null) {
@@ -169,7 +169,7 @@ namespace Xamarin.Social
 
 		ACAccountStore accountStore; // Save this reference since ACAccounts are only good so long as it's alive
 
-		public override Task<IEnumerable<Account>> GetSavedAccountsAsync ()
+		public override Task<Account[]> GetSavedAccountsAsync ()
 		{
 			if (accountStore == null) {
 				accountStore = new ACAccountStore ();
@@ -193,7 +193,7 @@ namespace Xamarin.Social
 
 			return Task.Factory.StartNew (delegate {
 				completedEvent.WaitOne ();
-				return (IEnumerable<Account>)r;
+				return r.ToArray ();
 			}, TaskCreationOptions.LongRunning);
 		}
 

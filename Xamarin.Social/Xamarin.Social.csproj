@@ -53,6 +53,7 @@
     <Compile Include="FormAuthenticator.cs" />
     <Compile Include="Authenticator.cs" />
     <Compile Include="FacebookService.cs" />
+    <Compile Include="AccountStore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

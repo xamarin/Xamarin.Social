@@ -20,14 +20,14 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Uniquely identifies this service type.
 		/// </summary>
-		public string ServiceType { get; private set; }
+		public string ServiceId { get; private set; }
 
-		protected Service (string serviceType)
+		protected Service (string serviceId)
 		{
-			if (string.IsNullOrWhiteSpace (serviceType)) {
-				throw new ArgumentException ("serviceType must be a non-blank string", "serviceType");
+			if (string.IsNullOrWhiteSpace (serviceId)) {
+				throw new ArgumentException ("serviceId must be a non-blank string", "serviceId");
 			}
-			ServiceType = serviceType;
+			ServiceId = serviceId;
 		}
 
 
@@ -61,9 +61,9 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
-		public virtual Task<IEnumerable<Account>> GetSavedAccountsAsync ()
+		public virtual Task<Account[]> GetSavedAccountsAsync ()
 		{
-			return Task.Factory.StartNew (() => Enumerable.Empty<Account> ());
+			return Task.Factory.StartNew (() => new Account[0]);
 		}
 
 		/// <summary>
@@ -96,7 +96,7 @@ namespace Xamarin.Social
 			if (auth == null) {
 				throw new NotSupportedException ("Account sign in is not supported.");
 			}
-			return auth.AuthenticateAsync (context).ContinueWith (task => {
+			return auth.AuthenticateAsync (context, this).ContinueWith (task => {
 				return task.Result;
 			});
 		}
@@ -191,11 +191,11 @@ namespace Xamarin.Social
 		{
 			lock (registry) {
 				Service s;
-				if (registry.TryGetValue (service.ServiceType, out s)) {
-					throw new ArgumentException ("Service '" + service.ServiceType + "' is already registered.", "service");
+				if (registry.TryGetValue (service.ServiceId, out s)) {
+					throw new ArgumentException ("Service '" + service.ServiceId + "' is already registered.", "service");
 				}
 				else {
-					registry.Add (service.ServiceType, service);
+					registry.Add (service.ServiceId, service);
 				}
 			}
 		}

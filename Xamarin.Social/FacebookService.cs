@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text;
 
 namespace Xamarin.Social
 {
@@ -22,6 +23,13 @@ namespace Xamarin.Social
 			get {
 				return true;
 			}
+		}
+
+		public override Task<Account[]> GetSavedAccountsAsync ()
+		{
+			return Task.Factory.StartNew (delegate {
+				return AccountStore.Create ().FindAccountsForService (ServiceId);
+			});
 		}
 
 		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)
@@ -51,6 +59,7 @@ namespace Xamarin.Social
 			{
 				this.clientId = clientId;
 				this.scope = scope;
+				this.service = service;
 			}
 
 			public override string Title {
@@ -110,9 +119,38 @@ namespace Xamarin.Social
 			Task<string> GetUsernameAsync (string accessToken)
 			{
 				var request = service.CreateRequest ("GET", new Uri ("https://graph.facebook.com/me"));
-				return request.GetResponseAsync ().ContinueWith (reqTask => {
-					return "";
+				request.Account = new Account ("?", new Dictionary<string,string> {
+					{ "access_token", accessToken },
 				});
+				return request.GetResponseAsync ().ContinueWith (reqTask => {
+					using (var s = reqTask.Result.GetResponseStream ()) {
+						var json = new System.IO.StreamReader (s).ReadToEnd ();
+						var username = GetValueFromJson (json, "username");
+						if (string.IsNullOrEmpty (username)) {
+							throw new Exception ("Could not read username from the /me API call");
+						}
+						else {
+							return username;
+						}
+					}
+				});
+			}
+
+			string GetValueFromJson (string json, string key)
+			{
+				var p = json.IndexOf ("\"" + key + "\"");
+				if (p < 0) return "";
+				var c = json.IndexOf (":", p);
+				if (c < 0) return "";
+				var q = json.IndexOf ("\"", c);
+				if (q < 0) return "";
+				var v = new StringBuilder ();
+				var b = q + 1;
+				var e = b;
+				for (; e < json.Length && json[e] != '\"'; e++) {
+				}
+				var r = json.Substring (b, e - b);
+				return r;
 			}
 		}
 
@@ -121,9 +159,39 @@ namespace Xamarin.Social
 			throw new NotImplementedException ();
 		}
 
-		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> paramters = null)
+		protected class FacebookRequest : Request
 		{
-			throw new NotImplementedException ();
+			public FacebookRequest (string method, Uri url, IDictionary<string, string> parameters)
+				: base (method, url, parameters)
+			{
+			}
+
+			protected override Uri GetPreparedUrl ()
+			{
+				var a = Account;
+				if (a == null) {
+					throw new InvalidOperationException ("Facebook requests require a valid Account to be set.");
+				}
+				if (!a.Properties.ContainsKey ("access_token")) {
+					throw new InvalidOperationException ("Facebook account is missing required access_token property.");
+				}
+
+				var url = base.GetPreparedUrl ().AbsoluteUri;
+
+				if (url.Contains ('?')) {
+					url += "&access_token=" + a.Properties["access_token"];
+				}
+				else {
+					url += "?access_token=" + a.Properties["access_token"];
+				}
+
+				return new Uri (url);
+			}
+		}
+
+		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters = null)
+		{
+			return new FacebookRequest (method, url, parameters);
 		}
 	}
 }
