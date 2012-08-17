@@ -24,7 +24,7 @@ namespace Xamarin.Social
 			//
 			// Create the UI
 			//
-			Title = authenticator.Title;
+			Title = authenticator.Service.Title;
 
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (
 				UIBarButtonSystemItem.Cancel,

@@ -7,26 +7,9 @@ namespace Xamarin.Social.Services
 	public abstract class TwitterService : Service
 	{
 		public TwitterService ()
-			: base ("Twitter")
+			: base ("Twitter", "Twitter")
 		{
-		}
-
-		public override string Description {
-			get {
-				return "Real-time information network that connects you to the latest stories, ideas, opinions and news about what you find interesting.";
-			}
-		}
-
-		public override Uri SignUpLink {
-			get {
-				return new Uri ("https://twitter.com/signup");
-			}
-		}
-
-		public override string SignUpTitle {
-			get {
-				return "Sign up";
-			}
+			CreateAccountLink = new Uri ("https://twitter.com/signup");
 		}
 
 		public override bool CanShareText {

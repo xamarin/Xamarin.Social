@@ -22,8 +22,6 @@ namespace Xamarin.Social
 		Exception error;
 		AuthenticationResult? result;
 
-		public abstract string Title { get; }
-
 		/// <summary>
 		/// Authenticates the user using an approprate GUI.
 		/// </summary>

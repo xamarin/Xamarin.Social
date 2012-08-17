@@ -46,20 +46,21 @@ namespace Xamarin.Social
 	public class FormAuthenticatorField
 	{
 		public string Key { get; set; }
-		public string DisplayName { get; set; }
+		public string Title { get; set; }
 		public string Placeholder { get; set; }
 		public string Value { get; set; }
 
-		public FormAuthenticatorField (string key, string displayName, FormAuthenticatorFieldType fieldType, string placeholder = "", string defaultValue = "")
+		public FormAuthenticatorField (string key, string title, FormAuthenticatorFieldType fieldType, string placeholder = "", string defaultValue = "")
 		{
 			if (string.IsNullOrWhiteSpace (key)) {
+				throw new ArgumentException ("key must not be blank", "key");
 			}
 			Key = key;
 
-			if (string.IsNullOrWhiteSpace (displayName)) {
-				throw new ArgumentException ("displayName must not be blank", "key");
+			if (string.IsNullOrWhiteSpace (title)) {
+				throw new ArgumentException ("title must not be blank", "title");
 			}
-			DisplayName = displayName;
+			Title = title;
 
 			Placeholder = placeholder ?? "";
 

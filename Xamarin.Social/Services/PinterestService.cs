@@ -10,20 +10,9 @@ namespace Xamarin.Social.Services
 	public class PinterestService : Service
 	{
 		public PinterestService ()
-			: base ("Pinterest")
+			: base ("Pinterest", "Pinterest")
 		{
-		}
-
-		public override string Description {
-			get {
-				return "Pinterest allows you to organize and share all the beautiful things you find on the web.";
-			}
-		}
-
-		public override Uri SignUpLink {
-			get {
-				return new Uri ("https://pinterest.com/join/signup/");
-			}
+			CreateAccountLink = new Uri ("https://pinterest.com/join/signup/");
 		}
 
 		class PinterestAuthenticator : FormAuthenticator
@@ -32,12 +21,6 @@ namespace Xamarin.Social.Services
 			{
 				Fields.Add (new FormAuthenticatorField ("email", "Email", FormAuthenticatorFieldType.PlainText, "sally@example.com", ""));
 				Fields.Add (new FormAuthenticatorField ("password", "Password", FormAuthenticatorFieldType.Password, "Required", ""));
-			}
-
-			public override string Title {
-				get {
-					return "Pinterest";
-				}
 			}
 
 			public override void OnSignIn ()

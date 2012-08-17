@@ -24,31 +24,31 @@ namespace Xamarin.Social
 		/// </summary>
 		public string ServiceId { get; private set; }
 
-		protected Service (string serviceId)
+		/// <summary>
+		/// Text used to label this service in the UI.
+		/// </summary>
+		public string Title { get; private set; }
+
+		protected Service (string serviceId, string title)
 		{
 			if (string.IsNullOrWhiteSpace (serviceId)) {
 				throw new ArgumentException ("serviceId must be a non-blank string", "serviceId");
 			}
 			ServiceId = serviceId;
+
+			if (string.IsNullOrWhiteSpace (title)) {
+				throw new ArgumentException ("title must be a non-blank string", "title");
+			}
+			Title = title;
 		}
 
 
 		#region Service Information
 
 		/// <summary>
-		/// Description of the social network service.
-		/// </summary>
-		public abstract string Description { get; }
-
-		/// <summary>
-		/// Text to display on the button to sign up.
-		/// </summary>
-		public virtual string SignUpTitle { get { return "Sign Up"; } }
-
-		/// <summary>
 		/// Link to sign up.
 		/// </summary>
-		public abstract Uri SignUpLink { get; }
+		public Uri CreateAccountLink { get; protected set; }
 
 		#endregion
 
@@ -83,7 +83,7 @@ namespace Xamarin.Social
 		/// are not supplied, an exception will be thrown detailing which ones need to be
 		/// provided.
 		/// </param>
-		protected abstract Authenticator GetAuthenticator (IDictionary<string, string> parameters);
+		protected abstract Authenticator GetAuthenticator (IDictionary<string, string> parameters = null);
 
 		/// <summary>
 		/// Presents the necessary UI for the user to sign in to their account.
@@ -91,9 +91,9 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task that will complete when they have signed in.
 		/// </returns>
-		public virtual Task<AuthenticationResult> AddAccountAsync (UIContext context, IDictionary<string, string> authenticaionParameters)
+		public virtual Task<AuthenticationResult> AddAccountAsync (UIContext context, IDictionary<string, string> authenticationParameters = null)
 		{
-			var auth = GetAuthenticator (authenticaionParameters);
+			var auth = GetAuthenticator (authenticationParameters);
 			if (auth == null) {
 				throw new NotSupportedException ("Account sign in is not supported.");
 			}

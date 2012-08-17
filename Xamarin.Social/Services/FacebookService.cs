@@ -9,20 +9,9 @@ namespace Xamarin.Social.Services
 	public class FacebookService : Service
 	{
 		public FacebookService ()
-			: base ("Facebook")
+			: base ("Facebook", "Facebook")
 		{
-		}
-
-		public override string Description {
-			get {
-				return "A social utility that connects people, to keep up with friends, upload photos, share links and videos.";
-			}
-		}
-
-		public override Uri SignUpLink {
-			get {
-				return new Uri ("https://www.facebook.com");
-			}
+			CreateAccountLink = new Uri ("https://www.facebook.com");
 		}
 
 		public override bool CanShareText {
@@ -59,12 +48,6 @@ namespace Xamarin.Social.Services
 				this.clientId = clientId;
 				this.scope = scope;
 				this.service = service;
-			}
-
-			public override string Title {
-				get {
-					return "Facebook";
-				}
 			}
 
 			public override Uri InitialUrl
