@@ -12,14 +12,14 @@ namespace Xamarin.Social.Services
 		public PinterestService ()
 			: base ("Pinterest", "Pinterest")
 		{
-			CreateAccountLink = new Uri ("https://pinterest.com/join/signup/");
+			CreateAccountLink = new Uri ("https://pinterest.com/join/register/");
 		}
 
 		class PinterestAuthenticator : FormAuthenticator
 		{
 			public PinterestAuthenticator ()
 			{
-				Fields.Add (new FormAuthenticatorField ("email", "Email", FormAuthenticatorFieldType.PlainText, "sally@example.com", ""));
+				Fields.Add (new FormAuthenticatorField ("email", "Email", FormAuthenticatorFieldType.Email, "sally@example.com", ""));
 				Fields.Add (new FormAuthenticatorField ("password", "Password", FormAuthenticatorFieldType.Password, "Required", ""));
 			}
 

@@ -49,6 +49,7 @@ namespace Xamarin.Social
 		public string Title { get; set; }
 		public string Placeholder { get; set; }
 		public string Value { get; set; }
+		public FormAuthenticatorFieldType FieldType { get; set; }
 
 		public FormAuthenticatorField (string key, string title, FormAuthenticatorFieldType fieldType, string placeholder = "", string defaultValue = "")
 		{
@@ -65,6 +66,8 @@ namespace Xamarin.Social
 			Placeholder = placeholder ?? "";
 
 			Value = defaultValue ?? "";
+
+			FieldType = fieldType;
 		}
 	}
 
@@ -74,9 +77,14 @@ namespace Xamarin.Social
 	public enum FormAuthenticatorFieldType
 	{
 		/// <summary>
-		/// The field is visible plain text.
+		/// The field is plain text.
 		/// </summary>
 		PlainText,
+
+		/// <summary>
+		/// The field is an email address.
+		/// </summary>
+		Email,
 
 		/// <summary>
 		/// The field is protected from onlookers.
