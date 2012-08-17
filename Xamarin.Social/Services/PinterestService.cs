@@ -5,7 +5,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 
-namespace Xamarin.Social
+namespace Xamarin.Social.Services
 {
 	public class PinterestService : Service
 	{

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace Xamarin.Social
+namespace Xamarin.Social.Services
 {
 	public abstract class TwitterService : Service
 	{

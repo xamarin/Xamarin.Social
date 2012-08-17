@@ -8,7 +8,7 @@ using System.IO;
 using System.Collections.Generic;
 using MonoTouch.Accounts;
 
-namespace Xamarin.Social
+namespace Xamarin.Social.Services
 {
 	class TwitterService5 : TwitterService
 	{

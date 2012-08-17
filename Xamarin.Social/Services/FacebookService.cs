@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
 
-namespace Xamarin.Social
+namespace Xamarin.Social.Services
 {
 	public class FacebookService : Service
 	{

@@ -164,12 +164,12 @@ namespace Xamarin.Social
 		{
 			registry = new Dictionary<string, Service> ();
 
-			RegisterService (Facebook = new FacebookService ());
+			RegisterService (Facebook = new Xamarin.Social.Services.FacebookService ());
 			//RegisterService (new GoogleService ());
 
 
 #if PLATFORM_IOS
-			RegisterService (Twitter = new TwitterService5 ());
+			RegisterService (Twitter = new Xamarin.Social.Services.TwitterService5 ());
 #endif
 
 			//RegisterService (new TwitterService ());

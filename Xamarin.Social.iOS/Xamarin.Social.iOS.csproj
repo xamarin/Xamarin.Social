@@ -58,10 +58,6 @@
     <Compile Include="..\Xamarin.Social\Service.cs">
       <Link>Service.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\TwitterService.cs">
-      <Link>TwitterService.cs</Link>
-    </Compile>
-    <Compile Include="TwitterService5.cs" />
     <Compile Include="..\Xamarin.Social\ShareResult.cs">
       <Link>ShareResult.cs</Link>
     </Compile>
@@ -80,20 +76,27 @@
     <Compile Include="..\Xamarin.Social\WebAuthenticator.cs">
       <Link>WebAuthenticator.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\FacebookService.cs">
-      <Link>FacebookService.cs</Link>
-    </Compile>
     <Compile Include="WebAuthenticatorController.cs" />
     <Compile Include="..\Xamarin.Social\AccountStore.cs">
       <Link>AccountStore.cs</Link>
     </Compile>
     <Compile Include="KeyChainAccountStore.cs" />
-    <Compile Include="..\Xamarin.Social\PinterestService.cs">
-      <Link>PinterestService.cs</Link>
-    </Compile>
     <Compile Include="FormAuthenticatorController.cs" />
     <Compile Include="..\Xamarin.Social\HttpHelper.cs">
       <Link>HttpHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\Services\FacebookService.cs">
+      <Link>Services\FacebookService.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\Services\PinterestService.cs">
+      <Link>Services\PinterestService.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\Services\TwitterService.cs">
+      <Link>Services\TwitterService.cs</Link>
+    </Compile>
+    <Compile Include="Services\TwitterService5.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 </Project>

@@ -89,7 +89,7 @@ namespace Xamarin.Social
 			var f = new BinaryFormatter ();
 			using (var s = new MemoryStream ()) {
 				f.Serialize (s, Cookies);
-				return Convert.ToBase64String (s.GetBuffer (), 0, s.Length);
+				return Convert.ToBase64String (s.GetBuffer (), 0, (int)s.Length);
 			}
 		}
 
