@@ -9,7 +9,7 @@ namespace Xamarin.Social
 {
 	public class HttpHelper
 	{
-		CookieContainer cookies;
+		public CookieContainer Cookies { get; private set; }
 
 		public HttpHelper ()
 			: this (new CookieContainer ())
@@ -18,18 +18,25 @@ namespace Xamarin.Social
 
 		public HttpHelper (CookieContainer cookies)
 		{
-			this.cookies = cookies;
+			this.Cookies = cookies;
 		}
 
 		public HttpWebRequest CreateHttpWebRequest (string method, string url)
 		{
 			var req = (HttpWebRequest)WebRequest.Create (url);
 			req.Method = method;
-			req.CookieContainer = cookies;
+			req.CookieContainer = Cookies;
 			return req;
 		}
 
-		public Task<HttpWebResponse> PostUrlFormEncodedAsync (string url, IDictionary<string, string> inputs)
+		public Task<WebResponse> GetAsync (string url)
+		{
+			var req = CreateHttpWebRequest ("GET", url);
+			return Task.Factory
+				.FromAsync<WebResponse> (req.BeginGetResponse, req.EndGetResponse, null);
+		}
+
+		public Task<WebResponse> PostUrlFormEncodedAsync (string url, IDictionary<string, string> inputs)
 		{
 			var req = CreateHttpWebRequest ("POST", url);
 
@@ -53,16 +60,21 @@ namespace Xamarin.Social
 					using (ts.Result) {
 						ts.Result.Write (bodyData, 0, bodyData.Length);
 					}
-					return (HttpWebResponse)Task.Factory
+					return Task.Factory
 						.FromAsync<WebResponse> (req.BeginGetResponse, req.EndGetResponse, null)
 						.Result;
 				});
 		}
 
-		public string ReadResponseText (HttpWebResponse response)
+		public static string ReadResponseText (WebResponse response)
 		{
+			var httpResponse = response as HttpWebResponse;
+
 			var encoding = Encoding.UTF8;
-			//response.ContentEncoding;
+
+			if (httpResponse != null) {
+				//encoding = response.ContentEncoding;
+			}
 
 			using (var s = response.GetResponseStream ()) {
 				using (var r = new StreamReader (s, encoding)) {

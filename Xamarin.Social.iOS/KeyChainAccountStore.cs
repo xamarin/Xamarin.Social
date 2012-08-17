@@ -44,7 +44,8 @@ namespace Xamarin.Social
 		public override void Save (Account account, string serviceId)
 		{
 			var statusCode = SecStatusCode.Success;
-			var data = NSData.FromString (account.Serialize (), NSStringEncoding.UTF8);
+			var serializedAccount = account.Serialize ();
+			var data = NSData.FromString (serializedAccount, NSStringEncoding.UTF8);
 
 			//
 			// Remove any existing record

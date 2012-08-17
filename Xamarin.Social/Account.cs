@@ -17,22 +17,29 @@ namespace Xamarin.Social
 		public virtual CookieContainer Cookies { get; private set; }
 
 		public Account ()
-			: this ("", null)
+			: this ("", null, null)
 		{
 		}
 
-		public Account (string username)
-			: this (username, null)
+		public Account (string username, CookieContainer cookies)
+			: this (username, null, cookies)
 		{
 		}
 
 		public Account (string username, IDictionary<string, string> properties)
+			: this (username, properties, null)
+		{
+		}
+
+		public Account (string username, IDictionary<string, string> properties, CookieContainer cookies)
 		{
 			Username = username;
 			Properties = (properties == null) ?
 				new Dictionary<string, string> () :
 				new Dictionary<string, string> (properties);
-			Cookies = new CookieContainer ();
+			Cookies = (cookies == null) ?
+				new CookieContainer () :
+				cookies;
 		}
 
 		/// <summary>
