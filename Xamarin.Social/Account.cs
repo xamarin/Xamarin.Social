@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Net;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Xamarin.Social
 {
@@ -11,9 +14,10 @@ namespace Xamarin.Social
 	{
 		public virtual string Username { get; private set; }
 		public virtual Dictionary<string, string> Properties { get; private set; }
+		public virtual CookieContainer Cookies { get; private set; }
 
 		public Account ()
-			: this (null, null)
+			: this ("", null)
 		{
 		}
 
@@ -28,31 +32,73 @@ namespace Xamarin.Social
 			Properties = (properties == null) ?
 				new Dictionary<string, string> () :
 				new Dictionary<string, string> (properties);
+			Cookies = new CookieContainer ();
 		}
 
-		public static string SerializeProperties (IDictionary<string, string> properties)
+		/// <summary>
+		/// Serialize this account into a string that can be deserialized.
+		/// </summary>
+		public string Serialize ()
 		{
 			var sb = new StringBuilder ();
-			var head = "";
-			foreach (var p in properties) {
-				sb.Append (head);
+
+			sb.Append ("__username__=");
+			sb.Append (Uri.EscapeDataString (Username));
+
+			foreach (var p in Properties) {
+				sb.Append ("&");
 				sb.Append (Uri.EscapeDataString (p.Key));
 				sb.Append ("=");
 				sb.Append (Uri.EscapeDataString (p.Value));
-				head = "&";
 			}
+
+			if (Cookies.Count > 0) {
+				sb.Append ("&__cookies__=");
+				sb.Append (Uri.EscapeDataString (SerializeCookies ()));
+			}
+
 			return sb.ToString ();
 		}
 
-		public static Dictionary<string, string> DeserializeProperties (string propertiesString)
+		public static Account Deserialize (string serializedString)
 		{
-			var r = new Dictionary<string, string> ();
-			var kvs = propertiesString.Split ('&');
-			foreach (var p in kvs) {
+			var acct = new Account ();
+
+			foreach (var p in serializedString.Split ('&')) {
 				var kv = p.Split ('=');
-				r[Uri.UnescapeDataString (kv[0])] = kv.Length > 1 ? Uri.UnescapeDataString (kv[1]) : "";
+
+				var key = Uri.UnescapeDataString (kv[0]);
+				var val = kv.Length > 1 ? Uri.UnescapeDataString (kv[1]) : "";
+
+				if (key == "__cookies__") {
+					acct.Cookies = DeserializeCookies (val);
+				}
+				else if (key == "__username__") {
+					acct.Username = val;
+				}
+				else {
+					acct.Properties[key] = val;
+				}
 			}
-			return r;
+
+			return acct;
+		}
+
+		string SerializeCookies ()
+		{
+			var f = new BinaryFormatter ();
+			using (var s = new MemoryStream ()) {
+				f.Serialize (s, Cookies);
+				return Convert.ToBase64String (s.GetBuffer (), 0, s.Length);
+			}
+		}
+
+		static CookieContainer DeserializeCookies (string cookiesString)
+		{
+			var f = new BinaryFormatter ();
+			using (var s = new MemoryStream (Convert.FromBase64String (cookiesString))) {
+				return (CookieContainer)f.Deserialize (s);
+			}
 		}
 	}
 }

@@ -23,9 +23,8 @@ namespace Xamarin.Social
 
 		Account GetAccountFromRecord (SecRecord r)
 		{
-			return new Account (
-				r.Account,
-				Account.DeserializeProperties (NSString.FromData (r.Generic, NSStringEncoding.UTF8)));
+			var serializedData = NSString.FromData (r.Generic, NSStringEncoding.UTF8);
+			return Account.Deserialize (serializedData);
 		}
 
 		Account FindAccount (string username, string serviceId)
@@ -45,7 +44,7 @@ namespace Xamarin.Social
 		public override void Save (Account account, string serviceId)
 		{
 			var statusCode = SecStatusCode.Success;
-			var data = NSData.FromString (Account.SerializeProperties (account.Properties), NSStringEncoding.UTF8);
+			var data = NSData.FromString (account.Serialize (), NSStringEncoding.UTF8);
 
 			//
 			// Remove any existing record
