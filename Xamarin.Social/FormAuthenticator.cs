@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 #if PLATFORM_IOS
 using UIContext = MonoTouch.UIKit.UIViewController;
@@ -27,7 +28,7 @@ namespace Xamarin.Social
 			return (f != null) ? f.Value : null;
 		}
 
-		public abstract void OnSignIn ();
+		public abstract Task<Account> SignInAsync ();
 
 		protected override void PresentUI (UIContext context)
 		{

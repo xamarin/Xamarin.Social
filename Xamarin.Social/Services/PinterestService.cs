@@ -23,16 +23,23 @@ namespace Xamarin.Social.Services
 				Fields.Add (new FormAuthenticatorField ("password", "Password", FormAuthenticatorFieldType.Password, "Required", ""));
 			}
 
-			public override void OnSignIn ()
+			public override Task<Account> SignInAsync ()
 			{
 				var http = new HttpHelper ();
-				http
+				return http
 					.PostUrlFormEncodedAsync ("https://pinterest.com/login/?next=%2Flogin%2F", new Dictionary<string, string> {
 						{ "email", GetFieldValue ("email") },
 						{ "password", GetFieldValue ("password") },
 						{ "next", "/" },
 					})
 					.ContinueWith (reqt => {
+
+						var res = reqt.Result;
+
+						
+
+						return new Account ();
+
 					});
 			}
 		}

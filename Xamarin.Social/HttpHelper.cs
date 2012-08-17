@@ -31,7 +31,7 @@ namespace Xamarin.Social
 
 		public Task<HttpWebResponse> PostUrlFormEncodedAsync (string url, IDictionary<string, string> inputs)
 		{
-			var req = CreateHttpWebRequest ("GET", url);
+			var req = CreateHttpWebRequest ("POST", url);
 
 			var sb = new StringBuilder ();
 			var head = "";

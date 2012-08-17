@@ -55,21 +55,17 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Implementations must call this function when they have successfully authenticated.
 		/// </summary>
-		/// <param name='username'>
-		/// User name of the account.
+		/// <param name='account'>
+		/// The authenticated account.
 		/// </param>
-		/// <param name='accountProperties'>
-		/// Additional data, such as access tokens, that need to be stored with the account. This
-		/// information is secured.
-		/// </param>
-		public void OnSuccess (string username, IDictionary<string, string> accountProperties)
+		public void OnSuccess (Account account)
 		{
 			this.result = AuthenticationResult.Success;
 
 			//
 			// Store the account
 			//
-			AccountStore.Create ().Save (new Account (username, accountProperties), Service.ServiceId);
+			AccountStore.Create ().Save (account, Service.ServiceId);
 
 			//
 			// Notify the work
@@ -80,6 +76,21 @@ namespace Xamarin.Social
 			}
 
 			completedEvent.Set ();
+		}
+
+		/// <summary>
+		/// Implementations must call this function when they have successfully authenticated.
+		/// </summary>
+		/// <param name='username'>
+		/// User name of the account.
+		/// </param>
+		/// <param name='accountProperties'>
+		/// Additional data, such as access tokens, that need to be stored with the account. This
+		/// information is secured.
+		/// </param>
+		public void OnSuccess (string username, IDictionary<string, string> accountProperties)
+		{
+			OnSuccess (new Account (username, accountProperties));
 		}
 
 		public event EventHandler Success;

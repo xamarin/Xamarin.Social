@@ -4,12 +4,15 @@ using MonoTouch.Foundation;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Xamarin.Social
 {
 	public class FormAuthenticatorController : UITableViewController
 	{
 		FormAuthenticator authenticator;
+
+		StatusView status;
 
 		public FormAuthenticatorController (FormAuthenticator authenticator)
 			: base (UITableViewStyle.Grouped)
@@ -23,13 +26,99 @@ namespace Xamarin.Social
 
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (
 				UIBarButtonSystemItem.Cancel,
-				delegate {
-				authenticator.OnFailure (AuthenticationResult.Cancelled);
-			});
+				delegate { HandleCancel (); });
 		}
 
 		void HandleSubmit ()
 		{
+			if (status == null) {
+				status = new StatusView ();
+				NavigationItem.TitleView = status;
+				status.StartAnimating ();
+			}
+
+			authenticator.SignInAsync ().ContinueWith (task => {
+
+				StopStatus ();
+
+				if (task.IsFaulted) {
+					var alert = new UIAlertView (
+						NSBundle.MainBundle.LocalizedString ("Error Signing In", "Error message title when failed to sign in"),
+						GetErrorMessage (task.Exception),
+						null,
+						NSBundle.MainBundle.LocalizedString ("OK", "Error message dismiss button title when failed to sign in"));
+					alert.Show ();
+				}
+				else {
+					authenticator.OnSuccess (task.Result);
+				}
+
+			}, TaskScheduler.FromCurrentSynchronizationContext ());
+		}
+
+		void HandleCancel ()
+		{
+			StopStatus ();
+			authenticator.OnFailure (AuthenticationResult.Cancelled);
+		}
+
+		static string GetErrorMessage (Exception error)
+		{
+			var e = error;
+			while (e.InnerException != null) {
+				e = e.InnerException;
+			}
+			return e.Message;
+		}
+
+		void StopStatus ()
+		{
+			if (status != null) {
+				status.StopAnimating ();
+				NavigationItem.TitleView = null;
+				status = null;
+			}
+		}
+
+		class StatusView : UIView
+		{
+			UIActivityIndicatorView activity;
+
+			public StatusView ()
+				: base (new RectangleF (0, 0, 180, 44))
+			{
+				BackgroundColor = UIColor.Clear;
+
+				activity = new UIActivityIndicatorView (UIActivityIndicatorViewStyle.White) {
+					Frame = new RectangleF (0, 11.5f, 21, 21),
+					HidesWhenStopped = false,
+					Hidden = false,
+				};
+				AddSubview (activity);
+
+				var label = new UILabel () {
+					Text = NSBundle.MainBundle.LocalizedString ("Verifying", "Verifying status message when adding accounts"),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize (20),
+					BackgroundColor = UIColor.Clear,
+					Frame = new RectangleF (25, 0, Frame.Width - 25, 44),
+				};
+				AddSubview (label);
+
+				var f = Frame;
+				f.Width = label.Frame.X + label.StringSize (label.Text, label.Font).Width;
+				Frame = f;
+			}
+
+			public void StartAnimating ()
+			{
+				activity.StartAnimating ();
+			}
+
+			public void StopAnimating ()
+			{
+				activity.StopAnimating ();
+			}
 		}
 
 		class FormDelegate : UITableViewDelegate
@@ -99,6 +188,8 @@ namespace Xamarin.Social
 					AutocorrectionType = (field.FieldType == FormAuthenticatorFieldType.PlainText) ?
 						UITextAutocorrectionType.Yes :
 						UITextAutocorrectionType.No,
+					
+					AutocapitalizationType = UITextAutocapitalizationType.None,
 
 					ShouldReturn = delegate {
 						handleReturn ();
