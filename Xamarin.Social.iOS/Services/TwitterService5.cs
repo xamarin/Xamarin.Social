@@ -19,18 +19,13 @@ namespace Xamarin.Social.Services
 
 		#region Share
 
-		public override Task<ShareResult> ShareAsync (Item item)
+		public override Task<ShareResult> ShareAsync (UIViewController rootVC, Item item)
 		{
 			//
 			// Validate
 			//
 			if (item.Files.Count > 0) {
 				throw new NotSupportedException ("Twitter does not support uploading arbitrary files.");
-			}
-
-			var rootVC = UIHelper.RootViewController;
-			if (rootVC == null) {
-				throw new InvalidOperationException ("Could not locate app root view controller.");
 			}
 
 			//

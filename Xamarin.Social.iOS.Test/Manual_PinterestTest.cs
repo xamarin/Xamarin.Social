@@ -17,5 +17,19 @@ namespace Xamarin.Social.iOS.Test
 
 			pinterest.AddAccountAsync (AppDelegate.Shared.RootViewController);
 		}
+
+		[Test]
+		public void ShareImageTextLink ()
+		{
+			var pinterest = new PinterestService ();
+
+			var item = new Item {
+
+			};
+
+			pinterest.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
+				Console.WriteLine ("SHARE RESULT = " + t.Result);
+			});
+		}
 	}
 }

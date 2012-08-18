@@ -90,7 +90,7 @@ namespace Xamarin.Social.Services
 			return new PinterestAuthenticator ();
 		}
 
-		public override Task<ShareResult> ShareAsync (Item item)
+		protected override Task<ShareResult> ShareItemAsync (Item item, Account account)
 		{
 			throw new System.NotImplementedException ();
 		}

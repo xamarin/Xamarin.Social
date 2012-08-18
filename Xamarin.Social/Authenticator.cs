@@ -20,7 +20,7 @@ namespace Xamarin.Social
 
 		ManualResetEvent completedEvent;
 		Exception error;
-		AuthenticationResult? result;
+		Account account;
 
 		/// <summary>
 		/// Authenticates the user using an approprate GUI.
@@ -28,7 +28,7 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task notifying the completion (good or bad) of the authentication process.
 		/// </returns>
-		public Task<AuthenticationResult> AuthenticateAsync (UIContext context, Service service)
+		public Task<Account> AuthenticateAsync (UIContext context, Service service)
 		{
 			Service = service;
 
@@ -44,7 +44,7 @@ namespace Xamarin.Social
 					throw new AggregateException (error);
 				}
 				else {
-					return result.HasValue ? result.Value : AuthenticationResult.Cancelled;
+					return account;
 				}
 
 			}, TaskCreationOptions.LongRunning);
@@ -60,7 +60,7 @@ namespace Xamarin.Social
 		/// </param>
 		public void OnSuccess (Account account)
 		{
-			this.result = AuthenticationResult.Success;
+			this.account = account;
 
 			//
 			// Store the account
@@ -104,8 +104,6 @@ namespace Xamarin.Social
 		/// </param>
 		public void OnFailure (AuthenticationResult result)
 		{
-			this.result = (result == AuthenticationResult.Success) ? AuthenticationResult.Cancelled : result;
-
 			var ev = Failure;
 			if (ev != null) {
 				ev (this, EventArgs.Empty);
@@ -123,7 +121,6 @@ namespace Xamarin.Social
 		/// </param>
 		public void OnFailure (Exception error)
 		{
-			this.result = AuthenticationResult.Failed;
 			this.error = error;
 
 			var ev = Failure;

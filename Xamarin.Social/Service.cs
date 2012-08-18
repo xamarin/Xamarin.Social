@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+using System.Threading;
 
 #if PLATFORM_IOS
 using UIContext = MonoTouch.UIKit.UIViewController;
@@ -91,15 +92,13 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task that will complete when they have signed in.
 		/// </returns>
-		public virtual Task<AuthenticationResult> AddAccountAsync (UIContext context, IDictionary<string, string> authenticationParameters = null)
+		public virtual Task<Account> AddAccountAsync (UIContext uiContext, IDictionary<string, string> authenticationParameters = null)
 		{
 			var auth = GetAuthenticator (authenticationParameters);
 			if (auth == null) {
 				throw new NotSupportedException ("Account sign in is not supported.");
 			}
-			return auth.AuthenticateAsync (context, this).ContinueWith (task => {
-				return task.Result;
-			});
+			return auth.AuthenticateAsync (uiContext, this);
 		}
 
 		#endregion
@@ -131,7 +130,60 @@ namespace Xamarin.Social
 		/// <param name='item'>
 		/// The item to share. It may be edited by the user.
 		/// </param>
-		public abstract Task<ShareResult> ShareAsync (Item item);
+		public virtual Task<ShareResult> ShareAsync (UIContext uiContext, Item item)
+		{
+			var progress = new ShareProgress ();
+
+			GetSavedAccountsAsync ().ContinueWith (accountsTask => {
+				if (accountsTask.Result.Length > 0) {
+					PresentShareUI (uiContext, accountsTask.Result, item, progress);
+				}
+				else {
+					AddAccountAsync (uiContext).ContinueWith (addTask => {
+						if (addTask.Result != null) {
+							PresentShareUI (uiContext, new[] { addTask.Result }, item, progress);
+						}
+						else {
+							progress.Result = ShareResult.Cancelled;
+							progress.DoneEvent.Set ();
+						}
+					}, TaskScheduler.FromCurrentSynchronizationContext ());
+				}
+			}, TaskScheduler.FromCurrentSynchronizationContext ());
+
+			return Task.Factory.StartNew (delegate {
+				progress.DoneEvent.WaitOne ();
+				return progress.Result;
+			}, TaskCreationOptions.LongRunning);
+		}
+
+		void PresentShareUI (UIContext uiContext, Account[] accounts, Item item, ShareProgress progress)
+		{
+#if PLATFORM_IOS
+			var share = new ShareController (this, accounts, item, progress);
+			var nav = new MonoTouch.UIKit.UINavigationController (share);
+			uiContext.PresentModalViewController (nav, true);
+#else
+			throw new NotImplementedException ("Share not implemented on this platform.");
+#endif
+
+		}
+
+		/// <summary>
+		/// <para>
+		/// Shares the passed-in object without presenting any UI to the user.
+		/// </para>
+		/// </summary>
+		/// <param name='item'>
+		/// The item to share.
+		/// </param>
+		/// <param name='account'>
+		/// The account to use to share.
+		/// </param>
+		protected virtual Task<ShareResult> ShareItemAsync (Item item, Account account)
+		{
+			throw new NotSupportedException ();
+		}
 
 		//
 		// More options:

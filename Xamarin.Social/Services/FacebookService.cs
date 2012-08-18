@@ -8,6 +8,17 @@ namespace Xamarin.Social.Services
 {
 	public class FacebookService : Service
 	{
+		/// <summary>
+		/// AppId is the 'App ID' at https://developers.facebook.com/apps
+		/// and must be set.
+		/// </summary>
+		public string AppId { get; set; }
+
+		public string Permissions { get; set; }
+
+
+		public string Scope { get; set; }
+
 		public FacebookService ()
 			: base ("Facebook", "Facebook")
 		{
@@ -34,19 +45,15 @@ namespace Xamarin.Social.Services
 					"This is a comma separated list of permissions. To share, \"publish_actions\" is required. " +
 					"The full list of permissions is available at https://developers.facebook.com/docs/authentication/permissions/", "parameters");
 			}
-			return new FacebookAuthenticator (parameters["client_id"], parameters["scope"], this);
+			return new FacebookAuthenticator (this);
 		}
 
 		class FacebookAuthenticator : WebAuthenticator
 		{
-			string clientId;
-			string scope;
 			FacebookService service;
 
-			public FacebookAuthenticator (string clientId, string scope, FacebookService service)
+			public FacebookAuthenticator (FacebookService service)
 			{
-				this.clientId = clientId;
-				this.scope = scope;
 				this.service = service;
 			}
 
@@ -55,9 +62,9 @@ namespace Xamarin.Social.Services
 				get {
 					var url = string.Format (
 						"https://m.facebook.com/dialog/oauth/?client_id={0}&redirect_uri={1}&response_type=token&scope={2}",
-						clientId,
+						service.AppId,
 						Uri.EscapeDataString ("http://www.facebook.com/connect/login_success.html"),
-						scope);
+						service.Permissions);
 					return new Uri (url);
 				}
 			}
@@ -126,7 +133,6 @@ namespace Xamarin.Social.Services
 				if (c < 0) return "";
 				var q = json.IndexOf ("\"", c);
 				if (q < 0) return "";
-				var v = new StringBuilder ();
 				var b = q + 1;
 				var e = b;
 				for (; e < json.Length && json[e] != '\"'; e++) {
@@ -134,11 +140,6 @@ namespace Xamarin.Social.Services
 				var r = json.Substring (b, e - b);
 				return r;
 			}
-		}
-
-		public override Task<ShareResult> ShareAsync (Item item)
-		{
-			throw new NotImplementedException ();
 		}
 
 		protected class FacebookRequest : Request

@@ -6,7 +6,7 @@ using MonoTouch.Foundation;
 
 namespace Xamarin.Social
 {
-	public class KeyChainAccountStore : AccountStore
+	class KeyChainAccountStore : AccountStore
 	{
 		public override Account[] FindAccountsForService (string serviceId)
 		{

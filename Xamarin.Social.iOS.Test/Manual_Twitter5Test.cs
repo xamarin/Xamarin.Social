@@ -11,7 +11,7 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void BlankTweet ()
 		{
-			Service.Twitter.ShareAsync (new Item ()).ContinueWith (task => {
+			Service.Twitter.ShareAsync (AppDelegate.Shared.RootViewController, new Item ()).ContinueWith (task => {
 				Console.WriteLine ("RESULT == " + task.Result);
 			});
 		}
@@ -24,7 +24,7 @@ namespace Xamarin.Social.iOS.Test
 			item.Links.Add (new Uri ("http://microsoft.com"));
 			item.Images.Add (UIImage.FromBundle ("Images/xamarin-logo.png"));
 			item.Images.Add (UIImage.FromBundle ("Images/guides-block-img.png"));
-			Service.Twitter.ShareAsync (item).ContinueWith (task => {
+			Service.Twitter.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (task => {
 				Console.WriteLine ("RESULT == " + task.Result);
 			});
 		}

@@ -35,11 +35,6 @@ namespace Xamarin.Social.Services
 			throw new NotImplementedException ();
 		}
 
-		public override Task<ShareResult> ShareAsync (Item item)
-		{
-			throw new System.NotImplementedException ();
-		}
-
 		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> paramters = null)
 		{
 			throw new System.NotImplementedException ();
