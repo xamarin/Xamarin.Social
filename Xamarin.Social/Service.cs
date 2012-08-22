@@ -30,6 +30,11 @@ namespace Xamarin.Social
 		/// </summary>
 		public string Title { get; private set; }
 
+		/// <summary>
+		/// Text used as the title of screen when editing an item.
+		/// </summary>
+		public string ShareTitle { get; protected set; }
+
 		protected Service (string serviceId, string title)
 		{
 			if (string.IsNullOrWhiteSpace (serviceId)) {
@@ -41,6 +46,8 @@ namespace Xamarin.Social
 				throw new ArgumentException ("title must be a non-blank string", "title");
 			}
 			Title = title;
+
+			ShareTitle = "Share";
 		}
 
 
@@ -106,12 +113,12 @@ namespace Xamarin.Social
 
 		#region Sharing
 
-		public virtual bool CanShareText { get { return false; } }
-		public virtual bool CanShareLinks { get { return false; } }
-		public virtual bool CanShareImages { get { return false; } }
-		public virtual bool CanShareFiles { get { return false; } }
+		public bool CanShareText { get; protected set; }
+		public bool CanShareLinks { get; protected set; }
+		public bool CanShareImages { get; protected set; }
+		public bool CanShareFiles { get; protected set; }
 #if SUPPORT_VIDEO
-		public virtual bool CanShareVideo { get { return false; } }
+		public bool CanShareVideo { get; protected set; }
 #endif
 
 		/// <summary>
@@ -132,41 +139,41 @@ namespace Xamarin.Social
 		/// </param>
 		public virtual Task<ShareResult> ShareAsync (UIContext uiContext, Item item)
 		{
-			var progress = new ShareProgress ();
+			var viewModel = new ShareProgress (this, item, ShareItemAsync);
 
 			GetSavedAccountsAsync ().ContinueWith (accountsTask => {
 				if (accountsTask.Result.Length > 0) {
-					PresentShareUI (uiContext, accountsTask.Result, item, progress);
+					viewModel.Accounts = accountsTask.Result.ToList ();
+					PresentShareUI (uiContext, viewModel);
 				}
 				else {
 					AddAccountAsync (uiContext).ContinueWith (addTask => {
 						if (addTask.Result != null) {
-							PresentShareUI (uiContext, new[] { addTask.Result }, item, progress);
+							viewModel.Accounts = new List<Account> { addTask.Result };
+							PresentShareUI (uiContext, viewModel);
 						}
 						else {
-							progress.Result = ShareResult.Cancelled;
-							progress.DoneEvent.Set ();
+							viewModel.Cancel ();
 						}
 					}, TaskScheduler.FromCurrentSynchronizationContext ());
 				}
 			}, TaskScheduler.FromCurrentSynchronizationContext ());
 
 			return Task.Factory.StartNew (delegate {
-				progress.DoneEvent.WaitOne ();
-				return progress.Result;
+				viewModel.Wait ();
+				return viewModel.Result;
 			}, TaskCreationOptions.LongRunning);
 		}
 
-		void PresentShareUI (UIContext uiContext, Account[] accounts, Item item, ShareProgress progress)
+		void PresentShareUI (UIContext uiContext, ShareProgress viewModel)
 		{
 #if PLATFORM_IOS
-			var share = new ShareController (this, accounts, item, progress);
+			var share = new ShareController (viewModel);
 			var nav = new MonoTouch.UIKit.UINavigationController (share);
 			uiContext.PresentModalViewController (nav, true);
 #else
 			throw new NotImplementedException ("Share not implemented on this platform.");
 #endif
-
 		}
 
 		/// <summary>
@@ -180,7 +187,7 @@ namespace Xamarin.Social
 		/// <param name='account'>
 		/// The account to use to share.
 		/// </param>
-		protected virtual Task<ShareResult> ShareItemAsync (Item item, Account account)
+		protected virtual Task<ShareResult> ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			throw new NotSupportedException ();
 		}

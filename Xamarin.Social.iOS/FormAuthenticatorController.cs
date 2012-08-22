@@ -42,12 +42,7 @@ namespace Xamarin.Social
 				StopStatus ();
 
 				if (task.IsFaulted) {
-					var alert = new UIAlertView (
-						NSBundle.MainBundle.LocalizedString ("Error Signing In", "Error message title when failed to sign in"),
-						GetErrorMessage (task.Exception),
-						null,
-						NSBundle.MainBundle.LocalizedString ("OK", "Error message dismiss button title when failed to sign in"));
-					alert.Show ();
+					ShowError (task.Exception);
 				}
 				else {
 					authenticator.OnSuccess (task.Result);
@@ -56,19 +51,23 @@ namespace Xamarin.Social
 			}, TaskScheduler.FromCurrentSynchronizationContext ());
 		}
 
+		void ShowError (Exception error)
+		{
+			var mainBundle = NSBundle.MainBundle;
+			
+			var alert = new UIAlertView (
+				mainBundle.LocalizedString ("Error Signing In", "Error message title when failed to sign in"),
+				mainBundle.LocalizedString (error.GetUserMessage (), "Error"),
+				null,
+				mainBundle.LocalizedString ("OK", "Dismiss button title when failed to sign in"));
+
+			alert.Show ();
+		}
+
 		void HandleCancel ()
 		{
 			StopStatus ();
 			authenticator.OnFailure (AuthenticationResult.Cancelled);
-		}
-
-		static string GetErrorMessage (Exception error)
-		{
-			var e = error;
-			while (e.InnerException != null) {
-				e = e.InnerException;
-			}
-			return e.Message;
 		}
 
 		void StopStatus ()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text;
 
 namespace Xamarin.Social
 {
@@ -40,7 +41,12 @@ namespace Xamarin.Social
 
 		List<Part> parts = new List<Part> ();
 
-		public virtual void AddMultipartData (Stream data, string name, string mimeType, string filename)
+		public void AddMultipartData (string name, string data, string mimeType = "", string filename = "")
+		{
+			AddMultipartData (name, new MemoryStream (Encoding.UTF8.GetBytes (data)), mimeType, filename);
+		}
+
+		public virtual void AddMultipartData (string name, Stream data, string mimeType = "", string filename = "")
 		{
 			parts.Add (new Part {
 				Data = data,

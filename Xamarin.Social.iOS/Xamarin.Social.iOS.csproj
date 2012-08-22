@@ -12,25 +12,25 @@
     <AssemblyName>Xamarin.Social.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;PLATFORM_IOS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ConsolePause>False</ConsolePause>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
     <DefineConstants>PLATFORM_IOS</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -97,6 +97,13 @@
     <Compile Include="ShareController.cs" />
     <Compile Include="..\Xamarin.Social\ShareProgress.cs">
       <Link>ShareProgress.cs</Link>
+    </Compile>
+    <Compile Include="UIImageEx.cs" />
+    <Compile Include="..\Xamarin.Social\ImageData.cs">
+      <Link>ImageData.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
+      <Link>ExceptionEx.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -118,7 +118,7 @@ namespace Xamarin.Social.Services
 				}
 			}
 
-			public override void AddMultipartData (System.IO.Stream data, string name, string mimeType, string filename)
+			public override void AddMultipartData (string name, System.IO.Stream data, string mimeType, string filename)
 			{
 				request.AddMultiPartData (NSData.FromStream (data), name, mimeType);
 			}

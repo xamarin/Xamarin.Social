@@ -10,24 +10,10 @@ namespace Xamarin.Social.Services
 			: base ("Twitter", "Twitter")
 		{
 			CreateAccountLink = new Uri ("https://twitter.com/signup");
-		}
-
-		public override bool CanShareText {
-			get {
-				return true;
-			}
-		}
-
-		public override bool CanShareLinks {
-			get {
-				return true;
-			}
-		}
-
-		public override bool CanShareImages {
-			get {
-				return true;
-			}
+			ShareTitle = "Tweet";
+			CanShareText = true;
+			CanShareLinks = true;
+			CanShareImages = true;
 		}
 
 		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)

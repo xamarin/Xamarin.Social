@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace Xamarin.Social.Services
 {
@@ -13,18 +15,9 @@ namespace Xamarin.Social.Services
 			: base ("Pinterest", "Pinterest")
 		{
 			CreateAccountLink = new Uri ("https://pinterest.com/join/register/");
-		}
-
-		public override bool CanShareText {
-			get {
-				return true;
-			}
-		}
-
-		public override bool CanShareImages {
-			get {
-				return true;
-			}
+			ShareTitle = "Pin";
+			CanShareText = true;
+			CanShareImages = true;
 		}
 
 		class PinterestAuthenticator : FormAuthenticator
@@ -90,9 +83,31 @@ namespace Xamarin.Social.Services
 			return new PinterestAuthenticator ();
 		}
 
-		protected override Task<ShareResult> ShareItemAsync (Item item, Account account)
+		protected override Task<ShareResult> ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
-			throw new System.NotImplementedException ();
+			var req = CreateRequest ("POST", new Uri ("https://pinterest.com/pin/create/"));
+			req.Account = account;
+
+			req.AddMultipartData ("board", "451978581292091392");
+			req.AddMultipartData ("details", item.Text);
+			req.AddMultipartData ("link", item.Links.Count > 0 ? item.Links.First ().AbsoluteUri : "");
+			req.AddMultipartData ("img_url", "");
+			req.AddMultipartData ("tags", "");
+			req.AddMultipartData ("replies", "");
+			req.AddMultipartData ("buyable", "");
+			var imageData = item.Images.First ().GetImageData ();
+			req.AddMultipartData ("img", imageData.Stream, imageData.MimeType, imageData.Filename);
+			req.AddMultipartData ("csrfmiddlewaretoken", "???");
+
+			return req.GetResponseAsync ().ContinueWith (reqTask => {
+
+				var res = reqTask.Result;
+
+				throw new NotImplementedException ();
+
+				return ShareResult.Done;
+
+			}, cancellationToken);
 		}
 	}
 }
