@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Social
 {
-	public class ShareProgress
+	class ShareViewModel
 	{
 		public delegate Task<ShareResult> ShareItemAsyncFunc (Item item, Account account, CancellationToken cancellationToken);
 
@@ -47,7 +47,7 @@ namespace Xamarin.Social
 		/// </summary>
 		public ShareResult Result { get; private set; }
 		
-		public ShareProgress (Service service, Item item, ShareItemAsyncFunc shareFunc)
+		public ShareViewModel (Service service, Item item, ShareItemAsyncFunc shareFunc)
 		{
 			Service = service;
 			Item = item;

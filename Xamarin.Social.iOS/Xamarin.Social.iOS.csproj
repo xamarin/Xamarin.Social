@@ -95,15 +95,15 @@
     </Compile>
     <Compile Include="Services\TwitterService5.cs" />
     <Compile Include="ShareController.cs" />
-    <Compile Include="..\Xamarin.Social\ShareProgress.cs">
-      <Link>ShareProgress.cs</Link>
-    </Compile>
     <Compile Include="UIImageEx.cs" />
     <Compile Include="..\Xamarin.Social\ImageData.cs">
       <Link>ImageData.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\ShareViewModel.cs">
+      <Link>ShareViewModel.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

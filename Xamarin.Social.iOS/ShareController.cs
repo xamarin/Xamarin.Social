@@ -9,7 +9,7 @@ namespace Xamarin.Social
 {
 	class ShareController : UIViewController
 	{
-		public ShareController (ShareProgress viewModel)
+		public ShareController (ShareViewModel viewModel)
 		{
 			Title = NSBundle.MainBundle.LocalizedString (viewModel.Service.ShareTitle, "Title of Share dialog");
 

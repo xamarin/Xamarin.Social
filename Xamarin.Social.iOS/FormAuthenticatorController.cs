@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Social
 {
-	public class FormAuthenticatorController : UITableViewController
+	class FormAuthenticatorController : UITableViewController
 	{
 		FormAuthenticator authenticator;
 

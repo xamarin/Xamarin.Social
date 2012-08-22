@@ -139,7 +139,7 @@ namespace Xamarin.Social
 		/// </param>
 		public virtual Task<ShareResult> ShareAsync (UIContext uiContext, Item item)
 		{
-			var viewModel = new ShareProgress (this, item, ShareItemAsync);
+			var viewModel = new ShareViewModel (this, item, ShareItemAsync);
 
 			GetSavedAccountsAsync ().ContinueWith (accountsTask => {
 				if (accountsTask.Result.Length > 0) {
@@ -165,7 +165,7 @@ namespace Xamarin.Social
 			}, TaskCreationOptions.LongRunning);
 		}
 
-		void PresentShareUI (UIContext uiContext, ShareProgress viewModel)
+		void PresentShareUI (UIContext uiContext, ShareViewModel viewModel)
 		{
 #if PLATFORM_IOS
 			var share = new ShareController (viewModel);

@@ -7,7 +7,7 @@ namespace Xamarin.Social
 	/// <summary>
 	/// The ViewController that the WebAuthenticator presents to the user.
 	/// </summary>
-	public class WebAuthenticatorController : UIViewController
+	class WebAuthenticatorController : UIViewController
 	{
 		protected WebAuthenticator authenticator;
 
