@@ -192,7 +192,7 @@ namespace Xamarin.Social.Services
 			}, TaskCreationOptions.LongRunning);
 		}
 
-		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)
+		protected override Authenticator GetAuthenticator ()
 		{
 			throw new NotSupportedException ("Only OS accounts are supported");
 		}

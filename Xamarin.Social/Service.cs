@@ -86,12 +86,7 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The authenticator or null if authentication is not supported.
 		/// </returns>
-		/// <param name='parameters'>
-		/// Set of keys and values required by the authenticator. If required parameters
-		/// are not supplied, an exception will be thrown detailing which ones need to be
-		/// provided.
-		/// </param>
-		protected abstract Authenticator GetAuthenticator (IDictionary<string, string> parameters = null);
+		protected abstract Authenticator GetAuthenticator ();
 
 		/// <summary>
 		/// Presents the necessary UI for the user to sign in to their account.
@@ -99,9 +94,9 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task that will complete when they have signed in.
 		/// </returns>
-		public virtual Task<Account> AddAccountAsync (UIContext uiContext, IDictionary<string, string> authenticationParameters = null)
+		public virtual Task<Account> AddAccountAsync (UIContext uiContext)
 		{
-			var auth = GetAuthenticator (authenticationParameters);
+			var auth = GetAuthenticator ();
 			if (auth == null) {
 				throw new NotSupportedException ("Account sign in is not supported.");
 			}
@@ -260,8 +255,8 @@ namespace Xamarin.Social
 			}
 		}
 
-		public static Service Twitter { get; private set; }
-		public static Service Facebook { get; private set; }
+		public static Xamarin.Social.Services.TwitterService Twitter { get; private set; }
+		public static Xamarin.Social.Services.FacebookService Facebook { get; private set; }
 		//public static Service Google { get; private set; }
 		//public static Service SinaWeibo { get; private set; }
 

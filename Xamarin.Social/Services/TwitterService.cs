@@ -16,7 +16,7 @@ namespace Xamarin.Social.Services
 			CanShareImages = true;
 		}
 
-		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)
+		protected override Authenticator GetAuthenticator ()
 		{
 			throw new NotImplementedException ();
 		}

@@ -85,7 +85,7 @@ namespace Xamarin.Social.Services
 			}
 		}
 
-		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)
+		protected override Authenticator GetAuthenticator ()
 		{
 			return new PinterestAuthenticator ();
 		}

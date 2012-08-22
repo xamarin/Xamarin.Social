@@ -16,9 +16,6 @@ namespace Xamarin.Social.Services
 
 		public string Permissions { get; set; }
 
-
-		public string Scope { get; set; }
-
 		public FacebookService ()
 			: base ("Facebook", "Facebook")
 		{
@@ -26,19 +23,16 @@ namespace Xamarin.Social.Services
 			CanShareText = true;
 		}
 
-		protected override Authenticator GetAuthenticator (IDictionary<string, string> parameters)
+		protected override Authenticator GetAuthenticator ()
 		{
-			if (parameters == null) {
-				throw new ArgumentNullException ("parameters");
+			if (string.IsNullOrEmpty (AppId)) {
+				throw new InvalidOperationException ("AppId must be set before using Facebook. " +
+					"Get your 'App ID' at https://developers.facebook.com/apps");
 			}
-			if (!parameters.ContainsKey ("client_id")) {
-				throw new ArgumentException ("parameters must include the client_id of your Facebook application. " +
-					"It is called 'App ID' at https://developers.facebook.com/apps", "parameters");
-			}
-			if (!parameters.ContainsKey ("scope")) {
-				throw new ArgumentException ("parameters must include the scope of your Facebook application. " +
-					"This is a comma separated list of permissions. To share, \"publish_actions\" is required. " +
-					"The full list of permissions is available at https://developers.facebook.com/docs/authentication/permissions/", "parameters");
+			if (string.IsNullOrEmpty (Permissions)) {
+				throw new InvalidOperationException ("You must set the Permissions required by your app. " +
+					"To share, \"publish_actions\" is required. " +
+					"This is a comma separated list from https://developers.facebook.com/docs/authentication/permissions/");
 			}
 			return new FacebookAuthenticator (this);
 		}

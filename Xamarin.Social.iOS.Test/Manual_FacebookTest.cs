@@ -14,10 +14,9 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void AddAccount ()
 		{
-			Service.Facebook.AddAccountAsync (AppDelegate.Shared.RootViewController, new Dictionary<string,string> {
-				{ "client_id", TestClientId },
-				{ "scope", "publish_actions" },
-			}).ContinueWith (task => {
+			Service.Facebook.AppId = TestClientId;
+			Service.Facebook.Permissions = "publish_actions";
+			Service.Facebook.AddAccountAsync (AppDelegate.Shared.RootViewController).ContinueWith (task => {
 				if (task.IsFaulted) {
 					Console.WriteLine (task.Exception);
 				}
@@ -33,10 +32,9 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void BadClientId ()
 		{
-			Service.Facebook.AddAccountAsync (AppDelegate.Shared.RootViewController, new Dictionary<string,string> {
-				{ "client_id", "537639364986381" },
-				{ "scope", "publish_actions" },
-			}).ContinueWith (task => {
+			Service.Facebook.AppId = "537639364986381";
+			Service.Facebook.Permissions = "publish_actions";
+			Service.Facebook.AddAccountAsync (AppDelegate.Shared.RootViewController).ContinueWith (task => {
 				Console.WriteLine ("RESULT " + task.Result);
 			});
 		}
