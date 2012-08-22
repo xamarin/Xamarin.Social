@@ -60,6 +60,9 @@
     <Compile Include="ExceptionEx.cs" />
     <Compile Include="ShareViewModel.cs" />
     <Compile Include="FileData.cs" />
+    <Compile Include="Services\FlickrService.cs" />
+    <Compile Include="OAuthAuthenticator.cs" />
+    <Compile Include="OAuth.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -110,6 +110,15 @@
     <Compile Include="NSDataStream.cs" />
     <Compile Include="CheckedPickerView.cs" />
     <Compile Include="ProgressLabel.cs" />
+    <Compile Include="..\Xamarin.Social\Services\FlickrService.cs">
+      <Link>Services\FlickrService.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\OAuthAuthenticator.cs">
+      <Link>OAuthAuthenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\OAuth.cs">
+      <Link>OAuth.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
