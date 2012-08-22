@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Xamarin.Social
 {
@@ -59,6 +60,17 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Gets the response.
 		/// </summary>
+		/// <returns>
+		/// The response.
+		/// </returns>
+		public virtual Task<Response> GetResponseAsync ()
+		{
+			return GetResponseAsync (CancellationToken.None);
+		}
+
+		/// <summary>
+		/// Gets the response.
+		/// </summary>
 		/// <remarks>
 		/// Service implementors should override this method to modify the PreparedWebRequest
 		/// to authenticate it.
@@ -66,69 +78,83 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The response.
 		/// </returns>
-		public virtual Task<Response> GetResponseAsync ()
+		public virtual Task<Response> GetResponseAsync (CancellationToken cancellationToken)
 		{
 			var request = GetPreparedWebRequest ();
 
-			//
-			// TODO: Add the multipart data
-			//
 			if (parts.Count > 0) {
-				
-				var boundary = "---------------------------" + new Random ().Next ();
-				var boundaryBytes = Encoding.ASCII.GetBytes ("--" + boundary + "\r\n");
-				
-				request.ContentType = "multipart/form-data; boundary=" + boundary;
-				
-				using (var s = request.GetRequestStream ()) {
-					foreach (var p in parts) {
-						s.Write (boundaryBytes, 0, boundaryBytes.Length);
-
-						//
-						// Content-Disposition
-						//
-						var header = "Content-Disposition: form-data; name=\"" + p.Name + "\"";
-						if (!string.IsNullOrEmpty (p.Filename)) {
-							header += "; filename=\"" + p.Filename + "\"";
-						}
-						var headerBytes = Encoding.ASCII.GetBytes (header);
-						s.Write (headerBytes, 0, headerBytes.Length);
-						s.Write (CrLf, 0, CrLf.Length);
-
-						//
-						// Content-Type
-						//
-						if (!string.IsNullOrEmpty (p.MimeType)) {
-							header = "Content-Type: " + p.MimeType;
-							headerBytes = Encoding.ASCII.GetBytes (header);
-							s.Write (headerBytes, 0, headerBytes.Length);
-							s.Write (CrLf, 0, CrLf.Length);
-						}
-
-						s.Write (CrLf, 0, CrLf.Length);
-						s.Write (CrLf, 0, CrLf.Length);
-
-						//
-						// Data
-						//
-						p.Data.CopyTo (s);
-						s.Write (CrLf, 0, CrLf.Length);
-					}
-
-					//
-					// End
-					//
-					s.Write (boundaryBytes, 0, boundaryBytes.Length);
-					s.Write (DashDash, 0, DashDash.Length);
-					s.Write (CrLf, 0, CrLf.Length);
-				}
+				return Task.Factory
+						.FromAsync<Stream> (request.BeginGetRequestStream, request.EndGetRequestStream, null)
+						.ContinueWith (reqStreamtask => {
+						
+							var boundary = "---------------------------" + new Random ().Next ();
+							request.ContentType = "multipart/form-data; boundary=" + boundary;
+							using (reqStreamtask.Result) {
+								WriteMultipartFormData (boundary, reqStreamtask.Result);
+							}
+						
+							return Task.Factory
+									.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
+									.ContinueWith (resTask => {
+										return new Response ((HttpWebResponse)resTask.Result);
+									}).Result;
+						});
 			}
 
 			return Task.Factory
-				.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
-				.ContinueWith (task => {
-				return new Response ((HttpWebResponse)task.Result);
-			});
+					.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
+					.ContinueWith (resTask => {
+						return new Response ((HttpWebResponse)resTask.Result);
+					});
+		}
+
+		void WriteMultipartFormData (string boundary, Stream s)
+		{
+			var boundaryBytes = Encoding.ASCII.GetBytes ("--" + boundary);
+
+			foreach (var p in parts) {
+				s.Write (boundaryBytes, 0, boundaryBytes.Length);
+				s.Write (CrLf, 0, CrLf.Length);
+				
+				//
+				// Content-Disposition
+				//
+				var header = "Content-Disposition: form-data; name=\"" + p.Name + "\"";
+				if (!string.IsNullOrEmpty (p.Filename)) {
+					header += "; filename=\"" + p.Filename + "\"";
+				}
+				var headerBytes = Encoding.ASCII.GetBytes (header);
+				s.Write (headerBytes, 0, headerBytes.Length);
+				s.Write (CrLf, 0, CrLf.Length);
+				
+				//
+				// Content-Type
+				//
+				if (!string.IsNullOrEmpty (p.MimeType)) {
+					header = "Content-Type: " + p.MimeType;
+					headerBytes = Encoding.ASCII.GetBytes (header);
+					s.Write (headerBytes, 0, headerBytes.Length);
+					s.Write (CrLf, 0, CrLf.Length);
+				}
+				
+				//
+				// End Header
+				//
+				s.Write (CrLf, 0, CrLf.Length);
+				
+				//
+				// Data
+				//
+				p.Data.CopyTo (s);
+				s.Write (CrLf, 0, CrLf.Length);
+			}
+			
+			//
+			// End
+			//
+			s.Write (boundaryBytes, 0, boundaryBytes.Length);
+			s.Write (DashDash, 0, DashDash.Length);
+			s.Write (CrLf, 0, CrLf.Length);
 		}
 
 		static readonly byte[] CrLf = new byte[] { (byte)'\r', (byte)'\n' };
@@ -174,6 +200,10 @@ namespace Xamarin.Social
 			if (request == null) {
 				request = (HttpWebRequest)WebRequest.Create (GetPreparedUrl ());
 				request.Method = Method;
+			}
+
+			if (request.CookieContainer == null && Account != null) {
+				request.CookieContainer = Account.Cookies;
 			}
 
 			return request;

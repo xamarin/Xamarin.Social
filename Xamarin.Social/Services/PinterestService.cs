@@ -38,11 +38,12 @@ namespace Xamarin.Social.Services
 						var loginHtml = HttpHelper.ReadResponseText (getTask.Result);
 						
 						var email = GetFieldValue ("email");
+						var password = GetFieldValue ("password");
 
 						return http
 							.PostUrlFormEncodedAsync ("https://pinterest.com/login/?next=%2Flogin%2F", new Dictionary<string, string> {
-								{ "email", GetFieldValue ("email") },
-								{ "password", GetFieldValue ("password") },
+								{ "email", email },
+								{ "password", password },
 								{ "csrfmiddlewaretoken", ReadInputValue (loginHtml, "csrfmiddlewaretoken") },
 								{ "next", "/" },
 							})
@@ -52,7 +53,13 @@ namespace Xamarin.Social.Services
 									throw new ApplicationException ("The email or password is incorrect.");
 								}
 								else {
-									return new Account (email, http.Cookies);
+									return new Account (
+											email,
+											new Dictionary<string, string> {
+												{ "email", email },
+												{ "password", password }
+											},
+											http.Cookies);
 								}
 
 							}).Result;
@@ -83,7 +90,7 @@ namespace Xamarin.Social.Services
 			return new PinterestAuthenticator ();
 		}
 
-		protected override Task<ShareResult> ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			var req = CreateRequest ("POST", new Uri ("https://pinterest.com/pin/create/"));
 			req.Account = account;
@@ -97,17 +104,9 @@ namespace Xamarin.Social.Services
 			req.AddMultipartData ("buyable", "");
 			var imageData = item.Images.First ().GetImageData ("image/jpeg");
 			req.AddMultipartData ("img", imageData.Stream, imageData.MimeType, imageData.Filename);
-			req.AddMultipartData ("csrfmiddlewaretoken", "???");
+			req.AddMultipartData ("csrfmiddlewaretoken", account.Cookies.GetCookie (new Uri ("https://pinterest.com"), "csrftoken"));
 
-			return req.GetResponseAsync ().ContinueWith (reqTask => {
-
-				var res = reqTask.Result;
-
-				throw new NotImplementedException ();
-
-				return ShareResult.Done;
-
-			}, cancellationToken);
+			return req.GetResponseAsync (cancellationToken);
 		}
 	}
 }

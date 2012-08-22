@@ -8,7 +8,7 @@ namespace Xamarin.Social
 {
 	class ShareViewModel
 	{
-		public delegate Task<ShareResult> ShareItemAsyncFunc (Item item, Account account, CancellationToken cancellationToken);
+		public delegate Task ShareItemAsyncFunc (Item item, Account account, CancellationToken cancellationToken);
 
 		ShareItemAsyncFunc shareFunc;
 		ManualResetEvent doneEvent;
@@ -94,8 +94,14 @@ namespace Xamarin.Social
 			var token = cts.Token;
 
 			return shareFunc (Item, UseAccount, token).ContinueWith (shareTask => {
-				Result = shareTask.Result;
-				doneEvent.Set ();
+				if (shareTask.IsFaulted) {
+					cts = null; // So we can try again
+					throw new AggregateException (shareTask.Exception);
+				}
+				else {
+					Result = ShareResult.Done;
+					doneEvent.Set ();
+				}
 			}, token);
 		}
 	}

@@ -4,9 +4,23 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace Xamarin.Social
 {
+	public static class HttpEx
+	{
+		public static string GetCookie (this CookieContainer containers, Uri domain, string name)
+		{
+			var c = containers
+					.GetCookies (domain)
+					.Cast<Cookie> ()
+					.FirstOrDefault (x => x.Name == name);
+			return c != null ? c.Value : "";
+		}
+	}
+
+
 	public class HttpHelper
 	{
 		public CookieContainer Cookies { get; private set; }

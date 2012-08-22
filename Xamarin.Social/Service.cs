@@ -187,7 +187,7 @@ namespace Xamarin.Social
 		/// <param name='account'>
 		/// The account to use to share.
 		/// </param>
-		protected virtual Task<ShareResult> ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		protected virtual Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			throw new NotSupportedException ();
 		}

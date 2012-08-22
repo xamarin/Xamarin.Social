@@ -123,7 +123,7 @@ namespace Xamarin.Social.Services
 				request.AddMultiPartData (NSData.FromStream (data), name, mimeType);
 			}
 
-			public override Task<Response> GetResponseAsync ()
+			public override Task<Response> GetResponseAsync (CancellationToken cancellationToken)
 			{
 				var completedEvent = new ManualResetEvent (false);
 
@@ -142,7 +142,7 @@ namespace Xamarin.Social.Services
 						throw new Exception (error.LocalizedDescription);
 					}
 					return response;
-				}, TaskCreationOptions.LongRunning);
+				}, TaskCreationOptions.LongRunning, cancellationToken);
 			}
 		}
 
