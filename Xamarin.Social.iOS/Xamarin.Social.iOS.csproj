@@ -113,11 +113,11 @@
     <Compile Include="..\Xamarin.Social\Services\FlickrService.cs">
       <Link>Services\FlickrService.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\OAuthAuthenticator.cs">
-      <Link>OAuthAuthenticator.cs</Link>
+    <Compile Include="..\Xamarin.Social\OAuth1.cs">
+      <Link>OAuth1.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\OAuth.cs">
-      <Link>OAuth.cs</Link>
+    <Compile Include="..\Xamarin.Social\OAuth1Authenticator.cs">
+      <Link>OAuth1Authenticator.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
