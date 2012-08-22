@@ -161,32 +161,19 @@ namespace Xamarin.Social
 
 		class ChoiceField : Field
 		{
-			List<string> items;
-			string selectedItem;
-
 			public string SelectedItem {
-				get { return selectedItem; }
-				set {
-					if (selectedItem != value) {
-						selectedItem = value;
-						ValueLabel.Text = selectedItem;
-					}
-				}
+				get { return picker.SelectedItem; }
 			}
 
 			public LabelButton ValueLabel { get; private set; }
-			public UIPickerView picker { get; private set; }
+			public CheckedPickerView picker { get; private set; }
 
 			public ChoiceField (RectangleF frame, ShareController controller, string title, IEnumerable<string> items)
 				: base (frame, controller, title)
 			{
-				this.items = items.ToList ();
-				selectedItem = this.items.First ();
-
 				ValueLabel = new LabelButton () {
 					BackgroundColor = UIColor.White,
 					Font = TextEditorFont,
-					Text = selectedItem,
 					TextColor = UIColor.DarkTextColor,
 					AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
 				};				
@@ -195,14 +182,16 @@ namespace Xamarin.Social
 
 				ValueLabel.TouchUpInside += HandleTouchUpInside;
 
-
 				AddSubview (ValueLabel);
 
-				picker = new UIPickerView (new RectangleF (0, 0, 320, 216));
-				picker.DataSource = new PickerDataSource (this);
-				picker.Delegate = new PickerDelegate (this);
+				picker = new CheckedPickerView (new RectangleF (0, 0, 320, 216), items);
 				picker.Hidden = true;
+				picker.SelectedItemChanged += delegate {
+					ValueLabel.Text = picker.SelectedItem;
+				};
 				controller.View.AddSubview (picker);
+
+				ValueLabel.Text = picker.SelectedItem;
 			}
 
 			void HandleTouchUpInside (object sender, EventArgs e)
@@ -214,107 +203,6 @@ namespace Xamarin.Social
 				picker.Hidden = false;
 				picker.Frame = new RectangleF (0, v.Bounds.Bottom - 216, 320, 216);
 				v.BringSubviewToFront (picker);
-			}
-
-			class PickerDelegate : UIPickerViewDelegate
-			{
-				ChoiceField field;
-
-				public PickerDelegate (ChoiceField field)
-				{
-					this.field = field;
-				}
-
-				public override UIView GetView (UIPickerView pickerView, int row, int component, UIView view)
-				{
-					var label = view as PickerLabel;
-
-					if (label == null) {
-						label = new PickerLabel (new RectangleF (16, 0, pickerView.Bounds.Width - 32, 44));
-					}
-
-					var item = field.items [row];
-					label.Text = item;
-					label.IsSelected = item == field.selectedItem;
-
-					return label;
-				}
-
-				public override void Selected (UIPickerView pickerView, int row, int component)
-				{
-					var n = pickerView.RowsInComponent (0);
-
-					field.SelectedItem = field.items[row];
-
-					for (var i = 0; i < n; i++) { 
-						var label = (PickerLabel)pickerView.ViewFor (i, 0);
-						label.IsSelected = field.selectedItem == label.Text;
-					}
-				}
-			}
-
-			class PickerDataSource : UIPickerViewDataSource
-			{
-				int numRows;
-
-				public PickerDataSource (ChoiceField field)
-				{
-					numRows = field.items.Count;
-				}
-
-				public override int GetRowsInComponent (UIPickerView pickerView, int component)
-				{
-					return numRows;
-				}
-				public override int GetComponentCount (UIPickerView pickerView)
-				{
-					return 1;
-				}
-			}
-
-			class PickerLabel : UIView
-			{
-				static UIFont LabelFont = UIFont.BoldSystemFontOfSize (22);
-
-				UILabel label;
-				UILabel checkLabel;
-
-				public string Text {
-					get { return label.Text; }
-					set { label.Text = value; }
-				}
-
-				bool isSelected = false;
-				public bool IsSelected {
-					get { return isSelected; }
-					set {
-						if (isSelected != value) {
-							isSelected = value;
-							label.TextColor = isSelected ? FieldColor : UIColor.DarkTextColor;
-							checkLabel.TextColor = label.TextColor;
-							checkLabel.Text = isSelected ? "\x2714" : "";
-						}
-					}
-				}
-
-				public PickerLabel (RectangleF frame)
-					: base (frame)
-				{
-					Opaque = false;
-					BackgroundColor = UIColor.Clear;
-
-					checkLabel = new UILabel (new RectangleF (8, 0, 28, 44)) {
-						Font = LabelFont,
-						BackgroundColor = UIColor.Clear,
-					};
-					AddSubview (checkLabel);
-
-					label = new UILabel (new RectangleF (36, 0, frame.Width - 44, 44)) {
-						Font = LabelFont,
-						BackgroundColor = UIColor.Clear,
-					};
-					AddSubview (label);					
-				}
 			}
 		}
 

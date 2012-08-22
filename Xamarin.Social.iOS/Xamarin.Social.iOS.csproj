@@ -108,6 +108,7 @@
       <Link>FileData.cs</Link>
     </Compile>
     <Compile Include="NSDataStream.cs" />
+    <Compile Include="CheckedPickerView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
