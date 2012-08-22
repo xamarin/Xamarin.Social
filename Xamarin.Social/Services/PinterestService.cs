@@ -95,7 +95,7 @@ namespace Xamarin.Social.Services
 			req.AddMultipartData ("tags", "");
 			req.AddMultipartData ("replies", "");
 			req.AddMultipartData ("buyable", "");
-			var imageData = item.Images.First ().GetImageData ();
+			var imageData = item.Images.First ().GetImageData ("image/jpeg");
 			req.AddMultipartData ("img", imageData.Stream, imageData.MimeType, imageData.Filename);
 			req.AddMultipartData ("csrfmiddlewaretoken", "???");
 

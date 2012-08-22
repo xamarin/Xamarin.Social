@@ -69,12 +69,70 @@ namespace Xamarin.Social
 		public virtual Task<Response> GetResponseAsync ()
 		{
 			var request = GetPreparedWebRequest ();
+
+			//
+			// TODO: Add the multipart data
+			//
+			if (parts.Count > 0) {
+				
+				var boundary = "---------------------------" + new Random ().Next ();
+				var boundaryBytes = Encoding.ASCII.GetBytes ("--" + boundary + "\r\n");
+				
+				request.ContentType = "multipart/form-data; boundary=" + boundary;
+				
+				using (var s = request.GetRequestStream ()) {
+					foreach (var p in parts) {
+						s.Write (boundaryBytes, 0, boundaryBytes.Length);
+
+						//
+						// Content-Disposition
+						//
+						var header = "Content-Disposition: form-data; name=\"" + p.Name + "\"";
+						if (!string.IsNullOrEmpty (p.Filename)) {
+							header += "; filename=\"" + p.Filename + "\"";
+						}
+						var headerBytes = Encoding.ASCII.GetBytes (header);
+						s.Write (headerBytes, 0, headerBytes.Length);
+						s.Write (CrLf, 0, CrLf.Length);
+
+						//
+						// Content-Type
+						//
+						if (!string.IsNullOrEmpty (p.MimeType)) {
+							header = "Content-Type: " + p.MimeType;
+							headerBytes = Encoding.ASCII.GetBytes (header);
+							s.Write (headerBytes, 0, headerBytes.Length);
+							s.Write (CrLf, 0, CrLf.Length);
+						}
+
+						s.Write (CrLf, 0, CrLf.Length);
+						s.Write (CrLf, 0, CrLf.Length);
+
+						//
+						// Data
+						//
+						p.Data.CopyTo (s);
+						s.Write (CrLf, 0, CrLf.Length);
+					}
+
+					//
+					// End
+					//
+					s.Write (boundaryBytes, 0, boundaryBytes.Length);
+					s.Write (DashDash, 0, DashDash.Length);
+					s.Write (CrLf, 0, CrLf.Length);
+				}
+			}
+
 			return Task.Factory
 				.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
 				.ContinueWith (task => {
 				return new Response ((HttpWebResponse)task.Result);
 			});
 		}
+
+		static readonly byte[] CrLf = new byte[] { (byte)'\r', (byte)'\n' };
+		static readonly byte[] DashDash = new byte[] { (byte)'-', (byte)'-' };
 
 		/// <summary>
 		/// Gets the prepared URL.
@@ -116,13 +174,6 @@ namespace Xamarin.Social
 			if (request == null) {
 				request = (HttpWebRequest)WebRequest.Create (GetPreparedUrl ());
 				request.Method = Method;
-
-				//
-				// TODO: Add the multipart data
-				//
-				if (parts.Count > 0) {
-					throw new NotImplementedException ("Multipart data");
-				}
 			}
 
 			return request;
