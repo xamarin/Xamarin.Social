@@ -102,8 +102,8 @@ namespace Xamarin.Social.Services
 			req.AddMultipartData ("tags", "");
 			req.AddMultipartData ("replies", "");
 			req.AddMultipartData ("buyable", "");
-			var imageData = item.Images.First ().GetImageData ("image/jpeg");
-			req.AddMultipartData ("img", imageData.Stream, imageData.MimeType, imageData.Filename);
+			var imageData = item.Images.First ();
+			req.AddMultipartData ("img", imageData.Data, imageData.MimeType, imageData.Filename);
 			req.AddMultipartData ("csrfmiddlewaretoken", account.Cookies.GetCookie (new Uri ("https://pinterest.com"), "csrftoken"));
 
 			return req.GetResponseAsync (cancellationToken);

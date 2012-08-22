@@ -57,9 +57,9 @@
     <Compile Include="Services\PinterestService.cs" />
     <Compile Include="Services\TwitterService.cs" />
     <Compile Include="ImageData.cs" />
-    <Compile Include="BitmapEx.cs" />
     <Compile Include="ExceptionEx.cs" />
     <Compile Include="ShareViewModel.cs" />
+    <Compile Include="FileData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

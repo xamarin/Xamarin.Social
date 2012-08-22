@@ -95,7 +95,6 @@
     </Compile>
     <Compile Include="Services\TwitterService5.cs" />
     <Compile Include="ShareController.cs" />
-    <Compile Include="UIImageEx.cs" />
     <Compile Include="..\Xamarin.Social\ImageData.cs">
       <Link>ImageData.cs</Link>
     </Compile>
@@ -105,6 +104,10 @@
     <Compile Include="..\Xamarin.Social\ShareViewModel.cs">
       <Link>ShareViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\FileData.cs">
+      <Link>FileData.cs</Link>
+    </Compile>
+    <Compile Include="NSDataStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

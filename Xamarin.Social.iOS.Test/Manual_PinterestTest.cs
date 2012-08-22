@@ -26,11 +26,12 @@ namespace Xamarin.Social.iOS.Test
 			var item = new Item {
 				Text = "Hello, World",
 			};
-			item.Images.Add (UIImage.FromBundle ("Images/xamarin-logo.png"));
+			item.Images.Add ("Images/xamarin-logo.png");
 			item.Links.Add (new Uri ("http://xamarin.com"));
 
 			pinterest.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
 				Console.WriteLine ("SHARE RESULT = " + t.Result);
+				item.Dispose ();
 			});
 		}
 	}

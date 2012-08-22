@@ -46,7 +46,7 @@ namespace Xamarin.Social.Services
 			vc.SetInitialText (item.Text);
 
 			foreach (var image in item.Images) {
-				vc.AddImage (image);
+				vc.AddImage (image.Image);
 			}
 
 			foreach (var link in item.Links) {

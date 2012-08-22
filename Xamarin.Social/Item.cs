@@ -1,23 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-
-#if PLATFORM_IOS
-using ImageType = MonoTouch.UIKit.UIImage;
-#elif PLATFORM_ANDROID
-using ImageType = Android.Graphics.Bitmap;
-#elif PLATFORM_XAML
-using ImageType = Windows.Media.BitmapSource;
-#else
-using ImageType = System.Drawing.Bitmap;
-#endif
 
 namespace Xamarin.Social
 {
 	/// <summary>
 	/// Facebook Post. Twitter Status. Google+ Activity.
 	/// </summary>
-	public class Item
+	public class Item : IDisposable
 	{
 		/// <summary>
 		/// Textual content.
@@ -29,14 +18,39 @@ namespace Xamarin.Social
 			Text = text ?? "";
 
 			Links = new List<Uri> ();
-			Images = new List<ImageType> ();
-			Files = new List<File> ();
+			Images = new List<ImageData> ();
+			Files = new List<FileData> ();
 		}
 
 		public Item ()
 			: this ("")
 		{
 		}
+
+		~Item ()
+		{
+			Dispose (false);
+		}
+
+		public void Dispose ()
+		{
+			Dispose (true);
+			GC.SuppressFinalize (this);
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			foreach (var i in Images) {
+				i.Dispose ();
+			}
+			Images.Clear ();
+
+			foreach (var f in Files) {
+				f.Dispose ();
+			}
+			Files.Clear ();
+		}
+
 
 		/// <summary>
 		/// Attached link.
@@ -46,40 +60,21 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Attached image.
 		/// </summary>
-		public IList<ImageType> Images { get; set; }
+		public IList<ImageData> Images { get; set; }
 
 		/// <summary>
 		/// Attached image.
 		/// </summary>
-		public IList<File> Files { get; set; }
+		public IList<FileData> Files { get; set; }
 
 #if SUPPORT_VIDEO
 		/// <summary>
 		/// Attached video.
 		/// </summary>
-		public IList<object> Videos { get; set; }
+		public IList<VideoData> Videos { get; set; }
 #endif
 	}
 
-	/// <summary>
-	/// Represents a file.
-	/// </summary>
-	/// <remarks>
-	/// The creator of this object is responsible for
-	/// closing and disposing of the data stream.
-	/// </remarks>
-	public class File
-	{
-		public File (Stream data, string filename, string mimeType = null)
-		{
-			Data = data;
-			Filename = filename;
-			MimeType = string.IsNullOrEmpty (mimeType) ? "application/octet-stream" : mimeType;
-		}
 
-		public Stream Data { get; set; }
-		public string Filename { get; set; }
-		public string MimeType { get; set; }
-	}
 }
 

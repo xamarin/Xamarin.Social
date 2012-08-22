@@ -1,25 +1,157 @@
 using System;
 using System.IO;
+using System.Linq;
+
+#if PLATFORM_IOS
+using MonoTouch.UIKit;
+#else
+using System.Drawing;
+using System.Drawing.Imaging;
+#endif
 
 namespace Xamarin.Social
 {
-	public class ImageData
+	/// <summary>
+	/// Represents an image to be shared with a service.
+	/// </summary>
+	/// <remarks>
+	/// This object disposes of the Data property.
+	/// </remarks>
+	public class ImageData : IDisposable
 	{
-		public Stream Stream { get; private set; }
+		public Stream Data { get; private set; }
 		public string MimeType { get; private set; }
 		public string Filename { get; private set; }
 
-		public ImageData (Stream stream, string mimeType)
-			: this (stream, mimeType, "image." + (mimeType == "image/jpeg" ? "jpg" : "png"))
+		public ImageData (Stream data, string mimeType)
+			: this (data, mimeType, "image." + (mimeType == "image/jpeg" ? "jpg" : "png"))
 		{
 		}
 
-		public ImageData (Stream stream, string mimeType, string filename)
+		public ImageData (Stream data, string filename, string mimeType)
 		{
-			Stream = stream;
+			if (data == null) {
+				throw new ArgumentNullException ("data");
+			}
+			if (string.IsNullOrEmpty (filename)) {
+				throw new ArgumentException ("filename is required", "filename");
+			}
+			if (string.IsNullOrEmpty (mimeType)) {
+				throw new ArgumentException ("mimeType is required", "mimeType");
+			}
+
+			Data = data;
 			MimeType = mimeType;
 			Filename = filename;
 		}
+
+		~ImageData ()
+		{
+			Dispose (false);
+		}
+
+		public void Dispose ()
+		{
+			Dispose (true);
+			GC.SuppressFinalize (this);
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Data != null) {
+				Data.Dispose ();
+				Data = null;
+			}
+
+			Image = null;
+		}
+
+#if PLATFORM_IOS
+
+		public UIImage Image { get; private set; }
+
+		public ImageData (UIImage image)
+			: this (image, "image.jpg")
+		{
+		}
+
+		public ImageData (string path)
+			: this (UIImage.FromFile (path), Path.GetFileName (path))
+		{
+		}
+
+		public ImageData (UIImage image, string filename)
+		{
+			Image = image;
+			Filename = filename;
+
+			MimeType = (filename.ToLowerInvariant ().EndsWith (".png")) ?
+				"image/png" : "image/jpeg";
+
+			if (MimeType == "image/png") {
+				Data = new NSDataStream (image.AsPNG ());
+			}
+			else {
+				Data = new NSDataStream (image.AsJPEG ());
+			}
+		}
+
+		public static implicit operator ImageData (UIImage image)
+		{
+			return new ImageData (image);
+		}
+
+		public static implicit operator ImageData (string path)
+		{
+			return new ImageData (path);
+		}
+
+#elif PLATFORM_ANDROID
+#elif PLATFORM_XAML
+#else
+
+		public Bitmap Image { get; private set; }
+		
+		public ImageData (Bitmap image)
+			: this (image, "image.jpg")
+		{
+		}
+		
+		public ImageData (string path)
+			: this (new Bitmap (path), Path.GetFileName (path))
+		{
+		}
+		
+		public ImageData (Bitmap image, string filename)
+		{
+			Image = image;
+			Filename = filename;
+			
+			MimeType = (filename.ToLowerInvariant ().EndsWith (".png")) ?
+				"image/png" : "image/jpeg";
+			
+			var jpegEncoder = ImageCodecInfo.GetImageEncoders ().First (x => x.MimeType == MimeType);
+			var ps = new EncoderParameters (1);
+			ps.Param[0] = new EncoderParameter (Encoder.Quality, 100);
+			
+			var stream = new MemoryStream ();			
+			image.Save (stream, jpegEncoder, ps);
+			stream.Position = 0;
+			
+			Data = stream;
+		}
+		
+		public static implicit operator ImageData (Bitmap image)
+		{
+			return new ImageData (image);
+		}
+		
+		public static implicit operator ImageData (string path)
+		{
+			return new ImageData (path);
+		}
+
+#endif
 	}
 }
 
