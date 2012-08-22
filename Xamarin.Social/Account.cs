@@ -107,6 +107,11 @@ namespace Xamarin.Social
 				return (CookieContainer)f.Deserialize (s);
 			}
 		}
+
+		public override string ToString ()
+		{
+			return Username;
+		}
 	}
 }
 

@@ -35,7 +35,7 @@ namespace Xamarin.Social.Services
 					.GetAsync ("https://pinterest.com/login/")
 					.ContinueWith (getTask => {
 
-						var loginHtml = HttpHelper.ReadResponseText (getTask.Result);
+						var loginHtml = getTask.Result.GetResponseText ();
 						
 						var email = GetFieldValue ("email");
 						var password = GetFieldValue ("password");
@@ -106,7 +106,12 @@ namespace Xamarin.Social.Services
 			req.AddMultipartData ("img", imageData.Data, imageData.MimeType, imageData.Filename);
 			req.AddMultipartData ("csrfmiddlewaretoken", account.Cookies.GetCookie (new Uri ("https://pinterest.com"), "csrftoken"));
 
-			return req.GetResponseAsync (cancellationToken);
+			return req.GetResponseAsync (cancellationToken).ContinueWith (t => {
+				var body = t.Result.GetResponseText ();
+				if (!body.Contains ("\"success\"")) {
+					throw new ApplicationException ("Pinterest did not accept the new Pin.");
+				}
+			});
 		}
 	}
 }

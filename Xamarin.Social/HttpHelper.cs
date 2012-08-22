@@ -18,6 +18,31 @@ namespace Xamarin.Social
 					.FirstOrDefault (x => x.Name == name);
 			return c != null ? c.Value : "";
 		}
+
+		public static Encoding GetEncodingFromContentType (string contentType)
+		{
+			//
+			// TODO: Parse the Content-Type
+			//
+			return Encoding.UTF8;
+		}
+
+		public static string GetResponseText (this WebResponse response)
+		{
+			var httpResponse = response as HttpWebResponse;
+			
+			var encoding = Encoding.UTF8;
+			
+			if (httpResponse != null) {
+				encoding = GetEncodingFromContentType (response.ContentType);
+			}
+			
+			using (var s = response.GetResponseStream ()) {
+				using (var r = new StreamReader (s, encoding)) {
+					return r.ReadToEnd ();
+				}
+			}
+		}
 	}
 
 
@@ -80,22 +105,7 @@ namespace Xamarin.Social
 				});
 		}
 
-		public static string ReadResponseText (WebResponse response)
-		{
-			var httpResponse = response as HttpWebResponse;
 
-			var encoding = Encoding.UTF8;
-
-			if (httpResponse != null) {
-				//encoding = response.ContentEncoding;
-			}
-
-			using (var s = response.GetResponseStream ()) {
-				using (var r = new StreamReader (s, encoding)) {
-					return r.ReadToEnd ();
-				}
-			}
-		}
 	}
 }
 
