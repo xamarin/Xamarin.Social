@@ -10,7 +10,8 @@ namespace Xamarin.Social
 {
 	class ShareController : UIViewController
 	{
-		UITextView TextEditor;
+		UITextView textEditor;
+		ProgressLabel progress;
 
 		static UIFont TextEditorFont = UIFont.SystemFontOfSize (18);
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
@@ -43,13 +44,13 @@ namespace Xamarin.Social
 			//
 			// Text Editor
 			//
-			TextEditor = new UITextView (new RectangleF (0, b.Y, b.Width, b.Height)) {
+			textEditor = new UITextView (new RectangleF (0, b.Y, b.Width, b.Height)) {
 				Font = TextEditorFont,
 				AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
 				Text = viewModel.Item.Text,
 			};
-			View.AddSubview (TextEditor);
-			TextEditor.BecomeFirstResponder ();
+			View.AddSubview (textEditor);
+			textEditor.BecomeFirstResponder ();
 
 			//
 			// Navigation Items
@@ -71,9 +72,12 @@ namespace Xamarin.Social
 				delegate {
 
 				if (!sharing) {
-					sharing = true;
 
-					viewModel.Item.Text = TextEditor.Text;
+					sharing = true;
+					NavigationItem.RightBarButtonItem.Enabled = false;
+					StartProgress ();
+
+					viewModel.Item.Text = textEditor.Text;
 
 					if (viewModel.Accounts.Count > 1 && afield != null) {
 						viewModel.UseAccount = viewModel.Accounts.First (x => x.Username == afield.SelectedItem);
@@ -82,6 +86,8 @@ namespace Xamarin.Social
 					viewModel.ShareAsync ().ContinueWith (shareTask => {
 
 						sharing = false;
+						NavigationItem.RightBarButtonItem.Enabled = true;
+						StopProgress ();
 
 						if (shareTask.IsFaulted) {
 							ShowError (shareTask.Exception);
@@ -94,6 +100,24 @@ namespace Xamarin.Social
 				}
 
 			});
+		}
+
+		void StartProgress ()
+		{
+			if (progress == null) {
+				progress = new ProgressLabel (NSBundle.MainBundle.LocalizedString ("Sending...", "Sending... status message when sharing"));
+				NavigationItem.TitleView = progress;
+				progress.StartAnimating ();
+			}
+		}
+
+		void StopProgress ()
+		{
+			if (progress != null) {
+				progress.StopAnimating ();
+				NavigationItem.TitleView = null;
+				progress = null;
+			}
 		}
 
 		void ShowError (Exception error)
@@ -116,7 +140,7 @@ namespace Xamarin.Social
 
 		void ResignFirstResponders ()
 		{
-			TextEditor.ResignFirstResponder ();
+			textEditor.ResignFirstResponder ();
 		}
 
 		abstract class Field : UIView

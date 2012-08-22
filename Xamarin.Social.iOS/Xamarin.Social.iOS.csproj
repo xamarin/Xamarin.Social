@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="NSDataStream.cs" />
     <Compile Include="CheckedPickerView.cs" />
+    <Compile Include="ProgressLabel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

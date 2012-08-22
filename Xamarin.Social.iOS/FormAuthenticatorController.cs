@@ -12,7 +12,7 @@ namespace Xamarin.Social
 	{
 		FormAuthenticator authenticator;
 
-		StatusView status;
+		ProgressLabel progress;
 
 		public FormAuthenticatorController (FormAuthenticator authenticator)
 			: base (UITableViewStyle.Grouped)
@@ -34,15 +34,15 @@ namespace Xamarin.Social
 
 		void HandleSubmit ()
 		{
-			if (status == null) {
-				status = new StatusView ();
-				NavigationItem.TitleView = status;
-				status.StartAnimating ();
+			if (progress == null) {
+				progress = new ProgressLabel (NSBundle.MainBundle.LocalizedString ("Verifying", "Verifying status message when adding accounts"));
+				NavigationItem.TitleView = progress;
+				progress.StartAnimating ();
 			}
 
 			authenticator.SignInAsync ().ContinueWith (task => {
 
-				StopStatus ();
+				StopProgress ();
 
 				if (task.IsFaulted) {
 					ShowError (task.Exception);
@@ -69,16 +69,16 @@ namespace Xamarin.Social
 
 		void HandleCancel ()
 		{
-			StopStatus ();
+			StopProgress ();
 			authenticator.OnFailure (AuthenticationResult.Cancelled);
 		}
 
-		void StopStatus ()
+		void StopProgress ()
 		{
-			if (status != null) {
-				status.StopAnimating ();
+			if (progress != null) {
+				progress.StopAnimating ();
 				NavigationItem.TitleView = null;
-				status = null;
+				progress = null;
 			}
 		}
 
@@ -116,47 +116,6 @@ namespace Xamarin.Social
 		{
 			authenticator.Failure -= HandleFailure;
 			Dismiss ();
-		}
-
-		class StatusView : UIView
-		{
-			UIActivityIndicatorView activity;
-
-			public StatusView ()
-				: base (new RectangleF (0, 0, 180, 44))
-			{
-				BackgroundColor = UIColor.Clear;
-
-				activity = new UIActivityIndicatorView (UIActivityIndicatorViewStyle.White) {
-					Frame = new RectangleF (0, 11.5f, 21, 21),
-					HidesWhenStopped = false,
-					Hidden = false,
-				};
-				AddSubview (activity);
-
-				var label = new UILabel () {
-					Text = NSBundle.MainBundle.LocalizedString ("Verifying", "Verifying status message when adding accounts"),
-					TextColor = UIColor.White,
-					Font = UIFont.BoldSystemFontOfSize (20),
-					BackgroundColor = UIColor.Clear,
-					Frame = new RectangleF (25, 0, Frame.Width - 25, 44),
-				};
-				AddSubview (label);
-
-				var f = Frame;
-				f.Width = label.Frame.X + label.StringSize (label.Text, label.Font).Width;
-				Frame = f;
-			}
-
-			public void StartAnimating ()
-			{
-				activity.StartAnimating ();
-			}
-
-			public void StopAnimating ()
-			{
-				activity.StopAnimating ();
-			}
 		}
 
 		class FormDelegate : UITableViewDelegate
