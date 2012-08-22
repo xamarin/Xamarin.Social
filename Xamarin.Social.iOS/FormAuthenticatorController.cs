@@ -19,6 +19,9 @@ namespace Xamarin.Social
 		{
 			this.authenticator = authenticator;
 
+			authenticator.Success += HandleSuccess;
+			authenticator.Failure += HandleFailure;
+
 			Title = authenticator.Service.Title;
 
 			TableView.DataSource = new FormDataSource (this);
@@ -77,6 +80,42 @@ namespace Xamarin.Social
 				NavigationItem.TitleView = null;
 				status = null;
 			}
+		}
+
+		bool wantsDismissal = false;
+		bool appeared = false;
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			if (wantsDismissal) {
+				// Bounce this call so we don't confuse the animation system
+				BeginInvokeOnMainThread (delegate {
+					DismissModalViewControllerAnimated (animated);
+				});
+			}
+			appeared = true;
+		}
+		
+		void Dismiss ()
+		{
+			if (appeared) {
+				DismissModalViewControllerAnimated (true);
+			}
+			else {
+				wantsDismissal = true;
+			}
+		}
+		
+		void HandleSuccess (object sender, EventArgs e)
+		{
+			authenticator.Success -= HandleSuccess;
+			Dismiss ();
+		}
+		
+		void HandleFailure (object sender, EventArgs e)
+		{
+			authenticator.Failure -= HandleFailure;
+			Dismiss ();
 		}
 
 		class StatusView : UIView
