@@ -1,6 +1,7 @@
 using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+using System.Threading.Tasks;
 
 namespace Xamarin.Social
 {
@@ -40,20 +41,29 @@ namespace Xamarin.Social
 			};
 			View = webView;
 
-			//
-			// Delete cookies so we can work with multiple accounts
-			//
-			DeleteCookies ();
 
 			//
-			// Begin displaying the page
+			// Locate our initial URL
 			//
-			LoadInitialUrl ();
+			authenticator.GetInitialUrlAsync ().ContinueWith (t => {
+				if (t.IsFaulted) {
+				}
+				else {
+					//
+					// Delete cookies so we can work with multiple accounts
+					//
+					DeleteCookies (t.Result);
+
+					//
+					// Begin displaying the page
+					//
+					LoadInitialUrl (t.Result);
+				}
+			}, TaskScheduler.FromCurrentSynchronizationContext ());
 		}
 
-		void DeleteCookies ()
+		void DeleteCookies (Uri url)
 		{
-			var url = authenticator.InitialUrl;
 			var cookiesUrl = url.Scheme + "://" + url.Host;
 			var store = NSHttpCookieStorage.SharedStorage;
 			var cookies = store.CookiesForUrl (new NSUrl (cookiesUrl));
@@ -62,9 +72,9 @@ namespace Xamarin.Social
 			}
 		}
 
-		void LoadInitialUrl ()
+		void LoadInitialUrl (Uri url)
 		{
-			var request = new NSUrlRequest (new NSUrl (authenticator.InitialUrl.AbsoluteUri));
+			var request = new NSUrlRequest (new NSUrl (url.AbsoluteUri));
 			NSUrlCache.SharedCache.RemoveCachedResponse (request); // Always try
 			webView.LoadRequest (request);
 		}
@@ -95,14 +105,18 @@ namespace Xamarin.Social
 
 		void HandleSuccess (object sender, EventArgs e)
 		{
-			authenticator.Success -= HandleSuccess;
-			Dismiss ();
+			BeginInvokeOnMainThread (() => {
+				authenticator.Success -= HandleSuccess;
+				Dismiss ();
+			});
 		}
 
 		void HandleFailure (object sender, EventArgs e)
 		{
-			authenticator.Failure -= HandleFailure;
-			Dismiss ();
+			BeginInvokeOnMainThread (() => {
+				authenticator.Failure -= HandleFailure;
+				Dismiss ();
+			});
 		}
 
 		protected class WebViewDelegate : UIWebViewDelegate

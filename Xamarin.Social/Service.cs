@@ -184,7 +184,9 @@ namespace Xamarin.Social
 		/// </param>
 		protected virtual Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
-			throw new NotSupportedException ();
+			return Task.Factory.StartNew (() => {
+				throw new NotSupportedException (Title + " does not support sharing.");
+			});
 		}
 
 		//

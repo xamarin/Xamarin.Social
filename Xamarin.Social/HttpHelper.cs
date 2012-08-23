@@ -43,6 +43,49 @@ namespace Xamarin.Social
 				}
 			}
 		}
+
+		public static Task<WebResponse> GetResponseAsync (this WebRequest request)
+		{
+			return Task
+				.Factory
+				.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null);
+		}
+
+		public static string FormEncode (this IDictionary<string, string> inputs)
+		{
+			var sb = new StringBuilder ();
+			var head = "";
+			foreach (var p in inputs) {
+				sb.Append (head);
+				sb.Append (Uri.EscapeDataString (p.Key));
+				sb.Append ("=");
+				sb.Append (Uri.EscapeDataString (p.Value));
+				head = "&";
+			}
+			return sb.ToString ();
+		}
+
+		static char[] AmpersandChars = new char[] { '&' };
+		static char[] EqualsChars = new char[] { '=' };
+
+		public static Dictionary<string, string> FormDecode (string encodedString)
+		{
+			var inputs = new Dictionary<string, string> ();
+
+			if (encodedString.StartsWith ("?")) {
+				encodedString = encodedString.Substring (1);
+			}
+
+			var parts = encodedString.Split (AmpersandChars);
+			foreach (var p in parts) {
+				var kv = p.Split (EqualsChars);
+				var k = Uri.UnescapeDataString (kv[0]);
+				var v = kv.Length > 1 ? Uri.UnescapeDataString (kv[1]) : "";
+				inputs[k] = v;
+			}
+
+			return inputs;
+		}
 	}
 
 
@@ -70,25 +113,14 @@ namespace Xamarin.Social
 
 		public Task<WebResponse> GetAsync (string url)
 		{
-			var req = CreateHttpWebRequest ("GET", url);
-			return Task.Factory
-				.FromAsync<WebResponse> (req.BeginGetResponse, req.EndGetResponse, null);
+			return CreateHttpWebRequest ("GET", url).GetResponseAsync ();
 		}
 
 		public Task<WebResponse> PostUrlFormEncodedAsync (string url, IDictionary<string, string> inputs)
 		{
 			var req = CreateHttpWebRequest ("POST", url);
 
-			var sb = new StringBuilder ();
-			var head = "";
-			foreach (var p in inputs) {
-				sb.Append (head);
-				sb.Append (Uri.EscapeDataString (p.Key));
-				sb.Append ("=");
-				sb.Append (Uri.EscapeDataString (p.Value));
-				head = "&";
-			}
-			var body = sb.ToString ();
+			var body = inputs.FormEncode ();
 			var bodyData = System.Text.Encoding.UTF8.GetBytes (body);
 			req.ContentLength = bodyData.Length;
 			req.ContentType = "application/x-www-form-urlencoded";
@@ -99,13 +131,9 @@ namespace Xamarin.Social
 					using (ts.Result) {
 						ts.Result.Write (bodyData, 0, bodyData.Length);
 					}
-					return Task.Factory
-						.FromAsync<WebResponse> (req.BeginGetResponse, req.EndGetResponse, null)
-						.Result;
+					return req.GetResponseAsync ().Result;
 				});
 		}
-
-
 	}
 }
 

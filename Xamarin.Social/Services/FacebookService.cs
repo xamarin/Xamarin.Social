@@ -46,16 +46,16 @@ namespace Xamarin.Social.Services
 				this.service = service;
 			}
 
-			public override Uri InitialUrl
+			public override Task<Uri> GetInitialUrlAsync ()
 			{
-				get {
+				return Task.Factory.StartNew (() => {
 					var url = string.Format (
 						"https://m.facebook.com/dialog/oauth/?client_id={0}&redirect_uri={1}&response_type=token&scope={2}",
 						service.AppId,
 						Uri.EscapeDataString ("http://www.facebook.com/connect/login_success.html"),
 						service.Permissions);
 					return new Uri (url);
-				}
+				});
 			}
 
 			public override void OnPageLoaded (Uri url)

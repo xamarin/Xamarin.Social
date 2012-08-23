@@ -28,7 +28,12 @@ namespace Xamarin.Social
 					"Get it at http://www.flickr.com/services/apps/by/me");
 			}
 
-			return new OAuth1Authenticator (Key, Secret);
+			return new OAuth1Authenticator (
+				consumerKey: Key,
+				consumerSecret: Secret,
+				requestTokenUrl: new Uri ("http://www.flickr.com/services/oauth/request_token"),
+				authorizeUrl: new Uri ("http://www.flickr.com/services/oauth/authorize"),
+				accessTokenUrl: new Uri ("http://www.flickr.com/services/oauth/access_token"));
 		}
 	}
 }
