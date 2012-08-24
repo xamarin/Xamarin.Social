@@ -21,7 +21,7 @@ namespace Xamarin.Social.Services
 			throw new NotImplementedException ();
 		}
 
-		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> paramters = null)
+		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> paramters, Account account)
 		{
 			throw new System.NotImplementedException ();
 		}

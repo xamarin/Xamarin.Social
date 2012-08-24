@@ -23,13 +23,14 @@ namespace Xamarin.Social
 
 		public virtual Account Account { get; set; }
 
-		public Request (string method, Uri url, IDictionary<string, string> parameters = null)
+		public Request (string method, Uri url, IDictionary<string, string> parameters, Account account)
 		{
 			Method = method;
 			Url = url;
 			Parameters = parameters == null ? 
 				new Dictionary<string, string> () :
 				new Dictionary<string, string> (parameters);
+			Account = account;
 		}
 
 		class Part
@@ -42,9 +43,19 @@ namespace Xamarin.Social
 
 		List<Part> parts = new List<Part> ();
 
-		public void AddMultipartData (string name, string data, string mimeType = "", string filename = "")
+		public void AddMultipartData (string name, string data)
 		{
-			AddMultipartData (name, new MemoryStream (Encoding.UTF8.GetBytes (data)), mimeType, filename);
+			AddMultipartData (name, new MemoryStream (Encoding.UTF8.GetBytes (data)), "", "");
+		}
+
+		public void AddMultipartData (string name, ImageData image)
+		{
+			AddMultipartData (name, image.Data, image.MimeType, image.Filename);
+		}
+
+		public void AddMultipartData (string name, FileData file)
+		{
+			AddMultipartData (name, file.Data, file.MimeType, file.Filename);
 		}
 
 		public virtual void AddMultipartData (string name, Stream data, string mimeType = "", string filename = "")

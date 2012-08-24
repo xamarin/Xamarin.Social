@@ -92,8 +92,7 @@ namespace Xamarin.Social.Services
 
 		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
-			var req = CreateRequest ("POST", new Uri ("https://pinterest.com/pin/create/"));
-			req.Account = account;
+			var req = CreateRequest ("POST", new Uri ("https://pinterest.com/pin/create/"), account);
 
 			req.AddMultipartData ("board", "451978581292091392");
 			req.AddMultipartData ("details", item.Text);
@@ -102,8 +101,7 @@ namespace Xamarin.Social.Services
 			req.AddMultipartData ("tags", "");
 			req.AddMultipartData ("replies", "");
 			req.AddMultipartData ("buyable", "");
-			var imageData = item.Images.First ();
-			req.AddMultipartData ("img", imageData.Data, imageData.MimeType, imageData.Filename);
+			req.AddMultipartData ("img", item.Images.First ());
 			req.AddMultipartData ("csrfmiddlewaretoken", account.Cookies.GetCookie (new Uri ("https://pinterest.com"), "csrftoken"));
 
 			return req.GetResponseAsync (cancellationToken).ContinueWith (t => {

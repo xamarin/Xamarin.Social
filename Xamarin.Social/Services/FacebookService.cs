@@ -96,10 +96,12 @@ namespace Xamarin.Social.Services
 
 			Task<string> GetUsernameAsync (string accessToken)
 			{
-				var request = service.CreateRequest ("GET", new Uri ("https://graph.facebook.com/me"));
-				request.Account = new Account ("?", new Dictionary<string,string> {
-					{ "access_token", accessToken },
-				});
+				var request = service.CreateRequest (
+					"GET",
+					new Uri ("https://graph.facebook.com/me"),
+					new Account ("?", new Dictionary<string,string> {
+						{ "access_token", accessToken },
+					}));
 				return request.GetResponseAsync ().ContinueWith (reqTask => {
 					using (var s = reqTask.Result.GetResponseStream ()) {
 						var json = new System.IO.StreamReader (s).ReadToEnd ();
@@ -133,8 +135,8 @@ namespace Xamarin.Social.Services
 
 		protected class FacebookRequest : Request
 		{
-			public FacebookRequest (string method, Uri url, IDictionary<string, string> parameters)
-				: base (method, url, parameters)
+			public FacebookRequest (string method, Uri url, IDictionary<string, string> parameters, Account account)
+				: base (method, url, parameters, account)
 			{
 			}
 
@@ -161,9 +163,11 @@ namespace Xamarin.Social.Services
 			}
 		}
 
-		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters = null)
+		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters, Account account)
 		{
-			return new FacebookRequest (method, url, parameters);
+			return new FacebookRequest (method, url, parameters, account) {
+				Account = account,
+			};
 		}
 	}
 }

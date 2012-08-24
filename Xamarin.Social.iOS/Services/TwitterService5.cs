@@ -73,8 +73,8 @@ namespace Xamarin.Social.Services
 		{
 			TWRequest request;
 
-			public TwitterRequest (string method, Uri url, IDictionary<string, string> paramters)
-				: base (method, url, paramters)
+			public TwitterRequest (string method, Uri url, IDictionary<string, string> paramters, Account account)
+				: base (method, url, paramters, account)
 			{
 				var ps = new NSMutableDictionary ();
 				if (paramters != null) {
@@ -99,6 +99,8 @@ namespace Xamarin.Social.Services
 				}
 
 				request = new TWRequest (new NSUrl (url.AbsoluteUri), ps, m);
+
+				Account = account;
 			}
 
 			public override Account Account {
@@ -146,9 +148,9 @@ namespace Xamarin.Social.Services
 			}
 		}
 
-		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> paramters = null)
+		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> paramters, Account account)
 		{
-			return new TwitterRequest (method, url, paramters);
+			return new TwitterRequest (method, url, paramters, account);
 		}
 
 		#endregion

@@ -35,10 +35,10 @@ namespace Xamarin.Social
 			return sig;
 		}
 
-		public static WebRequest CreateRequest (string method, Uri url, IDictionary<string, string> parameters, string consumerKey, string consumerSecret, string tokenSecret)
+		static Dictionary<string, string> MixInOAuthParameters (string method, Uri url, IDictionary<string, string> parameters, string consumerKey, string consumerSecret, string tokenSecret)
 		{
 			var ps = new Dictionary<string, string> (parameters);
-
+			
 			var nonce = new Random ().Next ().ToString ();
 			var timestamp = ((int)(DateTime.UtcNow - new DateTime (1970, 1, 1)).TotalSeconds).ToString ();
 
@@ -47,16 +47,43 @@ namespace Xamarin.Social
 			ps ["oauth_version"] = "1.0";
 			ps ["oauth_consumer_key"] = consumerKey;
 			ps ["oauth_signature_method"] = "HMAC-SHA1";
-
+			
 			var sig = GetSignature (method, url, ps, consumerSecret, tokenSecret);
-
 			ps ["oauth_signature"] = sig;
+
+			return ps;
+		}
+
+		public static WebRequest CreateRequest (string method, Uri url, IDictionary<string, string> parameters, string consumerKey, string consumerSecret, string tokenSecret)
+		{
+			var ps = MixInOAuthParameters (method, url, parameters, consumerKey, consumerSecret, tokenSecret);
 
 			var realUrl = url.AbsoluteUri + "?" + ps.FormEncode ();
 
 			var req = (HttpWebRequest)WebRequest.Create (realUrl);
 			req.Method = method;
 			return req;
+		}
+
+		public static string GetAuthorizationHeader (string method, Uri url, IDictionary<string, string> parameters, string consumerKey, string consumerSecret, string token, string tokenSecret)
+		{
+			var ps = new Dictionary<string, string> (parameters);
+			ps["oauth_token"] = token;
+			ps = MixInOAuthParameters (method, url, ps, consumerKey, consumerSecret, tokenSecret);
+
+			var sb = new StringBuilder ();
+			sb.Append ("OAuth ");
+
+			var head = "";
+			foreach (var p in ps) {
+				if (p.Key.StartsWith ("oauth_")) {
+					sb.Append (head);
+					sb.AppendFormat ("{0}=\"{1}\"", Uri.EscapeDataString (p.Key), Uri.EscapeDataString (p.Value));
+					head = ",";
+				}
+			}
+
+			return sb.ToString ();
 		}
 	}
 }

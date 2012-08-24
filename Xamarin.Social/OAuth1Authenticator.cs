@@ -83,8 +83,12 @@ namespace Xamarin.Social
 			
 			return req.GetResponseAsync ().ContinueWith (respTask => {				
 				var content = respTask.Result.GetResponseText ();
-				var r = HttpEx.FormDecode (content);
-				OnSuccess (r["username"], r);				
+
+				var accountProperties = HttpEx.FormDecode (content);
+				accountProperties["oauth_consumer_key"] = consumerKey;
+				accountProperties["oauth_consumer_secret"] = consumerSecret;
+
+				OnSuccess (accountProperties["username"], accountProperties);				
 			});
 		}
 	}
