@@ -64,14 +64,9 @@ namespace Xamarin.Social
 		#region Authentication
 
 		/// <summary>
-		/// Whether this instance has any saved accounts.
-		/// </summary>
-		public virtual bool HasSavedAccounts { get { return GetSavedAccountsAsync ().Result.Length > 0; } }
-
-		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
-		public virtual Task<Account[]> GetSavedAccountsAsync ()
+		public virtual Task<List<Account>> GetAccountsAsync ()
 		{
 			return Task.Factory.StartNew (delegate {
 				return AccountStore.Create ().FindAccountsForService (ServiceId);
@@ -136,8 +131,8 @@ namespace Xamarin.Social
 		{
 			var viewModel = new ShareViewModel (this, item, ShareItemAsync);
 
-			GetSavedAccountsAsync ().ContinueWith (accountsTask => {
-				if (accountsTask.Result.Length > 0) {
+			GetAccountsAsync ().ContinueWith (accountsTask => {
+				if (accountsTask.Result.Count > 0) {
 					viewModel.Accounts = accountsTask.Result.ToList ();
 					PresentShareUI (uiContext, viewModel);
 				}

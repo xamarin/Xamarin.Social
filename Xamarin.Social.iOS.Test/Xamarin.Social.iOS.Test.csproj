@@ -89,7 +89,6 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Manual_NativeTwitterTest.cs" />
     <Compile Include="Manual_Twitter5Test.cs" />
-    <Compile Include="Auto_Twitter5Test.cs" />
     <Compile Include="Manual_FacebookTest.cs" />
     <Compile Include="Auto_KeyChain.cs" />
     <Compile Include="Manual_PinterestTest.cs" />

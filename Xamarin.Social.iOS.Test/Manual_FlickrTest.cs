@@ -42,23 +42,23 @@ namespace Xamarin.Social.iOS.Test
 		}
 
 		[Test]
-		public void Manual_PeopleGetPhotos ()
+		public void PeopleGetPhotos ()
 		{
 			var service = new FlickrService () {
 				ConsumerKey = "cd876d2995de61c8f57efb44520461e2",
 				ConsumerSecret = "34bf6099d244db6a",
 			};
 
-			service.GetSavedAccountsAsync ().ContinueWith (task => {
-				var req = service.CreateRequest ("POST", new Uri ("http://www.flickr.com/services/rest"), task.Result[0]);
-				req.Parameters["user_id"] = "me";
-				req.Parameters["method"] = "flickr.people.getPhotos";
+			var accounts = service.GetAccountsAsync ().Result;
 
-				req.GetResponseAsync ().ContinueWith (t => {
-					var content = t.Result.GetResponseText ();
-					Console.WriteLine ("GET-PHOTO RESULT = " + content);
-				});
-			});
+			var req = service.CreateRequest ("POST", new Uri ("http://www.flickr.com/services/rest"), accounts[0]);
+			req.Parameters["user_id"] = "me";
+			req.Parameters["method"] = "flickr.people.getPhotos";
+
+			var content = req.GetResponseAsync ().Result.GetResponseText ();
+
+			Console.WriteLine (content);
+			Assert.IsTrue (content.Contains ("success"));
 		}
 	}
 }

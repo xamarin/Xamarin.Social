@@ -9,7 +9,7 @@ using System.Linq;
 namespace Xamarin.Social.iOS.Test
 {
 	[TestFixture]
-	public class Auto_OAuth1
+	public class OAuth1Test
 	{
 		[Test]
 		public void GetBaseString ()

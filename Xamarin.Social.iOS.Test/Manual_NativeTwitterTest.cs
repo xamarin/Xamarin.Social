@@ -7,10 +7,10 @@ using MonoTouch.Accounts;
 namespace Xamarin.Social.iOS.Test
 {
 	[TestFixture]
-	public class Manual_NativeTwitterTest
+	public class NativeTwitterTest
 	{
 		[Test]
-		public void PresentsDialog ()
+		public void Manual_PresentsDialog ()
 		{
 			var c = new MonoTouch.Twitter.TWTweetComposeViewController ();
 
@@ -23,7 +23,7 @@ namespace Xamarin.Social.iOS.Test
 		}
 
 		[Test]
-		public void HasMultipleAccounts ()
+		public void Manual_HasMultipleAccounts ()
 		{
 			var store = new ACAccountStore ();
 			var at = store.FindAccountType (ACAccountType.Twitter);

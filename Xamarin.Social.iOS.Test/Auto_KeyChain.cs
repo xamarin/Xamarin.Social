@@ -9,7 +9,7 @@ using System.Linq;
 namespace Xamarin.Social.iOS.Test
 {
 	[TestFixture]
-	public class Auto_KeyChain
+	public class KeyChainTest
 	{
 		Random rand = new Random ();
 

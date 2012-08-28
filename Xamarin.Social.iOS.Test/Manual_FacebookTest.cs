@@ -7,12 +7,12 @@ using System.Collections.Generic;
 namespace Xamarin.Social.iOS.Test
 {
 	[TestFixture]
-	public class Manual_FacebookTest
+	public class FacebookTest
 	{
 		const string TestClientId = "110632278980691";
 
 		[Test]
-		public void AddAccount ()
+		public void Manual_AddAccount ()
 		{
 			Service.Facebook.AppId = TestClientId;
 			Service.Facebook.Permissions = "publish_actions";
@@ -22,15 +22,15 @@ namespace Xamarin.Social.iOS.Test
 				}
 				else {
 					Console.WriteLine ("RESULT " + task.Result);
-					Service.Facebook.GetSavedAccountsAsync ().ContinueWith (accountsTask => {
-						Console.WriteLine ("ACCOUNTS = " + accountsTask.Result.Length);
+					Service.Facebook.GetAccountsAsync ().ContinueWith (accountsTask => {
+						Console.WriteLine ("ACCOUNTS = " + accountsTask.Result.Count);
 					});
 				}
 			});
 		}
 
 		[Test]
-		public void BadClientId ()
+		public void Manual_BadClientId ()
 		{
 			Service.Facebook.AppId = "537639364986381";
 			Service.Facebook.Permissions = "publish_actions";

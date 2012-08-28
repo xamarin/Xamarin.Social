@@ -8,10 +8,10 @@ using Xamarin.Social.Services;
 namespace Xamarin.Social.iOS.Test
 {
 	[TestFixture]
-	public class Manual_PinterestTest
+	public class PinterestTest
 	{
 		[Test]
-		public void AddAccount ()
+		public void Manual_AddAccount ()
 		{
 			var pinterest = new PinterestService ();
 
@@ -19,7 +19,7 @@ namespace Xamarin.Social.iOS.Test
 		}
 
 		[Test]
-		public void ShareImageTextLink ()
+		public void Manual_ShareImageTextLink ()
 		{
 			var pinterest = new PinterestService ();
 

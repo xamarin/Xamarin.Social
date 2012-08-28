@@ -8,7 +8,7 @@ namespace Xamarin.Social
 {
 	class KeyChainAccountStore : AccountStore
 	{
-		public override Account[] FindAccountsForService (string serviceId)
+		public override List<Account> FindAccountsForService (string serviceId)
 		{
 			var query = new SecRecord (SecKind.GenericPassword);
 			query.Service = serviceId;
@@ -17,8 +17,8 @@ namespace Xamarin.Social
 			var records = SecKeyChain.QueryAsRecord (query, 1000, out result);
 
 			return records != null ?
-				records.Select (GetAccountFromRecord).ToArray () :
-				new Account[0];
+				records.Select (GetAccountFromRecord).ToList () :
+				new List<Account> ();
 		}
 
 		Account GetAccountFromRecord (SecRecord r)

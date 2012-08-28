@@ -158,15 +158,9 @@ namespace Xamarin.Social.Services
 
 		#region Authentication
 
-		public override bool HasSavedAccounts {
-			get {
-				return TWTweetComposeViewController.CanSendTweet;
-			}
-		}
-
 		ACAccountStore accountStore; // Save this reference since ACAccounts are only good so long as it's alive
 
-		public override Task<Account[]> GetSavedAccountsAsync ()
+		public override Task<List<Account>> GetAccountsAsync ()
 		{
 			if (accountStore == null) {
 				accountStore = new ACAccountStore ();
@@ -190,7 +184,7 @@ namespace Xamarin.Social.Services
 
 			return Task.Factory.StartNew (delegate {
 				completedEvent.WaitOne ();
-				return r.ToArray ();
+				return r;
 			}, TaskCreationOptions.LongRunning);
 		}
 

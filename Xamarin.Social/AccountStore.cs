@@ -14,7 +14,7 @@ namespace Xamarin.Social
 #endif
 		}
 
-		public abstract Account[] FindAccountsForService (string serviceId);
+		public abstract List<Account> FindAccountsForService (string serviceId);
 
 		public abstract void Save (Account account, string serviceId);
 	}
