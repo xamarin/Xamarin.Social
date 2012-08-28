@@ -87,13 +87,13 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Manual_NativeTwitterTest.cs" />
-    <Compile Include="Manual_Twitter5Test.cs" />
-    <Compile Include="Manual_FacebookTest.cs" />
-    <Compile Include="Auto_KeyChain.cs" />
-    <Compile Include="Manual_PinterestTest.cs" />
-    <Compile Include="Manual_FlickrTest.cs" />
     <Compile Include="Auto_OAuth.cs" />
+    <Compile Include="KeyChainTest.cs" />
+    <Compile Include="FacebookTest.cs" />
+    <Compile Include="FlickrTest.cs" />
+    <Compile Include="NativeTwitterTest.cs" />
+    <Compile Include="PinterestTest.cs" />
+    <Compile Include="Twitter5Test.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
