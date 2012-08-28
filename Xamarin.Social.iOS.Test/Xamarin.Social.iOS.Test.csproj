@@ -94,6 +94,7 @@
     <Compile Include="NativeTwitterTest.cs" />
     <Compile Include="PinterestTest.cs" />
     <Compile Include="Twitter5Test.cs" />
+    <Compile Include="TwitterTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

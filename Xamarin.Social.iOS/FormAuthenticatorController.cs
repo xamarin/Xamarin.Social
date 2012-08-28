@@ -19,8 +19,8 @@ namespace Xamarin.Social
 		{
 			this.authenticator = authenticator;
 
-			authenticator.Success += HandleSuccess;
-			authenticator.Failure += HandleFailure;
+			authenticator.Succeeded += HandleSucceeded;
+			authenticator.Cancelled += HandleCancelled;
 
 			Title = authenticator.Service.Title;
 
@@ -29,7 +29,10 @@ namespace Xamarin.Social
 
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (
 				UIBarButtonSystemItem.Cancel,
-				delegate { HandleCancel (); });
+				delegate { 
+					StopProgress ();
+					authenticator.OnCancelled ();
+				});
 		}
 
 		void HandleSubmit ()
@@ -45,32 +48,13 @@ namespace Xamarin.Social
 				StopProgress ();
 
 				if (task.IsFaulted) {
-					ShowError (task.Exception);
+					this.ShowError ("Error Signing In", task.Exception);
 				}
 				else {
-					authenticator.OnSuccess (task.Result);
+					authenticator.OnSucceeded (task.Result);
 				}
 
 			}, TaskScheduler.FromCurrentSynchronizationContext ());
-		}
-
-		void ShowError (Exception error)
-		{
-			var mainBundle = NSBundle.MainBundle;
-			
-			var alert = new UIAlertView (
-				mainBundle.LocalizedString ("Error Signing In", "Error message title when failed to sign in"),
-				mainBundle.LocalizedString (error.GetUserMessage (), "Error"),
-				null,
-				mainBundle.LocalizedString ("OK", "Dismiss button title when failed to sign in"));
-
-			alert.Show ();
-		}
-
-		void HandleCancel ()
-		{
-			StopProgress ();
-			authenticator.OnFailure (AuthenticationResult.Cancelled);
 		}
 
 		void StopProgress ()
@@ -106,15 +90,15 @@ namespace Xamarin.Social
 			}
 		}
 		
-		void HandleSuccess (object sender, EventArgs e)
+		void HandleSucceeded (object sender, EventArgs e)
 		{
-			authenticator.Success -= HandleSuccess;
+			authenticator.Succeeded -= HandleSucceeded;
 			Dismiss ();
 		}
 		
-		void HandleFailure (object sender, EventArgs e)
+		void HandleCancelled (object sender, EventArgs e)
 		{
-			authenticator.Failure -= HandleFailure;
+			authenticator.Cancelled -= HandleCancelled;
 			Dismiss ();
 		}
 

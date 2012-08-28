@@ -19,8 +19,9 @@ namespace Xamarin.Social
 		{
 			this.authenticator = authenticator;
 
-			authenticator.Success += HandleSuccess;
-			authenticator.Failure += HandleFailure;
+			authenticator.Succeeded += HandleSucceeded;
+			authenticator.Failed += HandleFailed;
+			authenticator.Cancelled += HandleCancelled;
 
 			//
 			// Create the UI
@@ -30,8 +31,8 @@ namespace Xamarin.Social
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (
 				UIBarButtonSystemItem.Cancel,
 				delegate {
-				authenticator.OnFailure (AuthenticationResult.Cancelled);
-			});
+					authenticator.OnCancelled ();
+				});
 
 			activity = new UIActivityIndicatorView (UIActivityIndicatorViewStyle.White);
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem (activity);
@@ -41,10 +42,14 @@ namespace Xamarin.Social
 			};
 			View = webView;
 
-
 			//
 			// Locate our initial URL
 			//
+			BeginLoadingInitialUrl ();
+		}
+
+		void BeginLoadingInitialUrl ()
+		{
 			authenticator.GetInitialUrlAsync ().ContinueWith (t => {
 				if (t.IsFaulted) {
 				}
@@ -53,7 +58,7 @@ namespace Xamarin.Social
 					// Delete cookies so we can work with multiple accounts
 					//
 					DeleteCookies (t.Result);
-
+					
 					//
 					// Begin displaying the page
 					//
@@ -71,12 +76,14 @@ namespace Xamarin.Social
 				store.DeleteCookie (c);
 			}
 		}
-
+		
 		void LoadInitialUrl (Uri url)
 		{
-			var request = new NSUrlRequest (new NSUrl (url.AbsoluteUri));
-			NSUrlCache.SharedCache.RemoveCachedResponse (request); // Always try
-			webView.LoadRequest (request);
+			if (url != null) {
+				var request = new NSUrlRequest (new NSUrl (url.AbsoluteUri));
+				NSUrlCache.SharedCache.RemoveCachedResponse (request); // Always try
+				webView.LoadRequest (request);
+			}
 		}
 
 		bool wantsDismissal = false;
@@ -103,18 +110,30 @@ namespace Xamarin.Social
 			}
 		}
 
-		void HandleSuccess (object sender, EventArgs e)
+		void HandleSucceeded (object sender, EventArgs e)
 		{
 			BeginInvokeOnMainThread (() => {
-				authenticator.Success -= HandleSuccess;
+				authenticator.Succeeded -= HandleSucceeded;
 				Dismiss ();
 			});
 		}
 
-		void HandleFailure (object sender, EventArgs e)
+		void HandleFailed (object sender, AuthenticationFailedEventArgs e)
 		{
 			BeginInvokeOnMainThread (() => {
-				authenticator.Failure -= HandleFailure;
+				if (e.Exception != null) {
+					this.ShowError ("Authentication Error", e.Exception, BeginLoadingInitialUrl);
+				}
+				else {
+					this.ShowError ("Authentication Error", e.Message, BeginLoadingInitialUrl);
+				}
+			});
+		}
+
+		void HandleCancelled (object sender, EventArgs e)
+		{
+			BeginInvokeOnMainThread (() => {
+				authenticator.Cancelled -= HandleCancelled;
 				Dismiss ();
 			});
 		}

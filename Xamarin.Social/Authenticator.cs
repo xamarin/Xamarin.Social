@@ -19,7 +19,8 @@ namespace Xamarin.Social
 		public Service Service { get; private set; }
 
 		ManualResetEvent completedEvent;
-		Exception error;
+		Exception exception;
+		string failureMessage;
 		Account account;
 
 		/// <summary>
@@ -40,8 +41,11 @@ namespace Xamarin.Social
 
 				completedEvent.WaitOne ();
 
-				if (error != null) {
-					throw new AggregateException (error);
+				if (exception != null) {
+					throw new AggregateException (exception);
+				}
+				else if (!string.IsNullOrEmpty (failureMessage)) {
+					throw new ApplicationException (failureMessage);
 				}
 				else {
 					return account;
@@ -58,7 +62,7 @@ namespace Xamarin.Social
 		/// <param name='account'>
 		/// The authenticated account.
 		/// </param>
-		public void OnSuccess (Account account)
+		public void OnSucceeded (Account account)
 		{
 			this.account = account;
 
@@ -70,7 +74,7 @@ namespace Xamarin.Social
 			//
 			// Notify the work
 			//
-			var ev = Success;
+			var ev = Succeeded;
 			if (ev != null) {
 				ev (this, EventArgs.Empty);
 			}
@@ -88,50 +92,82 @@ namespace Xamarin.Social
 		/// Additional data, such as access tokens, that need to be stored with the account. This
 		/// information is secured.
 		/// </param>
-		public void OnSuccess (string username, IDictionary<string, string> accountProperties)
+		public void OnSucceeded (string username, IDictionary<string, string> accountProperties)
 		{
-			OnSuccess (new Account (username, accountProperties));
+			OnSucceeded (new Account (username, accountProperties));
 		}
 
-		public event EventHandler Success;
+		public event EventHandler Succeeded;
 
 		/// <summary>
-		/// Implementations must call this function when they have failed to authenticate or the
-		/// user has cancelled the operation.
+		/// Implementations must call this function when they have failed to authenticate.
 		/// </summary>
-		/// <param name='result'>
+		/// <param name='message'>
 		/// The reason that this authentication has failed.
 		/// </param>
-		public void OnFailure (AuthenticationResult result)
+		public void OnFailed (string message)
 		{
-			var ev = Failure;
+			this.failureMessage = message;
+
+			var ev = Failed;
 			if (ev != null) {
-				ev (this, EventArgs.Empty);
+				ev (this, new AuthenticationFailedEventArgs (message));
 			}
 
 			completedEvent.Set ();
 		}
 
 		/// <summary>
-		/// Implementations must call this function when they have failed to authenticate or the
-		/// user has cancelled the operation.
+		/// Implementations must call this function when they have failed to authenticate.
 		/// </summary>
-		/// <param name='result'>
+		/// <param name='exception'>
 		/// The reason that this authentication has failed.
 		/// </param>
-		public void OnFailure (Exception error)
+		public void OnFailed (Exception exception)
 		{
-			this.error = error;
+			this.exception = exception;
 
-			var ev = Failure;
+			var ev = Failed;
 			if (ev != null) {
-				ev (this, EventArgs.Empty);
+				ev (this, new AuthenticationFailedEventArgs (exception));
 			}
 
 			completedEvent.Set ();
 		}
 
-		public event EventHandler Failure;
+		public event EventHandler<AuthenticationFailedEventArgs> Failed;
+
+		/// <summary>
+		/// Implementations must call this function when they have cancelled the operation.
+		/// </summary>
+		public void OnCancelled ()
+		{
+			var ev = Cancelled;
+			if (ev != null) {
+				ev (this, EventArgs.Empty);
+			}
+			
+			completedEvent.Set ();
+		}
+		
+		public event EventHandler Cancelled;
+	}
+
+	public class AuthenticationFailedEventArgs : EventArgs
+	{
+		public string Message { get; private set; }
+		public Exception Exception { get; private set; }
+
+		public AuthenticationFailedEventArgs (string message)
+		{
+			Message = message;
+		}
+
+		public AuthenticationFailedEventArgs (Exception exception)
+		{
+			Message = exception.GetUserMessage ();
+			Exception = exception;
+		}
 	}
 }
 

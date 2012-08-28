@@ -69,6 +69,28 @@ namespace Xamarin.Social
 			}
 		}
 
+		static readonly string[] UsernameKeys = new string[] {
+			"username",
+			"user_name",
+			"screenname",
+			"screen_name",
+			"email",
+			"email_address",
+			"userid",
+			"user_id",
+		};
+
+		protected virtual string GetUsername (IDictionary<string, string> accountProperties)
+		{
+			foreach (var k in UsernameKeys) {
+				if (accountProperties.ContainsKey (k)) {
+					return accountProperties[k];
+				}
+			}
+
+			return null;
+		}
+
 		Task GetAccessTokenAsync ()
 		{
 			var req = OAuth1.CreateRequest (
@@ -89,7 +111,14 @@ namespace Xamarin.Social
 				accountProperties["oauth_consumer_key"] = consumerKey;
 				accountProperties["oauth_consumer_secret"] = consumerSecret;
 
-				OnSuccess (accountProperties["username"], accountProperties);				
+				var username = GetUsername (accountProperties);
+
+				if (string.IsNullOrEmpty (username)) {
+					OnFailed ("No username provided by the server.");
+				}
+				else {
+					OnSucceeded (username, accountProperties);
+				}
 			});
 		}
 	}

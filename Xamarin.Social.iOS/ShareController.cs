@@ -90,7 +90,7 @@ namespace Xamarin.Social
 						StopProgress ();
 
 						if (shareTask.IsFaulted) {
-							ShowError (shareTask.Exception);
+							this.ShowError ("Share Error", shareTask.Exception);
 						}
 						else {
 							ParentViewController.DismissModalViewControllerAnimated (true);
@@ -118,19 +118,6 @@ namespace Xamarin.Social
 				NavigationItem.TitleView = null;
 				progress = null;
 			}
-		}
-
-		void ShowError (Exception error)
-		{
-			var mainBundle = NSBundle.MainBundle;
-			
-			var alert = new UIAlertView (
-				mainBundle.LocalizedString ("Share Error", "Error message title when failed to share"),
-				mainBundle.LocalizedString (error.GetUserMessage (), "Error"),
-				null,
-				mainBundle.LocalizedString ("OK", "Dismiss button title when failed to share"));
-			
-			alert.Show ();
 		}
 
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)

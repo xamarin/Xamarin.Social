@@ -125,6 +125,7 @@
     <Compile Include="..\Xamarin.Social\OAuth1Service.cs">
       <Link>OAuth1Service.cs</Link>
     </Compile>
+    <Compile Include="UIViewControllerEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

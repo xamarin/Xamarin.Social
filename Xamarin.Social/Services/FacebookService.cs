@@ -64,7 +64,7 @@ namespace Xamarin.Social.Services
 					//
 					// We end up here only if there was an error
 					//
-					OnFailure (AuthenticationResult.MissingRequiredProperty);
+					OnFailed ("Server responded with an unrecognized URL.");
 				}
 				else if (url.LocalPath == "/connect/login_success.html") {
 					//
@@ -82,10 +82,10 @@ namespace Xamarin.Social.Services
 						//
 						GetUsernameAsync (accessToken).ContinueWith (task => {
 							if (task.IsFaulted) {
-								OnFailure (task.Exception);
+								OnFailed (task.Exception);
 							}
 							else {
-								OnSuccess (task.Result, new Dictionary<string,string> {
+								OnSucceeded (task.Result, new Dictionary<string,string> {
 									{ "access_token", accessToken },
 								});
 							}
