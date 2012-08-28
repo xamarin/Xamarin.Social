@@ -64,6 +64,8 @@
     <Compile Include="Services\FlickrService.cs" />
     <Compile Include="OAuth1.cs" />
     <Compile Include="OAuth1Authenticator.cs" />
+    <Compile Include="OAuth1Request.cs" />
+    <Compile Include="OAuth1Service.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

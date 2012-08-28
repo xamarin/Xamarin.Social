@@ -13,20 +13,21 @@ namespace Xamarin.Social
 		Uri requestTokenUrl;
 		Uri authorizeUrl;
 		Uri accessTokenUrl;
-		Uri callbackUrl = new Uri ("http://www.facebook.com/connect/login_success.html");
+		Uri callbackUrl;
 
 		string token;
 		string tokenSecret;
 
 		string verifier;
 
-		public OAuth1Authenticator (string consumerKey, string consumerSecret, Uri requestTokenUrl, Uri authorizeUrl, Uri accessTokenUrl)
+		public OAuth1Authenticator (string consumerKey, string consumerSecret, Uri requestTokenUrl, Uri authorizeUrl, Uri accessTokenUrl, Uri callbackUrl)
 		{
 			this.consumerKey = consumerKey;
 			this.consumerSecret = consumerSecret;
 			this.requestTokenUrl = requestTokenUrl;
 			this.authorizeUrl = authorizeUrl;
 			this.accessTokenUrl = accessTokenUrl;
+			this.callbackUrl = callbackUrl;
 		}
 
 		public override Task<Uri> GetInitialUrlAsync () {

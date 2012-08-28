@@ -204,9 +204,18 @@ namespace Xamarin.Social
 		/// Creates a base request to access the service. This is a low-level entrypoint for those
 		/// who need to access resources that are not covered by this class.
 		/// </summary>
+		public Request CreateRequest (string method, Uri url)
+		{
+			return CreateRequest (method, url, null, null);
+		}
+
+		/// <summary>
+		/// Creates a base request to access the service. This is a low-level entrypoint for those
+		/// who need to access resources that are not covered by this class.
+		/// </summary>
 		public Request CreateRequest (string method, Uri url, Account account)
 		{
-			return CreateRequest (method, url, new Dictionary<string, string> (), account);
+			return CreateRequest (method, url, null, account);
 		}
 
 		/// <summary>

@@ -33,19 +33,26 @@ namespace Xamarin.Social
 			Account = account;
 		}
 
-		class Part
+		protected class Part
 		{
+			public string TextData;
 			public Stream Data;
 			public string Name;
 			public string MimeType;
 			public string Filename;
 		}
 
-		List<Part> parts = new List<Part> ();
+		protected readonly List<Part> Multiparts = new List<Part> ();
 
 		public void AddMultipartData (string name, string data)
 		{
-			AddMultipartData (name, new MemoryStream (Encoding.UTF8.GetBytes (data)), "", "");
+			Multiparts.Add (new Part {
+				TextData = data,
+				Data = new MemoryStream (Encoding.UTF8.GetBytes (data)),
+				Name = name,
+				MimeType = "",
+				Filename = "",
+			});
 		}
 
 		public void AddMultipartData (string name, ImageData image)
@@ -60,7 +67,7 @@ namespace Xamarin.Social
 
 		public virtual void AddMultipartData (string name, Stream data, string mimeType = "", string filename = "")
 		{
-			parts.Add (new Part {
+			Multiparts.Add (new Part {
 				Data = data,
 				Name = name,
 				MimeType = mimeType,
@@ -93,7 +100,7 @@ namespace Xamarin.Social
 		{
 			var request = GetPreparedWebRequest ();
 
-			if (parts.Count > 0) {
+			if (Multiparts.Count > 0) {
 				return Task.Factory
 						.FromAsync<Stream> (request.BeginGetRequestStream, request.EndGetRequestStream, null)
 						.ContinueWith (reqStreamtask => {
@@ -123,7 +130,7 @@ namespace Xamarin.Social
 		{
 			var boundaryBytes = Encoding.ASCII.GetBytes ("--" + boundary);
 
-			foreach (var p in parts) {
+			foreach (var p in Multiparts) {
 				s.Write (boundaryBytes, 0, boundaryBytes.Length);
 				s.Write (CrLf, 0, CrLf.Length);
 				

@@ -119,6 +119,12 @@
     <Compile Include="..\Xamarin.Social\OAuth1Authenticator.cs">
       <Link>OAuth1Authenticator.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\OAuth1Request.cs">
+      <Link>OAuth1Request.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\OAuth1Service.cs">
+      <Link>OAuth1Service.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

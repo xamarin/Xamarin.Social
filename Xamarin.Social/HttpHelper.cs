@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using System.Globalization;
 
 namespace Xamarin.Social
 {
@@ -86,8 +87,46 @@ namespace Xamarin.Social
 
 			return inputs;
 		}
-	}
 
+		public static string HtmlEncode (string text)
+		{
+			if (string.IsNullOrEmpty (text)) {
+				return "";
+			}
+
+			var sb = new StringBuilder(text.Length);
+
+			int len = text.Length;
+			for (int i = 0; i < len; i++) {
+				switch (text[i]) {
+				case '<':
+					sb.Append("&lt;");
+					break;
+				case '>':
+					sb.Append("&gt;");
+					break;
+				case '"':
+					sb.Append("&quot;");
+					break;
+				case '&':
+					sb.Append("&amp;");
+					break;
+				default:
+					if (text[i] > 159) {
+						sb.Append ("&#");
+						sb.Append (((int)text[i]).ToString (CultureInfo.InvariantCulture));
+						sb.Append (";");
+					}
+					else {
+						sb.Append(text[i]);
+					}
+					break;
+				}
+			}
+
+			return sb.ToString();
+		}
+	}
 
 	public class HttpHelper
 	{
