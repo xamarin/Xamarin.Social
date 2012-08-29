@@ -66,6 +66,7 @@
     <Compile Include="OAuth1Authenticator.cs" />
     <Compile Include="OAuth1Request.cs" />
     <Compile Include="OAuth1Service.cs" />
+    <Compile Include="SocialException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

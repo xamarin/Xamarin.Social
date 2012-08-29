@@ -126,6 +126,9 @@
       <Link>OAuth1Service.cs</Link>
     </Compile>
     <Compile Include="UIViewControllerEx.cs" />
+    <Compile Include="..\Xamarin.Social\SocialException.cs">
+      <Link>SocialException.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
+using System.Text;
 
 namespace Xamarin.Social.Services
 {
@@ -20,6 +22,43 @@ namespace Xamarin.Social.Services
 			RequestTokenUrl = new Uri ("https://api.twitter.com/oauth/request_token");
 			AuthorizeUrl = new Uri ("https://api.twitter.com/oauth/authorize");
 			AccessTokenUrl = new Uri ("https://api.twitter.com/oauth/access_token");
+		}
+
+		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		{
+			//
+			// Combine the links into the tweet
+			//
+			var sb = new StringBuilder ();
+			sb.Append (item.Text);
+			foreach (var l in item.Links) {
+				sb.Append (" ");
+				sb.Append (l.AbsoluteUri);
+			}
+			var status = sb.ToString ();
+
+			//
+			// Create the request
+			//
+			Request req;
+			if (item.Images.Count == 0) {
+				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1/statuses/update.xml"), account);
+				req.Parameters["status"] = status;
+			}
+			else {
+				throw new NotImplementedException ("Images not implemented");
+			}
+
+			//
+			// Send it
+			//
+			return req.GetResponseAsync (cancellationToken).ContinueWith (reqTask => {
+				var content = reqTask.Result.GetResponseText ();
+				Console.WriteLine (content);
+				if (!content.Contains ("<status")) {
+					throw new SocialException ("Twitter did not return the expected response.");
+				}
+			});
 		}
 	}
 }

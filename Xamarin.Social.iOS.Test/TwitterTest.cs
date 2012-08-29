@@ -25,6 +25,21 @@ namespace Xamarin.Social.iOS.Test
 		}
 
 		[Test]
+		public void Manual_ShareText ()
+		{
+			var service = CreateService ();
+			
+			var item = new Item {
+				Text = "This is just a test. Don't mind me...",
+			};
+
+			service.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
+				Console.WriteLine ("SHARE RESULT = " + t.Result);
+				item.Dispose ();
+			});
+		}
+
+		[Test]
 		public void Manual_ShareTextLinks ()
 		{
 			var service = CreateService ();

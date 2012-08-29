@@ -101,12 +101,13 @@ namespace Xamarin.Social
 			var request = GetPreparedWebRequest ();
 
 			if (Multiparts.Count > 0) {
+				var boundary = "---------------------------" + new Random ().Next ();
+				request.ContentType = "multipart/form-data; boundary=" + boundary;
+
 				return Task.Factory
 						.FromAsync<Stream> (request.BeginGetRequestStream, request.EndGetRequestStream, null)
 						.ContinueWith (reqStreamtask => {
 						
-							var boundary = "---------------------------" + new Random ().Next ();
-							request.ContentType = "multipart/form-data; boundary=" + boundary;
 							using (reqStreamtask.Result) {
 								WriteMultipartFormData (boundary, reqStreamtask.Result);
 							}
@@ -118,12 +119,34 @@ namespace Xamarin.Social
 									}).Result;
 						});
 			}
+			else if (Method == "POST" && Parameters.Count > 0) {
+				var body = Parameters.FormEncode ();
+				var bodyData = System.Text.Encoding.UTF8.GetBytes (body);
+				request.ContentLength = bodyData.Length;
+				request.ContentType = "application/x-www-form-urlencoded";
+				
+				return Task.Factory
+						.FromAsync<Stream> (request.BeginGetRequestStream, request.EndGetRequestStream, null)
+						.ContinueWith (reqStreamTask => {
 
-			return Task.Factory
-					.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
-					.ContinueWith (resTask => {
-						return new Response ((HttpWebResponse)resTask.Result);
-					});
+							using (reqStreamTask.Result) {
+								reqStreamTask.Result.Write (bodyData, 0, bodyData.Length);
+							}
+							
+							return Task.Factory
+								.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
+									.ContinueWith (resTask => {
+										return new Response ((HttpWebResponse)resTask.Result);
+									}).Result;
+						});
+			}
+			else {
+				return Task.Factory
+						.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
+						.ContinueWith (resTask => {
+							return new Response ((HttpWebResponse)resTask.Result);
+						});
+			}
 		}
 
 		void WriteMultipartFormData (string boundary, Stream s)
@@ -191,14 +214,18 @@ namespace Xamarin.Social
 		protected virtual Uri GetPreparedUrl ()
 		{
 			var url = Url.AbsoluteUri;
-			var head = Url.AbsoluteUri.Contains ('?') ? "&" : "?";
-			foreach (var p in Parameters) {
-				url += head;
-				url += Uri.EscapeDataString (p.Key);
-				url += "=";
-				url += Uri.EscapeDataString (p.Value);
-				head = "&";
+
+			if (Method == "GET" && Parameters.Count > 0) {
+				var head = Url.AbsoluteUri.Contains ('?') ? "&" : "?";
+				foreach (var p in Parameters) {
+					url += head;
+					url += Uri.EscapeDataString (p.Key);
+					url += "=";
+					url += Uri.EscapeDataString (p.Value);
+					head = "&";
+				}
 			}
+
 			return new Uri (url);
 		}
 
