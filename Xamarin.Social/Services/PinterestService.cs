@@ -93,7 +93,7 @@ namespace Xamarin.Social.Services
 			return new PinterestAuthenticator ();
 		}
 
-		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		public override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			var req = CreateRequest ("POST", new Uri ("https://pinterest.com/pin/create/"), account);
 

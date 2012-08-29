@@ -61,7 +61,7 @@ namespace Xamarin.Social.Services
 			return r;
 		}
 
-		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		public override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			Request req;
 

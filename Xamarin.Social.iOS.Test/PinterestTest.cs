@@ -21,7 +21,7 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void Manual_ShareImageTextLink ()
 		{
-			var pinterest = new PinterestService ();
+			var service = new PinterestService ();
 
 			var item = new Item {
 				Text = "Hello, World",
@@ -29,10 +29,12 @@ namespace Xamarin.Social.iOS.Test
 			item.Images.Add ("Images/xamarin-logo.png");
 			item.Links.Add (new Uri ("http://xamarin.com"));
 
-			pinterest.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
-				Console.WriteLine ("SHARE RESULT = " + t.Result);
+			var vc = service.GetShareUI (item, result => {
+				Console.WriteLine ("SHARE RESULT = " + result);
 				item.Dispose ();
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 	}
 }

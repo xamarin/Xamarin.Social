@@ -37,10 +37,12 @@ namespace Xamarin.Social.iOS.Test
 			item.Links.Add (new Uri ("http://xamarin.com"));
 			item.Links.Add (new Uri ("https://twitter.com/xamarinhq"));
 			
-			service.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
-				Console.WriteLine ("SHARE RESULT = " + t.Result);
+			var vc = service.GetShareUI (item, result => {
+				Console.WriteLine ("SHARE RESULT = " + result);
 				item.Dispose ();
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 
 		[Test]

@@ -19,28 +19,16 @@ namespace Xamarin.Social.Services
 
 		#region Share
 
-		public override Task<ShareResult> ShareAsync (UIViewController rootVC, Item item)
+		public override UIViewController GetShareUI (Item item, Action<ShareResult> completionHandler)
 		{
 			//
-			// Validate
+			// Get the native UI
 			//
-			if (item.Files.Count > 0) {
-				throw new NotSupportedException ("Twitter does not support uploading arbitrary files.");
-			}
-
-			//
-			// Present the native UI
-			//
-			var completedEvent = new ManualResetEvent (false);
-			var shareResult = ShareResult.Done;
-
 			var vc = new TWTweetComposeViewController ();
+
 			vc.SetCompletionHandler (result => {
-
-				shareResult = result == TWTweetComposeViewControllerResult.Done ? ShareResult.Done : ShareResult.Cancelled;
-				vc.DismissModalViewControllerAnimated (true);
-				completedEvent.Set ();
-
+				var shareResult = result == TWTweetComposeViewControllerResult.Done ? ShareResult.Done : ShareResult.Cancelled;
+				completionHandler (shareResult);
 			});
 
 			vc.SetInitialText (item.Text);
@@ -53,15 +41,12 @@ namespace Xamarin.Social.Services
 				vc.AddUrl (new NSUrl (link.AbsoluteUri));
 			}
 
-			rootVC.PresentModalViewController (vc, true);
+			return vc;
+		}
 
-			//
-			// Wait for it to finish
-			//
-			return Task.Factory.StartNew (delegate {
-				completedEvent.WaitOne ();
-				return shareResult;
-			}, TaskCreationOptions.LongRunning);
+		public override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		{
+			throw new NotSupportedException ("Sharing items without a GUI is not supported. Please use GetShareUI instead.");
 		}
 
 		#endregion
@@ -105,17 +90,19 @@ namespace Xamarin.Social.Services
 
 			public override Account Account {
 				get {
-					return new ACAccountWrapper (request.Account);
+					return request != null ? new ACAccountWrapper (request.Account) : null;
 				}
 				set {
-					if (value == null) {
-						request.Account = null;
-					}
-					else if (value is ACAccountWrapper) {
-						request.Account = ((ACAccountWrapper)value).ACAccount;
-					}
-					else {
-						throw new NotSupportedException ("Account type '" + value.GetType().FullName + "'not supported");
+					if (request != null) {
+						if (value == null) {
+							// Don't do anything, not supported
+						}
+						else if (value is ACAccountWrapper) {
+							request.Account = ((ACAccountWrapper)value).ACAccount;
+						}
+						else {
+							throw new NotSupportedException ("Account type '" + value.GetType().FullName + "'not supported");
+						}
 					}
 				}
 			}

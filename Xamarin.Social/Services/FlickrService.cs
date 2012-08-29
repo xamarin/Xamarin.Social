@@ -31,7 +31,7 @@ namespace Xamarin.Social
 			return new OAuth1Request (method, url, parameters, account, true);
 		}
 
-		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		public override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			var req = CreateRequest (
 				"POST",

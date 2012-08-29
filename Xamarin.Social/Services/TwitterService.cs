@@ -33,7 +33,7 @@ namespace Xamarin.Social.Services
 			return item.Text.Length + 22*(item.Links.Count + item.Images.Count + item.Files.Count);
 		}
 
-		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		public override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			//
 			// Combine the links into the tweet

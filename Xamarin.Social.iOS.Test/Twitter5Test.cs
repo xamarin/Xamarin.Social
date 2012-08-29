@@ -3,12 +3,19 @@ using NUnit.Framework;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
 using System.IO;
+using Xamarin.Social.Services;
+using System.Net;
 
 namespace Xamarin.Social.iOS.Test
 {
 	[TestFixture]
 	public class Twitter5Test
 	{
+		Service CreateService ()
+		{
+			return Service.Twitter;
+		}
+
 		[Test]
 		public void TimelineRequest ()
 		{
@@ -20,7 +27,7 @@ namespace Xamarin.Social.iOS.Test
 			};
 			var req = Service.Twitter.CreateRequest ("GET", new Uri ("http://api.twitter.com/1/statuses/user_timeline.json"), ps);
 			var res = req.GetResponseAsync ().Result;
-			Assert.That (res.StatusCode, Is.EqualTo (200));
+			Assert.That (res.StatusCode, Is.EqualTo (HttpStatusCode.OK));
 			Assert.That (res.Headers.Count, Is.GreaterThan (0));
 			var content = new StreamReader (res.GetResponseStream ()).ReadToEnd ();
 			Assert.That (content.Length, Is.GreaterThan (10));
@@ -29,9 +36,11 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void Manual_BlankTweet ()
 		{
-			Service.Twitter.ShareAsync (AppDelegate.Shared.RootViewController, new Item ()).ContinueWith (task => {
-				Console.WriteLine ("RESULT == " + task.Result);
+			var vc = CreateService ().GetShareUI (new Item (), result => {
+				Console.WriteLine ("RESULT == " + result);
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 
 		[Test]
@@ -42,9 +51,12 @@ namespace Xamarin.Social.iOS.Test
 			item.Links.Add (new Uri ("http://microsoft.com"));
 			item.Images.Add (UIImage.FromBundle ("Images/xamarin-logo.png"));
 			item.Images.Add (UIImage.FromBundle ("Images/guides-block-img.png"));
-			Service.Twitter.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (task => {
-				Console.WriteLine ("RESULT == " + task.Result);
+
+			var vc = CreateService ().GetShareUI (item, result => {
+				Console.WriteLine ("RESULT == " + result);
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 	}
 }

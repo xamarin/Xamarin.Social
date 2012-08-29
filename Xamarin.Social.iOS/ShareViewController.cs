@@ -9,9 +9,12 @@ using MonoTouch.CoreGraphics;
 
 namespace Xamarin.Social
 {
-	class ShareController : UIViewController
+	public class ShareViewController : UIViewController
 	{
-		ShareViewModel viewModel;
+		Service service;
+		Item item;
+		List<Account> accounts;
+		Action<ShareResult> completionHandler;
 
 		UITextView textEditor;
 		ProgressLabel progress;
@@ -24,14 +27,24 @@ namespace Xamarin.Social
 		static UIFont TextEditorFont = UIFont.SystemFontOfSize (18);
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
 
-		public ShareController (ShareViewModel viewModel)
+		internal ShareViewController (Service service, Item item, Action<ShareResult> completionHandler)
 		{
-			this.viewModel = viewModel;
+			this.service = service;
+			this.item = item;
+			this.completionHandler = completionHandler;
 
-			Title = NSBundle.MainBundle.LocalizedString (viewModel.Service.ShareTitle, "Title of Share dialog");
-
+			Title = NSBundle.MainBundle.LocalizedString (service.ShareTitle, "Title of Share dialog");
+			
 			View.BackgroundColor = UIColor.White;
 
+			service.GetAccountsAsync ().ContinueWith (t => {
+				accounts = t.Result;
+				BuildUI ();
+			}, TaskScheduler.FromCurrentSynchronizationContext ());
+		}
+
+		void BuildUI ()
+		{
 			var b = View.Bounds;
 
 			var statusHeight = 22.0f;
@@ -41,12 +54,12 @@ namespace Xamarin.Social
 			//
 			var fieldHeight = 33;
 
-			if (viewModel.Accounts.Count > 1) {
+			if (accounts.Count > 1) {
 				afield = new ChoiceField (
 					new RectangleF (0, b.Y, b.Width, 33),
 					this,
 					NSBundle.MainBundle.LocalizedString ("From", "From title when sharing"),
-					viewModel.Accounts.Select (x => x.Username));
+					accounts.Select (x => x.Username));
 				View.AddSubview (afield);
 				b.Y += fieldHeight;
 				b.Height -= fieldHeight;
@@ -56,13 +69,13 @@ namespace Xamarin.Social
 			// Text Editor
 			//
 			var editorHeight = b.Height;
-			if (viewModel.HasMaxTextLength || viewModel.Item.Links.Count > 0) {
+			if (service.HasMaxTextLength || item.Links.Count > 0) {
 				editorHeight -= statusHeight;
 			}
 			textEditor = new UITextView (new RectangleF (0, b.Y, b.Width, editorHeight)) {
 				Font = TextEditorFont,
 				AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
-				Text = viewModel.Item.Text,
+				Text = item.Text,
 			};
 			textEditor.Delegate = new TextEditorDelegate (this);
 			View.AddSubview (textEditor);
@@ -71,18 +84,18 @@ namespace Xamarin.Social
 			//
 			// Icons
 			//
-			if (viewModel.Item.Images.Count > 0) {
+			if (item.Images.Count > 0) {
 
 				var rem = 4.0f;
 				RectangleF f;
-				var x = b.Right - AttachmentIcon.Size - 8 - rem*(viewModel.Item.Images.Count - 1);
+				var x = b.Right - AttachmentIcon.Size - 8 - rem*(item.Images.Count - 1);
 				var y = textEditor.Frame.Y + 8;
 
 				f = textEditor.Frame;
 				f.Width = x - 8 - f.X;
 				textEditor.Frame = f;
 
-				foreach (var i in viewModel.Item.Images) {
+				foreach (var i in item.Images) {
 					var icon = new ImageIcon (i.Image);
 
 					f = icon.Frame;
@@ -100,11 +113,11 @@ namespace Xamarin.Social
 			//
 			// Remaining Text Length
 			//
-			if (viewModel.HasMaxTextLength) {
+			if (service.HasMaxTextLength) {
 				textLengthLabel = new TextLengthLabel (
 					new RectangleF (4, b.Bottom - statusHeight, textEditor.Frame.Width - 8, statusHeight),
-					viewModel.Service.MaxTextLength) {
-					TextLength = viewModel.TextLength,
+					service.MaxTextLength) {
+					TextLength = service.GetTextLength (item),
 				};
 				View.AddSubview (textLengthLabel);
 			}
@@ -112,7 +125,7 @@ namespace Xamarin.Social
 			//
 			// Links Label
 			//
-			if (viewModel.Item.Links.Count > 0) {
+			if (item.Links.Count > 0) {
 				linksLabel = new UILabel (
 					new RectangleF (4, b.Bottom - statusHeight, textEditor.Frame.Width - 66, statusHeight)) {
 					TextColor = UIColor.FromRGB (124, 124, 124),
@@ -126,13 +139,13 @@ namespace Xamarin.Social
 					Font = UIFont.SystemFontOfSize (16),
 					LineBreakMode = UILineBreakMode.HeadTruncation,
 				};
-				if (viewModel.Item.Links.Count == 1) {
-					linksLabel.Text = viewModel.Item.Links[0].AbsoluteUri;
+				if (item.Links.Count == 1) {
+					linksLabel.Text = item.Links[0].AbsoluteUri;
 				}
 				else {
 					linksLabel.Text = string.Format (
 						NSBundle.MainBundle.LocalizedString ("{0} links", "# of links label"),
-						viewModel.Item.Links.Count);
+						item.Links.Count);
 				}
 				View.AddSubview (linksLabel);
 			}
@@ -143,11 +156,8 @@ namespace Xamarin.Social
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (
 				UIBarButtonSystemItem.Cancel,
 				delegate {
-
-				ParentViewController.DismissModalViewControllerAnimated (true);
-
-				viewModel.Cancel ();
-			});
+					completionHandler (ShareResult.Cancelled);
+				});
 
 
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem (
@@ -166,16 +176,17 @@ namespace Xamarin.Social
 		{
 			if (sharing) return;
 				
-			viewModel.Item.Text = textEditor.Text;
+			item.Text = textEditor.Text;
 			
 			StartSharing ();
-			
-			if (viewModel.Accounts.Count > 1 && afield != null) {
-				viewModel.UseAccount = viewModel.Accounts.First (x => x.Username == afield.SelectedItem);
+
+			var account = accounts.FirstOrDefault ();
+			if (accounts.Count > 1 && afield != null) {
+				account = accounts.FirstOrDefault (x => x.Username == afield.SelectedItem);
 			}
 			
 			try {
-				viewModel.ShareAsync ().ContinueWith (shareTask => {
+				service.ShareItemAsync (item, account).ContinueWith (shareTask => {
 					
 					StopSharing ();
 					
@@ -183,7 +194,7 @@ namespace Xamarin.Social
 						this.ShowError ("Share Error", shareTask.Exception);
 					}
 					else {
-						ParentViewController.DismissModalViewControllerAnimated (true);
+						completionHandler (ShareResult.Done);
 					}
 					
 				}, TaskScheduler.FromCurrentSynchronizationContext ());
@@ -276,16 +287,17 @@ namespace Xamarin.Social
 
 		class TextEditorDelegate : UITextViewDelegate
 		{
-			ShareController controller;
-			public TextEditorDelegate (ShareController controller)
+			ShareViewController controller;
+			public TextEditorDelegate (ShareViewController controller)
 			{
 				this.controller = controller;
 			}
 			public override void Changed (UITextView textView)
 			{
-				controller.viewModel.Item.Text = textView.Text;
+				controller.item.Text = textView.Text;
 				if (controller.textLengthLabel != null) {
-					controller.textLengthLabel.TextLength = controller.viewModel.TextLength;
+					controller.textLengthLabel.TextLength =
+						controller.service.GetTextLength (controller.item);
 				}
 			}
 		}
@@ -371,10 +383,10 @@ namespace Xamarin.Social
 
 		abstract class Field : UIView
 		{
-			public ShareController Controller { get; private set; }
+			public ShareViewController Controller { get; private set; }
 			public UILabel TitleLabel { get; private set; }
 
-			public Field (RectangleF frame, ShareController controller, string title)
+			public Field (RectangleF frame, ShareViewController controller, string title)
 				: base (frame)
 			{
 				Controller = controller;
@@ -418,7 +430,7 @@ namespace Xamarin.Social
 			public LabelButton ValueLabel { get; private set; }
 			public CheckedPickerView picker { get; private set; }
 
-			public ChoiceField (RectangleF frame, ShareController controller, string title, IEnumerable<string> items)
+			public ChoiceField (RectangleF frame, ShareViewController controller, string title, IEnumerable<string> items)
 				: base (frame, controller, title)
 			{
 				ValueLabel = new LabelButton () {

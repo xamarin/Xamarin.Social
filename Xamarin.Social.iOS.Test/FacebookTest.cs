@@ -45,10 +45,12 @@ namespace Xamarin.Social.iOS.Test
 			item.Images.Add ("Images/what_does_that_mean_trollcat.jpg");
 			item.Links.Add (new Uri ("http://praeclarum.org"));
 
-			service.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
-				Console.WriteLine ("SHARE RESULT = " + t.Result);
+			var vc = service.GetShareUI (item, result => {
+				Console.WriteLine ("SHARE RESULT = " + result);
 				item.Dispose ();
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 
 		[Test]
@@ -61,10 +63,12 @@ namespace Xamarin.Social.iOS.Test
 			};
 			item.Links.Add (new Uri ("http://praeclarum.org"));
 
-			service.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
-				Console.WriteLine ("SHARE RESULT = " + t.Result);
+			var vc = service.GetShareUI (item, result => {
+				Console.WriteLine ("SHARE RESULT = " + result);
 				item.Dispose ();
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 
 		[Test]

@@ -59,7 +59,6 @@
     <Compile Include="Services\TwitterService.cs" />
     <Compile Include="ImageData.cs" />
     <Compile Include="ExceptionEx.cs" />
-    <Compile Include="ShareViewModel.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="Services\FlickrService.cs" />
     <Compile Include="OAuth1.cs" />

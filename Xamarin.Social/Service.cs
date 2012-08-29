@@ -9,8 +9,10 @@ using System.Threading;
 
 #if PLATFORM_IOS
 using UIContext = MonoTouch.UIKit.UIViewController;
+using ShareUIType = MonoTouch.UIKit.UIViewController;
 #else
 using UIContext = System.Object;
+using ShareUIType = System.Object;
 #endif
 
 namespace Xamarin.Social
@@ -111,61 +113,17 @@ namespace Xamarin.Social
 		public int MaxVideos { get; protected set; }
 #endif
 
+		public bool HasMaxTextLength { get { return MaxTextLength < int.MaxValue; } }
+
 		public virtual int GetTextLength (Item item)
 		{
 			return item.Text.Length;
 		}
 
-		/// <summary>
-		/// <para>
-		/// Shares the passed-in object by presenting the necessary UI to the user.
-		/// </para>
-		/// <para>
-		/// If there are saved accounts, then the composer will allow the user to choose
-		/// which account to send to. If there are no accounts, then a sign in dialog will
-		/// be presented followed by the compose view.
-		/// </para>
-		/// </summary>
-		/// <remarks>
-		/// Must be called from the UI thread because this will cause dialogs to be displayed.
-		/// </remarks>			
-		/// <param name='item'>
-		/// The item to share. It may be edited by the user.
-		/// </param>
-		public virtual Task<ShareResult> ShareAsync (UIContext uiContext, Item item)
-		{
-			var viewModel = new ShareViewModel (this, item, ShareItemAsync);
-
-			GetAccountsAsync ().ContinueWith (accountsTask => {
-				if (accountsTask.Result.Count > 0) {
-					viewModel.Accounts = accountsTask.Result.ToList ();
-					PresentShareUI (uiContext, viewModel);
-				}
-				else {
-					AddAccountAsync (uiContext).ContinueWith (addTask => {
-						if (addTask.Result != null) {
-							viewModel.Accounts = new List<Account> { addTask.Result };
-							PresentShareUI (uiContext, viewModel);
-						}
-						else {
-							viewModel.Cancel ();
-						}
-					}, TaskScheduler.FromCurrentSynchronizationContext ());
-				}
-			}, TaskScheduler.FromCurrentSynchronizationContext ());
-
-			return Task.Factory.StartNew (delegate {
-				viewModel.Wait ();
-				return viewModel.Result;
-			}, TaskCreationOptions.LongRunning);
-		}
-
-		void PresentShareUI (UIContext uiContext, ShareViewModel viewModel)
+		public virtual ShareUIType GetShareUI (Item item, Action<ShareResult> completionHandler)
 		{
 #if PLATFORM_IOS
-			var share = new ShareController (viewModel);
-			var nav = new MonoTouch.UIKit.UINavigationController (share);
-			uiContext.PresentModalViewController (nav, true);
+			return new MonoTouch.UIKit.UINavigationController (new ShareViewController (this, item, completionHandler));
 #else
 			throw new NotImplementedException ("Share not implemented on this platform.");
 #endif
@@ -182,7 +140,26 @@ namespace Xamarin.Social
 		/// <param name='account'>
 		/// The account to use to share.
 		/// </param>
-		protected virtual Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		public Task ShareItemAsync (Item item, Account account)
+		{
+			return ShareItemAsync (item, account, CancellationToken.None);
+		}
+
+		/// <summary>
+		/// <para>
+		/// Shares the passed-in object without presenting any UI to the user.
+		/// </para>
+		/// </summary>
+		/// <param name='item'>
+		/// The item to share.
+		/// </param>
+		/// <param name='account'>
+		/// The account to use to share.
+		/// </param>
+		/// <param name='cancellationToken'>
+		/// Token used to cancel this operation.
+		/// </param>
+		public virtual Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
 			return Task.Factory.StartNew (() => {
 				throw new NotSupportedException (Title + " does not support sharing.");
