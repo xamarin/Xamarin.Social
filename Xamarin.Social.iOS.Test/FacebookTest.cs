@@ -14,8 +14,8 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void Manual_AddAccount ()
 		{
-			Service.Facebook.AppId = TestClientId;
-			Service.Facebook.Permissions = "publish_actions";
+			Service.Facebook.ClientId = TestClientId;
+			Service.Facebook.Scope = "publish_actions";
 			Service.Facebook.AddAccountAsync (AppDelegate.Shared.RootViewController).ContinueWith (task => {
 				if (task.IsFaulted) {
 					Console.WriteLine (task.Exception);
@@ -32,8 +32,8 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void Manual_BadClientId ()
 		{
-			Service.Facebook.AppId = "537639364986381";
-			Service.Facebook.Permissions = "publish_actions";
+			Service.Facebook.ClientId = "537639364986381";
+			Service.Facebook.Scope = "publish_actions";
 			Service.Facebook.AddAccountAsync (AppDelegate.Shared.RootViewController).ContinueWith (task => {
 				Console.WriteLine ("RESULT " + task.Result);
 			});

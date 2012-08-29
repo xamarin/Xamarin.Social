@@ -129,6 +129,15 @@
     <Compile Include="..\Xamarin.Social\SocialException.cs">
       <Link>SocialException.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\OAuth2Authenticator.cs">
+      <Link>OAuth2Authenticator.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\OAuth2Request.cs">
+      <Link>OAuth2Request.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\OAuth2Service.cs">
+      <Link>OAuth2Service.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
