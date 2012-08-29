@@ -62,7 +62,7 @@ namespace Xamarin.Social.iOS.Test
 			var service = CreateService ();
 			
 			var item = new Item {
-				Text = "This is just with an image. Don't mind me...",
+				Text = "I wonder if images and links will work?",
 			};
 			item.Images.Add ("Images/xamarin-logo.png");
 			item.Links.Add (new Uri ("http://xamarin.com"));

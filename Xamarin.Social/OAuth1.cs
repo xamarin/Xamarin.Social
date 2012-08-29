@@ -4,22 +4,45 @@ using System.Text;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Net;
+using System.Globalization;
 
 namespace Xamarin.Social
 {
 	public static class OAuth1
 	{
+		/// <summary>
+		/// Encodes the string accoring to: http://tools.ietf.org/html/rfc5849#section-3.6
+		/// </summary>
+		public static string EncodeString (string unencoded)
+		{
+			var utf8 = Encoding.UTF8.GetBytes (unencoded);
+			var sb = new StringBuilder ();
+
+			for (var i = 0; i < utf8.Length; i++) {
+				var v = utf8[i];
+				if ((0x41 <= v && v <= 0x5A) || (0x61 <= v && v <= 0x7A) || (0x30 <= v && v <= 0x39) ||
+				    v == 0x2D || v == 0x2E || v == 0x5F || v == 0x7E) {
+					sb.Append ((char)v);
+				}
+				else {
+					sb.AppendFormat (CultureInfo.InvariantCulture, "%{0:X2}", v);
+				}
+			}
+
+			return sb.ToString ();
+		}
+
 		public static string GetBaseString (string method, Uri uri, IDictionary<string, string> parameters)
 		{
 			var baseBuilder = new StringBuilder ();
 			baseBuilder.Append (method);
 			baseBuilder.Append ("&");
-			baseBuilder.Append (Uri.EscapeDataString (uri.AbsoluteUri));
+			baseBuilder.Append (EncodeString (uri.AbsoluteUri));
 			baseBuilder.Append ("&");
 			var head = "";
 			foreach (var key in parameters.Keys.OrderBy (x => x)) {
-				var p = head + Uri.EscapeDataString (key) + "=" + Uri.EscapeDataString (parameters[key]);
-				baseBuilder.Append (Uri.EscapeDataString (p));
+				var p = head + EncodeString (key) + "=" + EncodeString (parameters[key]);
+				baseBuilder.Append (EncodeString (p));
 				head = "&";
 			}
 			return baseBuilder.ToString ();
@@ -28,7 +51,7 @@ namespace Xamarin.Social
 		public static string GetSignature (string method, Uri uri, IDictionary<string, string> parameters, string consumerSecret, string tokenSecret)
 		{
 			var baseString = GetBaseString (method, uri, parameters);
-			var key = Uri.EscapeDataString (consumerSecret) + "&" + Uri.EscapeDataString (tokenSecret);
+			var key = EncodeString (consumerSecret) + "&" + EncodeString (tokenSecret);
 			var hashAlgo = new HMACSHA1 (Encoding.ASCII.GetBytes (key));
 			var hash = hashAlgo.ComputeHash (Encoding.ASCII.GetBytes (baseString));
 			var sig = Convert.ToBase64String (hash);
@@ -78,7 +101,7 @@ namespace Xamarin.Social
 			foreach (var p in ps) {
 				if (p.Key.StartsWith ("oauth_")) {
 					sb.Append (head);
-					sb.AppendFormat ("{0}=\"{1}\"", Uri.EscapeDataString (p.Key), Uri.EscapeDataString (p.Value));
+					sb.AppendFormat ("{0}=\"{1}\"", EncodeString (p.Key), EncodeString (p.Value));
 					head = ",";
 				}
 			}

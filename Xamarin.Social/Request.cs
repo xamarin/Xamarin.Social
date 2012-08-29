@@ -100,6 +100,10 @@ namespace Xamarin.Social
 		{
 			var request = GetPreparedWebRequest ();
 
+			if (Method == "POST") {
+				ServicePointManager.Expect100Continue = false;
+			}
+
 			if (Multiparts.Count > 0) {
 				var boundary = "---------------------------" + new Random ().Next ();
 				request.ContentType = "multipart/form-data; boundary=" + boundary;
@@ -124,7 +128,7 @@ namespace Xamarin.Social
 				var bodyData = System.Text.Encoding.UTF8.GetBytes (body);
 				request.ContentLength = bodyData.Length;
 				request.ContentType = "application/x-www-form-urlencoded";
-				
+
 				return Task.Factory
 						.FromAsync<Stream> (request.BeginGetRequestStream, request.EndGetRequestStream, null)
 						.ContinueWith (reqStreamTask => {

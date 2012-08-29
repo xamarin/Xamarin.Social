@@ -46,7 +46,11 @@ namespace Xamarin.Social.Services
 				req.Parameters["status"] = status;
 			}
 			else {
-				throw new NotImplementedException ("Images not implemented");
+				req = CreateRequest ("POST", new Uri ("https://upload.twitter.com/1/statuses/update_with_media.xml"), account);
+				req.AddMultipartData ("status", status);
+				foreach (var i in item.Images) {
+					req.AddMultipartData ("media[]", i);
+				}
 			}
 
 			//
@@ -54,7 +58,6 @@ namespace Xamarin.Social.Services
 			//
 			return req.GetResponseAsync (cancellationToken).ContinueWith (reqTask => {
 				var content = reqTask.Result.GetResponseText ();
-				Console.WriteLine (content);
 				if (!content.Contains ("<status")) {
 					throw new SocialException ("Twitter did not return the expected response.");
 				}
