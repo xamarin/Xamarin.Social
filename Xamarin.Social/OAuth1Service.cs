@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Xamarin.Social
 {
@@ -54,12 +55,34 @@ namespace Xamarin.Social
 				requestTokenUrl: RequestTokenUrl,
 				authorizeUrl: AuthorizeUrl,
 				accessTokenUrl: AccessTokenUrl,
-				callbackUrl: CallbackUrl);
+				callbackUrl: CallbackUrl,
+				getUsernameAsync: GetUsernameAsync);
 		}
 		
 		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters, Account account)
 		{
 			return new OAuth1Request (method, url, parameters, account);
+		}
+
+		static readonly string[] UsernameKeys = new string[] {
+			"username",
+			"user_name",
+			"screenname",
+			"screen_name",
+			"email",
+			"email_address",
+		};
+		
+		protected virtual Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties)
+		{
+			return Task.Factory.StartNew (delegate {
+				foreach (var k in UsernameKeys) {
+					if (accountProperties.ContainsKey (k)) {
+						return accountProperties[k];
+					}
+				}			
+				throw new SocialException ("Could not determine username.");
+			});
 		}
 	}
 }

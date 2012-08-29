@@ -7,6 +7,8 @@ namespace Xamarin.Social
 {
 	public class OAuth1Authenticator : WebAuthenticator
 	{
+		public delegate Task<string> GetUsernameAsyncFunc (IDictionary<string, string> accountProperties);
+
 		string consumerKey;
 		string consumerSecret;
 
@@ -15,12 +17,14 @@ namespace Xamarin.Social
 		Uri accessTokenUrl;
 		Uri callbackUrl;
 
+		GetUsernameAsyncFunc getUsernameAsync;
+
 		string token;
 		string tokenSecret;
 
 		string verifier;
 
-		public OAuth1Authenticator (string consumerKey, string consumerSecret, Uri requestTokenUrl, Uri authorizeUrl, Uri accessTokenUrl, Uri callbackUrl)
+		public OAuth1Authenticator (string consumerKey, string consumerSecret, Uri requestTokenUrl, Uri authorizeUrl, Uri accessTokenUrl, Uri callbackUrl, GetUsernameAsyncFunc getUsernameAsync)
 		{
 			this.consumerKey = consumerKey;
 			this.consumerSecret = consumerSecret;
@@ -28,6 +32,11 @@ namespace Xamarin.Social
 			this.authorizeUrl = authorizeUrl;
 			this.accessTokenUrl = accessTokenUrl;
 			this.callbackUrl = callbackUrl;
+
+			if (getUsernameAsync == null) {
+				throw new ArgumentNullException ("getUsernameAsync");
+			}
+			this.getUsernameAsync = getUsernameAsync;
 		}
 
 		public override Task<Uri> GetInitialUrlAsync () {
@@ -69,28 +78,6 @@ namespace Xamarin.Social
 			}
 		}
 
-		static readonly string[] UsernameKeys = new string[] {
-			"username",
-			"user_name",
-			"screenname",
-			"screen_name",
-			"email",
-			"email_address",
-			"userid",
-			"user_id",
-		};
-
-		protected virtual string GetUsername (IDictionary<string, string> accountProperties)
-		{
-			foreach (var k in UsernameKeys) {
-				if (accountProperties.ContainsKey (k)) {
-					return accountProperties[k];
-				}
-			}
-
-			return null;
-		}
-
 		Task GetAccessTokenAsync ()
 		{
 			var req = OAuth1.CreateRequest (
@@ -111,14 +98,14 @@ namespace Xamarin.Social
 				accountProperties["oauth_consumer_key"] = consumerKey;
 				accountProperties["oauth_consumer_secret"] = consumerSecret;
 
-				var username = GetUsername (accountProperties);
-
-				if (string.IsNullOrEmpty (username)) {
-					OnFailed ("No username provided by the server.");
-				}
-				else {
-					OnSucceeded (username, accountProperties);
-				}
+				getUsernameAsync (accountProperties).ContinueWith (uTask => {
+					if (uTask.IsFaulted) {
+						OnFailed (uTask.Exception);
+					}
+					else {
+						OnSucceeded (uTask.Result, accountProperties);
+					}
+				});
 			});
 		}
 	}
