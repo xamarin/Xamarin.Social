@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Xml;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Xamarin.Social
 {
@@ -20,6 +21,11 @@ namespace Xamarin.Social
 			RequestTokenUrl = new Uri ("http://www.flickr.com/services/oauth/request_token");
 			AuthorizeUrl = new Uri ("http://www.flickr.com/services/oauth/authorize");
 			AccessTokenUrl = new Uri ("http://www.flickr.com/services/oauth/access_token");
+		}
+
+		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters, Account account)
+		{
+			return new OAuth1Request (method, url, parameters, account, true);
 		}
 
 		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)

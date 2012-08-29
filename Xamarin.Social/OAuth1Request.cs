@@ -8,9 +8,12 @@ namespace Xamarin.Social
 {
 	public class OAuth1Request : Request
 	{
-		public OAuth1Request (string method, Uri url, IDictionary<string, string> parameters, Account account)
+		bool includeMultipartsInSignature;
+
+		public OAuth1Request (string method, Uri url, IDictionary<string, string> parameters, Account account, bool includeMultipartsInSignature = false)
 			: base (method, url, parameters, account)
 		{
+			this.includeMultipartsInSignature = includeMultipartsInSignature;
 		}
 		
 		public override Task<Response> GetResponseAsync (CancellationToken cancellationToken)
@@ -29,15 +32,23 @@ namespace Xamarin.Social
 
 			//
 			// Make sure that the parameters array contains
-			// mulitpart keys also
+			// mulitpart keys if we're dealing with a buggy
+			// OAuth implementation (I'm looking at you Flickr).
+			//
+			// These normally shouldn't be included: http://tools.ietf.org/html/rfc5849#section-3.4.1.3.1
 			//
 			var ps = new Dictionary<string, string> (Parameters);
-			foreach (var p in Multiparts) {
-				if (!string.IsNullOrEmpty (p.TextData)) {
-					ps[p.Name] = p.TextData;
+			if (includeMultipartsInSignature) {
+				foreach (var p in Multiparts) {
+					if (!string.IsNullOrEmpty (p.TextData)) {
+						ps[p.Name] = p.TextData;
+					}
 				}
 			}
-			
+
+			//
+			// Authorize it
+			//
 			var authorization = OAuth1.GetAuthorizationHeader (
 				Method,
 				Url,

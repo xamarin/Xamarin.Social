@@ -100,6 +100,9 @@ namespace Xamarin.Social
 		{
 			var request = GetPreparedWebRequest ();
 
+			//
+			// Disable 100-Continue: http://blogs.msdn.com/b/shitals/archive/2008/12/27/9254245.aspx
+			//
 			if (Method == "POST") {
 				ServicePointManager.Expect100Continue = false;
 			}
@@ -120,8 +123,8 @@ namespace Xamarin.Social
 									.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
 									.ContinueWith (resTask => {
 										return new Response ((HttpWebResponse)resTask.Result);
-									}).Result;
-						});
+									}, cancellationToken).Result;
+						}, cancellationToken);
 			}
 			else if (Method == "POST" && Parameters.Count > 0) {
 				var body = Parameters.FormEncode ();
@@ -141,15 +144,15 @@ namespace Xamarin.Social
 								.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
 									.ContinueWith (resTask => {
 										return new Response ((HttpWebResponse)resTask.Result);
-									}).Result;
-						});
+									}, cancellationToken).Result;
+						}, cancellationToken);
 			}
 			else {
 				return Task.Factory
 						.FromAsync<WebResponse> (request.BeginGetResponse, request.EndGetResponse, null)
 						.ContinueWith (resTask => {
 							return new Response ((HttpWebResponse)resTask.Result);
-						});
+						}, cancellationToken);
 			}
 		}
 
@@ -219,7 +222,7 @@ namespace Xamarin.Social
 		{
 			var url = Url.AbsoluteUri;
 
-			if (Method == "GET" && Parameters.Count > 0) {
+			if (Parameters.Count > 0 && Method != "POST") {
 				var head = Url.AbsoluteUri.Contains ('?') ? "&" : "?";
 				foreach (var p in Parameters) {
 					url += head;
