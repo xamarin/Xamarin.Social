@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 using System.Text;
+using System.Linq;
 
 namespace Xamarin.Social.Services
 {
@@ -17,7 +18,7 @@ namespace Xamarin.Social.Services
 
 			MaxTextLength = 140;
 			MaxLinks = int.MaxValue;
-			MaxImages = int.MaxValue;
+			MaxImages = 1;
 
 			RequestTokenUrl = new Uri ("https://api.twitter.com/oauth/request_token");
 			AuthorizeUrl = new Uri ("https://api.twitter.com/oauth/authorize");
@@ -56,7 +57,7 @@ namespace Xamarin.Social.Services
 			else {
 				req = CreateRequest ("POST", new Uri ("https://upload.twitter.com/1/statuses/update_with_media.xml"), account);
 				req.AddMultipartData ("status", status);
-				foreach (var i in item.Images) {
+				foreach (var i in item.Images.Take (MaxImages)) {
 					req.AddMultipartData ("media[]", i);
 				}
 			}
