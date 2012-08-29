@@ -127,52 +127,5 @@ namespace Xamarin.Social
 			return sb.ToString();
 		}
 	}
-
-	public class HttpHelper
-	{
-		public CookieContainer Cookies { get; private set; }
-
-		public HttpHelper ()
-			: this (new CookieContainer ())
-		{
-		}
-
-		public HttpHelper (CookieContainer cookies)
-		{
-			this.Cookies = cookies;
-		}
-
-		public HttpWebRequest CreateHttpWebRequest (string method, string url)
-		{
-			var req = (HttpWebRequest)WebRequest.Create (url);
-			req.Method = method;
-			req.CookieContainer = Cookies;
-			return req;
-		}
-
-		public Task<WebResponse> GetAsync (string url)
-		{
-			return CreateHttpWebRequest ("GET", url).GetResponseAsync ();
-		}
-
-		public Task<WebResponse> PostUrlFormEncodedAsync (string url, IDictionary<string, string> inputs)
-		{
-			var req = CreateHttpWebRequest ("POST", url);
-
-			var body = inputs.FormEncode ();
-			var bodyData = System.Text.Encoding.UTF8.GetBytes (body);
-			req.ContentLength = bodyData.Length;
-			req.ContentType = "application/x-www-form-urlencoded";
-
-			return Task.Factory
-				.FromAsync<Stream> (req.BeginGetRequestStream, req.EndGetRequestStream, null)
-				.ContinueWith (ts => {
-					using (ts.Result) {
-						ts.Result.Write (bodyData, 0, bodyData.Length);
-					}
-					return req.GetResponseAsync ().Result;
-				});
-		}
-	}
 }
 

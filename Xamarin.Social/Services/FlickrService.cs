@@ -14,6 +14,9 @@ namespace Xamarin.Social
 			: base ("Flickr", "Flickr")
 		{
 			CreateAccountLink = new Uri ("http://www.flickr.com");
+
+			ShareTitle = "Upload";
+
 			MaxImages = 1;
 			MaxTextLength = int.MaxValue;
 			MaxLinks = int.MaxValue;

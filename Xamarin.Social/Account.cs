@@ -12,7 +12,7 @@ namespace Xamarin.Social
 	/// </summary>
 	public class Account
 	{
-		public virtual string Username { get; private set; }
+		public virtual string Username { get; set; }
 		public virtual Dictionary<string, string> Properties { get; private set; }
 		public virtual CookieContainer Cookies { get; private set; }
 

@@ -28,42 +28,45 @@ namespace Xamarin.Social.Services
 				Fields.Add (new FormAuthenticatorField ("password", "Password", FormAuthenticatorFieldType.Password, "Required", ""));
 			}
 
-			public override Task<Account> SignInAsync ()
+			public override Task<Account> SignInAsync (CancellationToken cancellationToken)
 			{
-				var http = new HttpHelper ();
-				return http
-					.GetAsync ("https://pinterest.com/login/")
-					.ContinueWith (getTask => {
+				var account = new Account ();
 
-						var loginHtml = getTask.Result.GetResponseText ();
-						
-						var email = GetFieldValue ("email");
-						var password = GetFieldValue ("password");
+				var loginRequest = new Request ("GET", new Uri ("https://pinterest.com/login/"), null, account);
+				return loginRequest
+						.GetResponseAsync (cancellationToken)
+						.ContinueWith (getTask => {
 
-						return http
-							.PostUrlFormEncodedAsync ("https://pinterest.com/login/?next=%2Flogin%2F", new Dictionary<string, string> {
-								{ "email", email },
-								{ "password", password },
-								{ "csrfmiddlewaretoken", ReadInputValue (loginHtml, "csrfmiddlewaretoken") },
-								{ "next", "/" },
-							})
-							.ContinueWith (postTask => {
+							var loginHtml = getTask.Result.GetResponseText ();
+							
+							var email = GetFieldValue ("email");
+							var password = GetFieldValue ("password");
 
-								if (postTask.Result.ResponseUri.AbsoluteUri.Contains ("/login")) {
-									throw new ApplicationException ("The email or password is incorrect.");
-								}
-								else {
-									return new Account (
-											email,
-											new Dictionary<string, string> {
-												{ "email", email },
-												{ "password", password }
-											},
-											http.Cookies);
-								}
+							var authRequest = new Request (
+								"POST",
+								new Uri ("https://pinterest.com/login/?next=%2Flogin%2F"),
+								new Dictionary<string, string> {
+									{ "email", email },
+									{ "password", password },
+									{ "csrfmiddlewaretoken", ReadInputValue (loginHtml, "csrfmiddlewaretoken") },
+									{ "next", "/" },
+								},
+								account);
 
-							}).Result;
-					});
+							return authRequest
+									.GetResponseAsync (cancellationToken)
+									.ContinueWith (postTask => {
+										if (postTask.Result.ResponseUri.AbsoluteUri.Contains ("/login")) {
+											throw new ApplicationException ("The email or password is incorrect.");
+										}
+										else {
+											account.Username = email;
+											account.Properties["email"] = email;
+											account.Properties["password"] = password;
+											return account;
+										}
+									}, cancellationToken).Result;
+						}, cancellationToken);
 			}
 
 			static string ReadInputValue (string html, string name)

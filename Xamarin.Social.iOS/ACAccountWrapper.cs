@@ -7,7 +7,13 @@ namespace Xamarin.Social
 	{
 		public ACAccount ACAccount { get; private set; }
 
-		public override string Username { get { return ACAccount.Username; } }
+		public override string Username { 
+			get { 
+				return ACAccount.Username;
+			}
+			set {
+			}
+		}
 
 		public ACAccountWrapper (ACAccount account)
 		{

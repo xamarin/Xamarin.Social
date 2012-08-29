@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Xamarin.Social
 {
@@ -13,6 +14,8 @@ namespace Xamarin.Social
 		FormAuthenticator authenticator;
 
 		ProgressLabel progress;
+
+		CancellationTokenSource cancelSource;
 
 		public FormAuthenticatorController (FormAuthenticator authenticator)
 			: base (UITableViewStyle.Grouped)
@@ -43,7 +46,9 @@ namespace Xamarin.Social
 				progress.StartAnimating ();
 			}
 
-			authenticator.SignInAsync ().ContinueWith (task => {
+			cancelSource = new CancellationTokenSource ();
+
+			authenticator.SignInAsync (cancelSource.Token).ContinueWith (task => {
 
 				StopProgress ();
 
