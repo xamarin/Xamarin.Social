@@ -10,14 +10,19 @@ namespace Xamarin.Social
 {
 	class ShareController : UIViewController
 	{
+		ShareViewModel viewModel;
+
 		UITextView textEditor;
 		ProgressLabel progress;
+		TextLengthLabel textLengthLabel;
 
 		static UIFont TextEditorFont = UIFont.SystemFontOfSize (18);
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
 
 		public ShareController (ShareViewModel viewModel)
 		{
+			this.viewModel = viewModel;
+
 			Title = NSBundle.MainBundle.LocalizedString (viewModel.Service.ShareTitle, "Title of Share dialog");
 
 			View.BackgroundColor = UIColor.White;
@@ -49,8 +54,24 @@ namespace Xamarin.Social
 				AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
 				Text = viewModel.Item.Text,
 			};
+			textEditor.Delegate = new TextEditorDelegate (this);
 			View.AddSubview (textEditor);
 			textEditor.BecomeFirstResponder ();
+
+			//
+			// Remaining Text Length
+			//
+			if (viewModel.HasMaxTextLength) {
+				textLengthLabel = new TextLengthLabel (
+					new RectangleF (4, b.Bottom - 22, b.Width - 8, 22),
+					viewModel.Service.MaxTextLength) {
+					TextLength = viewModel.TextLength,
+				};
+				View.AddSubview (textLengthLabel);
+				var f = textEditor.Frame;
+				f.Height -= 22;
+				textEditor.Frame = f;
+			}
 
 			//
 			// Navigation Items
@@ -62,7 +83,6 @@ namespace Xamarin.Social
 				ParentViewController.DismissModalViewControllerAnimated (true);
 
 				viewModel.Cancel ();
-
 			});
 
 			bool sharing = false;
@@ -100,6 +120,12 @@ namespace Xamarin.Social
 				}
 
 			});
+
+			//
+			// Watch for the keyboard
+			//
+			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.DidShowNotification, HandleKeyboardDidShow);
+			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillHideNotification, HandleKeyboardDidHide);
 		}
 
 		void StartProgress ()
@@ -128,6 +154,103 @@ namespace Xamarin.Social
 		void ResignFirstResponders ()
 		{
 			textEditor.ResignFirstResponder ();
+		}
+
+		void HandleKeyboardDidShow (NSNotification n)
+		{
+			var size = UIKeyboard.BoundsFromNotification (n).Size;
+			
+			var f = textEditor.Frame;
+			f.Height -= size.Height;
+			textEditor.Frame = f;
+
+			if (textLengthLabel != null) {
+				f = textLengthLabel.Frame;
+				f.Y -= size.Height;
+				textLengthLabel.Frame = f;
+			}
+		}
+		
+		void HandleKeyboardDidHide (NSNotification n)
+		{
+			var size = UIKeyboard.BoundsFromNotification (n).Size;
+			
+			UIView.BeginAnimations ("kbd");
+			
+			var f = textEditor.Frame;
+			f.Height += size.Height;
+			textEditor.Frame = f;
+
+			if (textLengthLabel != null) {
+				f = textLengthLabel.Frame;
+				f.Y += size.Height;
+				textLengthLabel.Frame = f;
+			}
+			
+			UIView.CommitAnimations ();
+		}
+
+		class TextEditorDelegate : UITextViewDelegate
+		{
+			ShareController controller;
+			public TextEditorDelegate (ShareController controller)
+			{
+				this.controller = controller;
+			}
+			public override void Changed (UITextView textView)
+			{
+				controller.viewModel.Item.Text = textView.Text;
+				if (controller.textLengthLabel != null) {
+					controller.textLengthLabel.TextLength = controller.viewModel.TextLength;
+				}
+			}
+		}
+
+		class TextLengthLabel : UILabel
+		{
+			int maxLength;
+			int textLength;
+
+			static readonly UIColor okColor = UIColor.FromRGB (124, 124, 124);
+			static readonly UIColor errorColor = UIColor.FromRGB (166, 80, 80);
+
+			public int TextLength {
+				get {
+					return textLength;
+				}
+				set {
+					textLength = value;
+					Update ();
+				}
+			}
+
+			public TextLengthLabel (RectangleF frame, int maxLength)
+				: base (frame)
+			{
+				this.maxLength = maxLength;
+				this.textLength = 0;
+				UserInteractionEnabled = false;
+				BackgroundColor = UIColor.Clear;
+				AutoresizingMask = 
+					UIViewAutoresizing.FlexibleWidth | 
+					UIViewAutoresizing.FlexibleBottomMargin |
+					UIViewAutoresizing.FlexibleTopMargin;
+				TextAlignment = UITextAlignment.Right;
+				Font = UIFont.BoldSystemFontOfSize (16);
+				TextColor = okColor;
+			}
+
+			void Update ()
+			{
+				var rem = maxLength - textLength;
+				Text = rem.ToString ();
+				if (rem < 0) {
+					TextColor = errorColor;
+				}
+				else {
+					TextColor = okColor;
+				}
+			}
 		}
 
 		abstract class Field : UIView

@@ -20,7 +20,7 @@ namespace Xamarin.Social.Services
 			: base ("Facebook", "Facebook")
 		{
 			CreateAccountLink = new Uri ("https://www.facebook.com");
-			CanShareText = true;
+			MaxTextLength = int.MaxValue;
 		}
 
 		protected override Authenticator GetAuthenticator ()

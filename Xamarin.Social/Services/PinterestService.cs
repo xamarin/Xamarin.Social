@@ -16,8 +16,8 @@ namespace Xamarin.Social.Services
 		{
 			CreateAccountLink = new Uri ("https://pinterest.com/join/register/");
 			ShareTitle = "Pin";
-			CanShareText = true;
-			CanShareImages = true;
+			MaxTextLength = int.MaxValue;
+			MaxImages = 1;
 		}
 
 		class PinterestAuthenticator : FormAuthenticator

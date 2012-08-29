@@ -103,13 +103,18 @@ namespace Xamarin.Social
 
 		#region Sharing
 
-		public bool CanShareText { get; protected set; }
-		public bool CanShareLinks { get; protected set; }
-		public bool CanShareImages { get; protected set; }
-		public bool CanShareFiles { get; protected set; }
+		public int MaxTextLength { get; protected set; }
+		public int MaxLinks { get; protected set; }
+		public int MaxImages { get; protected set; }
+		public int MaxFiles { get; protected set; }
 #if SUPPORT_VIDEO
-		public bool CanShareVideo { get; protected set; }
+		public int MaxVideos { get; protected set; }
 #endif
+
+		public virtual int GetTextLength (Item item)
+		{
+			return item.Text.Length;
+		}
 
 		/// <summary>
 		/// <para>

@@ -24,6 +24,24 @@ namespace Xamarin.Social
 		/// </summary>
 		public Item Item { get; private set; }
 
+		/// <summary>
+		/// Whether the service has a max text length
+		/// </summary>
+		public bool HasMaxTextLength {
+			get {
+				return Service.MaxTextLength < int.MaxValue;
+			}
+		}
+
+		/// <summary>
+		/// Gets the length of the text including attachments that will be inlined.
+		/// </summary>
+		public int TextLength {
+			get {
+				return Service.GetTextLength (Item);
+			}
+		}
+
 		IList<Account> accounts;
 
 		/// <summary>

@@ -14,9 +14,9 @@ namespace Xamarin.Social
 			: base ("Flickr", "Flickr")
 		{
 			CreateAccountLink = new Uri ("http://www.flickr.com");
-			CanShareImages = true;
-			CanShareText = true;
-			CanShareLinks = true;
+			MaxImages = 1;
+			MaxTextLength = int.MaxValue;
+			MaxLinks = int.MaxValue;
 
 			RequestTokenUrl = new Uri ("http://www.flickr.com/services/oauth/request_token");
 			AuthorizeUrl = new Uri ("http://www.flickr.com/services/oauth/authorize");

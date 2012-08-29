@@ -15,13 +15,21 @@ namespace Xamarin.Social.Services
 
 			ShareTitle = "Tweet";
 
-			CanShareText = true;
-			CanShareLinks = true;
-			CanShareImages = true;
+			MaxTextLength = 140;
+			MaxLinks = int.MaxValue;
+			MaxImages = int.MaxValue;
 
 			RequestTokenUrl = new Uri ("https://api.twitter.com/oauth/request_token");
 			AuthorizeUrl = new Uri ("https://api.twitter.com/oauth/authorize");
 			AccessTokenUrl = new Uri ("https://api.twitter.com/oauth/access_token");
+		}
+
+		public override int GetTextLength (Item item)
+		{
+			//
+			// There are about 22 chars (eg https://t.co/UoGgfjFd) per attachment
+			//
+			return item.Text.Length + 22*(item.Links.Count + item.Images.Count + item.Files.Count);
 		}
 
 		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
