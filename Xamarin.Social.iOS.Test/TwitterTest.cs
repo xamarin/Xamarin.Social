@@ -40,16 +40,15 @@ namespace Xamarin.Social.iOS.Test
 		}
 
 		[Test]
-		public void Manual_ShareTextLinks ()
+		public void Manual_ShareTextLink ()
 		{
 			var service = CreateService ();
 			
 			var item = new Item {
 				Text = "This is just a test. Don't mind me...",
 			};
-			item.Links.Add (new Uri ("http://xamarin.com"));
-			item.Links.Add (new Uri ("https://twitter.com/xamarinhq"));
-			
+			item.Links.Add (new Uri ("http://docs.xamarin.com/ios/getting_started/intro_to_mvc_in_ios"));
+
 			service.ShareAsync (AppDelegate.Shared.RootViewController, item).ContinueWith (t => {
 				Console.WriteLine ("SHARE RESULT = " + t.Result);
 				item.Dispose ();
@@ -57,7 +56,7 @@ namespace Xamarin.Social.iOS.Test
 		}
 		
 		[Test]
-		public void Manual_ShareImageTextLinks ()
+		public void Manual_ShareImagesTextLinks ()
 		{
 			var service = CreateService ();
 			
@@ -65,6 +64,7 @@ namespace Xamarin.Social.iOS.Test
 				Text = "I wonder if images and links will work?",
 			};
 			item.Images.Add ("Images/xamarin-logo.png");
+			item.Images.Add ("Images/what_does_that_mean_trollcat.jpg");
 			item.Links.Add (new Uri ("http://xamarin.com"));
 			item.Links.Add (new Uri ("https://twitter.com/xamarinhq"));
 			

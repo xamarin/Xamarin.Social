@@ -33,7 +33,7 @@ namespace Xamarin.Social.iOS.Test
 			var item = new Item {
 				Text = "Hello, World",
 			};
-			item.Images.Add ("Images/xamarin-logo.png");
+			item.Images.Add ("Images/what_does_that_mean_trollcat.jpg");
 			item.Links.Add (new Uri ("http://xamarin.com"));
 			item.Links.Add (new Uri ("https://twitter.com/xamarinhq"));
 			

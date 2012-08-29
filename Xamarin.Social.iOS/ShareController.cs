@@ -5,6 +5,7 @@ using MonoTouch.Foundation;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Linq;
+using MonoTouch.CoreGraphics;
 
 namespace Xamarin.Social
 {
@@ -15,6 +16,7 @@ namespace Xamarin.Social
 		UITextView textEditor;
 		ProgressLabel progress;
 		TextLengthLabel textLengthLabel;
+		UILabel linksLabel;
 
 		static UIFont TextEditorFont = UIFont.SystemFontOfSize (18);
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
@@ -28,6 +30,8 @@ namespace Xamarin.Social
 			View.BackgroundColor = UIColor.White;
 
 			var b = View.Bounds;
+
+			var statusHeight = 22.0f;
 
 			//
 			// Fields
@@ -49,7 +53,11 @@ namespace Xamarin.Social
 			//
 			// Text Editor
 			//
-			textEditor = new UITextView (new RectangleF (0, b.Y, b.Width, b.Height)) {
+			var editorHeight = b.Height;
+			if (viewModel.HasMaxTextLength || viewModel.Item.Links.Count > 0) {
+				editorHeight -= statusHeight;
+			}
+			textEditor = new UITextView (new RectangleF (0, b.Y, b.Width, editorHeight)) {
 				Font = TextEditorFont,
 				AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
 				Text = viewModel.Item.Text,
@@ -59,18 +67,72 @@ namespace Xamarin.Social
 			textEditor.BecomeFirstResponder ();
 
 			//
+			// Icons
+			//
+			if (viewModel.Item.Images.Count > 0) {
+
+				var rem = 4.0f;
+				RectangleF f;
+				var x = b.Right - AttachmentIcon.Size - 8 - rem*(viewModel.Item.Images.Count - 1);
+				var y = textEditor.Frame.Y + 8;
+
+				f = textEditor.Frame;
+				f.Width = x - 8 - f.X;
+				textEditor.Frame = f;
+
+				foreach (var i in viewModel.Item.Images) {
+					var icon = new ImageIcon (i.Image);
+
+					f = icon.Frame;
+					f.X = x;
+					f.Y = y;
+					icon.Frame = f;
+
+					View.AddSubview (icon);
+
+					x += rem;
+					y += rem;
+				}
+			}
+
+			//
 			// Remaining Text Length
 			//
 			if (viewModel.HasMaxTextLength) {
 				textLengthLabel = new TextLengthLabel (
-					new RectangleF (4, b.Bottom - 22, b.Width - 8, 22),
+					new RectangleF (4, b.Bottom - statusHeight, textEditor.Frame.Width - 8, statusHeight),
 					viewModel.Service.MaxTextLength) {
 					TextLength = viewModel.TextLength,
 				};
 				View.AddSubview (textLengthLabel);
-				var f = textEditor.Frame;
-				f.Height -= 22;
-				textEditor.Frame = f;
+			}
+			
+			//
+			// Links Label
+			//
+			if (viewModel.Item.Links.Count > 0) {
+				linksLabel = new UILabel (
+					new RectangleF (4, b.Bottom - statusHeight, textEditor.Frame.Width - 66, statusHeight)) {
+					TextColor = UIColor.FromRGB (124, 124, 124),
+					AutoresizingMask =
+						UIViewAutoresizing.FlexibleTopMargin |
+						UIViewAutoresizing.FlexibleBottomMargin |
+						UIViewAutoresizing.FlexibleWidth,
+
+					UserInteractionEnabled = false,
+					BackgroundColor = UIColor.Clear,
+					Font = UIFont.SystemFontOfSize (16),
+					LineBreakMode = UILineBreakMode.HeadTruncation,
+				};
+				if (viewModel.Item.Links.Count == 1) {
+					linksLabel.Text = viewModel.Item.Links[0].AbsoluteUri;
+				}
+				else {
+					linksLabel.Text = string.Format (
+						NSBundle.MainBundle.LocalizedString ("{0} links", "# of links label"),
+						viewModel.Item.Links.Count);
+				}
+				View.AddSubview (linksLabel);
 			}
 
 			//
@@ -169,6 +231,12 @@ namespace Xamarin.Social
 				f.Y -= size.Height;
 				textLengthLabel.Frame = f;
 			}
+
+			if (linksLabel != null) {
+				f = linksLabel.Frame;
+				f.Y -= size.Height;
+				linksLabel.Frame = f;
+			}
 		}
 		
 		void HandleKeyboardDidHide (NSNotification n)
@@ -185,6 +253,12 @@ namespace Xamarin.Social
 				f = textLengthLabel.Frame;
 				f.Y += size.Height;
 				textLengthLabel.Frame = f;
+			}
+
+			if (linksLabel != null) {
+				f = linksLabel.Frame;
+				f.Y += size.Height;
+				linksLabel.Frame = f;
 			}
 			
 			UIView.CommitAnimations ();
@@ -250,6 +324,38 @@ namespace Xamarin.Social
 				else {
 					TextColor = okColor;
 				}
+			}
+		}
+
+		abstract class AttachmentIcon : UIImageView
+		{
+			public static float Size { get { return 72; } }
+
+			static readonly CGColor borderColor = new CGColor (0.75f, 0.75f, 0.75f);
+			static readonly CGColor shadowColor = new CGColor (0.25f, 0.25f, 0.25f);
+
+			public AttachmentIcon ()
+				: base (new RectangleF (0, 0, Size, Size))
+			{
+				ContentMode = UIViewContentMode.ScaleAspectFill;
+				ClipsToBounds = true;
+				AutoresizingMask = UIViewAutoresizing.FlexibleLeftMargin;
+
+				Layer.CornerRadius = 4;
+				Layer.ShadowOffset = new SizeF (0, 0);
+				Layer.ShadowColor = shadowColor;
+				Layer.ShadowRadius = 4;
+				Layer.ShadowOpacity = 1.0f;
+				Layer.BorderColor = borderColor;
+				Layer.BorderWidth = 1;
+			}
+		}
+
+		class ImageIcon : AttachmentIcon
+		{
+			public ImageIcon (UIImage image)
+			{
+				Image = image;
 			}
 		}
 

@@ -110,5 +110,6 @@
     <Content Include="Images\guides-block-img.png" />
     <Content Include="Images\video-block-img.png" />
     <Content Include="Images\xamarin-logo.png" />
+    <Content Include="Images\what_does_that_mean_trollcat.jpg" />
   </ItemGroup>
 </Project>
