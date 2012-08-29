@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Xamarin.Social.Services
 {
@@ -14,9 +15,13 @@ namespace Xamarin.Social.Services
 			CreateAccountLink = new Uri ("https://www.facebook.com");
 
 			MaxTextLength = int.MaxValue;
+			MaxImages = 1;
+			MaxLinks = 1;
 
 			AuthorizeUrl = new Uri ("https://m.facebook.com/dialog/oauth/");
 			RedirectUrl = new Uri ("http://www.facebook.com/connect/login_success.html");
+
+			Scope = "publish_stream";
 		}
 
 		protected override Task<string> GetUsernameAsync (string accessToken)
@@ -54,6 +59,38 @@ namespace Xamarin.Social.Services
 			}
 			var r = json.Substring (b, e - b);
 			return r;
+		}
+
+		protected override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		{
+			Request req;
+
+			if (item.Images.Count > 0) {
+				req = CreateRequest ("POST", new Uri ("https://graph.facebook.com/me/photos"), account);
+				req.AddMultipartData ("source", item.Images.First ());
+
+				var message = new StringBuilder ();
+				message.Append (item.Text);
+				foreach (var l in item.Links) {
+					message.AppendLine ();
+					message.Append (l.AbsoluteUri);
+				}
+				req.AddMultipartData ("message", message.ToString ());
+			}
+			else {
+				req = CreateRequest ("POST", new Uri ("https://graph.facebook.com/me/feed"), account);
+				req.Parameters["message"] = item.Text;
+				if (item.Links.Count > 0) {
+					req.Parameters["link"] = item.Links.First ().AbsoluteUri;
+				}
+			}
+
+			return req.GetResponseAsync (cancellationToken).ContinueWith (reqTask => {
+				var content = reqTask.Result.GetResponseText ();
+				if (!content.Contains ("\"id\"")) {
+					throw new SocialException ("Facebook returned an unrecognized response.");
+				}
+			});
 		}
 	}
 }

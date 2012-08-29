@@ -17,6 +17,9 @@ namespace Xamarin.Social
 		ProgressLabel progress;
 		TextLengthLabel textLengthLabel;
 		UILabel linksLabel;
+		ChoiceField afield = null;
+
+		bool sharing = false;
 
 		static UIFont TextEditorFont = UIFont.SystemFontOfSize (18);
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
@@ -38,7 +41,6 @@ namespace Xamarin.Social
 			//
 			var fieldHeight = 33;
 
-			ChoiceField afield = null;
 			if (viewModel.Accounts.Count > 1) {
 				afield = new ChoiceField (
 					new RectangleF (0, b.Y, b.Width, 33),
@@ -147,41 +149,11 @@ namespace Xamarin.Social
 				viewModel.Cancel ();
 			});
 
-			bool sharing = false;
+
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem (
 				NSBundle.MainBundle.LocalizedString ("Send", "Send button text when sharing"),
 				UIBarButtonItemStyle.Done,
-				delegate {
-
-				if (!sharing) {
-
-					sharing = true;
-					NavigationItem.RightBarButtonItem.Enabled = false;
-					StartProgress ();
-
-					viewModel.Item.Text = textEditor.Text;
-
-					if (viewModel.Accounts.Count > 1 && afield != null) {
-						viewModel.UseAccount = viewModel.Accounts.First (x => x.Username == afield.SelectedItem);
-					}
-
-					viewModel.ShareAsync ().ContinueWith (shareTask => {
-
-						sharing = false;
-						NavigationItem.RightBarButtonItem.Enabled = true;
-						StopProgress ();
-
-						if (shareTask.IsFaulted) {
-							this.ShowError ("Share Error", shareTask.Exception);
-						}
-						else {
-							ParentViewController.DismissModalViewControllerAnimated (true);
-						}
-
-					}, TaskScheduler.FromCurrentSynchronizationContext ());
-				}
-
-			});
+				HandleSend);
 
 			//
 			// Watch for the keyboard
@@ -190,8 +162,43 @@ namespace Xamarin.Social
 			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillHideNotification, HandleKeyboardDidHide);
 		}
 
-		void StartProgress ()
+		void HandleSend (object sender, EventArgs e)
 		{
+			if (sharing) return;
+				
+			viewModel.Item.Text = textEditor.Text;
+			
+			StartSharing ();
+			
+			if (viewModel.Accounts.Count > 1 && afield != null) {
+				viewModel.UseAccount = viewModel.Accounts.First (x => x.Username == afield.SelectedItem);
+			}
+			
+			try {
+				viewModel.ShareAsync ().ContinueWith (shareTask => {
+					
+					StopSharing ();
+					
+					if (shareTask.IsFaulted) {
+						this.ShowError ("Share Error", shareTask.Exception);
+					}
+					else {
+						ParentViewController.DismissModalViewControllerAnimated (true);
+					}
+					
+				}, TaskScheduler.FromCurrentSynchronizationContext ());
+			}
+			catch (Exception ex) {
+				StopSharing ();
+				this.ShowError ("Share Error", ex);
+			}
+		}
+
+		void StartSharing ()
+		{
+			sharing = true;
+			NavigationItem.RightBarButtonItem.Enabled = false;
+
 			if (progress == null) {
 				progress = new ProgressLabel (NSBundle.MainBundle.LocalizedString ("Sending...", "Sending... status message when sharing"));
 				NavigationItem.TitleView = progress;
@@ -199,8 +206,11 @@ namespace Xamarin.Social
 			}
 		}
 
-		void StopProgress ()
+		void StopSharing ()
 		{
+			sharing = false;
+			NavigationItem.RightBarButtonItem.Enabled = true;
+
 			if (progress != null) {
 				progress.StopAnimating ();
 				NavigationItem.TitleView = null;
