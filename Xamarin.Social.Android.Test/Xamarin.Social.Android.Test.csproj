@@ -50,6 +50,7 @@
     <Compile Include="Android.NUnit.cs" />
     <Compile Include="TwitterTest.cs" />
     <Compile Include="AccountStoreTest.cs" />
+    <Compile Include="FacebookTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

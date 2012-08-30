@@ -72,6 +72,7 @@ namespace Xamarin.Social
 				webView.RestoreState (savedInstanceState);
 			}
 			else {
+				Android.Webkit.CookieManager.Instance.RemoveAllCookie ();
 				BeginLoadingInitialUrl ();
 			}
 		}
