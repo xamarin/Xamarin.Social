@@ -4,6 +4,8 @@ using System.Linq;
 
 #if PLATFORM_IOS
 using MonoTouch.UIKit;
+#elif PLATFORM_ANDROID
+using Android.Graphics;
 #else
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -107,6 +109,48 @@ namespace Xamarin.Social
 		}
 
 #elif PLATFORM_ANDROID
+
+		public Bitmap Image { get; private set; }
+		
+		public ImageData (Bitmap image)
+			: this (image, "image.jpg")
+		{
+		}
+		
+		public ImageData (string path)
+			: this (BitmapFactory.DecodeFile (path), System.IO.Path.GetFileName (path))
+		{
+		}
+		
+		public ImageData (Bitmap image, string filename)
+		{
+			Image = image;
+			Filename = filename;
+
+			var compressFormat = Bitmap.CompressFormat.Jpeg;
+			MimeType = "image/jpeg";
+			if (filename.ToLowerInvariant ().EndsWith (".png")) {
+				MimeType = "image/png";
+				compressFormat = Bitmap.CompressFormat.Png;
+			}
+
+			var stream = new MemoryStream ();			
+			image.Compress (compressFormat, 100, stream);
+			stream.Position = 0;
+			
+			Data = stream;
+		}
+		
+		public static implicit operator ImageData (Bitmap image)
+		{
+			return new ImageData (image);
+		}
+		
+		public static implicit operator ImageData (string path)
+		{
+			return new ImageData (path);
+		}
+
 #elif PLATFORM_XAML
 #else
 
