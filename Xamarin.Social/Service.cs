@@ -8,11 +8,11 @@ using System.IO;
 using System.Threading;
 
 #if PLATFORM_IOS
-using UIContext = MonoTouch.UIKit.UIViewController;
 using ShareUIType = MonoTouch.UIKit.UIViewController;
+using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #else
-using UIContext = System.Object;
 using ShareUIType = System.Object;
+using AuthenticateUIType = System.Object;
 #endif
 
 namespace Xamarin.Social
@@ -91,13 +91,16 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task that will complete when they have signed in.
 		/// </returns>
-		public virtual Task<Account> AddAccountAsync (UIContext uiContext)
+		public AuthenticateUIType GetAuthenticateUI (AuthenticateCompletionHandler completionHandler)
 		{
 			var auth = GetAuthenticator ();
 			if (auth == null) {
-				throw new NotSupportedException ("Account sign in is not supported.");
+				throw new NotSupportedException ("Account authentication in is not supported.");
 			}
-			return auth.AuthenticateAsync (uiContext, this);
+
+			auth.CompletionHandler = completionHandler;
+			auth.Service = this;
+			return auth.GetUI ();
 		}
 
 		#endregion

@@ -19,9 +19,7 @@ namespace Xamarin.Social
 		{
 			this.authenticator = authenticator;
 
-			authenticator.Succeeded += HandleSucceeded;
-			authenticator.Failed += HandleFailed;
-			authenticator.Cancelled += HandleCancelled;
+			authenticator.Error += HandleError;
 
 			//
 			// Create the UI
@@ -86,56 +84,14 @@ namespace Xamarin.Social
 			}
 		}
 
-		bool wantsDismissal = false;
-		bool appeared = false;
-		public override void ViewDidAppear (bool animated)
+		void HandleError (object sender, AuthenticationErrorEventArgs e)
 		{
-			base.ViewDidAppear (animated);
-			if (wantsDismissal) {
-				// Bounce this call so we don't confuse the animation system
-				BeginInvokeOnMainThread (delegate {
-					DismissModalViewControllerAnimated (animated);
-				});
-			}
-			appeared = true;
-		}
-
-		void Dismiss ()
-		{
-			if (appeared) {
-				DismissModalViewControllerAnimated (true);
+			if (e.Exception != null) {
+				this.ShowError ("Authentication Error", e.Exception, BeginLoadingInitialUrl);
 			}
 			else {
-				wantsDismissal = true;
+				this.ShowError ("Authentication Error", e.Message, BeginLoadingInitialUrl);
 			}
-		}
-
-		void HandleSucceeded (object sender, EventArgs e)
-		{
-			BeginInvokeOnMainThread (() => {
-				authenticator.Succeeded -= HandleSucceeded;
-				Dismiss ();
-			});
-		}
-
-		void HandleFailed (object sender, AuthenticationFailedEventArgs e)
-		{
-			BeginInvokeOnMainThread (() => {
-				if (e.Exception != null) {
-					this.ShowError ("Authentication Error", e.Exception, BeginLoadingInitialUrl);
-				}
-				else {
-					this.ShowError ("Authentication Error", e.Message, BeginLoadingInitialUrl);
-				}
-			});
-		}
-
-		void HandleCancelled (object sender, EventArgs e)
-		{
-			BeginInvokeOnMainThread (() => {
-				authenticator.Cancelled -= HandleCancelled;
-				Dismiss ();
-			});
 		}
 
 		protected class WebViewDelegate : UIWebViewDelegate

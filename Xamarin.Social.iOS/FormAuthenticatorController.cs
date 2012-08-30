@@ -22,9 +22,6 @@ namespace Xamarin.Social
 		{
 			this.authenticator = authenticator;
 
-			authenticator.Succeeded += HandleSucceeded;
-			authenticator.Cancelled += HandleCancelled;
-
 			Title = authenticator.Service.Title;
 
 			TableView.DataSource = new FormDataSource (this);
@@ -69,42 +66,6 @@ namespace Xamarin.Social
 				NavigationItem.TitleView = null;
 				progress = null;
 			}
-		}
-
-		bool wantsDismissal = false;
-		bool appeared = false;
-		public override void ViewDidAppear (bool animated)
-		{
-			base.ViewDidAppear (animated);
-			if (wantsDismissal) {
-				// Bounce this call so we don't confuse the animation system
-				BeginInvokeOnMainThread (delegate {
-					DismissModalViewControllerAnimated (animated);
-				});
-			}
-			appeared = true;
-		}
-		
-		void Dismiss ()
-		{
-			if (appeared) {
-				DismissModalViewControllerAnimated (true);
-			}
-			else {
-				wantsDismissal = true;
-			}
-		}
-		
-		void HandleSucceeded (object sender, EventArgs e)
-		{
-			authenticator.Succeeded -= HandleSucceeded;
-			Dismiss ();
-		}
-		
-		void HandleCancelled (object sender, EventArgs e)
-		{
-			authenticator.Cancelled -= HandleCancelled;
-			Dismiss ();
 		}
 
 		class FormDelegate : UITableViewDelegate

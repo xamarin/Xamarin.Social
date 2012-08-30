@@ -4,57 +4,29 @@ using System.Threading.Tasks;
 using System.Threading;
 
 #if PLATFORM_IOS
-using UIContext = MonoTouch.UIKit.UIViewController;
+using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #else
-using UIContext = System.Object;
+using AuthenticateUIType = System.Object;
 #endif
 
 namespace Xamarin.Social
 {
+	public delegate void AuthenticateCompletionHandler (Account authenticatedAccount);
+
 	/// <summary>
 	/// A process to authenticate the user.
 	/// </summary>
 	public abstract class Authenticator
 	{
-		public Service Service { get; private set; }
+		public AuthenticateCompletionHandler CompletionHandler { get; set; }
+		public Service Service { get; set; }
 
-		ManualResetEvent completedEvent;
-		Exception exception;
-		string failureMessage;
-		Account account;
-
-		/// <summary>
-		/// Authenticates the user using an approprate GUI.
-		/// </summary>
-		/// <returns>
-		/// The task notifying the completion (good or bad) of the authentication process.
-		/// </returns>
-		public Task<Account> AuthenticateAsync (UIContext context, Service service)
+		public AuthenticateUIType GetUI ()
 		{
-			Service = service;
-
-			completedEvent = new ManualResetEvent (false);
-
-			PresentUI (context);
-
-			return Task.Factory.StartNew (delegate {
-
-				completedEvent.WaitOne ();
-
-				if (exception != null) {
-					throw new AggregateException (exception);
-				}
-				else if (!string.IsNullOrEmpty (failureMessage)) {
-					throw new ApplicationException (failureMessage);
-				}
-				else {
-					return account;
-				}
-
-			}, TaskCreationOptions.LongRunning);
+			return GetPlatformUI ();
 		}
 
-		protected abstract void PresentUI (UIContext context);
+		protected abstract AuthenticateUIType GetPlatformUI ();
 
 		/// <summary>
 		/// Implementations must call this function when they have successfully authenticated.
@@ -64,22 +36,19 @@ namespace Xamarin.Social
 		/// </param>
 		public void OnSucceeded (Account account)
 		{
-			this.account = account;
+			BeginInvokeOnUIThread (delegate {
+				//
+				// Store the account
+				//
+				AccountStore.Create ().Save (account, Service.ServiceId);
 
-			//
-			// Store the account
-			//
-			AccountStore.Create ().Save (account, Service.ServiceId);
-
-			//
-			// Notify the work
-			//
-			var ev = Succeeded;
-			if (ev != null) {
-				ev (this, EventArgs.Empty);
-			}
-
-			completedEvent.Set ();
+				//
+				// Notify the work
+				//
+				if (CompletionHandler != null) {
+					CompletionHandler (account);
+				}
+			});
 		}
 
 		/// <summary>
@@ -97,24 +66,20 @@ namespace Xamarin.Social
 			OnSucceeded (new Account (username, accountProperties));
 		}
 
-		public event EventHandler Succeeded;
-
 		/// <summary>
 		/// Implementations must call this function when they have failed to authenticate.
 		/// </summary>
 		/// <param name='message'>
 		/// The reason that this authentication has failed.
 		/// </param>
-		public void OnFailed (string message)
+		public void OnError (string message)
 		{
-			this.failureMessage = message;
-
-			var ev = Failed;
-			if (ev != null) {
-				ev (this, new AuthenticationFailedEventArgs (message));
-			}
-
-			completedEvent.Set ();
+			BeginInvokeOnUIThread (delegate {
+				var ev = Error;
+				if (ev != null) {
+					ev (this, new AuthenticationErrorEventArgs (message));
+				}
+			});
 		}
 
 		/// <summary>
@@ -123,47 +88,51 @@ namespace Xamarin.Social
 		/// <param name='exception'>
 		/// The reason that this authentication has failed.
 		/// </param>
-		public void OnFailed (Exception exception)
+		public void OnError (Exception exception)
 		{
-			this.exception = exception;
-
-			var ev = Failed;
-			if (ev != null) {
-				ev (this, new AuthenticationFailedEventArgs (exception));
-			}
-
-			completedEvent.Set ();
+			BeginInvokeOnUIThread (delegate {
+				var ev = Error;
+				if (ev != null) {
+					ev (this, new AuthenticationErrorEventArgs (exception));
+				}
+			});
 		}
 
-		public event EventHandler<AuthenticationFailedEventArgs> Failed;
+		public event EventHandler<AuthenticationErrorEventArgs> Error;
 
 		/// <summary>
 		/// Implementations must call this function when they have cancelled the operation.
 		/// </summary>
 		public void OnCancelled ()
 		{
-			var ev = Cancelled;
-			if (ev != null) {
-				ev (this, EventArgs.Empty);
-			}
-			
-			completedEvent.Set ();
+			BeginInvokeOnUIThread (delegate {
+				if (CompletionHandler != null) {
+					CompletionHandler (null);
+				}
+			});
 		}
-		
-		public event EventHandler Cancelled;
+
+		void BeginInvokeOnUIThread (Action action)
+		{
+#if PLATFORM_IOS
+			MonoTouch.UIKit.UIApplication.SharedApplication.BeginInvokeOnMainThread (delegate { action (); });
+#else
+			throw new NotImplementedException ();
+#endif
+		}
 	}
 
-	public class AuthenticationFailedEventArgs : EventArgs
+	public class AuthenticationErrorEventArgs : EventArgs
 	{
 		public string Message { get; private set; }
 		public Exception Exception { get; private set; }
 
-		public AuthenticationFailedEventArgs (string message)
+		public AuthenticationErrorEventArgs (string message)
 		{
 			Message = message;
 		}
 
-		public AuthenticationFailedEventArgs (Exception exception)
+		public AuthenticationErrorEventArgs (Exception exception)
 		{
 			Message = exception.GetUserMessage ();
 			Exception = exception;

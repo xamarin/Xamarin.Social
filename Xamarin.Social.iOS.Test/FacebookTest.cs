@@ -72,21 +72,15 @@ namespace Xamarin.Social.iOS.Test
 		}
 
 		[Test]
-		public void Manual_AddAccount ()
+		public void Manual_Authenticate ()
 		{
 			var service = CreateService ();
 
-			service.AddAccountAsync (AppDelegate.Shared.RootViewController).ContinueWith (task => {
-				if (task.IsFaulted) {
-					Console.WriteLine (task.Exception);
-				}
-				else {
-					Console.WriteLine ("RESULT " + task.Result);
-					Service.Facebook.GetAccountsAsync ().ContinueWith (accountsTask => {
-						Console.WriteLine ("ACCOUNTS = " + accountsTask.Result.Count);
-					});
-				}
+			var vc = service.GetAuthenticateUI (result => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 
 		[Test]
@@ -94,9 +88,10 @@ namespace Xamarin.Social.iOS.Test
 		{
 			var service = CreateService ();
 			
-			service.AddAccountAsync (AppDelegate.Shared.RootViewController).ContinueWith (task => {
-				Console.WriteLine ("RESULT " + task.Result);
+			var vc = service.GetAuthenticateUI (result => {
+				Console.WriteLine ("RESULT " + result);
 			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 	}
 }

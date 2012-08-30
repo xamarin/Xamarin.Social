@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using System.Threading;
 
 #if PLATFORM_IOS
-using UIContext = MonoTouch.UIKit.UIViewController;
+using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #else
-using UIContext = System.Object;
+using AuthenticateUIType = System.Object;
 #endif
 
 namespace Xamarin.Social
@@ -31,11 +31,10 @@ namespace Xamarin.Social
 
 		public abstract Task<Account> SignInAsync (CancellationToken cancellationToken);
 
-		protected override void PresentUI (UIContext context)
+		protected override AuthenticateUIType GetPlatformUI ()
 		{
 #if PLATFORM_IOS
-			context.PresentModalViewController (new MonoTouch.UIKit.UINavigationController (
-				new FormAuthenticatorController (this)), true);
+			return new MonoTouch.UIKit.UINavigationController (new FormAuthenticatorController (this));
 #else
 			throw new System.NotImplementedException ("This platform does not support web authentication.");
 #endif

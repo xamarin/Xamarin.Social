@@ -100,7 +100,7 @@ namespace Xamarin.Social
 
 				getUsernameAsync (accountProperties).ContinueWith (uTask => {
 					if (uTask.IsFaulted) {
-						OnFailed (uTask.Exception);
+						OnError (uTask.Exception);
 					}
 					else {
 						OnSucceeded (uTask.Result, accountProperties);

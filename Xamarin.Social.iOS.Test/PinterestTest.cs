@@ -11,11 +11,15 @@ namespace Xamarin.Social.iOS.Test
 	public class PinterestTest
 	{
 		[Test]
-		public void Manual_AddAccount ()
+		public void Manual_Authenticate ()
 		{
-			var pinterest = new PinterestService ();
+			var service = new PinterestService ();
 
-			pinterest.AddAccountAsync (AppDelegate.Shared.RootViewController);
+			var vc = service.GetAuthenticateUI (result => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
+			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 
 		[Test]

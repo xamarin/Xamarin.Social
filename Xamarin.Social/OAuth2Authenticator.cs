@@ -63,7 +63,7 @@ namespace Xamarin.Social
 					//
 					getUsernameAsync (accessToken).ContinueWith (task => {
 						if (task.IsFaulted) {
-							OnFailed (task.Exception);
+							OnError (task.Exception);
 						}
 						else {
 							OnSucceeded (task.Result, new Dictionary<string,string> {

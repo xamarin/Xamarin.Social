@@ -18,10 +18,14 @@ namespace Xamarin.Social.iOS.Test
 		}
 
 		[Test]
-		public void Manual_AddAccount ()
+		public void Manual_Authenticate ()
 		{
 			var service = CreateService ();
-			service.AddAccountAsync (AppDelegate.Shared.RootViewController);
+			var vc = service.GetAuthenticateUI (result => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
+				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
+			});
+			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}
 
 		[Test]
