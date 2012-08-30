@@ -63,9 +63,6 @@
     </Compile>
     <Compile Include="ACAccountWrapper.cs" />
     <Compile Include="FoundationResponse.cs" />
-    <Compile Include="..\Xamarin.Social\AuthenticationResult.cs">
-      <Link>AuthenticationResult.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\Authenticator.cs">
       <Link>Authenticator.cs</Link>
     </Compile>

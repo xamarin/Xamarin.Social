@@ -48,7 +48,6 @@
     <Compile Include="Item.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="ShareResult.cs" />
-    <Compile Include="AuthenticationResult.cs" />
     <Compile Include="WebAuthenticator.cs" />
     <Compile Include="FormAuthenticator.cs" />
     <Compile Include="Authenticator.cs" />

@@ -49,9 +49,6 @@
     <Compile Include="..\Xamarin.Social\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\AuthenticationResult.cs">
-      <Link>AuthenticationResult.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\Authenticator.cs">
       <Link>Authenticator.cs</Link>
     </Compile>
