@@ -10,6 +10,9 @@ using System.Threading;
 #if PLATFORM_IOS
 using ShareUIType = MonoTouch.UIKit.UIViewController;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
+#elif PLATFORM_ANDROID
+using ShareUIType = Android.Content.Intent;
+using AuthenticateUIType = Android.Content.Intent;
 #else
 using ShareUIType = System.Object;
 using AuthenticateUIType = System.Object;

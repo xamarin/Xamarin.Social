@@ -6,6 +6,8 @@ using System.Threading;
 
 #if PLATFORM_IOS
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
+#elif PLATFORM_ANDROID
+using AuthenticateUIType = Android.Content.Intent;
 #else
 using AuthenticateUIType = System.Object;
 #endif
