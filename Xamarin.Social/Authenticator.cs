@@ -7,7 +7,7 @@ using System.Threading;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #elif PLATFORM_ANDROID
 using AuthenticateUIType = Android.Content.Intent;
-using UIContext = Android.Content.Context;
+using UIContext = Android.App.Activity;
 #else
 using AuthenticateUIType = System.Object;
 #endif
@@ -25,8 +25,10 @@ namespace Xamarin.Social
 		public Service Service { get; set; }
 
 #if PLATFORM_ANDROID
+		UIContext context;
 		public AuthenticateUIType GetUI (UIContext context)
 		{
+			this.context = context;
 			return GetPlatformUI (context);
 		}
 		protected abstract AuthenticateUIType GetPlatformUI (UIContext context);
@@ -127,8 +129,10 @@ namespace Xamarin.Social
 		{
 #if PLATFORM_IOS
 			MonoTouch.UIKit.UIApplication.SharedApplication.BeginInvokeOnMainThread (delegate { action (); });
+#elif PLATFORM_ANDROID
+			context.RunOnUiThread (action);
 #else
-			throw new NotImplementedException ();
+			action ();
 #endif
 		}
 	}

@@ -125,6 +125,8 @@
       <Link>SocialException.cs</Link>
     </Compile>
     <Compile Include="WebAuthenticatorActivity.cs" />
+    <Compile Include="ActivityStateRepository.cs" />
+    <Compile Include="ActivityEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

@@ -8,7 +8,7 @@ using System.Threading;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #elif PLATFORM_ANDROID
 using AuthenticateUIType = Android.Content.Intent;
-using UIContext = Android.Content.Context;
+using UIContext = Android.App.Activity;
 #else
 using AuthenticateUIType = System.Object;
 #endif
