@@ -7,6 +7,7 @@ using System.Threading;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #elif PLATFORM_ANDROID
 using AuthenticateUIType = Android.Content.Intent;
+using UIContext = Android.Content.Context;
 #else
 using AuthenticateUIType = System.Object;
 #endif
@@ -22,14 +23,20 @@ namespace Xamarin.Social
 
 		public abstract void OnPageLoaded (Uri url);
 
+#if PLATFORM_IOS
 		protected override AuthenticateUIType GetPlatformUI ()
 		{
-#if PLATFORM_IOS
 			return new MonoTouch.UIKit.UINavigationController (new WebAuthenticatorController (this));
-#else
-			throw new System.NotImplementedException ("This platform does not support web authentication.");
-#endif
 		}
+#endif
+
+#if PLATFORM_ANDROID
+		protected override AuthenticateUIType GetPlatformUI (UIContext context)
+		{
+			var i = new global::Android.Content.Intent (context, typeof (WebAuthenticatorActivity));
+			return i;
+		}
+#endif
 	}
 }
 

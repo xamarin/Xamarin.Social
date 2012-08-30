@@ -13,6 +13,7 @@ using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #elif PLATFORM_ANDROID
 using ShareUIType = Android.Content.Intent;
 using AuthenticateUIType = Android.Content.Intent;
+using UIContext = Android.App.Activity;
 #else
 using ShareUIType = System.Object;
 using AuthenticateUIType = System.Object;
@@ -88,6 +89,24 @@ namespace Xamarin.Social
 		/// </returns>
 		protected abstract Authenticator GetAuthenticator ();
 
+#if PLATFORM_ANDROID
+		/// <summary>
+		/// Presents the necessary UI for the user to sign in to their account.
+		/// </summary>
+		/// <returns>
+		/// The task that will complete when they have signed in.
+		/// </returns>
+		public AuthenticateUIType GetAuthenticateUI (UIContext context, AuthenticateCompletionHandler completionHandler)
+		{
+			var auth = GetAuthenticator ();
+			if (auth == null) {
+				throw new NotSupportedException ("Account authentication in is not supported.");
+			}
+			auth.CompletionHandler = completionHandler;
+			auth.Service = this;
+			return auth.GetUI (context);
+		}
+#else
 		/// <summary>
 		/// Presents the necessary UI for the user to sign in to their account.
 		/// </summary>
@@ -100,12 +119,11 @@ namespace Xamarin.Social
 			if (auth == null) {
 				throw new NotSupportedException ("Account authentication in is not supported.");
 			}
-
 			auth.CompletionHandler = completionHandler;
 			auth.Service = this;
 			return auth.GetUI ();
 		}
-
+#endif
 		#endregion
 
 
@@ -236,6 +254,8 @@ namespace Xamarin.Social
 
 #if PLATFORM_IOS
 			RegisterService (Twitter = new Xamarin.Social.Services.TwitterService5 ());
+#else
+			RegisterService (Twitter = new Xamarin.Social.Services.TwitterService ());
 #endif
 
 			//RegisterService (new TwitterService ());

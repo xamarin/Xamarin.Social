@@ -1,31 +1,29 @@
 using System;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.IO;
-using Xamarin.Social.Services;
-using System.Net;
 using Android.NUnit;
+using Xamarin.Social.Services;
 
-namespace Xamarin.Social.Android.Test
+namespace Xamarin.Social.iOS.Test
 {
 	[TestFixture]
 	public class TwitterTest
 	{
-		Service CreateService ()
+		TwitterService CreateService ()
 		{
-			return Service.Twitter;
+			return new TwitterService () {
+				ConsumerKey = "GsileCDN9PqjHNoIKUfGQ",
+				ConsumerSecret = "g7gAeVQPJzTC4zwS0ftVPWsv3brVQVgfyR47gD03lk",
+			};
 		}
-		
+
 		[Test]
 		public void Manual_Authenticate ()
 		{
 			var service = CreateService ();
-
-			var ui = service.GetAuthenticateUI (result => {
+			var intent = service.GetAuthenticateUI (TestRunner.Shared, result => {
 				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
-				TestRunner.Shared.FinishActivity (42);
 			});
-			TestRunner.Shared.StartActivityForResult (ui, 42);
+			TestRunner.Shared.StartActivityForResult (intent, 42);
 		}
 	}
 }

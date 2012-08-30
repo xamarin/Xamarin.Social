@@ -9,20 +9,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Reflection;
+using Android.Graphics;
 
 namespace Android.NUnit
 {
-	[Activity (Label = "TestRunner", MainLauncher = true)]			
+	[Activity (Label = "TestRunner", MainLauncher = true)]
 	public class TestRunner : ListActivity
 	{
 		public static TestRunner Shared { get; private set; }
-
-		List<Assembly> assemblies = new List<Assembly> ();
-
-		public void Add (Assembly assembly)
-		{
-			assemblies.Add (assembly);
-		}
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -30,15 +24,19 @@ namespace Android.NUnit
 
 			Shared = this;
 
-			Add (Assembly.GetExecutingAssembly ());
-
 			ListAdapter = new FixtureAdapter (
 				this,
-				from a in assemblies
-				from t in a.GetTypes ()
+				from t in Assembly.GetExecutingAssembly ().GetTypes ()
 				where t.GetCustomAttributes (typeof (global::NUnit.Framework.TestFixtureAttribute), true).Length > 0
 				orderby t.FullName
 				select t);
+
+			ListView.ItemClick += (s, e) => {
+				var f = ((FixtureAdapter)ListAdapter)[e.Position];
+				var i = new Intent (this, typeof(FixtureActivity));
+				i.PutExtra ("FixtureFullName", f.FullName);
+				StartActivity (i);
+			};
 		}
 
 		class FixtureAdapter : BaseAdapter
@@ -51,6 +49,8 @@ namespace Android.NUnit
 				this.activity = activity;
 				this.fixtures = fixtures.ToList ();
 			}
+
+			public Type this[int position] { get { return fixtures[position]; } }
 
 			public override Java.Lang.Object GetItem (int position)
 			{
@@ -68,9 +68,11 @@ namespace Android.NUnit
 
 				if (tv == null) {
 					tv = new TextView (activity);
+					tv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
 				}
 
 				var f = fixtures[position];
+
 				tv.Text = f.Name;
 
 				return tv;
@@ -79,6 +81,94 @@ namespace Android.NUnit
 			public override int Count {
 				get {
 					return fixtures.Count;
+				}
+			}
+		}
+	}
+
+	[Activity (Label = "Fixture", MainLauncher = true)]			
+	public class FixtureActivity : ListActivity
+	{
+		protected override void OnCreate (Bundle savedInstanceState)
+		{
+			base.OnCreate (savedInstanceState);
+
+			var fixture = Assembly.GetExecutingAssembly ().GetType (Intent.GetStringExtra ("FixtureFullName"));
+
+			ListAdapter = new TestAdapter (
+				this,
+				from t in fixture.GetMethods ()
+				where t.GetCustomAttributes (typeof (global::NUnit.Framework.TestAttribute), true).Length > 0
+				orderby t.Name
+				select t);
+
+			ListView.ItemClick += (s, e) => {
+				RunTest (((TestAdapter)ListAdapter)[e.Position]);
+			};
+		}
+
+		void RunTest (MethodInfo test)
+		{
+			try {
+				var o = Activator.CreateInstance (test.DeclaringType);
+				test.Invoke (o, null);
+			}
+			catch (TargetInvocationException ex) {
+				ShowError (ex.InnerException);
+			}
+		}
+
+		void ShowError (Exception ex)
+		{
+			var b = new AlertDialog.Builder (this);
+			b.SetMessage (ex.ToString ());
+			b.SetTitle (ex.GetType ().Name);
+			var alert = b.Create ();
+			alert.Show ();
+		}
+
+		class TestAdapter : BaseAdapter
+		{
+			FixtureActivity activity;
+			List<MethodInfo> tests;
+
+			public TestAdapter (FixtureActivity activity, IEnumerable<MethodInfo> tests)
+			{
+				this.activity = activity;
+				this.tests = tests.ToList ();
+			}
+
+			public MethodInfo this[int position] { get { return tests[position]; } }
+
+			public override Java.Lang.Object GetItem (int position)
+			{
+				return null;
+			}
+
+			public override long GetItemId (int position)
+			{
+				return 0;
+			}
+
+			public override View GetView (int position, View convertView, ViewGroup parent)
+			{
+				var tv = convertView as TextView;
+
+				if (tv == null) {
+					tv = new TextView (activity);
+					tv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
+				}
+
+				var t = tests[position];
+
+				tv.Text = t.Name;
+
+				return tv;
+			}
+
+			public override int Count {
+				get {
+					return tests.Count;
 				}
 			}
 		}

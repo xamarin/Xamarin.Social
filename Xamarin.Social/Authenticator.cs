@@ -7,6 +7,7 @@ using System.Threading;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #elif PLATFORM_ANDROID
 using AuthenticateUIType = Android.Content.Intent;
+using UIContext = Android.Content.Context;
 #else
 using AuthenticateUIType = System.Object;
 #endif
@@ -23,12 +24,20 @@ namespace Xamarin.Social
 		public AuthenticateCompletionHandler CompletionHandler { get; set; }
 		public Service Service { get; set; }
 
+#if PLATFORM_ANDROID
+		public AuthenticateUIType GetUI (UIContext context)
+		{
+			return GetPlatformUI (context);
+		}
+		protected abstract AuthenticateUIType GetPlatformUI (UIContext context);
+#else
 		public AuthenticateUIType GetUI ()
 		{
 			return GetPlatformUI ();
 		}
-
 		protected abstract AuthenticateUIType GetPlatformUI ();
+#endif
+
 
 		/// <summary>
 		/// Implementations must call this function when they have successfully authenticated.
