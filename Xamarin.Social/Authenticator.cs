@@ -7,7 +7,7 @@ using System.Threading;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 #elif PLATFORM_ANDROID
 using AuthenticateUIType = Android.Content.Intent;
-using UIContext = Android.App.Activity;
+using UIContext = Android.Content.Context;
 #else
 using AuthenticateUIType = System.Object;
 #endif
@@ -53,13 +53,22 @@ namespace Xamarin.Social
 				//
 				// Store the account
 				//
+#if PLATFORM_ANDROID
+				AccountStore.Create (context).Save (account, Service.ServiceId);
+#else
 				AccountStore.Create ().Save (account, Service.ServiceId);
+#endif
 
 				//
-				// Notify the work
+				// Notify
 				//
 				if (CompletionHandler != null) {
 					CompletionHandler (account);
+				}
+
+				var ev = Succeeded;
+				if (ev != null) {
+					ev (this, EventArgs.Empty);
 				}
 			});
 		}
@@ -78,6 +87,8 @@ namespace Xamarin.Social
 		{
 			OnSucceeded (new Account (username, accountProperties));
 		}
+
+		public event EventHandler Succeeded;
 
 		/// <summary>
 		/// Implementations must call this function when they have failed to authenticate.
@@ -122,15 +133,28 @@ namespace Xamarin.Social
 				if (CompletionHandler != null) {
 					CompletionHandler (null);
 				}
+
+				var ev = Cancelled;
+				if (ev != null) {
+					ev (this, EventArgs.Empty);
+				}
 			});
 		}
+
+		public event EventHandler Cancelled;
 
 		void BeginInvokeOnUIThread (Action action)
 		{
 #if PLATFORM_IOS
 			MonoTouch.UIKit.UIApplication.SharedApplication.BeginInvokeOnMainThread (delegate { action (); });
 #elif PLATFORM_ANDROID
-			context.RunOnUiThread (action);
+			var a = context as Android.App.Activity;
+			if (a != null) {
+				a.RunOnUiThread (action);
+			}
+			else {
+				action ();
+			}
 #else
 			action ();
 #endif

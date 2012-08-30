@@ -4,6 +4,13 @@ A cross-platform API for accessing social networks.
 
 Version 1 of this API focuses on getting authentication and sharing right. It also includes hooks to make API calls easier.
 
+## Android Permissions
+
+To use this library, the following permissions need to be enabled:
+
+* INTERNET
+
+
 ## Example uses
 
 ### Post to Twitter

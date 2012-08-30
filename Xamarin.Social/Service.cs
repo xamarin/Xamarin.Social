@@ -69,6 +69,17 @@ namespace Xamarin.Social
 
 		#region Authentication
 
+#if PLATFORM_ANDROID
+		/// <summary>
+		/// Gets the saved accounts associated with this service.
+		/// </summary>
+		public virtual Task<List<Account>> GetAccountsAsync (UIContext context)
+		{
+			return Task.Factory.StartNew (delegate {
+				return AccountStore.Create (context).FindAccountsForService (ServiceId);
+			});
+		}
+#else
 		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
@@ -78,6 +89,7 @@ namespace Xamarin.Social
 				return AccountStore.Create ().FindAccountsForService (ServiceId);
 			});
 		}
+#endif
 
 		/// <summary>
 		/// Gets the authenticator for this service. The authenticator will present

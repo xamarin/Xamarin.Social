@@ -21,6 +21,11 @@ namespace Xamarin.Social
 		{
 		}
 
+		public Account (string username)
+			: this (username, null, null)
+		{
+		}
+
 		public Account (string username, CookieContainer cookies)
 			: this (username, null, cookies)
 		{

@@ -33,7 +33,28 @@ namespace Xamarin.Social
 			}
 			if (state == null) {
 				Finish ();
-			}			
+			}
+
+			//
+			// Watch for completion
+			//
+			state.Authenticator.Succeeded += delegate {
+				SetResult (Result.Ok);
+				Finish ();
+			};
+			state.Authenticator.Cancelled += delegate {
+				SetResult (Result.Canceled);
+				Finish ();
+			};
+			state.Authenticator.Error += (s, e) => {
+				if (e.Exception != null) {
+					this.ShowError ("Authentication Error", e.Exception);
+				}
+				else {
+					this.ShowError ("Authentication Error", e.Message);
+				}
+				BeginLoadingInitialUrl ();
+			};
 
 			//
 			// Build the UI
@@ -59,7 +80,7 @@ namespace Xamarin.Social
 		{
 			state.Authenticator.GetInitialUrlAsync ().ContinueWith (t => {
 				if (t.IsFaulted) {
-					this.ShowError (t.Exception);
+					this.ShowError ("Authentication Error", t.Exception);
 				}
 				else {
 					webView.LoadUrl (t.Result.AbsoluteUri);

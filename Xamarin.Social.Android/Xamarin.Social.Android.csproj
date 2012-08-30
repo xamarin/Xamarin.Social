@@ -127,6 +127,7 @@
     <Compile Include="WebAuthenticatorActivity.cs" />
     <Compile Include="ActivityStateRepository.cs" />
     <Compile Include="ActivityEx.cs" />
+    <Compile Include="AndroidAccountStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

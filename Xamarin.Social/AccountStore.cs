@@ -5,14 +5,22 @@ namespace Xamarin.Social
 {
 	public abstract class AccountStore
 	{
+#if PLATFORM_IOS
 		public static AccountStore Create ()
 		{
-#if PLATFORM_IOS
 			return new KeyChainAccountStore ();
-#else
-			throw new NotSupportedException ("Cannot save account on this platform");
-#endif
 		}
+#elif PLATFORM_ANDROID
+		public static AccountStore Create (Android.Content.Context context)
+		{
+			return new AndroidAccountStore (context);
+		}
+#else
+		public static AccountStore Create ()
+		{
+			throw new NotSupportedException ("Cannot save account on this platform");
+		}
+#endif
 
 		public abstract List<Account> FindAccountsForService (string serviceId);
 

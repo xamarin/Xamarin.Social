@@ -187,8 +187,25 @@ namespace NUnit.Framework
 
 	public class Assert
 	{
-		public void IsTrue (bool condition)
+		public static void IsTrue (bool condition)
 		{
+			if (!condition) {
+				throw new AssertionException ("Expected <true> but was <false>");
+			}
+		}
+
+		public static void AreEqual (object expected, object value)
+		{
+			if (!expected.Equals (value)) {
+				throw new AssertionException ("Expected <" + expected + "> but was <" + value + ">");
+			}
+		}
+
+		public static void NotNull (object value)
+		{
+			if (value == null) {
+				throw new AssertionException ("Expected not null but was null");
+			}
 		}
 	}
 
