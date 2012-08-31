@@ -128,6 +128,7 @@
     <Compile Include="ActivityStateRepository.cs" />
     <Compile Include="ActivityEx.cs" />
     <Compile Include="AndroidAccountStore.cs" />
+    <Compile Include="ShareActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

@@ -25,5 +25,18 @@ namespace Xamarin.Social.iOS.Test
 			});
 			TestRunner.Shared.StartActivityForResult (intent, 42);
 		}
+
+		[Test]
+		public void Manual_ShareText ()
+		{
+			var service = CreateService ();
+
+			var item = new Item ("Hello from Android!");
+
+			var intent = service.GetShareUI (TestRunner.Shared, item, result => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
+			});
+			TestRunner.Shared.StartActivityForResult (intent, 42);
+		}
 	}
 }

@@ -64,18 +64,23 @@ namespace Android.NUnit
 
 			public override View GetView (int position, View convertView, ViewGroup parent)
 			{
-				var tv = convertView as TextView;
-
-				if (tv == null) {
-					tv = new TextView (activity);
-					tv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
+				var layout = convertView as LinearLayout;
+				if (layout == null) {
+					var ntv = new TextView (activity) {
+						Id = 42,
+						LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent) {
+							TopMargin = 12,
+							BottomMargin = 12,
+						},
+					};
+					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
+					layout = new LinearLayout (activity);
+					layout.AddView (ntv);
 				}
-
-				var f = fixtures[position];
-
-				tv.Text = f.Name;
-
-				return tv;
+				var item = fixtures[position];
+				var tv = layout.FindViewById<TextView> (42);
+				tv.Text = item.Name;
+				return layout;
 			}
 
 			public override int Count {
@@ -152,18 +157,23 @@ namespace Android.NUnit
 
 			public override View GetView (int position, View convertView, ViewGroup parent)
 			{
-				var tv = convertView as TextView;
-
-				if (tv == null) {
-					tv = new TextView (activity);
-					tv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
+				var layout = convertView as LinearLayout;
+				if (layout == null) {
+					var ntv = new TextView (activity) {
+						Id = 42,
+						LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent) {
+							TopMargin = 12,
+							BottomMargin = 12,
+						},
+					};
+					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
+					layout = new LinearLayout (activity);
+					layout.AddView (ntv);
 				}
-
-				var t = tests[position];
-
-				tv.Text = t.Name;
-
-				return tv;
+				var item = tests[position];
+				var tv = layout.FindViewById<TextView> (42);
+				tv.Text = item.Name;
+				return layout;
 			}
 
 			public override int Count {

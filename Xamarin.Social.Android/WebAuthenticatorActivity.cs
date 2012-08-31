@@ -33,7 +33,10 @@ namespace Xamarin.Social
 			}
 			if (state == null) {
 				Finish ();
+				return;
 			}
+
+			Title = state.Authenticator.Service.Title;
 
 			//
 			// Watch for completion

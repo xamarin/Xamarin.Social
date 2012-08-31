@@ -156,14 +156,29 @@ namespace Xamarin.Social
 			return item.Text.Length;
 		}
 
+#if PLATFORM_IOS
 		public virtual ShareUIType GetShareUI (Item item, Action<ShareResult> completionHandler)
 		{
-#if PLATFORM_IOS
 			return new MonoTouch.UIKit.UINavigationController (new ShareViewController (this, item, completionHandler));
-#else
-			throw new NotImplementedException ("Share not implemented on this platform.");
-#endif
 		}
+#elif PLATFORM_ANDROID
+		public virtual ShareUIType GetShareUI (UIContext context, Item item, Action<ShareResult> completionHandler)
+		{
+			var intent = new Android.Content.Intent (context, typeof (ShareActivity));
+			var state = new ShareActivity.State {
+				Service = this,
+				Item = item,
+				CompletionHandler = completionHandler,
+			};
+			intent.PutExtra ("StateKey", ShareActivity.StateRepo.Add (state));
+			return intent;
+		}
+#else
+		public virtual ShareUIType GetShareUI (Item item, Action<ShareResult> completionHandler)
+		{
+			throw new NotImplementedException ("Share not implemented on this platform.");
+		}
+#endif
 
 		/// <summary>
 		/// <para>
