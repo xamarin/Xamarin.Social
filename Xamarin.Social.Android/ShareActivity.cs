@@ -9,6 +9,8 @@ using Android.Views;
 using Android.Util;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using Android.Text;
+using Android.Text.Style;
 
 namespace Xamarin.Social
 {
@@ -98,12 +100,13 @@ namespace Xamarin.Social
 			acctLabel.SetTextSize (ComplexUnitType.Sp, labelTextSize);
 
 			acctPicker = new TextView (this) {
-				Text = state.ActiveAccount != null ? state.ActiveAccount.Username : "",
 				Typeface = Typeface.DefaultFromStyle (TypefaceStyle.Bold),
+				Clickable = true,
 			};
 			acctPicker.SetTextColor (Color.Black);
 			acctPicker.SetTextSize (ComplexUnitType.Sp, labelTextSize);
 			acctPicker.Click += PickAccount;
+			UpdateAccountUI ();
 
 			var acctLayout = new LinearLayout (this) {
 				Orientation = Orientation.Horizontal,
@@ -150,12 +153,38 @@ namespace Xamarin.Social
 
 		void PickAccount (object sender, EventArgs e)
 		{
+			if (state.Accounts == null || state.Accounts.Count <= 1) {
+				return;
+			}
 
+			var items = state.Accounts.Select (x => x.Username).ToArray ();
+
+			var builder = new AlertDialog.Builder (this);
+			builder.SetTitle ("Pick an account");
+			builder.SetItems (
+				items,
+				(ds, de) => {
+					var item = items[de.Which];
+					state.ActiveAccount = state.Accounts.FirstOrDefault (x => x.Username == item);
+					UpdateAccountUI ();
+				});
+			var alert = builder.Create ();
+
+			alert.Show ();
 		}
 
 		void UpdateAccountUI ()
 		{
-			acctPicker.Text = state.ActiveAccount != null ? state.ActiveAccount.Username : "";
+			var text = state.ActiveAccount != null ? state.ActiveAccount.Username : "?";
+
+			if (state.Accounts != null && state.Accounts.Count > 1) {
+				var content = new SpannableString (text);
+				content.SetSpan (new UnderlineSpan (), 0, text.Length, (SpanTypes)0);
+				acctPicker.SetText (content, TextView.BufferType.Spannable);
+			}
+			else {
+				acctPicker.Text = text;
+			}
 		}
 	}
 }

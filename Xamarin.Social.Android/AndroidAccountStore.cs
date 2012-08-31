@@ -66,6 +66,8 @@ namespace Xamarin.Social
 				}
 			}
 
+			r.Sort ((a, b) => a.Username.CompareTo (b.Username));
+
 			return r;
 		}
 
