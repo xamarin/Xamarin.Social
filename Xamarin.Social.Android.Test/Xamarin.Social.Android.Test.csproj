@@ -51,6 +51,7 @@
     <Compile Include="TwitterTest.cs" />
     <Compile Include="AccountStoreTest.cs" />
     <Compile Include="FacebookTest.cs" />
+    <Compile Include="FlickrTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -68,5 +69,8 @@
       <Project>{BA8CBA8B-7F55-4167-B872-0BBF09F08B8C}</Project>
       <Name>Xamarin.Social.Android</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\what_does_that_mean_trollcat.jpg" />
   </ItemGroup>
 </Project>

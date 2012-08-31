@@ -3,7 +3,7 @@ using Android.NUnit;
 using NUnit.Framework;
 using Xamarin.Social.Services;
 
-namespace Xamarin.Social.iOS.Test
+namespace Xamarin.Social.Android.Test
 {
 	[TestFixture]
 	public class FacebookTest

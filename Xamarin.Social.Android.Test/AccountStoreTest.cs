@@ -4,7 +4,7 @@ using Android.NUnit;
 using Xamarin.Social.Services;
 using System.Linq;
 
-namespace Xamarin.Social.iOS.Test
+namespace Xamarin.Social.Android.Test
 {
 	[TestFixture]
 	public class AccountManagerStoreTest

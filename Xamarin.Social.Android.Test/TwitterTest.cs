@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Android.NUnit;
 using Xamarin.Social.Services;
 
-namespace Xamarin.Social.iOS.Test
+namespace Xamarin.Social.Android.Test
 {
 	[TestFixture]
 	public class TwitterTest
@@ -35,6 +35,21 @@ namespace Xamarin.Social.iOS.Test
 
 			var intent = service.GetShareUI (TestRunner.Shared, item, result => {
 				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
+			});
+			TestRunner.Shared.StartActivityForResult (intent, 42);
+		}
+
+		[Test]
+		public void Manual_ShareTextImage ()
+		{
+			var service = CreateService ();
+
+			var item = new Item ("Hello image from Android!");
+			item.Images.Add (new ImageData (TestRunner.Shared.Assets.Open ("what_does_that_mean_trollcat.jpg"), "image/jpeg"));
+
+			var intent = service.GetShareUI (TestRunner.Shared, item, result => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
+				item.Dispose ();
 			});
 			TestRunner.Shared.StartActivityForResult (intent, 42);
 		}

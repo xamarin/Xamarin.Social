@@ -84,6 +84,13 @@ namespace Xamarin.Social
 
 		public ImageData (UIImage image, string filename)
 		{
+			if (image == null) {
+				throw new ArgumentNullException ("image");
+			}
+			if (string.IsNullOrEmpty (filename)) {
+				throw new ArgumentException ("filename");
+			}
+
 			Image = image;
 			Filename = filename;
 
@@ -121,9 +128,16 @@ namespace Xamarin.Social
 			: this (BitmapFactory.DecodeFile (path), System.IO.Path.GetFileName (path))
 		{
 		}
-		
+
 		public ImageData (Bitmap image, string filename)
 		{
+			if (image == null) {
+				throw new ArgumentNullException ("image");
+			}
+			if (string.IsNullOrEmpty (filename)) {
+				throw new ArgumentException ("filename");
+			}
+
 			Image = image;
 			Filename = filename;
 

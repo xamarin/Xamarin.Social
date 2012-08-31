@@ -128,6 +128,9 @@ namespace Android.NUnit
 			var b = new AlertDialog.Builder (this);
 			b.SetMessage (ex.ToString ());
 			b.SetTitle (ex.GetType ().Name);
+			b.SetNeutralButton ("OK", (s, e) => {
+				((AlertDialog)s).Cancel ();
+			});
 			var alert = b.Create ();
 			alert.Show ();
 		}
