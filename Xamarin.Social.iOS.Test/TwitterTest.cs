@@ -95,7 +95,7 @@ namespace Xamarin.Social.iOS.Test
 
 			var content = req.GetResponseAsync ().Result.GetResponseText ();
 			
-			Assert.IsTrue (content.Contains ("statuses"));
+			Assert.That (content.Contains ("statuses"));
 		}
 	}
 }

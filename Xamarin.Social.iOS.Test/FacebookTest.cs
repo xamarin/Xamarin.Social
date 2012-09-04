@@ -31,7 +31,7 @@ namespace Xamarin.Social.iOS.Test
 
 			var res = req.GetResponseAsync ().Result.GetResponseText ();
 
-			Assert.IsTrue (res.Contains ("\"data\""));
+			Assert.That (res.Contains ("\"data\""));
 		}
 
 		[Test]

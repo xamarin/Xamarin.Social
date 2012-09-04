@@ -30,8 +30,8 @@ namespace Xamarin.Social.iOS.Test
 
 			Assert.NotNull (newAccount);
 
-			Assert.AreEqual ("value1", newAccount.Properties["item1"]);
-			Assert.AreEqual ("value2", newAccount.Properties["item2"]);
+			Assert.That ("value1", Is.EqualTo (newAccount.Properties["item1"]));
+			Assert.That ("value2", Is.EqualTo (newAccount.Properties["item2"]));
 		}
 
 		[Test]
@@ -62,8 +62,8 @@ namespace Xamarin.Social.iOS.Test
 
 			Assert.NotNull (newerAccount);
 
-			Assert.AreEqual ("valueA", newerAccount.Properties["item1"]);
-			Assert.AreEqual ("valueB", newerAccount.Properties["item2"]);
+			Assert.That ("valueA", Is.EqualTo (newerAccount.Properties["item1"]));
+			Assert.That ("valueB", Is.EqualTo (newerAccount.Properties["item2"]));
 		}
 	}
 }
