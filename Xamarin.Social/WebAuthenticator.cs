@@ -28,9 +28,7 @@ namespace Xamarin.Social
 		{
 			return new MonoTouch.UIKit.UINavigationController (new WebAuthenticatorController (this));
 		}
-#endif
-
-#if PLATFORM_ANDROID
+#elif PLATFORM_ANDROID
 		protected override AuthenticateUIType GetPlatformUI (UIContext context)
 		{
 			var i = new global::Android.Content.Intent (context, typeof (WebAuthenticatorActivity));
@@ -39,6 +37,11 @@ namespace Xamarin.Social
 			};
 			i.PutExtra ("StateKey", WebAuthenticatorActivity.StateRepo.Add (state));
 			return i;
+		}
+#else
+		protected override AuthenticateUIType GetPlatformUI ()
+		{
+			throw new NotSupportedException ("WebAuthenticator not supported on this platform.");
 		}
 #endif
 	}

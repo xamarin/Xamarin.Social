@@ -39,12 +39,15 @@ namespace Xamarin.Social
 		{
 			return new MonoTouch.UIKit.UINavigationController (new FormAuthenticatorController (this));
 		}
-#endif
-
-#if PLATFORM_ANDROID
+#elif PLATFORM_ANDROID
 		protected override AuthenticateUIType GetPlatformUI (UIContext context)
 		{
 			throw new System.NotImplementedException ("This platform does not support web authentication.");
+		}
+#else
+		protected override AuthenticateUIType GetPlatformUI ()
+		{
+			throw new NotSupportedException ("FormAuthenticator not supported on this platform.");
 		}
 #endif
 	}
