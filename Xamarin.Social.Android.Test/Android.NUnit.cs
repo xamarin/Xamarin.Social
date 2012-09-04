@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Widget;
 using System.Reflection;
 using Android.Graphics;
+using System.IO;
 
 namespace Android.NUnit
 {
@@ -24,9 +25,12 @@ namespace Android.NUnit
 
 			Shared = this;
 
+			var asm = Assembly.GetExecutingAssembly ();
+			Title = asm.GetName ().Name;
+
 			ListAdapter = new FixtureAdapter (
 				this,
-				from t in Assembly.GetExecutingAssembly ().GetTypes ()
+				from t in asm.GetTypes ()
 				where t.GetCustomAttributes (typeof (global::NUnit.Framework.TestFixtureAttribute), true).Length > 0
 				orderby t.FullName
 				select t);
@@ -73,7 +77,7 @@ namespace Android.NUnit
 							BottomMargin = 12,
 						},
 					};
-					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
+					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 20);
 					layout = new LinearLayout (activity);
 					layout.AddView (ntv);
 				}
@@ -99,6 +103,8 @@ namespace Android.NUnit
 			base.OnCreate (savedInstanceState);
 
 			var fixture = Assembly.GetExecutingAssembly ().GetType (Intent.GetStringExtra ("FixtureFullName"));
+
+			Title = fixture.Name;
 
 			ListAdapter = new TestAdapter (
 				this,
@@ -169,7 +175,7 @@ namespace Android.NUnit
 							BottomMargin = 12,
 						},
 					};
-					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 36);
+					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 20);
 					layout = new LinearLayout (activity);
 					layout.AddView (ntv);
 				}
@@ -200,25 +206,104 @@ namespace NUnit.Framework
 
 	public class Assert
 	{
-		public static void IsTrue (bool condition)
+		public static void That (bool condition)
 		{
 			if (!condition) {
-				throw new AssertionException ("Expected <true> but was <false>");
+				throw new AssertionException ("<true>");
 			}
 		}
 
-		public static void AreEqual (object expected, object value)
+		public static void That (object actual, IResolveConstraint constraint)
 		{
-			if (!expected.Equals (value)) {
-				throw new AssertionException ("Expected <" + expected + "> but was <" + value + ">");
+			if (!constraint.Matches (actual)) {
+				var s = new StringWriter ();
+				constraint.WriteMessageTo (s);
+				throw new AssertionException (s.ToString ());
 			}
 		}
+	}
 
-		public static void NotNull (object value)
+	public static class Is
+	{
+		public static IResolveConstraint EqualTo (object expected)
 		{
-			if (value == null) {
-				throw new AssertionException ("Expected not null but was null");
+			return new EqualConstraint (expected);
+		}
+		public static IResolveConstraint Null ()
+		{
+			return new NullConstraint ();
+		}
+		public static class Not
+		{
+			public static IResolveConstraint EqualTo (object expected)
+			{
+				return new NotConstraint (new EqualConstraint (expected));
 			}
+			public static IResolveConstraint Null ()
+			{
+				return new NotConstraint (new NullConstraint ());
+			}
+		}
+	}
+
+	public interface IResolveConstraint
+	{
+		bool Matches (object actual);
+		void WriteMessageTo (TextWriter writer);
+	}
+
+	public abstract class Constraint : IResolveConstraint
+	{
+		protected object actual;
+		public abstract bool Matches (object actual);
+		public abstract void WriteMessageTo (TextWriter writer);
+	}
+
+	public class EqualConstraint : Constraint
+	{
+		object expected;
+		public EqualConstraint (object expected)
+		{
+			this.expected = expected;
+		}
+		public override bool Matches (object actual)
+		{
+			this.actual = actual;
+			return expected.Equals (actual);
+		}
+		public override void WriteMessageTo (TextWriter writer)
+		{
+			writer.Write ("<{0}> == <{1}>", actual, expected);
+		}
+	}
+
+	public class NullConstraint : Constraint
+	{
+		public override bool Matches (object actual)
+		{
+			return actual == null;
+		}
+		public override void WriteMessageTo (TextWriter writer)
+		{
+			writer.Write ("<{0}> == NULL", actual);
+		}
+	}
+
+	public class NotConstraint : Constraint
+	{
+		Constraint constraint;
+		public NotConstraint (Constraint constraint)
+		{
+			this.constraint = constraint;
+		}
+		public override bool Matches (object actual)
+		{
+			return !constraint.Matches (actual);
+		}
+		public override void WriteMessageTo (TextWriter writer)
+		{
+			writer.Write ("NOT ");
+			constraint.WriteMessageTo (writer);
 		}
 	}
 

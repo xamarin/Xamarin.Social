@@ -27,16 +27,16 @@ namespace Xamarin.Social.Android.Test
 			s.Save (acct, "Test");
 
 			var storedAcct = s.FindAccountsForService ("Test").FirstOrDefault (x => x.Username == acct.Username);
-			Assert.NotNull (storedAcct);
+			Assert.That (storedAcct, Is.Not.Null ());
 
 			storedAcct.Properties["foo"] = "bar";
 
 			s.Save (storedAcct, "Test");
 
 			var updatedAcct = s.FindAccountsForService ("Test").FirstOrDefault (x => x.Username == acct.Username);
-			Assert.NotNull (updatedAcct);
+			Assert.That (updatedAcct, Is.Not.Null ());
 
-			Assert.AreEqual ("bar", updatedAcct.Properties["foo"]);
+			Assert.That ("bar", Is.EqualTo (updatedAcct.Properties["foo"]));
 		}
 	}
 }

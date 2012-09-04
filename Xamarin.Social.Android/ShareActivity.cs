@@ -68,7 +68,7 @@ namespace Xamarin.Social
 
 		void BuildUI (Bundle savedInstanceState)
 		{
-			var labelTextSize = 28;
+			var labelTextSize = 24;
 			var buttonTextSize = 20;
 			var composeTextSize = 24;
 			var hMargin = 24;
@@ -253,27 +253,27 @@ namespace Xamarin.Social
 			if (state.Accounts.Count == 0) {
 				AddAccount ();
 			}
+			else {
+				var addAccountTitle = GetAddAccountTitle ();
+				var items = state.Accounts.Select (x => x.Username).OrderBy (x => x).Concat (new [] { addAccountTitle }).ToArray ();
 
-			var addAccountTitle = GetAddAccountTitle ();
-			var items = state.Accounts.Select (x => x.Username).OrderBy (x => x).Concat (new [] { addAccountTitle }).ToArray ();
+				var builder = new AlertDialog.Builder (this);
+				builder.SetTitle ("Pick an account");
+				builder.SetItems (
+					items,
+					(ds, de) => {
+						var item = items [de.Which];
+						if (item == addAccountTitle) {
+							AddAccount ();
+						} else {
+							state.ActiveAccount = state.Accounts.FirstOrDefault (x => x.Username == item);
+							UpdateAccountUI ();
+						}
+					});
 
-			var builder = new AlertDialog.Builder (this);
-			builder.SetTitle ("Pick an account");
-			builder.SetItems (
-				items,
-				(ds, de) => {
-					var item = items[de.Which];
-					if (item == addAccountTitle) {
-						AddAccount ();
-					}
-					else {
-						state.ActiveAccount = state.Accounts.FirstOrDefault (x => x.Username == item);
-						UpdateAccountUI ();
-					}
-				});
-			var alert = builder.Create ();
-
-			alert.Show ();
+				var alert = builder.Create ();
+				alert.Show ();
+			}
 		}
 
 		void AddAccount ()
