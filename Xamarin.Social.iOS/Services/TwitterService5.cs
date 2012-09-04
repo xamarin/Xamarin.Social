@@ -90,9 +90,11 @@ namespace Xamarin.Social.Services
 
 			public override Account Account {
 				get {
-					return request != null ? new ACAccountWrapper (request.Account) : null;
+					return base.Account;
 				}
 				set {
+					base.Account = value; 
+
 					if (request != null) {
 						if (value == null) {
 							// Don't do anything, not supported
@@ -163,7 +165,7 @@ namespace Xamarin.Social.Services
 				if (granted) {
 					var accounts = store.FindAccounts (at);
 					foreach (var a in accounts) {
-						r.Add (new ACAccountWrapper (a));
+						r.Add (new ACAccountWrapper (a, store));
 					}
 				}
 				completedEvent.Set ();
