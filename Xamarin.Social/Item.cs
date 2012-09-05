@@ -51,6 +51,11 @@ namespace Xamarin.Social
 			Files.Clear ();
 		}
 
+		public bool HasAttachments {
+			get {
+				return Links.Count > 0 || Images.Count > 0 || Files.Count > 0;
+			}
+		}
 
 		/// <summary>
 		/// Attached link.

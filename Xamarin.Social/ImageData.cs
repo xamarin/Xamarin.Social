@@ -19,52 +19,21 @@ namespace Xamarin.Social
 	/// <remarks>
 	/// This object disposes of the Data property.
 	/// </remarks>
-	public class ImageData : IDisposable
+	public class ImageData : FileData
 	{
-		public Stream Data { get; private set; }
-		public string MimeType { get; private set; }
-		public string Filename { get; private set; }
-
 		public ImageData (Stream data, string mimeType)
-			: this (data, mimeType, "image." + (mimeType == "image/jpeg" ? "jpg" : "png"))
+			: this (data, "image." + (mimeType == "image/jpeg" ? "jpg" : "png"), mimeType)
 		{
 		}
 
 		public ImageData (Stream data, string filename, string mimeType)
+			: base (data, filename, mimeType)
 		{
-			if (data == null) {
-				throw new ArgumentNullException ("data");
-			}
-			if (string.IsNullOrEmpty (filename)) {
-				throw new ArgumentException ("filename is required", "filename");
-			}
-			if (string.IsNullOrEmpty (mimeType)) {
-				throw new ArgumentException ("mimeType is required", "mimeType");
-			}
-
-			Data = data;
-			MimeType = mimeType;
-			Filename = filename;
 		}
 
-		~ImageData ()
+		protected override void Dispose (bool disposing)
 		{
-			Dispose (false);
-		}
-
-		public void Dispose ()
-		{
-			Dispose (true);
-			GC.SuppressFinalize (this);
-		}
-
-		protected virtual void Dispose (bool disposing)
-		{
-			if (Data != null) {
-				Data.Dispose ();
-				Data = null;
-			}
-
+			base.Dispose (disposing);
 			Image = null;
 		}
 

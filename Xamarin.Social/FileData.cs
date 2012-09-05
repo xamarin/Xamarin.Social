@@ -11,9 +11,13 @@ namespace Xamarin.Social
 	/// </remarks>
 	public class FileData : IDisposable
 	{
-		public Stream Data { get; private set; }
-		public string Filename { get; private set; }
-		public string MimeType { get; private set; }
+		public Stream Data { get; protected set; }
+		public string Filename { get; protected set; }
+		public string MimeType { get; protected set; }
+
+		protected FileData ()
+		{
+		}
 
 		public FileData (Stream data, string filename, string mimeType = null)
 		{
@@ -34,6 +38,17 @@ namespace Xamarin.Social
 			Data = File.OpenRead (path);
 			Filename = Path.GetFileName (path);
 			MimeType = "application/octet-stream";
+		}
+
+		public long Length {
+			get {
+				try {
+					return Data.Length;
+				}
+				catch (Exception) {
+					return 0;
+				}
+			}
 		}
 
 		public static implicit operator FileData (string path)

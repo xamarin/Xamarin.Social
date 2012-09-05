@@ -12,12 +12,16 @@ using Android.Graphics.Drawables;
 using Android.Text;
 using Android.Text.Style;
 using System.Threading;
+using Android.Content;
 
 namespace Xamarin.Social
 {
 	[Activity (Label = "Share")]
 	public class ShareActivity : Activity
 	{
+		static Color ToolbarColor = Color.Argb (0xFF, 0xDD, 0xDD, 0xDD);
+		static Color AttachmentColor = Color.Argb (0xFF, 0xEE, 0xEE, 0xEE);
+
 		LinearLayout layout;
 		TextView acctPicker;
 		EditText composer;
@@ -73,7 +77,7 @@ namespace Xamarin.Social
 			var labelTextSize = 24;
 			var buttonTextSize = 20;
 			var composeTextSize = 24;
-			var hMargin = 24;
+			var hMargin = 20;
 
 			RequestWindowFeature (WindowFeatures.NoTitle);
 
@@ -136,7 +140,7 @@ namespace Xamarin.Social
 
 				},
 			};
-			toolbar.SetBackgroundColor (Color.LightGray);
+			toolbar.SetBackgroundColor (ToolbarColor);
 			toolbar.SetColumnStretchable (1, true);
 			toolbar.SetColumnShrinkable (1, true);
 
@@ -193,6 +197,31 @@ namespace Xamarin.Social
 			acctLayout.AddView (acctPicker);
 
 			scrollContent.AddView (acctLayout);
+
+			//
+			// Attachments
+			//
+			var attachLayout = new LinearLayout (this) {
+				Orientation = Orientation.Vertical,
+				Visibility = state.Item.HasAttachments ? ViewStates.Visible : ViewStates.Gone,
+				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
+					TopMargin = 24,
+					LeftMargin = hMargin,
+					RightMargin = hMargin,
+				},
+			};
+
+			foreach (var x in state.Item.Links) {
+				attachLayout.AddView (new AttachmentView (this, x.AbsoluteUri));
+			}
+			foreach (var x in state.Item.Images) {
+				attachLayout.AddView (new AttachmentView (this, x.Filename, x.Length));
+			}
+			foreach (var x in state.Item.Files) {
+				attachLayout.AddView (new AttachmentView (this, x.Filename, x.Length));
+			}
+
+			scrollContent.AddView (attachLayout);
 
 			//
 			// Composer
@@ -377,6 +406,66 @@ namespace Xamarin.Social
 			}
 			else {
 				remaining.Text = "";
+			}
+		}
+
+		class AttachmentView : TableLayout
+		{
+			public AttachmentView (Context context, string title)
+				: this (context, title, 0)
+			{
+			}
+
+			public AttachmentView (Context context, string title, long size)
+				: base (context)
+			{
+				var textSize = 20;
+
+				var row = new TableRow (context) {
+				};
+				row.SetBackgroundColor (AttachmentColor);
+				AddView (row);
+
+				var tlabel = new TextView (context) {
+					Text = title,
+					LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
+						LeftMargin = 4,
+					},
+				};
+				tlabel.SetTextColor (Color.Black);
+				tlabel.SetTextSize (ComplexUnitType.Sp, textSize);
+				row.AddView (tlabel);
+
+				if (size > 0) {
+					var slabel = new TextView (context) {
+						Text = FormatSize (size),
+						LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
+							LeftMargin = 4,
+							RightMargin = 4,
+						},
+					};
+					slabel.SetTextColor (Color.Black);
+					slabel.SetTextSize (ComplexUnitType.Sp, textSize);
+					row.AddView (slabel);
+				}
+
+				SetColumnStretchable (0, true);
+				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent) {
+					TopMargin = 2,
+				};
+			}
+
+			static string FormatSize (long size)
+			{
+				if (size < 1024) {
+					return string.Format ("{0} bytes", size);
+				}
+				else if (size < 1024 * 1024) {
+					return string.Format ("{0} KB", size / 1024);
+				}
+				else {
+					return string.Format ("{0:0.0} MB", size / (1024.0 * 1024.0));
+				}
 			}
 		}
 	}

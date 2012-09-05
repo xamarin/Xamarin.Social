@@ -40,11 +40,12 @@ namespace Xamarin.Social.Android.Test
 		}
 
 		[Test]
-		public void Manual_ShareTextImage ()
+		public void Manual_ShareTextLinkImage ()
 		{
 			var service = CreateService ();
 
 			var item = new Item ("Hello image from Android!");
+			item.Links.Add (new Uri ("http://xamarin.com"));
 			item.Images.Add (new ImageData (TestRunner.Shared.Assets.Open ("what_does_that_mean_trollcat.jpg"), "image/jpeg"));
 
 			var intent = service.GetShareUI (TestRunner.Shared, item, result => {
