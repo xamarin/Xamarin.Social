@@ -22,6 +22,7 @@ namespace Xamarin.Social
 		TextView acctPicker;
 		EditText composer;
 		Button sendButton;
+		ProgressBar progress;
 
 		internal class State : Java.Lang.Object
 		{
@@ -98,6 +99,16 @@ namespace Xamarin.Social
 			};
 			title.SetTextColor (Color.Black);
 
+			progress = new ProgressBar (this) {
+				Indeterminate = true,
+				Visibility = state.IsSending ? ViewStates.Visible : ViewStates.Invisible,
+				LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
+					TopMargin = 2,
+					RightMargin = 6,
+					Column = 2,
+				},
+			};
+
 			sendButton = new Button (this) {
 				Text = "Send",
 				TextSize = buttonTextSize,
@@ -106,7 +117,7 @@ namespace Xamarin.Social
 					TopMargin = 2,
 					BottomMargin = 2,
 					RightMargin = 2,
-					Column = 2,
+					Column = 3,
 				},
 			};
 			sendButton.Click += delegate {
@@ -116,6 +127,7 @@ namespace Xamarin.Social
 			var toolbarRow = new TableRow (this) {
 			};
 			toolbarRow.AddView (title);
+			toolbarRow.AddView (progress);
 			toolbarRow.AddView (sendButton);
 
 			var toolbar = new TableLayout (this) {
@@ -154,7 +166,7 @@ namespace Xamarin.Social
 			var acctLayout = new LinearLayout (this) {
 				Orientation = Orientation.Horizontal,
 				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
-					TopMargin = 36,
+					TopMargin = 24,
 					LeftMargin = hMargin,
 					RightMargin = hMargin,
 				},
@@ -205,8 +217,11 @@ namespace Xamarin.Social
 				return;
 			}
 
-			sendButton.Enabled = false;
 			state.IsSending = true;
+
+			sendButton.Enabled = false;
+			progress.Visibility = ViewStates.Visible;
+			composer.Enabled = false;
 
 			state.Item.Text = composer.Text;
 
@@ -236,6 +251,8 @@ namespace Xamarin.Social
 		{
 			state.CancelSource = null;
 			sendButton.Enabled = true;
+			progress.Visibility = ViewStates.Invisible;
+			composer.Enabled = false;
 			state.IsSending = false;
 		}
 
@@ -246,6 +263,10 @@ namespace Xamarin.Social
 
 		void PickAccount (object sender, EventArgs e)
 		{
+			if (state.IsSending) {
+				return;
+			}
+
 			if (state.Accounts == null) {
 				return;
 			}
