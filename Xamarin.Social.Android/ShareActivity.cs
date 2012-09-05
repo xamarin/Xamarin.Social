@@ -21,6 +21,7 @@ namespace Xamarin.Social
 		LinearLayout layout;
 		TextView acctPicker;
 		EditText composer;
+		TextView remaining;
 		Button sendButton;
 		ProgressBar progress;
 
@@ -143,6 +144,22 @@ namespace Xamarin.Social
 			layout.AddView (toolbar);
 
 			//
+			// Scroll content
+			//
+			var scroller = new ScrollView (this) {
+				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent) {
+				},
+			};
+			var scrollContent = new LinearLayout (this) {
+				Orientation = Orientation.Vertical,
+				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent) {
+				},
+			};
+			scroller.ScrollbarFadingEnabled = true;
+			scroller.AddView (scrollContent);
+			layout.AddView (scroller);
+
+			//
 			// Account
 			//
 			var acctLabel = new TextView (this) {
@@ -175,7 +192,7 @@ namespace Xamarin.Social
 			acctLayout.AddView (acctLabel);
 			acctLayout.AddView (acctPicker);
 
-			layout.AddView (acctLayout);
+			scrollContent.AddView (acctLayout);
 
 			//
 			// Composer
@@ -190,8 +207,21 @@ namespace Xamarin.Social
 				},
 			};
 			composer.SetTextSize (ComplexUnitType.Sp, composeTextSize);
+			composer.AfterTextChanged += delegate {
+				UpdateRemainingTextUI ();
+			};
+			scrollContent.AddView (composer);
 
-			layout.AddView (composer);
+			remaining = new TextView (this) {
+				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
+					TopMargin = 2,
+					LeftMargin = hMargin,
+					RightMargin = hMargin,
+				},
+			};
+			remaining.SetTextSize (ComplexUnitType.Sp, composeTextSize);
+			UpdateRemainingTextUI ();
+			scrollContent.AddView (remaining);
 		}
 
 		public override Java.Lang.Object OnRetainNonConfigurationInstance ()
@@ -330,6 +360,24 @@ namespace Xamarin.Social
 			var content = new SpannableString (text);
 			content.SetSpan (new UnderlineSpan (), 0, text.Length, (SpanTypes)0);
 			acctPicker.SetText (content, TextView.BufferType.Spannable);
+		}
+
+		void UpdateRemainingTextUI ()
+		{
+			if (state.Service.HasMaxTextLength) {
+				state.Item.Text = composer.Text;
+				var rem = state.Service.MaxTextLength - state.Service.GetTextLength (state.Item);
+				remaining.Text = rem.ToString ();
+				if (rem < 0) {
+					remaining.SetTextColor (Color.DarkRed);
+				}
+				else {
+					remaining.SetTextColor (Color.DarkGray);
+				}
+			}
+			else {
+				remaining.Text = "";
+			}
 		}
 	}
 }
