@@ -129,6 +129,8 @@
     <Compile Include="ActivityEx.cs" />
     <Compile Include="AndroidAccountStore.cs" />
     <Compile Include="ShareActivity.cs" />
+    <Compile Include="FormAuthenticatorActivity.cs" />
+    <Compile Include="ToolbarView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

@@ -77,6 +77,7 @@ namespace Android.NUnit
 							BottomMargin = 12,
 						},
 					};
+					ntv.SetTextColor (Color.White);
 					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 20);
 					layout = new LinearLayout (activity);
 					layout.AddView (ntv);
@@ -175,6 +176,7 @@ namespace Android.NUnit
 							BottomMargin = 12,
 						},
 					};
+					ntv.SetTextColor (Color.White);
 					ntv.SetTextSize (Android.Util.ComplexUnitType.Sp, 20);
 					layout = new LinearLayout (activity);
 					layout.AddView (ntv);

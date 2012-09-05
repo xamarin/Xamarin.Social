@@ -52,6 +52,7 @@
     <Compile Include="AccountStoreTest.cs" />
     <Compile Include="FacebookTest.cs" />
     <Compile Include="FlickrTest.cs" />
+    <Compile Include="PinterestTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

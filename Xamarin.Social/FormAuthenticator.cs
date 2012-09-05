@@ -42,7 +42,12 @@ namespace Xamarin.Social
 #elif PLATFORM_ANDROID
 		protected override AuthenticateUIType GetPlatformUI (UIContext context)
 		{
-			throw new System.NotImplementedException ("This platform does not support web authentication.");
+			var i = new global::Android.Content.Intent (context, typeof (FormAuthenticatorActivity));
+			var state = new FormAuthenticatorActivity.State {
+				Authenticator = this,
+			};
+			i.PutExtra ("StateKey", FormAuthenticatorActivity.StateRepo.Add (state));
+			return i;
 		}
 #else
 		protected override AuthenticateUIType GetPlatformUI ()

@@ -19,15 +19,13 @@ namespace Xamarin.Social
 	[Activity (Label = "Share")]
 	public class ShareActivity : Activity
 	{
-		static Color ToolbarColor = Color.Argb (0xFF, 0xDD, 0xDD, 0xDD);
 		static Color AttachmentColor = Color.Argb (0xFF, 0xEE, 0xEE, 0xEE);
 
 		LinearLayout layout;
 		TextView acctPicker;
 		EditText composer;
 		TextView remaining;
-		Button sendButton;
-		ProgressBar progress;
+		ToolbarView toolbar;
 
 		internal class State : Java.Lang.Object
 		{
@@ -75,7 +73,6 @@ namespace Xamarin.Social
 		void BuildUI (Bundle savedInstanceState)
 		{
 			var labelTextSize = 24;
-			var buttonTextSize = 20;
 			var composeTextSize = 24;
 			var hMargin = 20;
 
@@ -92,59 +89,8 @@ namespace Xamarin.Social
 			//
 			// Toolbar
 			//
-			var title = new TextView (this) {
-				Text = Title,
-				TextSize = composeTextSize,
-				LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
-					Column = 0,
-					TopMargin = 4,
-					BottomMargin = 0,
-					LeftMargin = 8,
-				},
-			};
-			title.SetTextColor (Color.Black);
-
-			progress = new ProgressBar (this) {
-				Indeterminate = true,
-				Visibility = state.IsSending ? ViewStates.Visible : ViewStates.Invisible,
-				LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
-					TopMargin = 2,
-					RightMargin = 6,
-					Column = 2,
-				},
-			};
-
-			sendButton = new Button (this) {
-				Text = "Send",
-				TextSize = buttonTextSize,
-				Enabled = !state.IsSending,
-				LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
-					TopMargin = 2,
-					BottomMargin = 2,
-					RightMargin = 2,
-					Column = 3,
-				},
-			};
-			sendButton.Click += delegate {
-				StartSending ();
-			};
-
-			var toolbarRow = new TableRow (this) {
-			};
-			toolbarRow.AddView (title);
-			toolbarRow.AddView (progress);
-			toolbarRow.AddView (sendButton);
-
-			var toolbar = new TableLayout (this) {
-				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
-
-				},
-			};
-			toolbar.SetBackgroundColor (ToolbarColor);
-			toolbar.SetColumnStretchable (1, true);
-			toolbar.SetColumnShrinkable (1, true);
-
-			toolbar.AddView (toolbarRow);
+			toolbar = new ToolbarView (this, Title);
+			toolbar.IsProgressing = state.IsSending;
 			layout.AddView (toolbar);
 
 			//
@@ -278,8 +224,7 @@ namespace Xamarin.Social
 
 			state.IsSending = true;
 
-			sendButton.Enabled = false;
-			progress.Visibility = ViewStates.Visible;
+			toolbar.IsProgressing = true;
 			composer.Enabled = false;
 
 			state.Item.Text = composer.Text;
@@ -309,8 +254,7 @@ namespace Xamarin.Social
 		void StopSending ()
 		{
 			state.CancelSource = null;
-			sendButton.Enabled = true;
-			progress.Visibility = ViewStates.Invisible;
+			toolbar.IsProgressing = false;
 			composer.Enabled = false;
 			state.IsSending = false;
 		}
