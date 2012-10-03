@@ -3,6 +3,8 @@ using System;
 using NUnit.Framework;
 using MonoTouch.UIKit;
 using MonoTouch.Accounts;
+using MonoTouch.Twitter;
+using MonoTouch.Foundation;
 
 namespace Xamarin.Social.iOS.Test
 {
@@ -12,7 +14,7 @@ namespace Xamarin.Social.iOS.Test
 		[Test]
 		public void Manual_PresentsDialog ()
 		{
-			var c = new MonoTouch.Twitter.TWTweetComposeViewController ();
+			var c = new TWTweetComposeViewController ();
 
 			c.SetCompletionHandler (result => {
 				Console.WriteLine ("COMPLETED " + result);

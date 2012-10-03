@@ -22,9 +22,12 @@ namespace Xamarin.Social
 	{
 		public IList<FormAuthenticatorField> Fields { get; private set; }
 
-		public FormAuthenticator ()
+		public Uri CreateAccountLink { get; set; }
+
+		public FormAuthenticator (Uri createAccountLink)
 		{
 			Fields = new List<FormAuthenticatorField> ();
+			CreateAccountLink = createAccountLink;
 		}
 
 		public string GetFieldValue (string key) {

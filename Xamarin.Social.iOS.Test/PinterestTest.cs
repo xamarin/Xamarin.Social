@@ -15,8 +15,8 @@ namespace Xamarin.Social.iOS.Test
 		{
 			var service = new PinterestService ();
 
-			var vc = service.GetAuthenticateUI (result => {
-				Console.WriteLine ("AUTHENTICATE RESULT = " + result);
+			var vc = service.GetAuthenticateUI ((s, e) => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + e.Account);
 				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
 			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);

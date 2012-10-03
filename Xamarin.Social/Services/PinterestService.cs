@@ -22,7 +22,8 @@ namespace Xamarin.Social.Services
 
 		class PinterestAuthenticator : FormAuthenticator
 		{
-			public PinterestAuthenticator ()
+			public PinterestAuthenticator (Uri createAccountLink)
+				: base (createAccountLink)
 			{
 				Fields.Add (new FormAuthenticatorField ("email", "Email", FormAuthenticatorFieldType.Email, "sally@example.com", ""));
 				Fields.Add (new FormAuthenticatorField ("password", "Password", FormAuthenticatorFieldType.Password, "Required", ""));
@@ -90,7 +91,7 @@ namespace Xamarin.Social.Services
 
 		protected override Authenticator GetAuthenticator ()
 		{
-			return new PinterestAuthenticator ();
+			return new PinterestAuthenticator (CreateAccountLink);
 		}
 
 		public override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)

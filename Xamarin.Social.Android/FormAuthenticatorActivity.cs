@@ -47,17 +47,13 @@ namespace Xamarin.Social
 				return;
 			}
 
-			Title = state.Authenticator.Service.Title;
+			Title = state.Authenticator.Title;
 
 			//
 			// Watch for completion
 			//
-			state.Authenticator.Succeeded += delegate {
-				SetResult (Result.Ok);
-				Finish ();
-			};
-			state.Authenticator.Cancelled += delegate {
-				SetResult (Result.Canceled);
+			state.Authenticator.Completed += (s, e) => {
+				SetResult (e.IsAuthenticated ? Result.Ok : Result.Canceled);
 				Finish ();
 			};
 			state.Authenticator.Error += (s, e) => {
@@ -153,7 +149,7 @@ namespace Xamarin.Social
 			signIn.Click += HandleSignIn;
 			signInLayout.AddView (signIn);
 
-			if (state.Authenticator.Service.CreateAccountLink != null) {
+			if (state.Authenticator.CreateAccountLink != null) {
 				var createAccount = new Button (this) {
 					Text = "Create Account",
 					LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
@@ -209,7 +205,7 @@ namespace Xamarin.Social
 
 		void HandleCreateAccount (object sender, EventArgs e)
 		{
-			var intent = new Intent (Intent.ActionView, Android.Net.Uri.Parse (state.Authenticator.Service.CreateAccountLink.AbsoluteUri));
+			var intent = new Intent (Intent.ActionView, Android.Net.Uri.Parse (state.Authenticator.CreateAccountLink.AbsoluteUri));
 			StartActivity (intent);
 		}
 

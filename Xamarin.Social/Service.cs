@@ -108,14 +108,21 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task that will complete when they have signed in.
 		/// </returns>
-		public AuthenticateUIType GetAuthenticateUI (UIContext context, AuthenticateCompletionHandler completionHandler)
+		public AuthenticateUIType GetAuthenticateUI (UIContext context, EventHandler<AuthenticatorCompletedEventArgs> completedHandler)
 		{
 			var auth = GetAuthenticator ();
 			if (auth == null) {
 				throw new NotSupportedException ("Account authentication in is not supported.");
 			}
-			auth.CompletionHandler = completionHandler;
-			auth.Service = this;
+			auth.Completed += (sender, e) => {
+				if (e.IsAuthenticated) {
+					AccountStore.Create (context).Save (e.Account, ServiceId);
+				}
+			};
+			if (completedHandler != null) {
+				auth.Completed += completedHandler;
+			}
+			auth.Title = Title;
 			return auth.GetUI (context);
 		}
 #else
@@ -125,14 +132,21 @@ namespace Xamarin.Social
 		/// <returns>
 		/// The task that will complete when they have signed in.
 		/// </returns>
-		public AuthenticateUIType GetAuthenticateUI (AuthenticateCompletionHandler completionHandler)
+		public AuthenticateUIType GetAuthenticateUI (EventHandler<AuthenticatorCompletedEventArgs> completedHandler)
 		{
 			var auth = GetAuthenticator ();
 			if (auth == null) {
 				throw new NotSupportedException ("Account authentication in is not supported.");
 			}
-			auth.CompletionHandler = completionHandler;
-			auth.Service = this;
+			auth.Completed += (sender, e) => {
+				if (e.IsAuthenticated) {
+					AccountStore.Create ().Save (e.Account, ServiceId);
+				}
+			};
+			if (completedHandler != null) {
+				auth.Completed += completedHandler;
+			}
+			auth.Title = Title;
 			return auth.GetUI ();
 		}
 #endif

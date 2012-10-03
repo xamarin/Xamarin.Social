@@ -14,15 +14,35 @@ using AuthenticateUIType = System.Object;
 
 namespace Xamarin.Social
 {
-	public delegate void AuthenticateCompletionHandler (Account authenticatedAccount);
-
 	/// <summary>
-	/// A process to authenticate the user.
+	/// A process and user interface to authenticate a user.
 	/// </summary>
 	public abstract class Authenticator
 	{
-		public AuthenticateCompletionHandler CompletionHandler { get; set; }
-		public Service Service { get; set; }
+		/// <summary>
+		/// Title of any UI elements that need to be presented for this authenticator.
+		/// </summary>
+		public string Title { get; set; }
+
+		/// <summary>
+		/// Occurs when authentication has been successfully or unsuccessfully completed.
+		/// Consult the <see cref="AuthenticatorCompletedEventArgs.IsAuthenticated"/> event argument to determine if
+		/// authentication was successful.
+		/// </summary>
+		public event EventHandler<AuthenticatorCompletedEventArgs> Completed;
+
+		/// <summary>
+		/// Occurs when there an error is encountered when authenticating.
+		/// </summary>
+		public event EventHandler<AuthenticatorErrorEventArgs> Error;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Xamarin.Social.Authenticator"/> class.
+		/// </summary>
+		public Authenticator ()
+		{
+			Title = "Authenticate";
+		}
 
 #if PLATFORM_ANDROID
 		UIContext context;
@@ -40,7 +60,6 @@ namespace Xamarin.Social
 		protected abstract AuthenticateUIType GetPlatformUI ();
 #endif
 
-
 		/// <summary>
 		/// Implementations must call this function when they have successfully authenticated.
 		/// </summary>
@@ -50,25 +69,9 @@ namespace Xamarin.Social
 		public void OnSucceeded (Account account)
 		{
 			BeginInvokeOnUIThread (delegate {
-				//
-				// Store the account
-				//
-#if PLATFORM_ANDROID
-				AccountStore.Create (context).Save (account, Service.ServiceId);
-#else
-				AccountStore.Create ().Save (account, Service.ServiceId);
-#endif
-
-				//
-				// Notify
-				//
-				if (CompletionHandler != null) {
-					CompletionHandler (account);
-				}
-
-				var ev = Succeeded;
+				var ev = Completed;
 				if (ev != null) {
-					ev (this, EventArgs.Empty);
+					ev (this, new AuthenticatorCompletedEventArgs (account));
 				}
 			});
 		}
@@ -88,7 +91,18 @@ namespace Xamarin.Social
 			OnSucceeded (new Account (username, accountProperties));
 		}
 
-		public event EventHandler Succeeded;
+		/// <summary>
+		/// Implementations must call this function when they have cancelled the operation.
+		/// </summary>
+		public void OnCancelled ()
+		{
+			BeginInvokeOnUIThread (delegate {
+				var ev = Completed;
+				if (ev != null) {
+					ev (this, new AuthenticatorCompletedEventArgs (null));
+				}
+			});
+		}
 
 		/// <summary>
 		/// Implementations must call this function when they have failed to authenticate.
@@ -101,7 +115,7 @@ namespace Xamarin.Social
 			BeginInvokeOnUIThread (delegate {
 				var ev = Error;
 				if (ev != null) {
-					ev (this, new AuthenticationErrorEventArgs (message));
+					ev (this, new AuthenticatorErrorEventArgs (message));
 				}
 			});
 		}
@@ -117,31 +131,10 @@ namespace Xamarin.Social
 			BeginInvokeOnUIThread (delegate {
 				var ev = Error;
 				if (ev != null) {
-					ev (this, new AuthenticationErrorEventArgs (exception));
+					ev (this, new AuthenticatorErrorEventArgs (exception));
 				}
 			});
 		}
-
-		public event EventHandler<AuthenticationErrorEventArgs> Error;
-
-		/// <summary>
-		/// Implementations must call this function when they have cancelled the operation.
-		/// </summary>
-		public void OnCancelled ()
-		{
-			BeginInvokeOnUIThread (delegate {
-				if (CompletionHandler != null) {
-					CompletionHandler (null);
-				}
-
-				var ev = Cancelled;
-				if (ev != null) {
-					ev (this, EventArgs.Empty);
-				}
-			});
-		}
-
-		public event EventHandler Cancelled;
 
 		void BeginInvokeOnUIThread (Action action)
 		{
@@ -161,17 +154,28 @@ namespace Xamarin.Social
 		}
 	}
 
-	public class AuthenticationErrorEventArgs : EventArgs
+	public class AuthenticatorCompletedEventArgs : EventArgs
+	{
+		public bool IsAuthenticated { get { return Account != null; } }
+		public Account Account { get; private set; }
+
+		public AuthenticatorCompletedEventArgs (Account account)
+		{
+			Account = account;
+		}
+	}
+
+	public class AuthenticatorErrorEventArgs : EventArgs
 	{
 		public string Message { get; private set; }
 		public Exception Exception { get; private set; }
 
-		public AuthenticationErrorEventArgs (string message)
+		public AuthenticatorErrorEventArgs (string message)
 		{
 			Message = message;
 		}
 
-		public AuthenticationErrorEventArgs (Exception exception)
+		public AuthenticatorErrorEventArgs (Exception exception)
 		{
 			Message = exception.GetUserMessage ();
 			Exception = exception;

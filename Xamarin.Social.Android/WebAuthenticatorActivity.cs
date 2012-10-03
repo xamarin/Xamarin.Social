@@ -36,17 +36,13 @@ namespace Xamarin.Social
 				return;
 			}
 
-			Title = state.Authenticator.Service.Title;
+			Title = state.Authenticator.Title;
 
 			//
 			// Watch for completion
 			//
-			state.Authenticator.Succeeded += delegate {
-				SetResult (Result.Ok);
-				Finish ();
-			};
-			state.Authenticator.Cancelled += delegate {
-				SetResult (Result.Canceled);
+			state.Authenticator.Completed += (s, e) => {
+				SetResult (e.IsAuthenticated ? Result.Ok : Result.Canceled);
 				Finish ();
 			};
 			state.Authenticator.Error += (s, e) => {

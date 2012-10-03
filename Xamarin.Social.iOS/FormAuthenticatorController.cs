@@ -22,7 +22,7 @@ namespace Xamarin.Social
 		{
 			this.authenticator = authenticator;
 
-			Title = authenticator.Service.Title;
+			Title = authenticator.Title;
 
 			TableView.DataSource = new FormDataSource (this);
 			TableView.Delegate = new FormDelegate (this);
@@ -89,7 +89,7 @@ namespace Xamarin.Social
 				else if (indexPath.Section == 2) {
 					tableView.DeselectRow (indexPath, true);
 					UIApplication.SharedApplication.OpenUrl (
-						new NSUrl (controller.authenticator.Service.CreateAccountLink.AbsoluteUri));
+						new NSUrl (controller.authenticator.CreateAccountLink.AbsoluteUri));
 
 				}
 			}
@@ -162,7 +162,7 @@ namespace Xamarin.Social
 
 			public override int NumberOfSections (UITableView tableView)
 			{
-				return 2 + (controller.authenticator.Service.CreateAccountLink != null ? 1 : 0);
+				return 2 + (controller.authenticator.CreateAccountLink != null ? 1 : 0);
 			}
 
 			public override int RowsInSection (UITableView tableView, int section)

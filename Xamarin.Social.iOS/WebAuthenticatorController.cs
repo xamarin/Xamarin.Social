@@ -24,7 +24,7 @@ namespace Xamarin.Social
 			//
 			// Create the UI
 			//
-			Title = authenticator.Service.Title;
+			Title = authenticator.Title;
 
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (
 				UIBarButtonSystemItem.Cancel,
@@ -84,7 +84,7 @@ namespace Xamarin.Social
 			}
 		}
 
-		void HandleError (object sender, AuthenticationErrorEventArgs e)
+		void HandleError (object sender, AuthenticatorErrorEventArgs e)
 		{
 			if (e.Exception != null) {
 				this.ShowError ("Authentication Error", e.Exception, BeginLoadingInitialUrl);
