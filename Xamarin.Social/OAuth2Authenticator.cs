@@ -12,6 +12,8 @@ namespace Xamarin.Social
 	{
 		public delegate Task<string> GetUsernameAsyncFunc (string accessToken);
 
+		public string ResponseType { get; set; }
+
 		string clientId;
 		string scope;
 		Uri authorizeUrl;
@@ -20,9 +22,23 @@ namespace Xamarin.Social
 
 		public OAuth2Authenticator (string clientId, string scope, Uri authorizeUrl, Uri redirectUrl, GetUsernameAsyncFunc getUsernameAsync)
 		{
+			ResponseType = "token";
+
+			if (string.IsNullOrEmpty (clientId)) {
+				throw new ArgumentException ("clientId must be provided", "clientId");
+			}
 			this.clientId = clientId;
-			this.scope = scope;
+
+			this.scope = scope ?? "";
+
+			if (authorizeUrl == null) {
+				throw new ArgumentNullException ("authorizeUrl");
+			}
 			this.authorizeUrl = authorizeUrl;
+
+			if (redirectUrl == null) {
+				throw new ArgumentNullException ("redirectUrl");
+			}
 			this.redirectUrl = redirectUrl;
 
 			if (getUsernameAsync == null) {
@@ -34,10 +50,11 @@ namespace Xamarin.Social
 		public override Task<Uri> GetInitialUrlAsync ()
 		{
 			var url = new Uri (string.Format (
-				"{0}?client_id={1}&redirect_uri={2}&response_type=token&scope={3}",
+				"{0}?client_id={1}&redirect_uri={2}&response_type={3}&scope={4}",
 				authorizeUrl.AbsoluteUri,
 				Uri.EscapeDataString (clientId),
 				Uri.EscapeDataString (redirectUrl.AbsoluteUri),
+				Uri.EscapeDataString (ResponseType),
 				Uri.EscapeDataString (scope)));
 
 			return Task.Factory.StartNew (() => {

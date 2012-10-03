@@ -26,11 +26,34 @@ namespace Xamarin.Social
 
 		public OAuth1Authenticator (string consumerKey, string consumerSecret, Uri requestTokenUrl, Uri authorizeUrl, Uri accessTokenUrl, Uri callbackUrl, GetUsernameAsyncFunc getUsernameAsync)
 		{
+			if (string.IsNullOrEmpty (consumerKey)) {
+				throw new ArgumentException ("consumerKey must be provided", "consumerKey");
+			}
 			this.consumerKey = consumerKey;
+
+			if (string.IsNullOrEmpty (consumerSecret)) {
+				throw new ArgumentException ("consumerSecret must be provided", "consumerSecret");
+			}
 			this.consumerSecret = consumerSecret;
+
+			if (requestTokenUrl == null) {
+				throw new ArgumentNullException ("requestTokenUrl");
+			}
 			this.requestTokenUrl = requestTokenUrl;
+
+			if (authorizeUrl == null) {
+				throw new ArgumentNullException ("authorizeUrl");
+			}
 			this.authorizeUrl = authorizeUrl;
+
+			if (accessTokenUrl == null) {
+				throw new ArgumentNullException ("accessTokenUrl");
+			}
 			this.accessTokenUrl = accessTokenUrl;
+
+			if (callbackUrl == null) {
+				throw new ArgumentNullException ("callbackUrl");
+			}
 			this.callbackUrl = callbackUrl;
 
 			if (getUsernameAsync == null) {
