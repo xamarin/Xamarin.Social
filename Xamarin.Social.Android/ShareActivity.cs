@@ -302,8 +302,8 @@ namespace Xamarin.Social
 
 		void AddAccount ()
 		{
-			var intent = state.Service.GetAuthenticateUI (this, (s, e) => {
-				if (e.IsAuthenticated) {
+			var intent = state.Service.GetAuthenticateUI (this, account => {
+				if (account != null) {
 					BeginGetAccounts ();
 				}
 			});

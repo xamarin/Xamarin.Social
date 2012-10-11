@@ -76,8 +76,8 @@ namespace Xamarin.Social.iOS.Test
 		{
 			var service = CreateService ();
 
-			var vc = service.GetAuthenticateUI ((s, e) => {
-				Console.WriteLine ("AUTHENTICATE RESULT = " + e.Account);
+			var vc = service.GetAuthenticateUI (account => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + account);
 				AppDelegate.Shared.RootViewController.DismissModalViewControllerAnimated (true);
 			});
 			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
@@ -88,8 +88,8 @@ namespace Xamarin.Social.iOS.Test
 		{
 			var service = CreateService ();
 			
-			var vc = service.GetAuthenticateUI ((s, e) => {
-				Console.WriteLine ("RESULT " + e.Account);
+			var vc = service.GetAuthenticateUI (account => {
+				Console.WriteLine ("RESULT " + account);
 			});
 			AppDelegate.Shared.RootViewController.PresentViewController (vc, true, null);
 		}

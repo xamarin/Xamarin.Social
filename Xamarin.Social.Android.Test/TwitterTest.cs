@@ -20,8 +20,8 @@ namespace Xamarin.Social.Android.Test
 		public void Manual_Authenticate ()
 		{
 			var service = CreateService ();
-			var intent = service.GetAuthenticateUI (TestRunner.Shared, (s, e) => {
-				Console.WriteLine ("AUTHENTICATE RESULT = " + e.Account);
+			var intent = service.GetAuthenticateUI (TestRunner.Shared, account => {
+				Console.WriteLine ("AUTHENTICATE RESULT = " + account);
 			});
 			TestRunner.Shared.StartActivityForResult (intent, 42);
 		}
