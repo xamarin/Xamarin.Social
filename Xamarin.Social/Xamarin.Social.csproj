@@ -70,6 +70,7 @@
     <Compile Include="OAuth2Authenticator.cs" />
     <Compile Include="OAuth2Request.cs" />
     <Compile Include="OAuth2Service.cs" />
+    <Compile Include="Services\AppDotNetService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

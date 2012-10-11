@@ -136,6 +136,9 @@
       <Link>OAuth2Service.cs</Link>
     </Compile>
     <Compile Include="ShareViewController.cs" />
+    <Compile Include="..\Xamarin.Social\Services\AppDotNetService.cs">
+      <Link>Services\AppDotNetService.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

@@ -89,6 +89,12 @@ namespace Xamarin.Social
 						}
 					}, TaskScheduler.FromCurrentSynchronizationContext ());
 				}
+				else if (ResponseType == "code") {
+					throw new NotSupportedException ("ResponseType=code is not supported.");
+				}
+				else {
+					throw new SocialException ("Expected the RedirectUrl to contain an access_token. It did not.");
+				}
 			}
 		}
 	}
