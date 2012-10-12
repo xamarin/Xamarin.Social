@@ -317,7 +317,7 @@ namespace Xamarin.Social
 					this.ShowError ("Share Error", t.Exception);
 				}
 				else {
-					state.Accounts = t.Result;
+					state.Accounts = t.Result.ToList ();
 					if (state.ActiveAccount == null) {
 						state.ActiveAccount = state.Accounts.FirstOrDefault ();
 					}

@@ -38,7 +38,7 @@ namespace Xamarin.Social
 			View.BackgroundColor = UIColor.White;
 
 			service.GetAccountsAsync ().ContinueWith (t => {
-				accounts = t.Result;
+				accounts = t.Result.ToList ();
 				BuildUI ();
 			}, TaskScheduler.FromCurrentSynchronizationContext ());
 		}

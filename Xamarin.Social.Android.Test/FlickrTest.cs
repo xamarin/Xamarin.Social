@@ -2,6 +2,7 @@ using System;
 using NUnit.Framework;
 using Android.NUnit;
 using Xamarin.Social.Services;
+using System.Linq;
 
 namespace Xamarin.Social.Android.Test
 {
@@ -51,9 +52,9 @@ namespace Xamarin.Social.Android.Test
 		{
 			var service = CreateService ();
 
-			var accounts = service.GetAccountsAsync (TestRunner.Shared).Result;
+			var account = service.GetAccountsAsync (TestRunner.Shared).Result.First ();
 
-			var req = service.CreateRequest ("GET", new Uri ("http://www.flickr.com/services/rest"), accounts[0]);
+			var req = service.CreateRequest ("GET", new Uri ("http://www.flickr.com/services/rest"), account);
 			req.Parameters["user_id"] = "me";
 			req.Parameters["method"] = "flickr.people.getPhotos";
 

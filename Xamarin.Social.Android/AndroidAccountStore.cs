@@ -46,7 +46,7 @@ namespace Xamarin.Social
 			}
 		}
 
-		public override List<Account> FindAccountsForService (string serviceId)
+		public override IEnumerable<Account> FindAccountsForService (string serviceId)
 		{
 			var r = new List<Account> ();
 

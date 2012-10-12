@@ -3,6 +3,7 @@ using NUnit.Framework;
 using MonoTouch.UIKit;
 using MonoTouch.Accounts;
 using Xamarin.Social.Services;
+using System.Linq;
 
 namespace Xamarin.Social.iOS.Test
 {
@@ -89,9 +90,9 @@ namespace Xamarin.Social.iOS.Test
 		{
 			var service = CreateService ();
 			
-			var accounts = service.GetAccountsAsync ().Result;
+			var account = service.GetAccountsAsync ().Result.First ();
 			
-			var req = service.CreateRequest ("GET", new Uri ("http://api.twitter.com/1/statuses/home_timeline.xml"), accounts[0]);
+			var req = service.CreateRequest ("GET", new Uri ("http://api.twitter.com/1/statuses/home_timeline.xml"), account);
 
 			var content = req.GetResponseAsync ().Result.GetResponseText ();
 			

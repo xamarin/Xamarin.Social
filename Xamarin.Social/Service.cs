@@ -41,6 +41,15 @@ namespace Xamarin.Social
 		/// </summary>
 		public string ShareTitle { get; protected set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Xamarin.Social.Service"/> class.
+		/// </summary>
+		/// <param name='serviceId'>
+		/// Service identifier used when storing accounts.
+		/// </param>
+		/// <param name='title'>
+		/// Title used when displaying its name in UI.
+		/// </param>
 		protected Service (string serviceId, string title)
 		{
 			if (string.IsNullOrWhiteSpace (serviceId)) {
@@ -73,7 +82,7 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
-		public virtual Task<List<Account>> GetAccountsAsync (UIContext context)
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync (UIContext context)
 		{
 			return Task.Factory.StartNew (delegate {
 				return AccountStore.Create (context).FindAccountsForService (ServiceId);
@@ -83,7 +92,7 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
-		public virtual Task<List<Account>> GetAccountsAsync ()
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync ()
 		{
 			return Task.Factory.StartNew (delegate {
 				return AccountStore.Create ().FindAccountsForService (ServiceId);
@@ -158,30 +167,87 @@ namespace Xamarin.Social
 
 		#region Sharing
 
+		/// <summary>
+		/// The maximum number of characters that you can share.
+		/// </summary>
 		public int MaxTextLength { get; protected set; }
+
+		/// <summary>
+		/// The maximum number of links that you can share.
+		/// </summary>
 		public int MaxLinks { get; protected set; }
+
+		/// <summary>
+		/// The maximum number of images that you can share.
+		/// </summary>
 		public int MaxImages { get; protected set; }
+
+		/// <summary>
+		/// The maximum number of files that you can share.
+		/// </summary>
 		public int MaxFiles { get; protected set; }
 #if SUPPORT_VIDEO
 		public int MaxVideos { get; protected set; }
 #endif
 
+		/// <summary>
+		/// Gets a value indicating whether this instance has limit on the number of
+		/// characters that you can share.
+		/// </summary>
 		public bool HasMaxTextLength { get { return MaxTextLength < int.MaxValue; } }
 
+		/// <summary>
+		/// Calculate the text length of an item if links and other media need to be
+		/// inlined with the text.
+		/// </summary>
+		/// <returns>
+		/// The text length after inlining media.
+		/// </returns>
+		/// <param name='item'>
+		/// The item whose text length is to be calculated.
+		/// </param>
 		public virtual int GetTextLength (Item item)
 		{
 			return item.Text.Length;
 		}
 
 #if PLATFORM_IOS
+		/// <summary>
+		/// Gets an <see cref="MonoTouch.UIKit.UIViewController"/> that can be used to present the share UI.
+		/// </summary>
+		/// <returns>
+		/// The <see cref="MonoTouch.UIKit.UIViewController"/>.
+		/// </returns>
+		/// <param name='item'>
+		/// The item to share.
+		/// </param>
+		/// <param name='completionHandler'>
+		/// Handler called when the share UI has finished. You must dismiss the view controller in this method
+		/// as it won't dismiss itself.
+		/// </param>
 		public virtual ShareUIType GetShareUI (Item item, Action<ShareResult> completionHandler)
 		{
 			return new MonoTouch.UIKit.UINavigationController (new ShareViewController (this, item, completionHandler));
 		}
 #elif PLATFORM_ANDROID
-		public virtual ShareUIType GetShareUI (UIContext context, Item item, Action<ShareResult> completionHandler)
+		/// <summary>
+		/// Gets an <see cref="Android.Content.Intent"/> that can be used to start the share activity.
+		/// </summary>
+		/// <returns>
+		/// The <see cref="Android.Content.Intent"/>.
+		/// </returns>
+		/// <param name='activity'>
+		/// The <see cref="Android.App.Activity"/> that will invoke the returned <see cref="Android.Content.Intent"/>.
+		/// </param>
+		/// <param name='item'>
+		/// The item to share.
+		/// </param>
+		/// <param name='completionHandler'>
+		/// Handler called when the share UI has finished.
+		/// </param>
+		public virtual ShareUIType GetShareUI (UIContext activity, Item item, Action<ShareResult> completionHandler)
 		{
-			var intent = new Android.Content.Intent (context, typeof (ShareActivity));
+			var intent = new Android.Content.Intent (activity, typeof (ShareActivity));
 			var state = new ShareActivity.State {
 				Service = this,
 				Item = item,
@@ -191,6 +257,18 @@ namespace Xamarin.Social
 			return intent;
 		}
 #else
+		/// <summary>
+		/// Gets the share UI.
+		/// </summary>
+		/// <returns>
+		/// The share UI.
+		/// </returns>
+		/// <param name='item'>
+		/// The item to share.
+		/// </param>
+		/// <param name='completionHandler'>
+		/// Handler called when the share UI has finished.
+		/// </param>
 		public virtual ShareUIType GetShareUI (Item item, Action<ShareResult> completionHandler)
 		{
 			throw new NotImplementedException ("Share not implemented on this platform.");

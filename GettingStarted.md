@@ -4,6 +4,7 @@ Xamarin.Social enables you to post text and other media to social networks and a
 
 
 
+
 ## 1. Create and configure the service
 
 Access social networks by creating `Service` objects:
@@ -69,7 +70,7 @@ You need to have `Account` objects in order to work with services. You can get a
 On Android, `GetAuthenticateUI` returns an `Intent`:
 
 	var authenticateIntent = facebook.GetAuthenticateUI (this, account => {
-		// Do something with the account...
+		// do something wonderful with the account
 	});
 	StartActivityForResult (authenticateIntent, 42);
 
@@ -78,7 +79,7 @@ Accounts are automatically saved for you using the secure `SecKeyChain` on iOS a
 You can retrieve saved accounts with `GetAccountsAsync`:
 
 	facebook.GetAccountsAsync ().ContinueWith (accounts => {
-		// accounts is an IList<Account> of saved accounts
+		// accounts is an IEnumerable<Account> of saved accounts
 	});
 
 

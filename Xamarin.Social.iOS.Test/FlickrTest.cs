@@ -4,6 +4,7 @@ using NUnit.Framework;
 using MonoTouch.UIKit;
 using MonoTouch.Accounts;
 using Xamarin.Social.Services;
+using System.Linq;
 
 namespace Xamarin.Social.iOS.Test
 {
@@ -54,9 +55,9 @@ namespace Xamarin.Social.iOS.Test
 		{
 			var service = CreateService ();
 
-			var accounts = service.GetAccountsAsync ().Result;
+			var account = service.GetAccountsAsync ().Result.First ();
 
-			var req = service.CreateRequest ("GET", new Uri ("http://www.flickr.com/services/rest"), accounts[0]);
+			var req = service.CreateRequest ("GET", new Uri ("http://www.flickr.com/services/rest"), account);
 			req.Parameters["user_id"] = "me";
 			req.Parameters["method"] = "flickr.people.getPhotos";
 

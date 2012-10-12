@@ -8,7 +8,7 @@ namespace Xamarin.Social
 {
 	class KeyChainAccountStore : AccountStore
 	{
-		public override List<Account> FindAccountsForService (string serviceId)
+		public override IEnumerable<Account> FindAccountsForService (string serviceId)
 		{
 			var query = new SecRecord (SecKind.GenericPassword);
 			query.Service = serviceId;

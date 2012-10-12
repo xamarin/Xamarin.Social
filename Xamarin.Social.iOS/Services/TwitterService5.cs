@@ -149,7 +149,7 @@ namespace Xamarin.Social.Services
 
 		ACAccountStore accountStore; // Save this reference since ACAccounts are only good so long as it's alive
 
-		public override Task<List<Account>> GetAccountsAsync ()
+		public override Task<IEnumerable<Account>> GetAccountsAsync ()
 		{
 			if (accountStore == null) {
 				accountStore = new ACAccountStore ();
@@ -173,7 +173,7 @@ namespace Xamarin.Social.Services
 
 			return Task.Factory.StartNew (delegate {
 				completedEvent.WaitOne ();
-				return r;
+				return (IEnumerable<Account>)r;
 			}, TaskCreationOptions.LongRunning);
 		}
 

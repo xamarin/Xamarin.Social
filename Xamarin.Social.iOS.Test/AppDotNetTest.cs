@@ -3,6 +3,7 @@ using NUnit.Framework;
 using MonoTouch.UIKit;
 using MonoTouch.Accounts;
 using Xamarin.Social.Services;
+using System.Linq;
 
 namespace Xamarin.Social.iOS.Test
 {
@@ -69,9 +70,9 @@ namespace Xamarin.Social.iOS.Test
 		{
 			var service = CreateService ();
 			
-			var accounts = service.GetAccountsAsync ().Result;
+			var account = service.GetAccountsAsync ().Result.First ();
 			
-			var req = service.CreateRequest ("GET", new Uri ("https://alpha-api.app.net/stream/0/posts/stream"), accounts[0]);
+			var req = service.CreateRequest ("GET", new Uri ("https://alpha-api.app.net/stream/0/posts/stream"), account);
 
 			var content = req.GetResponseAsync ().Result.GetResponseText ();
 			
