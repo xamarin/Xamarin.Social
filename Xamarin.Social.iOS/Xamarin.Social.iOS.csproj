@@ -94,7 +94,6 @@
     <Compile Include="..\Xamarin.Social\Services\TwitterService.cs">
       <Link>Services\TwitterService.cs</Link>
     </Compile>
-    <Compile Include="Services\TwitterService5.cs" />
     <Compile Include="..\Xamarin.Social\ImageData.cs">
       <Link>ImageData.cs</Link>
     </Compile>
@@ -139,6 +138,7 @@
     <Compile Include="..\Xamarin.Social\Services\AppDotNetService.cs">
       <Link>Services\AppDotNetService.cs</Link>
     </Compile>
+    <Compile Include="Services\Twitter5Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

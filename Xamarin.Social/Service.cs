@@ -360,68 +360,6 @@ namespace Xamarin.Social
 		}
 
 		#endregion
-
-
-		#region Service Registry
-
-		static Dictionary<string, Service> registry;
-
-		static Service ()
-		{
-			registry = new Dictionary<string, Service> ();
-
-			RegisterService (Facebook = new Xamarin.Social.Services.FacebookService ());
-			//RegisterService (new GoogleService ());
-
-
-#if PLATFORM_IOS
-			RegisterService (Twitter = new Xamarin.Social.Services.TwitterService5 ());
-#else
-			RegisterService (Twitter = new Xamarin.Social.Services.TwitterService ());
-#endif
-
-			//RegisterService (new TwitterService ());
-		}
-
-		/// <summary>
-		/// Gets all the registered services.
-		/// </summary>
-		public static Service[] GetServices ()
-		{
-			lock (registry) {
-				return registry.Values.ToArray ();
-			}
-		}
-
-		/// <summary>
-		/// Registers a service.
-		/// </summary>
-		public static void RegisterService (Service service)
-		{
-			lock (registry) {
-				Service s;
-				if (registry.TryGetValue (service.ServiceId, out s)) {
-					throw new ArgumentException ("Service '" + service.ServiceId + "' is already registered.", "service");
-				}
-				else {
-					registry.Add (service.ServiceId, service);
-				}
-			}
-		}
-
-		public static Xamarin.Social.Services.TwitterService Twitter { get; private set; }
-		public static Xamarin.Social.Services.FacebookService Facebook { get; private set; }
-		//public static Service Google { get; private set; }
-		//public static Service SinaWeibo { get; private set; }
-
-		#endregion
-
-
-		#region HTTP Helpers
-
-
-
-		#endregion
 	}
 }
 

@@ -10,9 +10,9 @@ using MonoTouch.Accounts;
 
 namespace Xamarin.Social.Services
 {
-	class TwitterService5 : TwitterService
+	public class Twitter5Service : TwitterService
 	{
-		public TwitterService5 ()
+		public Twitter5Service ()
 		{
 		}
 

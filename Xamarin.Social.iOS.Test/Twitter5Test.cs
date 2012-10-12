@@ -13,7 +13,7 @@ namespace Xamarin.Social.iOS.Test
 	{
 		Service CreateService ()
 		{
-			return Service.Twitter;
+			return new Twitter5Service ();
 		}
 
 		[Test]
@@ -25,7 +25,7 @@ namespace Xamarin.Social.iOS.Test
 				{ "include_entities", "1" },
 				{ "incode_rts", "1" },
 			};
-			var req = Service.Twitter.CreateRequest ("GET", new Uri ("http://api.twitter.com/1/statuses/user_timeline.json"), ps);
+			var req = CreateService ().CreateRequest ("GET", new Uri ("http://api.twitter.com/1/statuses/user_timeline.json"), ps);
 			var res = req.GetResponseAsync ().Result;
 			Assert.That (res.StatusCode, Is.EqualTo (HttpStatusCode.OK));
 			Assert.That (res.Headers.Count, Is.GreaterThan (0));
