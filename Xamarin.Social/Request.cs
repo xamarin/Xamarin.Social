@@ -16,14 +16,44 @@ namespace Xamarin.Social
 	{
 		HttpWebRequest request;
 
+		/// <summary>
+		/// The HTTP method.
+		/// </summary>
 		public string Method { get; private set; }
+
+		/// <summary>
+		/// The URL of the resource to request.
+		/// </summary>
 		public Uri Url { get; private set; }
 
+		/// <summary>
+		/// The parameters of the request. These will be added to the query string of the
+		/// URL for GET requests, encoded as form a parameters for POSTs, and added as
+		/// multipart values if the request uses <see cref="Multiparts"/>.
+		/// </summary>
 		public IDictionary<string, string> Parameters { get; private set; }
 
+		/// <summary>
+		/// The account that will be used to authenticate this request.
+		/// </summary>
 		public virtual Account Account { get; set; }
 
-		public Request (string method, Uri url, IDictionary<string, string> parameters, Account account)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Xamarin.Social.Request"/> class.
+		/// </summary>
+		/// <param name='method'>
+		/// The HTTP method.
+		/// </param>
+		/// <param name='url'>
+		/// The URL.
+		/// </param>
+		/// <param name='parameters'>
+		/// Parameters that will pre-populate the <see cref="Parameters"/> property or null.
+		/// </param>
+		/// <param name='account'>
+		/// The account used to authenticate this request.
+		/// </param>
+		public Request (string method, Uri url, IDictionary<string, string> parameters = null, Account account = null)
 		{
 			Method = method;
 			Url = url;
@@ -33,17 +63,51 @@ namespace Xamarin.Social
 			Account = account;
 		}
 
+		/// <summary>
+		/// A single part of a multipart request.
+		/// </summary>
 		protected class Part
 		{
-			public string TextData;
+			/// <summary>
+			/// The data.
+			/// </summary>
 			public Stream Data;
+
+			/// <summary>
+			/// The optional textual representation of the <see cref="Data"/>.
+			/// </summary>
+			public string TextData;
+
+			/// <summary>
+			/// The name.
+			/// </summary>
 			public string Name;
+
+			/// <summary>
+			/// The MIME type.
+			/// </summary>
 			public string MimeType;
+
+			/// <summary>
+			/// The filename of this part if it represents a file.
+			/// </summary>
 			public string Filename;
 		}
 
+		/// <summary>
+		/// The parts of a multipart request.
+		/// </summary>
 		protected readonly List<Part> Multiparts = new List<Part> ();
 
+		/// <summary>
+		/// Adds a part to the request. Doing so will make this request be sent as multipart/form-data.
+		/// </summary>
+		/// <param name='name'>
+		/// Name of the part.
+		/// </param>
+		/// <param name='data'>
+		/// Text value of the part.
+		/// </param>
 		public void AddMultipartData (string name, string data)
 		{
 			Multiparts.Add (new Part {
@@ -55,16 +119,49 @@ namespace Xamarin.Social
 			});
 		}
 
+		/// <summary>
+		/// Adds a part to the request. Doing so will make this request be sent as multipart/form-data.
+		/// </summary>
+		/// <param name='name'>
+		/// Name of the part.
+		/// </param>
+		/// <param name='image'>
+		/// <see cref="ImageData"/> used to populate the part.
+		/// </param>
 		public void AddMultipartData (string name, ImageData image)
 		{
 			AddMultipartData (name, image.Data, image.MimeType, image.Filename);
 		}
 
+		/// <summary>
+		/// Adds a part to the request. Doing so will make this request be sent as multipart/form-data.
+		/// </summary>
+		/// <param name='name'>
+		/// Name of the part.
+		/// </param>
+		/// <param name='file'>
+		/// <see cref="FileData"/> used to populate the part.
+		/// </param>
 		public void AddMultipartData (string name, FileData file)
 		{
 			AddMultipartData (name, file.Data, file.MimeType, file.Filename);
 		}
 
+		/// <summary>
+		/// Adds a part to the request. Doing so will make this request be sent as multipart/form-data.
+		/// </summary>
+		/// <param name='name'>
+		/// Name of the part.
+		/// </param>
+		/// <param name='data'>
+		/// Data used when transmitting this part.
+		/// </param>
+		/// <param name='mimeType'>
+		/// The MIME type of this part.
+		/// </param>
+		/// <param name='filename'>
+		/// The filename of this part if it represents a file.
+		/// </param>
 		public virtual void AddMultipartData (string name, Stream data, string mimeType = "", string filename = "")
 		{
 			Multiparts.Add (new Part {

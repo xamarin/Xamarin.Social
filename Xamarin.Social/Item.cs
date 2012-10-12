@@ -13,6 +13,12 @@ namespace Xamarin.Social
 		/// </summary>
 		public string Text { get; set; }
 
+		/// <summary>
+		/// Initializes a new <see cref="Xamarin.Social.Item"/> with the given text.
+		/// </summary>
+		/// <param name='text'>
+		/// The initial text of the new item.
+		/// </param>
 		public Item (string text)
 		{
 			Text = text ?? "";
@@ -22,22 +28,38 @@ namespace Xamarin.Social
 			Files = new List<FileData> ();
 		}
 
+		/// <summary>
+		/// Initializes an empty <see cref="Xamarin.Social.Item"/>.
+		/// </summary>
 		public Item ()
 			: this ("")
 		{
 		}
 
+		/// <summary>
+		/// Releases unmanaged resources and performs other cleanup operations before the <see cref="Xamarin.Social.Item"/> is
+		/// reclaimed by garbage collection.
+		/// </summary>
 		~Item ()
 		{
 			Dispose (false);
 		}
 
+		/// <summary>
+		/// Releases all resource used by the <see cref="Xamarin.Social.Item"/>.
+		/// </summary>
 		public void Dispose ()
 		{
 			Dispose (true);
 			GC.SuppressFinalize (this);
 		}
 
+		/// <summary>
+		/// Releases all resource used by the <see cref="Xamarin.Social.Item"/>.
+		/// </summary>
+		/// <param name='disposing'>
+		/// If <c>true</c> then this was called from the Dispose method; otherwise, it was called from the finalizer.
+		/// </param>
 		protected virtual void Dispose (bool disposing)
 		{
 			foreach (var i in Images) {
@@ -51,6 +73,12 @@ namespace Xamarin.Social
 			Files.Clear ();
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether this item has attachments.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this item has attachments; otherwise, <c>false</c>.
+		/// </value>
 		public bool HasAttachments {
 			get {
 				return Links.Count > 0 || Images.Count > 0 || Files.Count > 0;

@@ -13,10 +13,27 @@ namespace Xamarin.Social
 	{
 		HttpWebResponse response;
 
+		/// <summary>
+		/// Gets the response URI.
+		/// </summary>
 		public virtual Uri ResponseUri { get; private set; }
+
+		/// <summary>
+		/// Gets the response status code.
+		/// </summary>
 		public virtual HttpStatusCode StatusCode { get; private set; }
+
+		/// <summary>
+		/// Gets the headers returned with this response.
+		/// </summary>
 		public virtual IDictionary<string, string> Headers { get; private set; }
 
+		/// <summary>
+		/// Initializes a new <see cref="Xamarin.Social.Response"/> that wraps a <see cref="System.Net.HttpWebResponse"/>.
+		/// </summary>
+		/// <param name='response'>
+		/// The System.Net response that this response will wrap.
+		/// </param>
 		public Response (HttpWebResponse response)
 		{
 			this.response = response;
@@ -30,10 +47,19 @@ namespace Xamarin.Social
 			}
 		}
 
-		public Response ()
+		/// <summary>
+		/// Initializes a new blank <see cref="Xamarin.Social.Response"/>.
+		/// </summary>
+		protected Response ()
 		{
 		}
 
+		/// <summary>
+		/// Reads all the response data and interprets it as a string.
+		/// </summary>
+		/// <returns>
+		/// The response text.
+		/// </returns>
 		public virtual string GetResponseText ()
 		{
 			var encoding = Encoding.UTF8;
@@ -49,11 +75,23 @@ namespace Xamarin.Social
 			}
 		}
 
+		/// <summary>
+		/// Gets the response stream.
+		/// </summary>
+		/// <returns>
+		/// The response stream.
+		/// </returns>
 		public virtual Stream GetResponseStream ()
 		{
 			return response.GetResponseStream ();
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Xamarin.Social.Response"/>.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents the current <see cref="Xamarin.Social.Response"/>.
+		/// </returns>
 		public override string ToString ()
 		{
 			return string.Format ("{0} {1}", StatusCode, ResponseUri);
