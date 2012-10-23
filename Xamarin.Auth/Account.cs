@@ -5,7 +5,7 @@ using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	/// <summary>
 	/// An Account that reprents and authenticated user of a social network.

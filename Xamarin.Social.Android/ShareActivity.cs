@@ -13,6 +13,8 @@ using Android.Text;
 using Android.Text.Style;
 using System.Threading;
 using Android.Content;
+using Xamarin.Utilities.Android;
+using Xamarin.Auth;
 
 namespace Xamarin.Social
 {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using Xamarin.Utilities;
 
 #if PLATFORM_IOS
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
@@ -12,7 +13,7 @@ using UIContext = Android.Content.Context;
 using AuthenticateUIType = System.Object;
 #endif
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	/// <summary>
 	/// A process and user interface to authenticate a user.

@@ -1,11 +1,18 @@
 using System;
 using MonoTouch.Accounts;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
-	class ACAccountWrapper : Account
+	public class ACAccountWrapper : Account
 	{
+		/// <summary>
+		/// The store that this account came from. We need to keep this reference to prevent the
+		/// store from getting collected. It's necessary to keep it in memory or else the
+		/// ACAccount store will stop working.
+		/// </summary>
+		#pragma warning disable 414
 		ACAccountStore store;
+		#pragma warning restore 414
 
 		public ACAccount ACAccount { get; private set; }
 

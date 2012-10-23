@@ -1,13 +1,15 @@
 using System;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using Xamarin.Controls;
+using Xamarin.Utilities.iOS;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	class FormAuthenticatorController : UITableViewController
 	{

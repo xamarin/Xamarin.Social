@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Xamarin.Auth;
 
 namespace Xamarin.Social
 {

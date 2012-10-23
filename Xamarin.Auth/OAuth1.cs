@@ -5,8 +5,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Net;
 using System.Globalization;
+using Xamarin.Utilities;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	public static class OAuth1
 	{

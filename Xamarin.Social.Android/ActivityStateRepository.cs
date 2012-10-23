@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Xamarin.Social
+namespace Xamarin.Utilities.Android
 {
 	/// <summary>
 	/// Object to make passing non serializable objects to Activities easier
 	/// </summary>
-	internal class ActivityStateRepository<T>
+	class ActivityStateRepository<T>
 		where T : Java.Lang.Object
 	{
 		readonly Random rand = new Random ();

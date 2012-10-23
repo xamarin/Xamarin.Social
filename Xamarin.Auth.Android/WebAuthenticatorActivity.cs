@@ -3,8 +3,9 @@ using Android.App;
 using Android.Webkit;
 using Android.OS;
 using System.Threading.Tasks;
+using Xamarin.Utilities.Android;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	[Activity (Label = "Web Authenticator")]
 	public class WebAuthenticatorActivity : Activity

@@ -2,7 +2,7 @@ using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace Xamarin.Social
+namespace Xamarin.Utilities.iOS
 {
 	static class UIViewControllerEx
 	{

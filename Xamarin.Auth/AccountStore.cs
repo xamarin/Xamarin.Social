@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	/// <summary>
 	/// A persistent storage for <see cref="Account"/>s. This storage is encrypted.

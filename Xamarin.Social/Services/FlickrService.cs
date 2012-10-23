@@ -5,6 +5,8 @@ using System.Threading;
 using System.Xml;
 using System.Text;
 using System.Collections.Generic;
+using Xamarin.Auth;
+using Xamarin.Utilities;
 
 namespace Xamarin.Social
 {
@@ -52,7 +54,7 @@ namespace Xamarin.Social
 				sb.AppendLine ();
 				sb.AppendLine ();
 				foreach (var l in item.Links) {
-					sb.AppendFormat ("<a href=\"{0}\">{0}</a>", HttpEx.HtmlEncode (l.AbsoluteUri));
+					sb.AppendFormat ("<a href=\"{0}\">{0}</a>", WebEx.HtmlEncode (l.AbsoluteUri));
 					sb.AppendLine ();
 				}
 			}

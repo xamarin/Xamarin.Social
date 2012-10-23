@@ -43,17 +43,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="..\Xamarin.Social\Account.cs">
-      <Link>Account.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\Authenticator.cs">
-      <Link>Authenticator.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\FormAuthenticator.cs">
-      <Link>FormAuthenticator.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\Item.cs">
       <Link>Item.cs</Link>
@@ -70,9 +61,6 @@
     <Compile Include="..\Xamarin.Social\ShareResult.cs">
       <Link>ShareResult.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\WebAuthenticator.cs">
-      <Link>WebAuthenticator.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\Services\FacebookService.cs">
       <Link>Services\FacebookService.cs</Link>
     </Compile>
@@ -85,35 +73,20 @@
     <Compile Include="..\Xamarin.Social\Services\TwitterService.cs">
       <Link>Services\TwitterService.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\AccountStore.cs">
-      <Link>AccountStore.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\FileData.cs">
       <Link>FileData.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\HttpHelper.cs">
-      <Link>HttpHelper.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\ImageData.cs">
       <Link>ImageData.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\OAuth1.cs">
-      <Link>OAuth1.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\OAuth1Authenticator.cs">
-      <Link>OAuth1Authenticator.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\OAuth1Request.cs">
       <Link>OAuth1Request.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\OAuth1Service.cs">
       <Link>OAuth1Service.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\OAuth2Authenticator.cs">
-      <Link>OAuth2Authenticator.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\OAuth2Request.cs">
       <Link>OAuth2Request.cs</Link>
@@ -124,15 +97,21 @@
     <Compile Include="..\Xamarin.Social\SocialException.cs">
       <Link>SocialException.cs</Link>
     </Compile>
-    <Compile Include="WebAuthenticatorActivity.cs" />
     <Compile Include="ActivityStateRepository.cs" />
     <Compile Include="ActivityEx.cs" />
-    <Compile Include="AndroidAccountStore.cs" />
     <Compile Include="ShareActivity.cs" />
-    <Compile Include="FormAuthenticatorActivity.cs" />
     <Compile Include="ToolbarView.cs" />
+    <Compile Include="..\Xamarin.Social\WebEx.cs">
+      <Link>WebEx.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Auth.Android\Xamarin.Auth.Android.csproj">
+      <Project>{FCF02C8C-6DD3-4C59-A8A2-58BC01A4BB21}</Project>
+      <Name>Xamarin.Auth.Android</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

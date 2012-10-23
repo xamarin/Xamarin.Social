@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {

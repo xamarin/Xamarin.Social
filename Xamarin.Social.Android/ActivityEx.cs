@@ -1,7 +1,7 @@
 using System;
 using Android.App;
 
-namespace Xamarin.Social
+namespace Xamarin.Utilities.Android
 {
 	static class ActivityEx
 	{

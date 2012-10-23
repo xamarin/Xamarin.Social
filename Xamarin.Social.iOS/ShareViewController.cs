@@ -1,11 +1,14 @@
 using System;
-using MonoTouch.UIKit;
 using System.Collections.Generic;
-using MonoTouch.Foundation;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using MonoTouch.CoreGraphics;
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
+using Xamarin.Auth;
+using Xamarin.Controls;
+using Xamarin.Utilities.iOS;
 
 namespace Xamarin.Social
 {

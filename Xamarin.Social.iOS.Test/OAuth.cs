@@ -5,6 +5,7 @@ using MonoTouch.UIKit;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Auth;
 
 namespace Xamarin.Social.iOS.Test
 {

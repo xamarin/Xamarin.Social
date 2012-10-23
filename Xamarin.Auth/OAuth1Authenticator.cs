@@ -2,8 +2,9 @@ using System;
 using System.Threading.Tasks;
 using System.Net;
 using System.Collections.Generic;
+using Xamarin.Utilities;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	public class OAuth1Authenticator : WebAuthenticator
 	{
@@ -77,7 +78,7 @@ namespace Xamarin.Social
 
 				var content = respTask.Result.GetResponseText ();
 
-				var r = HttpEx.FormDecode (content);
+				var r = WebEx.FormDecode (content);
 
 				token = r["oauth_token"];
 				tokenSecret = r["oauth_token_secret"];
@@ -93,7 +94,7 @@ namespace Xamarin.Social
 			if (url.Host == callbackUrl.Host && url.AbsolutePath == callbackUrl.AbsolutePath) {
 				
 				var query = url.Query;
-				var r = HttpEx.FormDecode (query);
+				var r = WebEx.FormDecode (query);
 				
 				verifier = r["oauth_verifier"];
 				
@@ -117,7 +118,7 @@ namespace Xamarin.Social
 			return req.GetResponseAsync ().ContinueWith (respTask => {				
 				var content = respTask.Result.GetResponseText ();
 
-				var accountProperties = HttpEx.FormDecode (content);
+				var accountProperties = WebEx.FormDecode (content);
 				accountProperties["oauth_consumer_key"] = consumerKey;
 				accountProperties["oauth_consumer_secret"] = consumerSecret;
 

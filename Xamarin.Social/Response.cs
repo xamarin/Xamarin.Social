@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Xamarin.Utilities;
 
 namespace Xamarin.Social
 {
@@ -65,7 +66,7 @@ namespace Xamarin.Social
 			var encoding = Encoding.UTF8;
 
 			if (Headers.ContainsKey ("Content-Type")) {
-				encoding = HttpEx.GetEncodingFromContentType (Headers ["Content-Type"]);
+				encoding = WebEx.GetEncodingFromContentType (Headers ["Content-Type"]);
 			}
 
 			using (var s = GetResponseStream ()) {

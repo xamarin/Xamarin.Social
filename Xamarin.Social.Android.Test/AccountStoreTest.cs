@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Android.NUnit;
 using Xamarin.Social.Services;
 using System.Linq;
+using Xamarin.Auth;
 
 namespace Xamarin.Social.Android.Test
 {

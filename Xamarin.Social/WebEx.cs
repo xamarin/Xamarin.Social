@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 
-namespace Xamarin.Social
+namespace Xamarin.Utilities
 {
-	public static class HttpEx
+	static class WebEx
 	{
 		public static string GetCookie (this CookieContainer containers, Uri domain, string name)
 		{

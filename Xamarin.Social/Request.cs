@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Xamarin.Auth;
+using Xamarin.Utilities;
 
 namespace Xamarin.Social
 {

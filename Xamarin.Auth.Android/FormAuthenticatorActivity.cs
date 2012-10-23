@@ -1,15 +1,16 @@
 using System;
-using Android.App;
-using Android.OS;
-using Android.Widget;
-using Android.Util;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Views;
+using Android.App;
+using Android.OS;
+using Android.Widget;
+using Android.Util;
+using Xamarin.Utilities.Android;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	[Activity (Label = "Web Authenticator")]
 	public class FormAuthenticatorActivity : Activity

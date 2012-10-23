@@ -1,8 +1,8 @@
 using System;
 
-namespace Xamarin.Social
+namespace Xamarin.Utilities
 {
-	public static class ExceptionEx
+	static class ExceptionEx
 	{
 		public static string GetUserMessage (this Exception error)
 		{

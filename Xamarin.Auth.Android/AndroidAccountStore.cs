@@ -8,7 +8,7 @@ using Java.IO;
 using Android.Content;
 using Android.Runtime;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	/// <summary>
 	/// AccountStore that uses a KeyStore of PrivateKeys protected by a fixed password

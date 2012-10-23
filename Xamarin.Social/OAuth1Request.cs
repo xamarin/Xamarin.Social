@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.Collections.Generic;
+using Xamarin.Auth;
 
 namespace Xamarin.Social
 {

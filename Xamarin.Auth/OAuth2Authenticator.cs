@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	/// <summary>
 	/// Implements OAuth 2.0 implicit granting. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2
@@ -93,7 +93,7 @@ namespace Xamarin.Social
 					throw new NotSupportedException ("ResponseType=code is not supported.");
 				}
 				else {
-					throw new SocialException ("Expected the RedirectUrl to contain an access_token. It did not.");
+					throw new AuthException ("Expected the RedirectUrl to contain an access_token. It did not.");
 				}
 			}
 		}

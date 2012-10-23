@@ -1,9 +1,10 @@
 using System;
+using System.Threading.Tasks;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
-using System.Threading.Tasks;
+using Xamarin.Utilities.iOS;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	/// <summary>
 	/// The ViewController that the WebAuthenticator presents to the user.

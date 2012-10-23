@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	class KeyChainAccountStore : AccountStore
 	{

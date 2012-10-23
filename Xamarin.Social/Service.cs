@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Threading;
+using Xamarin.Auth;
 
 #if PLATFORM_IOS
 using ShareUIType = MonoTouch.UIKit.UIViewController;

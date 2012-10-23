@@ -12,7 +12,7 @@ using UIContext = Android.Content.Context;
 using AuthenticateUIType = System.Object;
 #endif
 
-namespace Xamarin.Social
+namespace Xamarin.Auth
 {
 	/// <summary>
 	/// An authenticator that displays a web page.

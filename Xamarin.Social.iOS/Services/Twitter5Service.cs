@@ -1,12 +1,13 @@
 using System;
-using MonoTouch.Twitter;
-using System.Threading.Tasks;
-using MonoTouch.Foundation;
-using System.Threading;
-using MonoTouch.UIKit;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Threading;
 using MonoTouch.Accounts;
+using MonoTouch.Foundation;
+using MonoTouch.Twitter;
+using MonoTouch.UIKit;
+using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
