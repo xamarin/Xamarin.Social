@@ -75,15 +75,11 @@
     <Compile Include="..\Xamarin.Social\ImageData.cs">
       <Link>ImageData.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
-      <Link>ExceptionEx.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\FileData.cs">
       <Link>FileData.cs</Link>
     </Compile>
     <Compile Include="NSDataStream.cs" />
     <Compile Include="CheckedPickerView.cs" />
-    <Compile Include="ProgressLabel.cs" />
     <Compile Include="..\Xamarin.Social\Services\FlickrService.cs">
       <Link>Services\FlickrService.cs</Link>
     </Compile>
@@ -108,7 +104,13 @@
       <Link>Services\AppDotNetService.cs</Link>
     </Compile>
     <Compile Include="Services\Twitter5Service.cs" />
-    <Compile Include="..\Xamarin.Social\WebEx.cs">
+    <Compile Include="..\Xamarin.Auth.iOS\ProgressLabel.cs">
+      <Link>ProgressLabel.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
+      <Link>ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
   </ItemGroup>

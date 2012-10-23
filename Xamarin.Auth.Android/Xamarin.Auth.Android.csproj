@@ -73,20 +73,16 @@
     <Compile Include="..\Xamarin.Auth\WebAuthenticator.cs">
       <Link>WebAuthenticator.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\WebEx.cs">
-      <Link>WebEx.cs</Link>
-    </Compile>
     <Compile Include="AndroidAccountStore.cs" />
     <Compile Include="FormAuthenticatorActivity.cs" />
     <Compile Include="WebAuthenticatorActivity.cs" />
-    <Compile Include="..\Xamarin.Social.Android\ActivityStateRepository.cs">
-      <Link>ActivityStateRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
+    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social.Android\ActivityEx.cs">
-      <Link>ActivityEx.cs</Link>
+    <Compile Include="..\Xamarin.Auth\WebEx.cs">
+      <Link>WebEx.cs</Link>
     </Compile>
+    <Compile Include="ActivityEx.cs" />
+    <Compile Include="ActivityStateRepository.cs" />
   </ItemGroup>
 </Project>

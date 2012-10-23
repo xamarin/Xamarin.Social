@@ -43,12 +43,8 @@
     <Compile Include="WebAuthenticator.cs" />
     <Compile Include="OAuth1.cs" />
     <Compile Include="AuthException.cs" />
-    <Compile Include="..\Xamarin.Social\WebEx.cs">
-      <Link>WebEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
-      <Link>ExceptionEx.cs</Link>
-    </Compile>
+    <Compile Include="ExceptionEx.cs" />
+    <Compile Include="WebEx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -53,7 +53,6 @@
     <Compile Include="Services\PinterestService.cs" />
     <Compile Include="Services\TwitterService.cs" />
     <Compile Include="ImageData.cs" />
-    <Compile Include="ExceptionEx.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="Services\FlickrService.cs" />
     <Compile Include="OAuth1Request.cs" />
@@ -62,7 +61,12 @@
     <Compile Include="OAuth2Request.cs" />
     <Compile Include="OAuth2Service.cs" />
     <Compile Include="Services\AppDotNetService.cs" />
-    <Compile Include="WebEx.cs" />
+    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
+      <Link>ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth\WebEx.cs">
+      <Link>WebEx.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

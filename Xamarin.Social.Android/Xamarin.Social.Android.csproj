@@ -73,9 +73,6 @@
     <Compile Include="..\Xamarin.Social\Services\TwitterService.cs">
       <Link>Services\TwitterService.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
-      <Link>ExceptionEx.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\FileData.cs">
       <Link>FileData.cs</Link>
     </Compile>
@@ -97,11 +94,18 @@
     <Compile Include="..\Xamarin.Social\SocialException.cs">
       <Link>SocialException.cs</Link>
     </Compile>
-    <Compile Include="ActivityStateRepository.cs" />
-    <Compile Include="ActivityEx.cs" />
     <Compile Include="ShareActivity.cs" />
     <Compile Include="ToolbarView.cs" />
-    <Compile Include="..\Xamarin.Social\WebEx.cs">
+    <Compile Include="..\Xamarin.Auth.Android\ActivityEx.cs">
+      <Link>ActivityEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth.Android\ActivityStateRepository.cs">
+      <Link>ActivityStateRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
+      <Link>ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
   </ItemGroup>

@@ -72,21 +72,19 @@
     <Compile Include="..\Xamarin.Auth\WebAuthenticator.cs">
       <Link>WebAuthenticator.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\ExceptionEx.cs">
-      <Link>ExceptionEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\WebEx.cs">
-      <Link>WebEx.cs</Link>
-    </Compile>
     <Compile Include="ACAccountWrapper.cs" />
     <Compile Include="FormAuthenticatorController.cs" />
     <Compile Include="KeyChainAccountStore.cs" />
     <Compile Include="WebAuthenticatorController.cs" />
-    <Compile Include="..\Xamarin.Social.iOS\ProgressLabel.cs">
-      <Link>ProgressLabel.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social.iOS\UIViewControllerEx.cs">
       <Link>UIViewControllerEx.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
+      <Link>ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth\WebEx.cs">
+      <Link>WebEx.cs</Link>
+    </Compile>
+    <Compile Include="ProgressLabel.cs" />
   </ItemGroup>
 </Project>
