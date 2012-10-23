@@ -89,7 +89,6 @@
     <Compile Include="..\Xamarin.Social\OAuth1Service.cs">
       <Link>OAuth1Service.cs</Link>
     </Compile>
-    <Compile Include="UIViewControllerEx.cs" />
     <Compile Include="..\Xamarin.Social\SocialException.cs">
       <Link>SocialException.cs</Link>
     </Compile>
@@ -104,13 +103,16 @@
       <Link>Services\AppDotNetService.cs</Link>
     </Compile>
     <Compile Include="Services\Twitter5Service.cs" />
-    <Compile Include="..\Xamarin.Auth.iOS\ProgressLabel.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth.iOS\ProgressLabel.cs">
       <Link>ProgressLabel.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth.iOS\UIViewControllerEx.cs">
+      <Link>UIViewControllerEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\WebEx.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
   </ItemGroup>
@@ -118,7 +120,7 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
+    <ProjectReference Include="..\Xamarin.Auth\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
       <Project>{9309BCCC-AA7B-4195-A130-D4572FA9488D}</Project>
       <Name>Xamarin.Auth.iOS</Name>
     </ProjectReference>

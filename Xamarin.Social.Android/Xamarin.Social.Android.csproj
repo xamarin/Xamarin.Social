@@ -96,16 +96,16 @@
     </Compile>
     <Compile Include="ShareActivity.cs" />
     <Compile Include="ToolbarView.cs" />
-    <Compile Include="..\Xamarin.Auth.Android\ActivityEx.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth.Android\ActivityEx.cs">
       <Link>ActivityEx.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth.Android\ActivityStateRepository.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth.Android\ActivityStateRepository.cs">
       <Link>ActivityStateRepository.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\WebEx.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
   </ItemGroup>
@@ -113,7 +113,7 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Auth.Android\Xamarin.Auth.Android.csproj">
+    <ProjectReference Include="..\Xamarin.Auth\Xamarin.Auth.Android\Xamarin.Auth.Android.csproj">
       <Project>{FCF02C8C-6DD3-4C59-A8A2-58BC01A4BB21}</Project>
       <Name>Xamarin.Auth.Android</Name>
     </ProjectReference>

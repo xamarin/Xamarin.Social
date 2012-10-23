@@ -61,10 +61,10 @@
     <Compile Include="OAuth2Request.cs" />
     <Compile Include="OAuth2Service.cs" />
     <Compile Include="Services\AppDotNetService.cs" />
-    <Compile Include="..\Xamarin.Auth\ExceptionEx.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\WebEx.cs">
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
   </ItemGroup>
@@ -73,7 +73,7 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Auth\Xamarin.Auth.csproj">
+    <ProjectReference Include="..\Xamarin.Auth\Xamarin.Auth\Xamarin.Auth.csproj">
       <Project>{C9FF1919-78DD-4084-976D-BDABC0A7E80B}</Project>
       <Name>Xamarin.Auth</Name>
     </ProjectReference>
