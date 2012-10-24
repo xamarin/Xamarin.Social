@@ -11,7 +11,7 @@ namespace Xamarin.Social
 	public abstract class OAuth2Service : Service
 	{
 		/// <summary>
-		/// Client identifier. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-2.2
+		/// Client identifier. http://tools.ietf.org/html/rfc6749#section-2.2
 		/// </summary>
 		/// <value>
 		/// The client identifier.
@@ -19,12 +19,21 @@ namespace Xamarin.Social
 		public string ClientId { get; set; }
 
 		/// <summary>
-		/// Access token scope. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-3.3
+		/// Optional client secret. http://tools.ietf.org/html/rfc6749#section-4.1
+		/// </summary>
+		/// <value>
+		/// The client identifier.
+		/// </value>
+		public string ClientSecret { get; set; }
+
+		/// <summary>
+		/// Access token scope. http://tools.ietf.org/html/rfc6749#section-3.3
 		/// </summary>
 		public string Scope { get; set; }
 		
-		public Uri AuthorizeUrl { get; protected set; }
+		public Uri AuthorizeUrl { get; set; }
 		public Uri RedirectUrl { get; set; }
+		public Uri AccessTokenUrl { get; set; }
 		
 		public OAuth2Service (string serviceId, string title)
 			: base (serviceId, title)
@@ -52,16 +61,27 @@ namespace Xamarin.Social
 			if (RedirectUrl == null) {
 				throw new InvalidOperationException ("Redirect URL not specified.");
 			}
-			
-			return new OAuth2Authenticator (
-				clientId: ClientId,
-				scope: Scope,
-				authorizeUrl: AuthorizeUrl,
-				redirectUrl: RedirectUrl,
-				getUsernameAsync: GetUsernameAsync);
+
+			if (AccessTokenUrl != null) {
+				return new OAuth2Authenticator (
+					clientId: ClientId,
+					clientSecret: ClientSecret,
+					scope: Scope,
+					authorizeUrl: AuthorizeUrl,
+					redirectUrl: RedirectUrl,
+					accessTokenUrl: AccessTokenUrl,
+					getUsernameAsync: GetUsernameAsync);
+			} else {
+				return new OAuth2Authenticator (
+					clientId: ClientId,
+					scope: Scope,
+					authorizeUrl: AuthorizeUrl,
+					redirectUrl: RedirectUrl,
+					getUsernameAsync: GetUsernameAsync);
+			}
 		}
 
-		protected abstract Task<string> GetUsernameAsync (string accessToken);
+		protected abstract Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties);
 
 		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters, Account account)
 		{

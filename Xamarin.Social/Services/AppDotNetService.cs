@@ -25,14 +25,12 @@ namespace Xamarin.Social.Services
 			Scope = "basic,stream,write_post";
 		}
 
-		protected override Task<string> GetUsernameAsync (string accessToken)
+		protected override Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties)
 		{
 			var request = CreateRequest (
 				"GET",
 				new Uri ("https://alpha-api.app.net/stream/0/users/me"),
-				new Account ("?", new Dictionary<string,string> {
-					{ "access_token", accessToken },
-				}));
+				new Account ("", accountProperties));
 
 			return request.GetResponseAsync ().ContinueWith (reqTask => {
 				var json = reqTask.Result.GetResponseText ();

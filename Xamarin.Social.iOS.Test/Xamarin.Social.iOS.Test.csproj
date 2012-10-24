@@ -100,7 +100,6 @@
     <Compile Include="PinterestTest.cs" />
     <Compile Include="Twitter5Test.cs" />
     <Compile Include="TwitterTest.cs" />
-    <Compile Include="OAuth.cs" />
     <Compile Include="AppDotNetTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
