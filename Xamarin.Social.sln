@@ -132,6 +132,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Xamarin.Social.iOS.Test\Xamarin.Social.iOS.Test.csproj
+		StartupItem = Xamarin.Social.Android.Test\Xamarin.Social.Android.Test.csproj
 	EndGlobalSection
 EndGlobal

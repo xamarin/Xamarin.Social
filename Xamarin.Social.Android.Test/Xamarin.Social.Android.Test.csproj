@@ -47,12 +47,14 @@
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Android.NUnit.cs" />
     <Compile Include="TwitterTest.cs" />
     <Compile Include="AccountStoreTest.cs" />
     <Compile Include="FacebookTest.cs" />
     <Compile Include="FlickrTest.cs" />
     <Compile Include="PinterestTest.cs" />
+    <Compile Include="..\Xamarin.Auth\Xamarin.Auth.Android.Test\Android.NUnit.cs">
+      <Link>Android.NUnit.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
