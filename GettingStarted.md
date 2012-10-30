@@ -152,7 +152,7 @@ You're welcome!
 
 ## 5. Make your own Service (optional)
 
-If you want to access a service not covered by this API, fear not, it's
-extensible! It's very easy to create your own services. Check out
-[Details](Details.md) for details.
+If you want to access a service not yet covered by Xamarin.Social, fear
+not–it's extensible! Check out [Details](Details.md) for information on
+creating your own `Service` types.
 
