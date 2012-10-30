@@ -53,7 +53,7 @@ Xamarin.Social supports a variety of services:
 	</tbody>
 </table>
 
-\* uses iOS 5-specific UI and account settings.
+\*`Twitter5Service` uses iOS 5-specific UI and account settings.
 
 
 ## 2. Authenticate the user
