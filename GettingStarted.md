@@ -140,10 +140,7 @@ If you want to do more than just sharing `Items`, you can access social
 APIs directly by generating request objects from the `Service`:
 
 ```csharp
-var request = facebook.CreateRequest (
-	"GET",
-	new Uri ("https://graph.facebook.com/me/feed"),
-	account);
+var request = facebook.CreateRequest ("GET", new Uri ("https://graph.facebook.com/me/feed"), account);
 request.GetResponseAsync ().ContinueWith (response => {
 	// parse the JSON in response.GetResponseText ()
 });
