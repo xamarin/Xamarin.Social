@@ -53,7 +53,7 @@ Xamarin.Social comes with a variety of services:
 	</tbody>
 </table>
 
-\* uses native iOS 5 user interfaces and accounts.
+\* uses iOS 5-specific UI and account settings.
 
 
 ## 2. Authenticate the user
