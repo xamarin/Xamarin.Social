@@ -1,7 +1,8 @@
 # Getting Started
 
-Xamarin.Social enables you to post text and other media to social
-networks and access their API using authenticated requests.
+Xamarin.Social helps you post status updates and other media to social
+networks, and allows you to easily use other social APIs via
+authenticated requests.
 
 
 ## 1. Create and configure the service
