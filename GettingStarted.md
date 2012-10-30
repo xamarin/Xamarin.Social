@@ -134,7 +134,7 @@ limit the amount of text you can post. Use these properties on your
 * `MaxFiles`
 
 
-## 4. Call the API directly
+## 4. Call the API directly (optional)
 
 If you want to do more than just sharing `Items`, you can access social
 APIs directly by generating request objects from the `Service`:
@@ -150,7 +150,7 @@ Notice how the service automatically authenticates the request for you.
 You're welcome!
 
 
-## 5. Make your own Service
+## 5. Make your own Service (optional)
 
 If you want to access a service not covered by this API, fear not, it's
 extensible! It's very easy to create your own services. Check out
