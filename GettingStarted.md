@@ -58,9 +58,10 @@ Xamarin.Social comes with a variety of services:
 
 ## 2. Authenticate the user
 
-You need to have `Account` objects in order to work with services. You
-can get an account by making the user authenticate themselves with
-`GetAuthenticateUI`:
+You need an `Account` object to communicate with a `Service`.  Your
+`Service` object's `GetAuthenticateUI` method creates the UI that you
+will present to authenticate the user, and gives you access to an
+`Account` object once the user has authenticated:
 
 ```csharp
 var authenticateViewController = facebook.GetAuthenticateUI (account => {
