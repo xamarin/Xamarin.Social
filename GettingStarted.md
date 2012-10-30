@@ -65,8 +65,8 @@ will present to authenticate the user, and gives you access to an
 
 ```csharp
 var authenticateViewController = facebook.GetAuthenticateUI (account => {
-	// This is called after the user has authenticated,
-	// or they chose to cancel (account will be null in that case).
+	// This is called after the user has authenticated, or if the user
+	// cancelled the authentication (account will be null in that case).
 	DismissViewController (true);
 });
 PresentViewController (authenticateViewController, true, null);
