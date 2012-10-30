@@ -126,10 +126,10 @@ Not all services are able to share images, and some (crazy) services
 limit the amount of text you can post. Use these properties of the
 service to find out about such limitations:
 
-	* `MaxTextLength`
-	* `MaxLinks`
-	* `MaxImages`
-	* `MaxFiles`
+* `MaxTextLength`
+* `MaxLinks`
+* `MaxImages`
+* `MaxFiles`
 
 
 ## 4. Call the API
