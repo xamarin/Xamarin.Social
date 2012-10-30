@@ -60,8 +60,8 @@ Xamarin.Social supports a variety of services:
 
 You need an `Account` object to communicate with a `Service`.  Your
 `Service` object's `GetAuthenticateUI` method creates the UI that you
-will present to authenticate the user, and gives you access to an
-`Account` object once the user has authenticated:
+present to authenticate the user, and gives you access to an `Account`
+object once the user has authenticated:
 
 ```csharp
 var authenticateViewController = facebook.GetAuthenticateUI (account => {
@@ -111,7 +111,7 @@ var shareViewController = facebook.GetShareUI (item, result => {
 PresentViewController (shareViewController, true, null);
 ```
 
-On Android, `GetShareUI` will give you an intent:
+On Android, `GetShareUI` gives you an intent:
 
 ```csharp
 var shareIntent = facebook.GetShareUI (this, item, result => {
@@ -120,9 +120,9 @@ var shareIntent = facebook.GetShareUI (this, item, result => {
 StartActivityForResult (shareIntent, 42);
 ```
 
-The share UI will ask the user to select the social account they'd like
-to share from, so you don't need to specify this. The UI will also allow
-the user to edit the item's text before it is posted.
+The share UI asks the user to select the social account they'd like to
+share from, so you don't need to specify this. The share UI also allowa
+the user to edit the item's text before it's posted.
 
 Not all services are able to share images, and some (crazy) services
 limit the amount of text you can post. Use these properties on your
