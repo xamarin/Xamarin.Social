@@ -15,7 +15,7 @@ var facebook = new FacebookService {
 };
 ```
 
-Xamarin.Social comes with a variety of services:
+Xamarin.Social supports a variety of services:
 
 <table>
 	<thead><tr><th>Service</th><th>Class</th><th>Parameters</th><th>Developer Info</th></thead>
