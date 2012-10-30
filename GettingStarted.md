@@ -9,9 +9,11 @@ Xamarin.Social enables you to post text and other media to social networks and a
 
 Access social networks by creating `Service` objects:
 
-	var facebook = new FacebookService {
-		ClientId = "<App ID from http://developers.facebook.com/apps>"
-	};
+```csharp
+var facebook = new FacebookService {
+	ClientId = "<App ID from http://developers.facebook.com/apps>"
+};
+```
 
 Xamarin.Social comes with a variety of services:
 
@@ -60,27 +62,34 @@ Xamarin.Social comes with a variety of services:
 
 You need to have `Account` objects in order to work with services. You can get an account by making the user authenticate themselves with `GetAuthenticateUI`:
 
-	var authenticateViewController = facebook.GetAuthenticateUI (account => {
-		// This is called after the user has authenticated,
-		// or they chose to cancel (account will be null in that case).
-		DismissViewController (true);
-	});
-	PresentViewController (authenticateViewController, true, null);
+```csharp
+var authenticateViewController = facebook.GetAuthenticateUI (account => {
+	// This is called after the user has authenticated,
+	// or they chose to cancel (account will be null in that case).
+	DismissViewController (true);
+});
+PresentViewController (authenticateViewController, true, null);
+```
+
 
 On Android, `GetAuthenticateUI` returns an `Intent`:
 
-	var authenticateIntent = facebook.GetAuthenticateUI (this, account => {
-		// do something wonderful with the account
-	});
-	StartActivityForResult (authenticateIntent, 42);
+```csharp
+var authenticateIntent = facebook.GetAuthenticateUI (this, account => {
+	// do something wonderful with the account
+});
+StartActivityForResult (authenticateIntent, 42);
+```
 
 Accounts are automatically saved for you using the secure `SecKeyChain` on iOS and `KeyStore` on Android.
 
 You can retrieve saved accounts with `GetAccountsAsync`:
 
-	facebook.GetAccountsAsync ().ContinueWith (accounts => {
-		// accounts is an IEnumerable<Account> of saved accounts
-	});
+```csharp
+facebook.GetAccountsAsync ().ContinueWith (accounts => {
+	// accounts is an IEnumerable<Account> of saved accounts
+});
+```
 
 
 
@@ -89,24 +98,28 @@ You can retrieve saved accounts with `GetAccountsAsync`:
 
 To share some text, links, or images, fill out an `Item` object and call `GetShareUI`:
 
-	var item = new Item {
-		Text = "This is the best library I've ever used!",
-	};
-	item.Images.Add (imageOfACat);
-	item.Links.Add (new Uri ("http://xamarin.com"));
+```csharp
+var item = new Item {
+	Text = "This is the best library I've ever used!",
+};
+item.Images.Add (imageOfACat);
+item.Links.Add (new Uri ("http://xamarin.com"));
 
-	var shareViewController = facebook.GetShareUI (item, result => {
-		// result lets you know if they went through with it or canceled
-		DismissViewController (true);
-	});
-	PresentViewController (shareViewController, true, null);
+var shareViewController = facebook.GetShareUI (item, result => {
+	// result lets you know if they went through with it or canceled
+	DismissViewController (true);
+});
+PresentViewController (shareViewController, true, null);
+```
 
 On Android, `GetShareUI` will give you an intent:
 
-	var shareIntent = facebook.GetShareUI (this, item, result => {
-		// congratulate the user for being awesome
-	});
-	StartActivityForResult (shareIntent, 42);
+```csharp
+var shareIntent = facebook.GetShareUI (this, item, result => {
+	// congratulate the user for being awesome
+});
+StartActivityForResult (shareIntent, 42);
+```
 
 The share UI will allow the user to select the account that they want to use so you don't need to provide one. The UI will also allow the user to edit the item's text before it is posted.
 
@@ -124,13 +137,15 @@ Not all services are able to share images, and some (crazy) services limit the a
 
 If you want to do more than just share, you can access the API using request objects from the service:
 
-	var request = facebook.CreateRequest (
-		"GET",
-		new Uri ("https://graph.facebook.com/me/feed"),
-		account);
-	request.GetResponseAsync ().ContinueWith (response => {
-		// parse the JSON in response.GetResponseText ()
-	});
+```csharp
+var request = facebook.CreateRequest (
+	"GET",
+	new Uri ("https://graph.facebook.com/me/feed"),
+	account);
+request.GetResponseAsync ().ContinueWith (response => {
+	// parse the JSON in response.GetResponseText ()
+});
+```
 
 Notice how the service automatically authenticates the request for you. You're welcome.
 
