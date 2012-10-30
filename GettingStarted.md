@@ -136,8 +136,8 @@ limit the amount of text you can post. Use these properties on your
 
 ## 4. Call the API directly (optional)
 
-If you want to do more than just sharing `Items`, you can access social
-APIs directly by generating request objects from the `Service`:
+If you want to do more than share `Items`, you can access social APIs
+directly by generating request objects from the `Service`:
 
 ```csharp
 var request = facebook.CreateRequest ("GET", new Uri ("https://graph.facebook.com/me/feed"), account);
