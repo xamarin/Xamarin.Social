@@ -1,8 +1,8 @@
 # Getting Started
 
 Xamarin.Social helps you post status updates and other media to social
-networks, and allows you to easily use other social APIs via
-authenticated requests.
+networks, and to access social APIs in general via authenticated
+requests.
 
 
 ## 1. Create and configure the service
@@ -46,14 +46,14 @@ Xamarin.Social comes with a variety of services:
 		</tr>
 		<tr>
 			<td>Twitter</td>
-			<td><code>Twitter5Service</code><sup>5</sup></td>
+			<td><code>Twitter5Service</code>*</td>
 			<td>none</td>
 			<td><a href="http://dev.twitter.com">Twitter Developers</a></td>
 		</tr>
 	</tbody>
 </table>
 
-<sup>5</sup> uses native iOS 5 user interfaces and accounts.
+\* uses native iOS 5 user interfaces and accounts.
 
 
 ## 2. Authenticate the user
