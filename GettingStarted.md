@@ -1,8 +1,7 @@
 # Getting Started
 
 Xamarin.Social helps you post status updates and other media to social
-networks, and to access social APIs in general via authenticated
-requests.
+networks, and access social APIs in general via authenticated requests.
 
 
 ## 1. Create and configure the service
