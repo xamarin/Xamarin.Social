@@ -120,7 +120,7 @@ StartActivityForResult (shareIntent, 42);
 ```
 
 The share UI asks the user to select the social account they'd like to
-share from, so you don't need to specify this. The share UI also allowa
+share from, so you don't need to specify this. The share UI also allows
 the user to edit the item's text before it's posted.
 
 Not all services are able to share images, and some (crazy) services
