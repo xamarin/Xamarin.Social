@@ -1,8 +1,7 @@
 # Getting Started
 
-Xamarin.Social enables you to post text and other media to social networks and access their API using authenticated requests.
-
-
+Xamarin.Social helps you post status updates and other media to social
+networks, and access social APIs in general via authenticated requests.
 
 
 ## 1. Create and configure the service
@@ -13,7 +12,7 @@ Access social networks by creating `Service` objects:
 		ClientId = "<App ID from http://developers.facebook.com/apps>"
 	};
 
-Xamarin.Social comes with a variety of services:
+Xamarin.Social supports a variety of services:
 
 <table>
 	<thead><tr><th>Service</th><th>Class</th><th>Parameters</th><th>Developer Info</th></thead>
@@ -44,25 +43,26 @@ Xamarin.Social comes with a variety of services:
 		</tr>
 		<tr>
 			<td>Twitter</td>
-			<td><code>Twitter5Service</code><sup>5</sup></td>
+			<td><code>Twitter5Service</code>*</td>
 			<td>none</td>
 			<td><a href="http://dev.twitter.com">Twitter Developers</a></td>
 		</tr>
 	</tbody>
 </table>
 
-<sup>5</sup> uses native iOS 5 user interfaces and accounts.
-
-
+\*`Twitter5Service` uses iOS 5-specific UI and account settings.
 
 
 ## 2. Authenticate the user
 
-You need to have `Account` objects in order to work with services. You can get an account by making the user authenticate themselves with `GetAuthenticateUI`:
+You need an `Account` object to communicate with a `Service`.  Your
+`Service` object's `GetAuthenticateUI` method creates the UI that you
+present to authenticate the user, and gives you access to an `Account`
+object once the user has authenticated:
 
 	var authenticateViewController = facebook.GetAuthenticateUI (account => {
-		// This is called after the user has authenticated,
-		// or they chose to cancel (account will be null in that case).
+		// This is called after the user has authenticated, or if the user
+		// cancelled the authentication (account will be null in that case).
 		DismissViewController (true);
 	});
 	PresentViewController (authenticateViewController, true, null);
@@ -74,7 +74,8 @@ On Android, `GetAuthenticateUI` returns an `Intent`:
 	});
 	StartActivityForResult (authenticateIntent, 42);
 
-Accounts are automatically saved for you using the secure `SecKeyChain` on iOS and `KeyStore` on Android.
+Accounts are automatically saved for you using the secure `SecKeyChain`
+on iOS and `KeyStore` on Android.
 
 You can retrieve saved accounts with `GetAccountsAsync`:
 
@@ -82,12 +83,10 @@ You can retrieve saved accounts with `GetAccountsAsync`:
 		// accounts is an IEnumerable<Account> of saved accounts
 	});
 
-
-
-
 ## 3. Share a little something
 
-To share some text, links, or images, fill out an `Item` object and call `GetShareUI`:
+To share some text, links, or images, fill out an `Item` object and call
+`GetShareUI`:
 
 	var item = new Item {
 		Text = "This is the best library I've ever used!",
@@ -101,16 +100,20 @@ To share some text, links, or images, fill out an `Item` object and call `GetSha
 	});
 	PresentViewController (shareViewController, true, null);
 
-On Android, `GetShareUI` will give you an intent:
+On Android, `GetShareUI` gives you an intent:
 
 	var shareIntent = facebook.GetShareUI (this, item, result => {
 		// congratulate the user for being awesome
 	});
 	StartActivityForResult (shareIntent, 42);
 
-The share UI will allow the user to select the account that they want to use so you don't need to provide one. The UI will also allow the user to edit the item's text before it is posted.
+The share UI asks the user to select the social account they'd like to
+share from, so you don't need to specify this. The share UI also allows
+the user to edit the item's text before it's posted.
 
-Not all services are able to share images, and some (crazy) services limit the amount of text you can post. Use these properties of the service to find out about such limitations:
+Not all services are able to share images, and some (crazy) services
+limit the amount of text you can post. Use these properties on your
+`Service` object to find out about such limitations:
 
 * `MaxTextLength`
 * `MaxLinks`
@@ -118,28 +121,23 @@ Not all services are able to share images, and some (crazy) services limit the a
 * `MaxFiles`
 
 
+## 4. Call the API directly (optional)
 
+If you want to do more than share `Items`, you can access social APIs
+directly by generating request objects from the `Service`:
 
-## 4. Call the API
-
-If you want to do more than just share, you can access the API using request objects from the service:
-
-	var request = facebook.CreateRequest (
-		"GET",
-		new Uri ("https://graph.facebook.com/me/feed"),
-		account);
+	var request = facebook.CreateRequest ("GET", new Uri ("https://graph.facebook.com/me/feed"), account);
 	request.GetResponseAsync ().ContinueWith (response => {
 		// parse the JSON in response.GetResponseText ()
 	});
 
-Notice how the service automatically authenticates the request for you. You're welcome.
+Notice how the service automatically authenticates the request for you.
+You're welcome!
 
 
+## 5. Make your own Service (optional)
 
-
-## 5. Make your own Service
-
-If you want to access a service not covered by this API, fear not, it's extensible! It's very easy to create your own services. Check out <a href="Details.md">Details</a> for details.
-
-
+If you want to access a service not yet covered by Xamarin.Social, fear
+not–it's extensible! Check out [Details](Details.md) for information on
+creating your own `Service` types.
 
