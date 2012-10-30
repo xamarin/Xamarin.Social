@@ -125,8 +125,8 @@ to share from, so you don't need to specify this. The UI will also allow
 the user to edit the item's text before it is posted.
 
 Not all services are able to share images, and some (crazy) services
-limit the amount of text you can post. Use these properties of the
-service to find out about such limitations:
+limit the amount of text you can post. Use these properties on your
+`Service` object to find out about such limitations:
 
 * `MaxTextLength`
 * `MaxLinks`
