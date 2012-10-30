@@ -147,7 +147,7 @@ request.GetResponseAsync ().ContinueWith (response => {
 ```
 
 Notice how the service automatically authenticates the request for you.
-You're welcome.
+You're welcome!
 
 
 ## 5. Make your own Service
