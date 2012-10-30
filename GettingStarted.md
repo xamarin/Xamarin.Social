@@ -155,5 +155,5 @@ You're welcome.
 
 If you want to access a service not covered by this API, fear not, it's
 extensible! It's very easy to create your own services. Check out
-<a href="Details.md">Details</a> for details.
+[Details](Details.md) for details.
 
