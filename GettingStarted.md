@@ -120,9 +120,9 @@ var shareIntent = facebook.GetShareUI (this, item, result => {
 StartActivityForResult (shareIntent, 42);
 ```
 
-The share UI will allow the user to select the account that they want to
-use so you don't need to provide one. The UI will also allow the user to
-edit the item's text before it is posted.
+The share UI will ask the user to select the social account they'd like
+to share from, so you don't need to specify this. The UI will also allow
+the user to edit the item's text before it is posted.
 
 Not all services are able to share images, and some (crazy) services
 limit the amount of text you can post. Use these properties of the
