@@ -5,24 +5,24 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BA8CBA8B-7F55-4167-B872-0BBF09F08B8C}</ProjectGuid>
-    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Xamarin.Social</RootNamespace>
-    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
-    <AssemblyName>Xamarin.Social.Android</AssemblyName>
+    <AssemblyName>Xamarin.Social.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;PLATFORM_ANDROID</DefineConstants>
+    <DefineConstants>DEBUG;PLATFORM_IOS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GenerateDocumentation>True</GenerateDocumentation>
+    <MtouchArch>Default</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -31,17 +31,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <DefineConstants>PLATFORM_ANDROID</DefineConstants>
+    <DefineConstants>PLATFORM_IOS</DefineConstants>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GenerateDocumentation>True</GenerateDocumentation>
+    <MtouchArch>Default</MtouchArch>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Mono.Android" />
+    <Reference Include="monotouch" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="..\Xamarin.Social\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
@@ -61,11 +62,9 @@
     <Compile Include="..\Xamarin.Social\ShareResult.cs">
       <Link>ShareResult.cs</Link>
     </Compile>
+    <Compile Include="FoundationResponse.cs" />
     <Compile Include="..\Xamarin.Social\Services\FacebookService.cs">
       <Link>Services\FacebookService.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\Services\FlickrService.cs">
-      <Link>Services\FlickrService.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\Services\PinterestService.cs">
       <Link>Services\PinterestService.cs</Link>
@@ -73,11 +72,16 @@
     <Compile Include="..\Xamarin.Social\Services\TwitterService.cs">
       <Link>Services\TwitterService.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\ImageData.cs">
+      <Link>ImageData.cs</Link>
+    </Compile>
     <Compile Include="..\Xamarin.Social\FileData.cs">
       <Link>FileData.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\ImageData.cs">
-      <Link>ImageData.cs</Link>
+    <Compile Include="NSDataStream.cs" />
+    <Compile Include="CheckedPickerView.cs" />
+    <Compile Include="..\Xamarin.Social\Services\FlickrService.cs">
+      <Link>Services\FlickrService.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\OAuth1Request.cs">
       <Link>OAuth1Request.cs</Link>
@@ -85,27 +89,30 @@
     <Compile Include="..\Xamarin.Social\OAuth1Service.cs">
       <Link>OAuth1Service.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\SocialException.cs">
+      <Link>SocialException.cs</Link>
+    </Compile>
     <Compile Include="..\Xamarin.Social\OAuth2Request.cs">
       <Link>OAuth2Request.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\OAuth2Service.cs">
       <Link>OAuth2Service.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\SocialException.cs">
-      <Link>SocialException.cs</Link>
+    <Compile Include="ShareViewController.cs" />
+    <Compile Include="..\Xamarin.Social\Services\AppDotNetService.cs">
+      <Link>Services\AppDotNetService.cs</Link>
     </Compile>
-    <Compile Include="ShareActivity.cs" />
-    <Compile Include="ToolbarView.cs" />
-    <Compile Include="..\Xamarin.Auth\Xamarin.Auth.Android\ActivityEx.cs">
-      <Link>ActivityEx.cs</Link>
+    <Compile Include="Services\Twitter5Service.cs" />
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\ProgressLabel.cs">
+      <Link>ProgressLabel.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\Xamarin.Auth.Android\ActivityStateRepository.cs">
-      <Link>ActivityStateRepository.cs</Link>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\UIViewControllerEx.cs">
+      <Link>UIViewControllerEx.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\ExceptionEx.cs">
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Auth\Xamarin.Auth\WebEx.cs">
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
   </ItemGroup>
@@ -113,9 +120,9 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Auth\Xamarin.Auth.Android\Xamarin.Auth.Android.csproj">
-      <Project>{FCF02C8C-6DD3-4C59-A8A2-58BC01A4BB21}</Project>
-      <Name>Xamarin.Auth.Android</Name>
+    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
+      <Project>{9309BCCC-AA7B-4195-A130-D4572FA9488D}</Project>
+      <Name>Xamarin.Auth.iOS</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
