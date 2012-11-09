@@ -23,9 +23,14 @@ namespace Xamarin.Social
 		ProgressLabel progress;
 		TextLengthLabel textLengthLabel;
 		UILabel linksLabel;
-		ChoiceField afield = null;
+		ChoiceField accountField = null;
 
 		bool sharing = false;
+
+		bool retrievedAccounts = false;
+		bool appeared = false;
+		bool checkedForAccounts = false;
+		UIAlertView accountsAlert;
 
 		static UIFont TextEditorFont = UIFont.SystemFontOfSize (18);
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
@@ -41,9 +46,74 @@ namespace Xamarin.Social
 			View.BackgroundColor = UIColor.White;
 
 			service.GetAccountsAsync ().ContinueWith (t => {
+				retrievedAccounts = true;
 				accounts = t.Result.ToList ();
 				BuildUI ();
+
+				if (appeared && !checkedForAccounts) {
+					CheckForAccounts ();
+				}
 			}, TaskScheduler.FromCurrentSynchronizationContext ());
+		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			appeared = true;
+
+			if (retrievedAccounts && !checkedForAccounts) {
+				CheckForAccounts ();
+			} else {
+				textEditor.BecomeFirstResponder ();
+			}
+		}
+
+		void CheckForAccounts ()
+		{
+			checkedForAccounts = true;
+
+			if (accounts.Count == 0) {
+
+				var title = "No " + service.Title + " Accounts";
+				var msg = "There are no configured " + service.Title + " accounts. " +
+					"Would you like to add one?";
+
+				accountsAlert = new UIAlertView (
+					title,
+					msg,
+					null,
+					"Cancel",
+					"Add Account");
+
+				accountsAlert.Clicked += (sender, e) => {
+					if (e.ButtonIndex == 1) {
+						Authenticate ();
+					} else {
+						completionHandler (ShareResult.Cancelled);
+					}
+				};
+
+				accountsAlert.Show ();
+			} else {
+				textEditor.BecomeFirstResponder ();
+			}
+		}
+
+		void Authenticate ()
+		{
+			var vc = service.GetAuthenticateUI (account => {
+				DismissViewController (true, () => {
+					if (account != null) {
+						accountField.ValueLabel.Text = account.Username;
+						textEditor.BecomeFirstResponder ();
+					}
+					else {
+						completionHandler (ShareResult.Cancelled);
+					}
+				});
+			});
+			vc.ModalTransitionStyle = UIModalTransitionStyle.FlipHorizontal;
+			PresentViewController (vc, true, null);
 		}
 
 		void BuildUI ()
@@ -53,20 +123,18 @@ namespace Xamarin.Social
 			var statusHeight = 22.0f;
 
 			//
-			// Fields
+			// Account Field
 			//
 			var fieldHeight = 33;
 
-			if (accounts.Count > 1) {
-				afield = new ChoiceField (
-					new RectangleF (0, b.Y, b.Width, 33),
-					this,
-					NSBundle.MainBundle.LocalizedString ("From", "From title when sharing"),
-					accounts.Select (x => x.Username));
-				View.AddSubview (afield);
-				b.Y += fieldHeight;
-				b.Height -= fieldHeight;
-			}
+			accountField = new ChoiceField (
+				new RectangleF (0, b.Y, b.Width, 33),
+				this,
+				NSBundle.MainBundle.LocalizedString ("From", "From title when sharing"),
+				accounts.Select (x => x.Username));
+			View.AddSubview (accountField);
+			b.Y += fieldHeight;
+			b.Height -= fieldHeight;
 
 			//
 			// Text Editor
@@ -82,7 +150,6 @@ namespace Xamarin.Social
 			};
 			textEditor.Delegate = new TextEditorDelegate (this);
 			View.AddSubview (textEditor);
-			textEditor.BecomeFirstResponder ();
 
 			//
 			// Icons
@@ -184,8 +251,8 @@ namespace Xamarin.Social
 			StartSharing ();
 
 			var account = accounts.FirstOrDefault ();
-			if (accounts.Count > 1 && afield != null) {
-				account = accounts.FirstOrDefault (x => x.Username == afield.SelectedItem);
+			if (accounts.Count > 1 && accountField != null) {
+				account = accounts.FirstOrDefault (x => x.Username == accountField.SelectedItem);
 			}
 			
 			try {
@@ -427,15 +494,28 @@ namespace Xamarin.Social
 		class ChoiceField : Field
 		{
 			public string SelectedItem {
-				get { return picker.SelectedItem; }
+				get { return Picker.SelectedItem; }
 			}
 
+			List<string> items;
+
 			public LabelButton ValueLabel { get; private set; }
-			public CheckedPickerView picker { get; private set; }
+			public CheckedPickerView Picker { get; private set; }
+
+			public IList<string> Items {
+				get {
+					return items;
+				}
+				set {
+					items = value.ToList ();
+				}
+			}
 
 			public ChoiceField (RectangleF frame, ShareViewController controller, string title, IEnumerable<string> items)
 				: base (frame, controller, title)
 			{
+				this.items = items.ToList ();
+
 				ValueLabel = new LabelButton () {
 					BackgroundColor = UIColor.White,
 					Font = TextEditorFont,
@@ -449,25 +529,27 @@ namespace Xamarin.Social
 
 				AddSubview (ValueLabel);
 
-				picker = new CheckedPickerView (new RectangleF (0, 0, 320, 216), items);
-				picker.Hidden = true;
-				picker.SelectedItemChanged += delegate {
-					ValueLabel.Text = picker.SelectedItem;
+				Picker = new CheckedPickerView (new RectangleF (0, 0, 320, 216), this.items);
+				Picker.Hidden = true;
+				Picker.SelectedItemChanged += delegate {
+					ValueLabel.Text = Picker.SelectedItem;
 				};
-				controller.View.AddSubview (picker);
+				controller.View.AddSubview (Picker);
 
-				ValueLabel.Text = picker.SelectedItem;
+				ValueLabel.Text = Picker.SelectedItem;
 			}
 
 			void HandleTouchUpInside (object sender, EventArgs e)
 			{
-				Controller.ResignFirstResponders ();
+				if (items.Count > 1) {
+					Controller.ResignFirstResponders ();
 
-				var v = Controller.View;
+					var v = Controller.View;
 
-				picker.Hidden = false;
-				picker.Frame = new RectangleF (0, v.Bounds.Bottom - 216, 320, 216);
-				v.BringSubviewToFront (picker);
+					Picker.Hidden = false;
+					Picker.Frame = new RectangleF (0, v.Bounds.Bottom - 216, 320, 216);
+					v.BringSubviewToFront (Picker);
+				}
 			}
 		}
 

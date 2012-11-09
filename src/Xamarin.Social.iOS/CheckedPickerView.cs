@@ -10,8 +10,9 @@ namespace Xamarin.Social
 	{
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
 
-		List<string> items;
 		string selectedItem;
+
+		public IList<string> Items { get; set; }
 		
 		public string SelectedItem {
 			get { return selectedItem; }
@@ -32,7 +33,7 @@ namespace Xamarin.Social
 		public CheckedPickerView (RectangleF frame, IEnumerable<string> items)
 			: base (frame)
 		{
-			this.items = items.ToList ();
+			Items = items.ToList ();
 			selectedItem = items.FirstOrDefault ();
 
 			Delegate = new PickerDelegate ();
@@ -51,7 +52,7 @@ namespace Xamarin.Social
 
 				var cpv = (CheckedPickerView)pickerView;
 
-				var item = cpv.items [row];
+				var item = cpv.Items [row];
 				label.Text = item;
 				label.IsSelected = item == cpv.selectedItem;
 				
@@ -64,7 +65,7 @@ namespace Xamarin.Social
 
 				var cpv = (CheckedPickerView)pickerView;
 
-				cpv.SelectedItem = cpv.items[row];
+				cpv.SelectedItem = cpv.Items[row];
 				
 				for (var i = 0; i < n; i++) { 
 					var label = (PickerLabel)pickerView.ViewFor (i, 0);
@@ -78,7 +79,7 @@ namespace Xamarin.Social
 			public override int GetRowsInComponent (UIPickerView pickerView, int component)
 			{
 				var cpv = (CheckedPickerView)pickerView;
-				return cpv.items.Count;
+				return cpv.Items.Count;
 			}
 
 			public override int GetComponentCount (UIPickerView pickerView)

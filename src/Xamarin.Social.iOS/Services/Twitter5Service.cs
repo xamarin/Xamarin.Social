@@ -178,9 +178,16 @@ namespace Xamarin.Social.Services
 			}, TaskCreationOptions.LongRunning);
 		}
 
+		public override bool SupportsAuthentication
+		{
+			get {
+				return false;
+			}
+		}
+
 		protected override Authenticator GetAuthenticator ()
 		{
-			throw new NotSupportedException ("Only OS accounts are supported");
+			throw new NotSupportedException ("Twitter5Service does support authenticating users. You should direct them to the Settings application.");
 		}
 
 		#endregion

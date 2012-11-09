@@ -102,6 +102,18 @@ namespace Xamarin.Social
 #endif
 
 		/// <summary>
+		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports authenticating new accounts.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if supports authentication; otherwise, <c>false</c>.
+		/// </value>
+		public virtual bool SupportsAuthentication {
+			get {
+				return true;
+			}
+		}
+
+		/// <summary>
 		/// Gets the authenticator for this service. The authenticator will present
 		/// the user interface needed to authenticate a new account for the service.
 		/// This account will then be saved.
