@@ -72,10 +72,11 @@ namespace Xamarin.Social
 			}
 		}
 
+		const int LabelTextSize = 24;
+		const int ComposeTextSize = 24;
+
 		void BuildUI (Bundle savedInstanceState)
 		{
-			var labelTextSize = 24;
-			var composeTextSize = 24;
 			var hMargin = 20;
 
 			RequestWindowFeature (WindowFeatures.NoTitle);
@@ -121,14 +122,14 @@ namespace Xamarin.Social
 				},
 			};
 			acctLabel.SetTextColor (Color.DarkGray);
-			acctLabel.SetTextSize (ComplexUnitType.Sp, labelTextSize);
+			acctLabel.SetTextSize (ComplexUnitType.Sp, LabelTextSize);
 
 			acctPicker = new TextView (this) {
 				Typeface = Typeface.DefaultFromStyle (TypefaceStyle.Bold),
 				Clickable = true,
 			};
 			acctPicker.SetTextColor (Color.Black);
-			acctPicker.SetTextSize (ComplexUnitType.Sp, labelTextSize);
+			acctPicker.SetTextSize (ComplexUnitType.Sp, LabelTextSize);
 			acctPicker.Click += PickAccount;
 			UpdateAccountUI ();
 
@@ -140,7 +141,7 @@ namespace Xamarin.Social
 					RightMargin = hMargin,
 				},
 			};
-			acctLayout.SetGravity (GravityFlags.Center);
+			acctLayout.SetGravity (GravityFlags.Left);
 			acctLayout.AddView (acctLabel);
 			acctLayout.AddView (acctPicker);
 
@@ -153,7 +154,7 @@ namespace Xamarin.Social
 				Orientation = Orientation.Vertical,
 				Visibility = state.Item.HasAttachments ? ViewStates.Visible : ViewStates.Gone,
 				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
-					TopMargin = 24,
+					TopMargin = 30,
 					LeftMargin = hMargin,
 					RightMargin = hMargin,
 				},
@@ -179,11 +180,13 @@ namespace Xamarin.Social
 				Text = savedInstanceState != null ? savedInstanceState.GetString ("ComposerText") : state.Item.Text,
 				LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
 					TopMargin = 24,
-					LeftMargin = hMargin,
-					RightMargin = hMargin,
+					LeftMargin = hMargin - 14,
+					RightMargin = hMargin - 14,
 				},
 			};
-			composer.SetTextSize (ComplexUnitType.Sp, composeTextSize);
+			composer.SetTextSize (ComplexUnitType.Sp, ComposeTextSize);
+			composer.SetTextColor (Color.Black);
+			composer.SetBackgroundColor (Color.White);
 			composer.AfterTextChanged += delegate {
 				UpdateRemainingTextUI ();
 			};
@@ -196,7 +199,7 @@ namespace Xamarin.Social
 					RightMargin = hMargin,
 				},
 			};
-			remaining.SetTextSize (ComplexUnitType.Sp, composeTextSize);
+			remaining.SetTextSize (ComplexUnitType.Sp, ComposeTextSize);
 			UpdateRemainingTextUI ();
 			scrollContent.AddView (remaining);
 		}
@@ -365,8 +368,6 @@ namespace Xamarin.Social
 			public AttachmentView (Context context, string title, long size)
 				: base (context)
 			{
-				var textSize = 20;
-
 				var row = new TableRow (context) {
 				};
 				row.SetBackgroundColor (AttachmentColor);
@@ -379,7 +380,7 @@ namespace Xamarin.Social
 					},
 				};
 				tlabel.SetTextColor (Color.Black);
-				tlabel.SetTextSize (ComplexUnitType.Sp, textSize);
+				tlabel.SetTextSize (ComplexUnitType.Sp, LabelTextSize);
 				row.AddView (tlabel);
 
 				if (size > 0) {
@@ -391,7 +392,7 @@ namespace Xamarin.Social
 						},
 					};
 					slabel.SetTextColor (Color.Black);
-					slabel.SetTextSize (ComplexUnitType.Sp, textSize);
+					slabel.SetTextSize (ComplexUnitType.Sp, LabelTextSize);
 					row.AddView (slabel);
 				}
 
