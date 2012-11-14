@@ -22,7 +22,6 @@
     <ConsolePause>False</ConsolePause>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentation>True</GenerateDocumentation>
-    <MtouchArch>Default</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -34,7 +33,6 @@
     <DefineConstants>PLATFORM_IOS</DefineConstants>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentation>True</GenerateDocumentation>
-    <MtouchArch>Default</MtouchArch>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
