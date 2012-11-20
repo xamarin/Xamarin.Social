@@ -59,7 +59,7 @@ namespace Xamarin.Social.Services
 				req = CreateRequest ("POST", new Uri ("https://upload.twitter.com/1/statuses/update_with_media.xml"), account);
 				req.AddMultipartData ("status", status);
 				foreach (var i in item.Images.Take (MaxImages)) {
-					req.AddMultipartData ("media[]", i);
+					i.AddToRequest (req, "media[]");
 				}
 			}
 

@@ -66,7 +66,7 @@ namespace Xamarin.Social.Services
 
 			if (item.Images.Count > 0) {
 				req = CreateRequest ("POST", new Uri ("https://graph.facebook.com/me/photos"), account);
-				req.AddMultipartData ("source", item.Images.First ());
+				item.Images.First ().AddToRequest (req, "source");
 
 				var message = new StringBuilder ();
 				message.Append (item.Text);

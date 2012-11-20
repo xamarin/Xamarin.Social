@@ -56,6 +56,17 @@ namespace Xamarin.Social
 			return new FileData (path);
 		}
 
+		public void AddToRequest (Xamarin.Auth.Request request, string name)
+		{
+			if (request == null) {
+				throw new ArgumentNullException ("request");
+			}
+			if (string.IsNullOrEmpty (name)) {
+				throw new ArgumentException ("name", "Must provide a name for the file in the request.");
+			}
+			request.AddMultipartData (name, Data, MimeType, Filename);
+		}
+
 		~FileData ()
 		{
 			Dispose (false);

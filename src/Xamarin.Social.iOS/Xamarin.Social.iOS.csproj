@@ -48,12 +48,6 @@
     <Compile Include="..\Xamarin.Social\Item.cs">
       <Link>Item.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\Request.cs">
-      <Link>Request.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\Response.cs">
-      <Link>Response.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\Service.cs">
       <Link>Service.cs</Link>
     </Compile>
@@ -81,17 +75,11 @@
     <Compile Include="..\Xamarin.Social\Services\FlickrService.cs">
       <Link>Services\FlickrService.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\OAuth1Request.cs">
-      <Link>OAuth1Request.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\OAuth1Service.cs">
       <Link>OAuth1Service.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\SocialException.cs">
       <Link>SocialException.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social\OAuth2Request.cs">
-      <Link>OAuth2Request.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\OAuth2Service.cs">
       <Link>OAuth2Service.cs</Link>

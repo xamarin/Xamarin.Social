@@ -45,9 +45,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
-    <Compile Include="Request.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Response.cs" />
     <Compile Include="ShareResult.cs" />
     <Compile Include="Services\FacebookService.cs" />
     <Compile Include="Services\PinterestService.cs" />
@@ -55,10 +53,8 @@
     <Compile Include="ImageData.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="Services\FlickrService.cs" />
-    <Compile Include="OAuth1Request.cs" />
     <Compile Include="OAuth1Service.cs" />
     <Compile Include="SocialException.cs" />
-    <Compile Include="OAuth2Request.cs" />
     <Compile Include="OAuth2Service.cs" />
     <Compile Include="Services\AppDotNetService.cs" />
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">

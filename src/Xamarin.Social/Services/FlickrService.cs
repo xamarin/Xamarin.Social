@@ -43,7 +43,7 @@ namespace Xamarin.Social
 			//
 			// Add the image
 			//
-			req.AddMultipartData ("photo", item.Images.First ());
+			item.Images.First ().AddToRequest (req, "photo");
 
 			//
 			// Make the description include links

@@ -1,8 +1,9 @@
 using System;
-using MonoTouch.Foundation;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using MonoTouch.Foundation;
+using Xamarin.Auth;
 
 namespace Xamarin.Social
 {
