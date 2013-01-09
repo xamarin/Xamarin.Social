@@ -37,7 +37,7 @@ xpkg_args = [
 	"--getting-started", "addon/GettingStarted.md",
 	"--publisher", "Xamarin",
 	"--publisher-url", "http://xamarin.com",
-	"--summary", "Socialfy your app.",
+	"--summary", "Flexible social features for your app.",
 	"--icon", "icons/Xamarin.Social_512x512.png",
 	"--library", "ios:src/Xamarin.Social.iOS/bin/Release/Xamarin.Social.iOS.dll",
 	"--library", "android:src/Xamarin.Social.Android/bin/Release/Xamarin.Social.Android.dll",
