@@ -1,0 +1,54 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="Xamarin.Social" Version="1.0.4765.20756">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany("Xamarin, Inc.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright("2012 Xamarin, Inc.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyProduct("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("Xamarin.Social")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTrademark("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>To be added.</Copyright>
+  <Types>
+    <Namespace Name="Xamarin.Social">
+      <Type Name="FileData" Kind="Class" />
+      <Type Name="FlickrService" Kind="Class" />
+      <Type Name="ImageData" Kind="Class" />
+      <Type Name="Item" Kind="Class" />
+      <Type Name="OAuth1Service" Kind="Class" />
+      <Type Name="OAuth2Service" Kind="Class" />
+      <Type Name="Service" Kind="Class" />
+      <Type Name="ShareResult" Kind="Enumeration" />
+      <Type Name="SocialException" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Xamarin.Social.Services">
+      <Type Name="AppDotNetService" Kind="Class" />
+      <Type Name="FacebookService" Kind="Class" />
+      <Type Name="PinterestService" Kind="Class" />
+      <Type Name="TwitterService" Kind="Class" />
+    </Namespace>
+  </Types>
+  <Title>Xamarin.Social</Title>
+</Overview>
