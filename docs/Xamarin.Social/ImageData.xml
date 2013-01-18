@@ -31,8 +31,8 @@
         <Parameter Name="image" Type="System.Drawing.Bitmap" />
       </Parameters>
       <Docs>
-        <param name="image">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="image">The image in a <see cref="T:System.Drawing.Bitmap"/> .</param>
+        <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -48,9 +48,9 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="path">A filepath to an image file.</param>
+        <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -66,9 +66,9 @@
         <Parameter Name="filename" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="image">To be added.</param>
-        <param name="filename">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="image">An image that will be assigned to the <see cref="P:Xamarin.Social.ImageData.Image"/> property.</param>
+        <param name="filename">A JPG or PNG image file whose data will be assigned to the <see cref="P:Xamarin.Social.ImageData.Data"/> property.</param>
+        <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -85,9 +85,9 @@
         <Parameter Name="mimeType" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="mimeType">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">A <see cref="T:System.IO.String"/> of the image data.</param>
+        <param name="mimeType">The mime type of the image.</param>
+        <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -105,10 +105,10 @@
         <Parameter Name="mimeType" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="filename">To be added.</param>
-        <param name="mimeType">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">A <see cref="T:System.IO.String"/> of the image data.</param>
+        <param name="filename">A JPG or PNG image file whose data will be assigned to the <see cref="P:Xamarin.Social.ImageData.Data"/> property.</param>
+        <param name="mimeType">The mime type of the image.</param>
+        <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -144,7 +144,7 @@
         <ReturnType>System.Drawing.Bitmap</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The image in <see cref="T:System.Drawing.Bitmap"/> form.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -164,9 +164,9 @@
         <Parameter Name="image" Type="System.Drawing.Bitmap" />
       </Parameters>
       <Docs>
-        <param name="image">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="image">An image that will be assigned to the <see cref="P:Xamarin.Social.ImageData.Image"/> property.</param>
+        <summary>Implicit operator to create a new <see cref="T:Xamarin.Social.ImageData"/> from a <see cref="T:System.Drawing.Bitmap"/>.</summary>
+        <returns>A new <see cref="T:Xamarin.Social.ImageData"/>.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -186,8 +186,8 @@
       </Parameters>
       <Docs>
         <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Implicit operator to create a new <see cref="T:Xamarin.Social.ImageData"/> from a filepath.</summary>
+        <returns>A new <see cref="T:Xamarin.Social.ImageData"/></returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

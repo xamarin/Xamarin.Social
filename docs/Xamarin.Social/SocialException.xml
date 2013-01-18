@@ -11,7 +11,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>An <see cref='T:System.Exception'/> relating to the Xamarin.Social namespace.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>

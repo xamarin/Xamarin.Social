@@ -11,7 +11,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Access to Twitter as a <see cref="T:Xamarin.Social.Service"/>.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
