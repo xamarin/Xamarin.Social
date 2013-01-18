@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Xamarin.Auth;
 using Xamarin.Utilities;
 
-namespace Xamarin.Social
+namespace Xamarin.Social.Services
 {
 	public class FlickrService : OAuth1Service
 	{
