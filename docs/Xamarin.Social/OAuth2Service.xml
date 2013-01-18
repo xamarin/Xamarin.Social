@@ -4,6 +4,7 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+    <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Xamarin.Social.Service</BaseTypeName>
@@ -20,6 +21,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="serviceId" Type="System.String" />
@@ -38,6 +40,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
@@ -54,6 +57,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
@@ -70,6 +74,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -86,6 +91,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -102,6 +108,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -128,6 +135,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Authenticator</ReturnType>
@@ -145,6 +153,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.String&gt;</ReturnType>
@@ -165,6 +174,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
@@ -181,6 +191,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
+        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>

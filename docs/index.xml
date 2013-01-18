@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Xamarin.Social" Version="1.0.4765.20756">
+    <Assembly Name="Xamarin.Social" Version="1.0.4766.16322">
       <Attributes>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany("Xamarin, Inc.")</AttributeName>
@@ -46,6 +46,7 @@
     <Namespace Name="Xamarin.Social.Services">
       <Type Name="AppDotNetService" Kind="Class" />
       <Type Name="FacebookService" Kind="Class" />
+      <Type Name="FlickrService" Kind="Class" />
       <Type Name="PinterestService" Kind="Class" />
       <Type Name="TwitterService" Kind="Class" />
     </Namespace>
