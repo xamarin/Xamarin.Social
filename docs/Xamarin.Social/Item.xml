@@ -14,7 +14,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Facebook Post. Twitter Status. Google+ Activity.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -27,7 +27,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initializes an empty <see cref="Xamarin.Social.Item" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -42,8 +42,12 @@
         <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="text">
+          The initial text of the new item.
+        </param>
+        <summary>
+          Initializes a new <see cref="Xamarin.Social.Item" /> with the given text.
+        </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -59,7 +63,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Releases all resource used by the <see cref="Xamarin.Social.Item" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -77,8 +81,8 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="disposing">If <c>true</c> then this was called from the Dispose method; otherwise, it was called from the finalizer.</param>
+        <summary>Releases all resource used by the <see cref="Xamarin.Social.Item" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -93,7 +97,7 @@
         <ReturnType>System.Collections.Generic.IList&lt;Xamarin.Social.FileData&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Attached image.[tk check]</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -110,7 +114,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+          Releases unmanaged resources and performs other cleanup operations before the <see cref="Xamarin.Social.Item" /> is
+          reclaimed by garbage collection.
+        </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -125,8 +132,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value indicating whether this item has attachments.</summary>
+        <value>
+          <c>true</c> if this item has attachments; otherwise, <c>false</c>.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -141,7 +149,7 @@
         <ReturnType>System.Collections.Generic.IList&lt;Xamarin.Social.ImageData&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Attached image.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -157,7 +165,7 @@
         <ReturnType>System.Collections.Generic.IList&lt;System.Uri&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Attached link.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -173,7 +181,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Textual content.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

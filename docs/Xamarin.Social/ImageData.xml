@@ -10,8 +10,12 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+      Represents an image to be shared with a service.
+    </summary>
+    <remarks>
+      This object disposes of the Data property.
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

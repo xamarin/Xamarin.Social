@@ -14,8 +14,12 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+      Represents a file.
+    </summary>
+    <remarks>
+      This object disposes of the Data property.
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

@@ -1,6 +1,7 @@
+<?xml version="1.0"?>
 <Type Name="ShareResult" FullName="Xamarin.Social.ShareResult">
-  <TypeSignature Language="C#" Value="public enum ShareResult" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed ShareResult extends System.Enum" />
+  <TypeSignature Language="C#" Value="public enum ShareResult"/>
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed ShareResult extends System.Enum"/>
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -9,13 +10,13 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>The result of the user trying to share an <see cref="Item"/>.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName="Cancelled">
-      <MemberSignature Language="C#" Value="Cancelled" />
-      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Social.ShareResult Cancelled = int32(0)" />
+      <MemberSignature Language="C#" Value="Cancelled"/>
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Social.ShareResult Cancelled = int32(0)"/>
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -24,12 +25,15 @@
         <ReturnType>Xamarin.Social.ShareResult</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+          The user canceled that share operation. It's possible that they encountered
+          errors and gave up by choosing to cancel.
+        </summary>
       </Docs>
     </Member>
     <Member MemberName="Done">
-      <MemberSignature Language="C#" Value="Done" />
-      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Social.ShareResult Done = int32(1)" />
+      <MemberSignature Language="C#" Value="Done"/>
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Social.ShareResult Done = int32(1)"/>
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -38,7 +42,7 @@
         <ReturnType>Xamarin.Social.ShareResult</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The user successfully shared!</summary>
       </Docs>
     </Member>
   </Members>

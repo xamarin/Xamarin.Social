@@ -1,6 +1,7 @@
+<?xml version="1.0"?>
 <Type Name="Service" FullName="Xamarin.Social.Service">
-  <TypeSignature Language="C#" Value="public abstract class Service" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit Service extends System.Object" />
+  <TypeSignature Language="C#" Value="public abstract class Service"/>
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit Service extends System.Object"/>
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -8,33 +9,39 @@
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces/>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Social Networking Service.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected Service (string serviceId, string title);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string serviceId, string title) cil managed" />
+      <MemberSignature Language="C#" Value="protected Service (string serviceId, string title);"/>
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string serviceId, string title) cil managed"/>
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="serviceId" Type="System.String" />
-        <Parameter Name="title" Type="System.String" />
+        <Parameter Name="serviceId" Type="System.String"/>
+        <Parameter Name="title" Type="System.String"/>
       </Parameters>
       <Docs>
-        <param name="serviceId">To be added.</param>
-        <param name="title">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+          Initializes a new instance of the <see cref="Xamarin.Social.Service"/> class.
+        </summary>
+        <param name="serviceId">
+          Service identifier used when storing accounts.
+        </param>
+        <param name="title">
+          Title used when displaying its name in UI.
+        </param>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateAccountLink">
-      <MemberSignature Language="C#" Value="public Uri CreateAccountLink { get; protected set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.Uri CreateAccountLink" />
+      <MemberSignature Language="C#" Value="public Uri CreateAccountLink { get; protected set; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Uri CreateAccountLink"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -43,14 +50,14 @@
         <ReturnType>System.Uri</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Link to sign up.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
-      <MemberSignature Language="C#" Value="public Xamarin.Auth.Request CreateRequest (string method, Uri url);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url) cil managed" />
+      <MemberSignature Language="C#" Value="public Xamarin.Auth.Request CreateRequest (string method, Uri url);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -59,20 +66,23 @@
         <ReturnType>Xamarin.Auth.Request</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="method" Type="System.String" />
-        <Parameter Name="url" Type="System.Uri" />
+        <Parameter Name="method" Type="System.String"/>
+        <Parameter Name="url" Type="System.Uri"/>
       </Parameters>
       <Docs>
         <param name="method">To be added.</param>
         <param name="url">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+          Creates a base request to access the service. This is a low-level entrypoint for those
+          who need to access resources that are not covered by this class.
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
-      <MemberSignature Language="C#" Value="public Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters) cil managed" />
+      <MemberSignature Language="C#" Value="public Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -81,22 +91,25 @@
         <ReturnType>Xamarin.Auth.Request</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="method" Type="System.String" />
-        <Parameter Name="url" Type="System.Uri" />
-        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
+        <Parameter Name="method" Type="System.String"/>
+        <Parameter Name="url" Type="System.Uri"/>
+        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;"/>
       </Parameters>
       <Docs>
         <param name="method">To be added.</param>
         <param name="url">To be added.</param>
         <param name="parameters">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+          Creates a base request to access the service. This is a low-level entrypoint for those
+          who need to access resources that are not covered by this class.
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
-      <MemberSignature Language="C#" Value="public Xamarin.Auth.Request CreateRequest (string method, Uri url, Xamarin.Auth.Account account);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class Xamarin.Auth.Account account) cil managed" />
+      <MemberSignature Language="C#" Value="public Xamarin.Auth.Request CreateRequest (string method, Uri url, Xamarin.Auth.Account account);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class Xamarin.Auth.Account account) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -105,22 +118,25 @@
         <ReturnType>Xamarin.Auth.Request</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="method" Type="System.String" />
-        <Parameter Name="url" Type="System.Uri" />
-        <Parameter Name="account" Type="Xamarin.Auth.Account" />
+        <Parameter Name="method" Type="System.String"/>
+        <Parameter Name="url" Type="System.Uri"/>
+        <Parameter Name="account" Type="Xamarin.Auth.Account"/>
       </Parameters>
       <Docs>
         <param name="method">To be added.</param>
         <param name="url">To be added.</param>
         <param name="account">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+          Creates a base request to access the service. This is a low-level entrypoint for those
+          who need to access resources that are not covered by this class.
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
-      <MemberSignature Language="C#" Value="public virtual Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters, Xamarin.Auth.Account account);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters, class Xamarin.Auth.Account account) cil managed" />
+      <MemberSignature Language="C#" Value="public virtual Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters, Xamarin.Auth.Account account);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters, class Xamarin.Auth.Account account) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -129,24 +145,27 @@
         <ReturnType>Xamarin.Auth.Request</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="method" Type="System.String" />
-        <Parameter Name="url" Type="System.Uri" />
-        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
-        <Parameter Name="account" Type="Xamarin.Auth.Account" />
+        <Parameter Name="method" Type="System.String"/>
+        <Parameter Name="url" Type="System.Uri"/>
+        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;"/>
+        <Parameter Name="account" Type="Xamarin.Auth.Account"/>
       </Parameters>
       <Docs>
         <param name="method">To be added.</param>
         <param name="url">To be added.</param>
         <param name="parameters">To be added.</param>
         <param name="account">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+          Creates a base request to access the service. This is a low-level entrypoint for those
+          who need to access resources that are not covered by this class.
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAccountsAsync">
-      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;System.Collections.Generic.IEnumerable&lt;Xamarin.Auth.Account&gt;&gt; GetAccountsAsync ();" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Auth.Account&gt;&gt; GetAccountsAsync() cil managed" />
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;System.Collections.Generic.IEnumerable&lt;Xamarin.Auth.Account&gt;&gt; GetAccountsAsync ();"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Auth.Account&gt;&gt; GetAccountsAsync() cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -154,16 +173,16 @@
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Collections.Generic.IEnumerable&lt;Xamarin.Auth.Account&gt;&gt;</ReturnType>
       </ReturnValue>
-      <Parameters />
+      <Parameters/>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the saved accounts associated with this service.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticateUI">
-      <MemberSignature Language="C#" Value="public object GetAuthenticateUI (Action&lt;Xamarin.Auth.Account&gt; completedHandler);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetAuthenticateUI(class System.Action`1&lt;class Xamarin.Auth.Account&gt; completedHandler) cil managed" />
+      <MemberSignature Language="C#" Value="public object GetAuthenticateUI (Action&lt;Xamarin.Auth.Account&gt; completedHandler);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetAuthenticateUI(class System.Action`1&lt;class Xamarin.Auth.Account&gt; completedHandler) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -172,18 +191,22 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="completedHandler" Type="System.Action&lt;Xamarin.Auth.Account&gt;" />
+        <Parameter Name="completedHandler" Type="System.Action&lt;Xamarin.Auth.Account&gt;"/>
       </Parameters>
       <Docs>
         <param name="completedHandler">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>
+          Presents the necessary UI for the user to sign in to their account.
+        </summary>
+        <returns>
+          The task that will complete when they have signed in.
+        </returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticator">
-      <MemberSignature Language="C#" Value="protected abstract Xamarin.Auth.Authenticator GetAuthenticator ();" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class Xamarin.Auth.Authenticator GetAuthenticator() cil managed" />
+      <MemberSignature Language="C#" Value="protected abstract Xamarin.Auth.Authenticator GetAuthenticator ();"/>
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class Xamarin.Auth.Authenticator GetAuthenticator() cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -191,16 +214,22 @@
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Authenticator</ReturnType>
       </ReturnValue>
-      <Parameters />
+      <Parameters/>
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>
+          Gets the authenticator for this service. The authenticator will present
+          the user interface needed to authenticate a new account for the service.
+          This account will then be saved.
+        </summary>
+        <returns>
+          The authenticator or null if authentication is not supported.
+        </returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetShareUI">
-      <MemberSignature Language="C#" Value="public virtual object GetShareUI (Xamarin.Social.Item item, Action&lt;Xamarin.Social.ShareResult&gt; completionHandler);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object GetShareUI(class Xamarin.Social.Item item, class System.Action`1&lt;valuetype Xamarin.Social.ShareResult&gt; completionHandler) cil managed" />
+      <MemberSignature Language="C#" Value="public virtual object GetShareUI (Xamarin.Social.Item item, Action&lt;Xamarin.Social.ShareResult&gt; completionHandler);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object GetShareUI(class Xamarin.Social.Item item, class System.Action`1&lt;valuetype Xamarin.Social.ShareResult&gt; completionHandler) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -209,20 +238,29 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="item" Type="Xamarin.Social.Item" />
-        <Parameter Name="completionHandler" Type="System.Action&lt;Xamarin.Social.ShareResult&gt;" />
+        <Parameter Name="item" Type="Xamarin.Social.Item"/>
+        <Parameter Name="completionHandler" Type="System.Action&lt;Xamarin.Social.ShareResult&gt;"/>
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <param name="completionHandler">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>
+          Gets an <see cref="MonoTouch.UIKit.UIViewController"/> that can be used to present the share UI.
+        </summary>
+        <returns>
+          The <see cref="MonoTouch.UIKit.UIViewController"/>.
+        </returns>
+        <param name="item">
+          The item to share.
+        </param>
+        <param name="completionHandler">
+          Handler called when the share UI has finished. You must dismiss the view controller in this method
+          as it won't dismiss itself.
+        </param>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetTextLength">
-      <MemberSignature Language="C#" Value="public virtual int GetTextLength (Xamarin.Social.Item item);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance int32 GetTextLength(class Xamarin.Social.Item item) cil managed" />
+      <MemberSignature Language="C#" Value="public virtual int GetTextLength (Xamarin.Social.Item item);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance int32 GetTextLength(class Xamarin.Social.Item item) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -231,18 +269,25 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="item" Type="Xamarin.Social.Item" />
+        <Parameter Name="item" Type="Xamarin.Social.Item"/>
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>
+          Calculate the text length of an item if links and other media need to be
+          inlined with the text.
+        </summary>
+        <returns>
+          The text length after inlining media.
+        </returns>
+        <param name="item">
+          The item whose text length is to be calculated.
+        </param>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="HasMaxTextLength">
-      <MemberSignature Language="C#" Value="public bool HasMaxTextLength { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool HasMaxTextLength" />
+      <MemberSignature Language="C#" Value="public bool HasMaxTextLength { get; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance bool HasMaxTextLength"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -251,14 +296,17 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+          Gets a value indicating whether this instance has limit on the number of
+          characters that you can share.
+        </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxFiles">
-      <MemberSignature Language="C#" Value="public int MaxFiles { get; protected set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxFiles" />
+      <MemberSignature Language="C#" Value="public int MaxFiles { get; protected set; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxFiles"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -267,14 +315,14 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The maximum number of files that you can share.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxImages">
-      <MemberSignature Language="C#" Value="public int MaxImages { get; protected set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxImages" />
+      <MemberSignature Language="C#" Value="public int MaxImages { get; protected set; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxImages"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -283,14 +331,14 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The maximum number of images that you can share.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxLinks">
-      <MemberSignature Language="C#" Value="public int MaxLinks { get; protected set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxLinks" />
+      <MemberSignature Language="C#" Value="public int MaxLinks { get; protected set; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxLinks"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -299,14 +347,14 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The maximum number of links that you can share.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxTextLength">
-      <MemberSignature Language="C#" Value="public int MaxTextLength { get; protected set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxTextLength" />
+      <MemberSignature Language="C#" Value="public int MaxTextLength { get; protected set; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance int32 MaxTextLength"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -315,14 +363,14 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The maximum number of characters that you can share.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ServiceId">
-      <MemberSignature Language="C#" Value="public string ServiceId { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string ServiceId" />
+      <MemberSignature Language="C#" Value="public string ServiceId { get; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance string ServiceId"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -331,14 +379,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary> Uniquely identifies this service type.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task ShareItemAsync (Xamarin.Social.Item item, Xamarin.Auth.Account account);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task ShareItemAsync(class Xamarin.Social.Item item, class Xamarin.Auth.Account account) cil managed" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task ShareItemAsync (Xamarin.Social.Item item, Xamarin.Auth.Account account);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task ShareItemAsync(class Xamarin.Social.Item item, class Xamarin.Auth.Account account) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -347,20 +395,28 @@
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="item" Type="Xamarin.Social.Item" />
-        <Parameter Name="account" Type="Xamarin.Auth.Account" />
+        <Parameter Name="item" Type="Xamarin.Social.Item"/>
+        <Parameter Name="account" Type="Xamarin.Auth.Account"/>
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <param name="account">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+          <para>
+            Shares the passed-in object without presenting any UI to the user.
+          </para>
+        </summary>
+        <param name="item">
+          The item to share.
+        </param>
+        <param name="account">
+          The account to use to share.
+        </param>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
-      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task ShareItemAsync (Xamarin.Social.Item item, Xamarin.Auth.Account account, System.Threading.CancellationToken cancellationToken);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task ShareItemAsync(class Xamarin.Social.Item item, class Xamarin.Auth.Account account, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task ShareItemAsync (Xamarin.Social.Item item, Xamarin.Auth.Account account, System.Threading.CancellationToken cancellationToken);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task ShareItemAsync(class Xamarin.Social.Item item, class Xamarin.Auth.Account account, valuetype System.Threading.CancellationToken cancellationToken) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -369,22 +425,32 @@
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="item" Type="Xamarin.Social.Item" />
-        <Parameter Name="account" Type="Xamarin.Auth.Account" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
+        <Parameter Name="item" Type="Xamarin.Social.Item"/>
+        <Parameter Name="account" Type="Xamarin.Auth.Account"/>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken"/>
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <param name="account">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+          <para>
+            Shares the passed-in object without presenting any UI to the user.
+          </para>
+        </summary>
+        <param name="item">
+          The item to share.
+        </param>
+        <param name="account">
+          The account to use to share.
+        </param>
+        <param name="cancellationToken">
+          Token used to cancel this operation.
+        </param>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareTitle">
-      <MemberSignature Language="C#" Value="public string ShareTitle { get; protected set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string ShareTitle" />
+      <MemberSignature Language="C#" Value="public string ShareTitle { get; protected set; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance string ShareTitle"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -393,14 +459,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Text used as the title of screen when editing an item.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="SupportsAuthentication">
-      <MemberSignature Language="C#" Value="public virtual bool SupportsAuthentication { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool SupportsAuthentication" />
+      <MemberSignature Language="C#" Value="public virtual bool SupportsAuthentication { get; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance bool SupportsAuthentication"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -409,14 +475,14 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports authenticating new accounts.</summary>
+        <value><c>true</c> if supports authentication; otherwise, <c>false</c>.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Title">
-      <MemberSignature Language="C#" Value="public string Title { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string Title" />
+      <MemberSignature Language="C#" Value="public string Title { get; }"/>
+      <MemberSignature Language="ILAsm" Value=".property instance string Title"/>
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
@@ -425,7 +491,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Text used to label this service in the UI.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

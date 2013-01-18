@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Implements OAuth 2.0 implicit granting. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -75,8 +75,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Client identifier. http://tools.ietf.org/html/rfc6749#section-2.2</summary>
+        <value>The client identifier.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -91,8 +91,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Optional client secret. http://tools.ietf.org/html/rfc6749#section-4.1</summary>
+        <value>The client identifier.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -186,7 +186,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Access token scope. http://tools.ietf.org/html/rfc6749#section-3.3</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
