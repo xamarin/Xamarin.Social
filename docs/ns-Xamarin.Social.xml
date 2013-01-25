@@ -15,7 +15,7 @@
             <term>Sharing text, links, and images.</term>
           </item>
           <item>
-            <term>Enabling authenticated calls to the other APIs in the social network easy.</term>
+            <term>Enabling authenticated calls to the other APIs in the social network.</term>
           </item>
         </list>
       </para>
@@ -27,25 +27,25 @@
           To share an item: create it, create the service, then present the share UI, as shown in the following example:</para>
         <example>
           <code lang="C#">
-            using Xamarin.Social;
-            
-            // 1. Create the service
-            var facebook = new FacebookService {
-            ClientId = "&lt;App ID from http://developers.facebook.com/apps&gt;"
-            };
-            
-            // 2. Create an item to share
-            var item = new Item {
-            Text = "This is the best library I've ever used!",
-            };
-            item.Links.Add (new Uri ("http://xamarin.com"));
-            
-            // 3. Present the UI on iOS
-            var shareViewController = facebook.GetShareUI (item, result =&gt; {
-            // result lets you know if they went through with it or canceled
-            DismissViewController (true);
-            });
-            PresentViewController (shareViewController, true, null);
+using Xamarin.Social;
+
+// 1. Create the service
+var facebook = new FacebookService {
+&#xa0;&#xa0;ClientId = "&lt;App ID from http://developers.facebook.com/apps&gt;"
+};
+
+// 2. Create an item to share
+var item = new Item {
+&#xa0;&#xa0;Text = "This is the best library I've ever used!",
+};
+item.Links.Add (new Uri ("http://xamarin.com"));
+
+// 3. Present the UI on iOS
+var shareViewController = facebook.GetShareUI (item, result =&gt; {
+&#xa0;&#xa0;// result lets you know if they went through with it or canceled
+&#xa0;&#xa0;DismissViewController (true);
+});
+PresentViewController (shareViewController, true, null);
           </code>
         </example>
         <para>
@@ -53,15 +53,17 @@
         </para>
         <example>
           <code lang="C#">
-            // 3. Present the UI on Android
-            var shareIntent = facebook.GetShareUI (this, item, result =&gt; {
-            // congratulate the user for being awesome
-            });
-            StartActivityForResult (shareIntent, 42);
+// 3. Present the UI on Android
+var shareIntent = facebook.GetShareUI (this, item, result =&gt; {
+&#xa0;&#xa0;// congratulate the user for being awesome
+});
+StartActivityForResult (shareIntent, 42);
           </code>
         </example>
         <para>
-          <format type="text/html"><h2>Services</h2></format>
+          <format type="text/html">
+            <h2>Services</h2>
+          </format>
         </para>
         <para>Xamarin.Social comes with a variety of services that application developers can use to share items. Each service requires a certain number of parameters to be filled in by the application:</para>
         <list type="table">
@@ -75,7 +77,9 @@
                 <a href="https://alpha.app.net/developer/apps/">App.net</a>
               </format>
             </term>
-            <description><c>new AppDotNetService { ClientId }</c></description>
+            <description>
+              <c>new AppDotNetService { ClientId }</c>
+            </description>
           </item>
           <item>
             <term>
@@ -83,7 +87,9 @@
                 <a href="http://developers.facebook.com">Facebook</a>
               </format>
             </term>
-            <description><c>new FacebookService { ClientId }</c></description>
+            <description>
+              <c>new FacebookService { ClientId }</c>
+            </description>
           </item>
           <item>
             <term>
@@ -91,7 +97,9 @@
                 <a href="http://www.flickr.com/services/api/">Flickr</a>
               </format>
             </term>
-            <description><c>new FlickrService { ConsumerKey, ConsumerSecret }</c></description>
+            <description>
+              <c>new FlickrService { ConsumerKey, ConsumerSecret }</c>
+            </description>
           </item>
           <item>
             <term>
@@ -99,28 +107,34 @@
                 <a href="http://pinterest.com/">PInterest</a>
               </format>
             </term>
-            <description><c>new PinterestService ()</c></description>
+            <description>
+              <c>new PinterestService ()</c>
+            </description>
           </item>
           <item>
             <term>
               <format type="text/html">
-                <a href="http://dev.twitter.com">Twitter Standalone (*)</a>
+                <a href="http://dev.twitter.com">Twitter Standalone</a><format type="text/html"><sup>*</sup></format>
               </format>
             </term>
-            <description><c>new TwitterService { ConsumerKey, ConsumerSecret }</c></description>
+            <description>
+              <c>new TwitterService { ConsumerKey, ConsumerSecret }</c>
+            </description>
           </item>
           <item>
             <term>
               <format type="text/html">
-                <a href="http://dev.twitter.com">Twitter (iOS 5+)</a>
+                <a href="http://dev.twitter.com">Twitter (iOS 5+)</a><format type="text/html"><sup>&#x2020;</sup></format>
               </format>
             </term>
-            <description><c>new Twitter5Service ()</c></description>
+            <description>
+              <c>new Twitter5Service ()</c>
+            </description>
           </item>
         </list>
-        <para>(<sup>*</sup>) The application developer must make sure that their Twitter app has an authentication callback URL registered in Twitter's app settings.
+        <para><format type="text/html"><sup>*</sup></format> The application developer must make sure that their Twitter app has an authentication callback URL registered in Twitter's app settings.
         </para>
-        <para>Twitter iOS 5+ uses native iOS user interfaces and accounts (these are only available on iOS 5 and higher).
+        <para><format type="text/html"><sup>&#x2020;</sup></format> Twitter iOS 5+ uses native iOS user interfaces and accounts (these are only available on iOS 5 and higher).
         </para>
         <para>
           <format type="text/html">
@@ -128,27 +142,35 @@
           </format>
         </para>
         <para>
-        To share text, links, or images, fill out an <see cref="T:Xamarin.Social.Item"/> object and call <see cref="M:Xamarin.Social.Service.GetShareUI"/>. The share UI will allow the user to select the account that they want to use so you don't need to provide one. The UI will also allow the user to edit the item's text before it is posted.
+          To share text, links, or images, populate a <see cref="T:Xamarin.Social.Item"/> object and call <see cref="M:Xamarin.Social.Service.GetShareUI"/>. The share UI will allow the user to select the account that they want to use so the application does not need to provide one. The UI will also allow the user to edit the item's text before it is posted.
         </para>
         <para>
           Items have properties for Text, Images, Files, and Links; however, not all services support sharing all those types of media. The limitations can be discovered by examining the following properties of the  <see cref="T:Xamarin.Social.Service"/> object:
         </para>
         <list type="bullet">
           <item>
-            <term><see cref="P:Xamarin.Social.Service.MaxTextLength"/></term>
+            <term>
+              <see cref="P:Xamarin.Social.Service.MaxTextLength"/>
+            </term>
           </item>
           <item>
-            <term><see cref="P:Xamarin.Social.Service.MaxLinks"/></term>
+            <term>
+              <see cref="P:Xamarin.Social.Service.MaxLinks"/>
+            </term>
           </item>
           <item>
-            <term><see cref="P:Xamarin.Social.Service.MaxImages"/></term>
+            <term>
+              <see cref="P:Xamarin.Social.Service.MaxImages"/>
+            </term>
           </item>
           <item>
-            <term><see cref="P:Xamarin.Social.Service.MaxFiles"/></term>
+            <term>
+              <see cref="P:Xamarin.Social.Service.MaxFiles"/>
+            </term>
           </item>
         </list>
         <para>
-        In addition to presenting the Share UI, you can also share items directly using the <see cref="M:Xamarin.Social.Service.ShareItemAsync"/> method of the service.
+          In addition to presenting the Share UI, application developers can also share items directly using the <see cref="M:Xamarin.Social.Service.ShareItemAsync"/> method of the service.
         </para>
         <para>
           <format type="text/html">
@@ -160,13 +182,14 @@
         </para>
         <example>
           <code lang="C#">
-            var request = facebook.CreateRequest (
-            "GET",
-            new Uri ("https://graph.facebook.com/me/feed"),
-            account);
-            request.GetResponseAsync ().ContinueWith (response =&gt; {
-            // parse the JSON in response.GetResponseText ()
-            });
+var request = facebook.CreateRequest (
+&#xa0;&#xa0;"GET",
+&#xa0;&#xa0;new Uri ("https://graph.facebook.com/me/feed"),
+&#xa0;&#xa0;account);
+&#xa0;&#xa0;request.GetResponseAsync ().ContinueWith (response =&gt; {
+&#xa0;&#xa0;&#xa0;&#xa0;// parse the JSON in response.GetResponseText ()
+&#xa0;&#xa0;}
+);
           </code>
         </example>
         <para>
@@ -184,13 +207,13 @@
           Each <see cref="T:Xamarin.Social.Service"/> exposes a <see cref="M:Xamarin.Social.Service.GetAuthenticateUI"/> method that returns a <see cref="T:Xamarin.Auth.Authenticator"/> object that the application can use to authenticate the user. Doing so will automatically store the authenticated account so that it can be used later.
         </para>
         <para>
-          You can retrieve stored accounts with <see cref="M:Xamarin.Social.Service.GetAccountsAsync"/>:
+          Application developers can retrieve stored accounts with <see cref="M:Xamarin.Social.Service.GetAccountsAsync"/>:
         </para>
         <example>
           <code lang="C#">
-            facebook.GetAccountsAsync ().ContinueWith (accounts =&gt; {
-            // accounts is an IEnumerable&lt;Account&gt; of saved accounts
-            });
+facebook.GetAccountsAsync ().ContinueWith (accounts =&gt; {
+&#xa0;&#xa0;// accounts is an IEnumerable&lt;Account&gt; of saved accounts
+});
           </code>
         </example>
       </para>

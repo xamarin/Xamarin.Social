@@ -11,7 +11,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Implements OAuth 2.0 implicit granting. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2</summary>
+    <summary>Implements OAuth 2.0 implicit granting. <format type="text/html"><a href="http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2">http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2</a></format></summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>

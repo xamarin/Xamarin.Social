@@ -10,7 +10,7 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>The result of the user trying to share an <see cref="Item" />.</summary>
+    <summary>The result of the user trying to share an <see cref="T:Xamarin.Social.Item"/>.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
