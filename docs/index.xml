@@ -34,7 +34,6 @@
   <Types>
     <Namespace Name="Xamarin.Social">
       <Type Name="FileData" Kind="Class" />
-      <Type Name="FlickrService" Kind="Class" />
       <Type Name="ImageData" Kind="Class" />
       <Type Name="Item" Kind="Class" />
       <Type Name="OAuth1Service" Kind="Class" />
