@@ -4,6 +4,7 @@ To share an item: create it, create the service, then present the share UI:
 
 ```csharp
 using Xamarin.Social;
+using Xamarin.Social.Services;
 ...
 
 // 1. Create the service
@@ -20,7 +21,7 @@ item.Links.Add (new Uri ("http://xamarin.com"));
 // 3. Present the UI on iOS
 var shareViewController = facebook.GetShareUI (item, result => {
 	// result lets you know if they went through with it or canceled
-	DismissViewController (true);
+	DismissViewController (true, null);
 });
 PresentViewController (shareViewController, true, null);
 ```
