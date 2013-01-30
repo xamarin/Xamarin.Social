@@ -39,7 +39,7 @@ public override void ViewDidAppear (bool animated)
 
 	// 3. Present the UI on iOS
 	var shareViewController = facebook.GetShareUI (item, result => {
-		// result lets you know if they went through with it or canceled
+		// result lets you know if the user shared the item or canceled
 		DismissViewController (true, null);
 	});
 	PresentViewController (shareViewController, true, null);
