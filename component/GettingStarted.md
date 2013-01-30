@@ -57,14 +57,10 @@ Xamarin.Social comes with a variety of services that you can use to share items.
 * [Facebook](http://developers.facebook.com) `new FacebookService { ClientId }`
 * [Flickr](http://www.flickr.com/services/api/) `new FlickrService { ConsumerKey, ConsumerSecret }`
 * [Pinterest](http://pinterest.com) `new PinterestService ()`
-* [Twitter](http://dev.twitter.com)<sup>*</sup> `new TwitterService { ConsumerKey, ConsumerSecret }`
-* [Twitter](http://dev.twitter.com)<sup>5</sup> `new Twitter5Service ()`
+* [Twitter](http://dev.twitter.com) `new TwitterService { ConsumerKey, ConsumerSecret }`
+* [Twitter](http://dev.twitter.com)* `new Twitter5Service ()`
 
-<sup>*</sup> make sure that your Twitter app has an authentication callback URL registered in Twitter's app settings.
-
-<sup>5</sup> uses native iOS 5 user interfaces and accounts (only available on iOS 5 and newer).
-
-
+\* `Twitter5Service` uses iOS 5-specific UI and account settings.
 
 
 
