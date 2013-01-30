@@ -20,8 +20,8 @@ item.Links.Add (new Uri ("http://xamarin.com"));
 
 // 3. Present the UI on iOS
 var shareViewController = facebook.GetShareUI (item, result => {
-	// result lets you know if they went through with it or canceled
 	DismissViewController (true, null);
+	// result lets you know if they went through with it or canceled
 });
 PresentViewController (shareViewController, true, null);
 ```
@@ -31,7 +31,7 @@ If you're on Android, then you should present the share UI using an intent:
 ```csharp
 // 3. Present the UI on Android
 var shareIntent = facebook.GetShareUI (this, item, result => {
-	// congratulate the user for being awesome
+	// result lets you know if they went through with it or canceled
 });
 StartActivityForResult (shareIntent, 42);
 ```
