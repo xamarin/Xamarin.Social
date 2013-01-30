@@ -45,3 +45,5 @@ public override void ViewDidAppear (bool animated)
 	PresentViewController (shareViewController, true, null);
 }
 ```
+
++*Some screenshots assembled with [PlaceIt](http://placeit.breezi.com/).*
