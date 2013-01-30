@@ -46,4 +46,4 @@ public override void ViewDidAppear (bool animated)
 }
 ```
 
-+*Some screenshots assembled with [PlaceIt](http://placeit.breezi.com/).*
+*Some screenshots assembled with [PlaceIt](http://placeit.breezi.com/).*
