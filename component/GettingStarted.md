@@ -7,33 +7,45 @@ using Xamarin.Social;
 using Xamarin.Social.Services;
 ...
 
-// 1. Create the service
-var facebook = new FacebookService {
-	ClientId = "<App ID from http://developers.facebook.com/apps>"
-};
+public override void ViewDidAppear (bool animated)
+{
+	base.ViewDidAppear (animated);
 
-// 2. Create an item to share
-var item = new Item {
-	Text = "This is the best library I've ever used!",
-};
-item.Links.Add (new Uri ("http://xamarin.com"));
+	// 1. Create the service
+	var facebook = new FacebookService {
+		ClientId = "<App ID from http://developers.facebook.com/apps>"
+	};
 
-// 3. Present the UI on iOS
-var shareViewController = facebook.GetShareUI (item, result => {
-	DismissViewController (true, null);
-	// result lets you know if they went through with it or canceled
-});
-PresentViewController (shareViewController, true, null);
+	// 2. Create an item to share
+	var item = new Item {
+		Text = "This is the best library I've ever used!",
+	};
+	item.Links.Add (new Uri ("http://xamarin.com"));
+
+	// 3. Present the UI on iOS
+	var shareViewController = facebook.GetShareUI (item, result => {
+		// result lets you know if they went through with it or canceled
+		DismissViewController (true, null);
+	});
+	PresentViewController (shareViewController, true, null);
+}
 ```
 
 If you're on Android, then you should present the share UI using an intent:
 
 ```csharp
-// 3. Present the UI on Android
-var shareIntent = facebook.GetShareUI (this, item, result => {
-	// result lets you know if they went through with it or canceled
-});
-StartActivityForResult (shareIntent, 42);
+protected override void OnCreate (Bundle bundle)
+{
+	base.OnCreate (bundle);
+
+	...
+
+	// 3. Present the UI on Android
+	var shareIntent = facebook.GetShareUI (this, item, result => {
+		// result lets you know if they went through with it or canceled
+	});
+	StartActivityForResult (shareIntent, 42);
+}
 ```
 
 
