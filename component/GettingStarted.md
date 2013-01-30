@@ -1,6 +1,6 @@
 ## Sharing
 
-To share an item: create it, create the service, then present the share UI:
+To share an item: create the item, create the service, then present the share UI:
 
 ```csharp
 using Xamarin.Social;
@@ -24,7 +24,7 @@ public override void ViewDidAppear (bool animated)
 
 	// 3. Present the UI on iOS
 	var shareViewController = facebook.GetShareUI (item, result => {
-		// result lets you know if they went through with it or canceled
+		// result lets you know if the user shared the item or canceled
 		DismissViewController (true, null);
 	});
 	PresentViewController (shareViewController, true, null);
@@ -38,11 +38,20 @@ protected override void OnCreate (Bundle bundle)
 {
 	base.OnCreate (bundle);
 
-	...
+	// 1. Create the service
+	var facebook = new FacebookService {
+		ClientId = "<App ID from http://developers.facebook.com/apps>"
+	};
+
+	// 2. Create an item to share
+	var item = new Item {
+		Text = "This is the best library I've ever used!",
+	};
+	item.Links.Add (new Uri ("http://xamarin.com"));
 
 	// 3. Present the UI on Android
 	var shareIntent = facebook.GetShareUI (this, item, result => {
-		// result lets you know if they went through with it or canceled
+		// result lets you know if the user shared the item or canceled
 	});
 	StartActivityForResult (shareIntent, 42);
 }
