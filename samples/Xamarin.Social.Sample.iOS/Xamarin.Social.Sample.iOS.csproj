@@ -100,4 +100,9 @@
       <Name>Xamarin.Auth.iOS</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default%402x.png" />
+    <Content Include="Default-568h%402x.png" />
+    <Content Include="Default.png" />
+  </ItemGroup>
 </Project>
