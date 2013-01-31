@@ -1,6 +1,6 @@
 ## Sharing
 
-To share an item: create the item, create the service, then present the share UI:
+To share an item, create the item, create the service, then present the share UI:
 
 ```csharp
 using Xamarin.Social;
@@ -12,22 +12,18 @@ public override void ViewDidAppear (bool animated)
 	base.ViewDidAppear (animated);
 
 	// 1. Create the service
-	var facebook = new FacebookService {
-		ClientId = "<App ID from http://developers.facebook.com/apps>"
-	};
+	var facebook = new FacebookService { ClientId = "<App ID from developers.facebook.com/apps>" };
 
 	// 2. Create an item to share
-	var item = new Item {
-		Text = "This is the best library I've ever used!",
-	};
-	item.Links.Add (new Uri ("http://xamarin.com"));
+	var item = new Item { Text = "Xamarin.Social is the bomb.com." };
+	item.Links.Add (new Uri ("http://github.com/xamarin/xamarin.social"));
 
 	// 3. Present the UI on iOS
-	var shareViewController = facebook.GetShareUI (item, result => {
+	var shareController = facebook.GetShareUI (item, result => {
 		// result lets you know if the user shared the item or canceled
 		DismissViewController (true, null);
 	});
-	PresentViewController (shareViewController, true, null);
+	PresentViewController (shareController, true, null);
 }
 ```
 
@@ -39,15 +35,11 @@ protected override void OnCreate (Bundle bundle)
 	base.OnCreate (bundle);
 
 	// 1. Create the service
-	var facebook = new FacebookService {
-		ClientId = "<App ID from http://developers.facebook.com/apps>"
-	};
+	var facebook = new FacebookService { ClientId = "<App ID from developers.facebook.com/apps>" };
 
 	// 2. Create an item to share
-	var item = new Item {
-		Text = "This is the best library I've ever used!",
-	};
-	item.Links.Add (new Uri ("http://xamarin.com"));
+	var item = new Item { Text = "Xamarin.Social is the bomb.com." };
+	item.Links.Add (new Uri ("http://github.com/xamarin/xamarin.social"));
 
 	// 3. Present the UI on Android
 	var shareIntent = facebook.GetShareUI (this, item, result => {
@@ -57,10 +49,10 @@ protected override void OnCreate (Bundle bundle)
 }
 ```
 
-
 ## Services
 
-Xamarin.Social comes with a variety of services that you can use to share items. Each service requires a certain number of parameters to be filled in by you:
+Xamarin.Social comes with a variety of services that you can use to
+share items, and can be created with the following credentials:
 
 * [App.net](https://alpha.app.net/developer/apps/) `new AppDotNetService { ClientId }`
 * [Facebook](http://developers.facebook.com) `new FacebookService { ClientId }`
@@ -71,46 +63,47 @@ Xamarin.Social comes with a variety of services that you can use to share items.
 
 \* `Twitter5Service` uses iOS 5-specific UI and account settings.
 
-
-
 ## Share Items
 
-To share some text, links, or images, fill out an `Item` object and call `GetShareUI`. The share UI will allow the user to select the account that they want to use so you don't need to provide one. The UI will also allow the user to edit the item's text before it is posted.
+To share some text, links, or images, create an `Item` object and call
+`GetShareUI`. The share UI allows the user to select the account that
+they want to use, and allows the user to edit the item's text before it
+is posted.
 
-Items have properties for Text, Images, Files, and Links; however, not all services support sharing all those types of media. Use these properties of `Service` objects to find out about such limitations:
+Items have properties for Text, Images, Files, and Links; however, not
+all services support sharing all of these types of media. Use these
+`Service` properties to query the limitations of different services:
 
 * `MaxTextLength`
 * `MaxLinks`
 * `MaxImages`
 * `MaxFiles`
 
-In addition to presenting the Share UI, you can also share items directly using the `ShareItemAsync` method of the service.
-
-
+As an alternative to presenting the share UI, you can share items
+directly using the `ShareItemAsync` method of the service.
 
 ## Social APIs
 
-If you want to do more than just share, you can access the API using request objects from the service:
+If you want to do more than basic sharing, you can access arbitrary
+service APIs using `CreateRequest`:
 
 ```csharp
-var request = facebook.CreateRequest (
-	"GET",
-	new Uri ("https://graph.facebook.com/me/feed"),
-	account);
+var request = facebook.CreateRequest ("GET", new Uri ("https://graph.facebook.com/me/feed"), account);
 request.GetResponseAsync ().ContinueWith (response => {
 	// parse the JSON in response.GetResponseText ()
 });
 ```
 
-Notice how the service automatically authenticates the request for you. You're welcome.
-
-
+The service will automatically authenticate the request for you.
 
 ## Authentication
 
 Xamarin.Social uses the Xamarin.Auth library to fetch and store `Account` objects. 
 
-Each service exposes a `GetAuthenticateUI` method that returns a `Xamarin.Auth.Authenticator` object that you can use to authenticate the user. Doing so will automatically store the authenticated account so that it can be used later.
+Each service exposes a `GetAuthenticateUI` method that returns a
+`Xamarin.Auth.Authenticator` object that you can use to authenticate the
+user. Doing so will automatically store the authenticated account so
+that it can be used later.
 
 You can retrieve stored accounts with `GetAccountsAsync`:
 

@@ -1,19 +1,18 @@
+Xamarin.Social posts statuses, links, images, and other media to social networks using
+a simple, cross-platform API. With Xamarin.Social, you can easily:
 
-Xamarin.Social enables you to post text and other media to social networks and access their API using authenticated requests.
+ 1. Share text and images on social networks.
+ 2. Access social network APIs using authenticated requests.
+ 3. Automatically and securely store user credentials using Xamarin.Auth.
 
-With Xamarin.Social, you can easily:
+Xamarin.Social currently works with these social networks, and can be extended to support
+custom services:
 
-1. Share text and images to social networks
-2. Access social network APIs using authenticated requests
-3. Automatically and securely store user credentials
-
-Xamarin.Social works with these social networks:
-
-* [App.net](http://alpha.app.net)
-* [Facebook](http://facebook.com)
-* [Flickr](http://www.flickr.com)
-* [Pinterest](http://pinterest.com)
-* [Twitter](http://twitter.com)
+ * [App.net](http://alpha.app.net)
+ * [Facebook](http://facebook.com)
+ * [Flickr](http://www.flickr.com)
+ * [Pinterest](http://pinterest.com)
+ * [Twitter](http://twitter.com)
 
 An example for sharing a link with Facebook on iOS:
 
@@ -27,22 +26,18 @@ public override void ViewDidAppear (bool animated)
 	base.ViewDidAppear (animated);
 
 	// 1. Create the service
-	var facebook = new FacebookService {
-		ClientId = "<App ID from http://developers.facebook.com/apps>"
-	};
+	var facebook = new FacebookService { ClientId = "<App ID from developers.facebook.com/apps>" };
 
 	// 2. Create an item to share
-	var item = new Item {
-		Text = "This is the best library I've ever used!",
-	};
-	item.Links.Add (new Uri ("http://xamarin.com"));
+	var item = new Item { Text = "Xamarin.Social is the bomb.com." };
+	item.Links.Add (new Uri ("http://github.com/xamarin/xamarin.social"));
 
 	// 3. Present the UI on iOS
-	var shareViewController = facebook.GetShareUI (item, result => {
+	var shareController = facebook.GetShareUI (item, result => {
 		// result lets you know if the user shared the item or canceled
 		DismissViewController (true, null);
 	});
-	PresentViewController (shareViewController, true, null);
+	PresentViewController (shareController, true, null);
 }
 ```
 
