@@ -67,9 +67,9 @@ Xamarin.Social comes with a variety of services that you can use to share items.
 * [Flickr](http://www.flickr.com/services/api/) `new FlickrService { ConsumerKey, ConsumerSecret }`
 * [Pinterest](http://pinterest.com) `new PinterestService ()`
 * [Twitter](http://dev.twitter.com) `new TwitterService { ConsumerKey, ConsumerSecret }`
-* [Twitter](http://dev.twitter.com)<sup>*</sup> `new Twitter5Service ()`
+* [Twitter](http://dev.twitter.com)* `new Twitter5Service ()`
 
-<sup>*</sup> `Twitter5Service` uses iOS 5-specific UI and account settings.
+\* `Twitter5Service` uses iOS 5-specific UI and account settings.
 
 
 
