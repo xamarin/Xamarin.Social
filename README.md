@@ -14,4 +14,4 @@ This library focuses on:
 Please read [Getting Started](component/GettingStarted.md) to learn how to use 
 the library.
 
-Read [Details](components/Details.md) to learn how to write your own services.
+Read [Details](component/Details.md) to learn how to write your own services.
