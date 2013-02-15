@@ -19,16 +19,19 @@ namespace Xamarin.Social.Sample.iOS
 
 			new FacebookService {
 				ClientId = "App ID/API Key from https://developers.facebook.com/apps",
+				RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
 			},
 
 			new FlickrService {
 				ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
 				ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
+				CallbackUrl = new Uri ("Callback URL from http://www.flickr.com/services/apps/by/me")
 			},
 
 			new TwitterService {
 				ConsumerKey = "Consumer key from https://dev.twitter.com/apps",
 				ConsumerSecret = "Consumer secret from https://dev.twitter.com/apps",
+				CallbackUrl = new Uri ("Callback URL from https://dev.twitter.com/apps")
 			},
 
 			new Twitter5Service {
