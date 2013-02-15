@@ -94,6 +94,7 @@ namespace Xamarin.Social
 			//
 			toolbar = new ToolbarView (this, Title);
 			toolbar.IsProgressing = state.IsSending;
+			toolbar.Clicked += (sender, args) => StartSending();
 			layout.AddView (toolbar);
 
 			//
