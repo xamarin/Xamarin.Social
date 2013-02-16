@@ -1,6 +1,10 @@
 ## Sharing
 
-To share an item, create the item, create the service, then present the share UI:
+We'll demonstrate sharing using Facebook. In order to share with Facebook, you'll need to have created
+a Facebook app at https://developers.facebook.com/apps. Use the "Website with Facebook Login" integration
+and ensure you've added `publish_stream` in the "Extended Permissions" section.
+
+To share an item, first create the service, create the item and then present the share UI:
 
 ```csharp
 using Xamarin.Social;
@@ -12,7 +16,10 @@ public override void ViewDidAppear (bool animated)
 	base.ViewDidAppear (animated);
 
 	// 1. Create the service
-	var facebook = new FacebookService { ClientId = "<App ID from developers.facebook.com/apps>" };
+	var facebook = new FacebookService {
+		ClientId = "<App ID from developers.facebook.com/apps>",
+		RedirectUrl = new System.Uri ("<Redirect URL from developers.facebook.com/apps>")
+	};
 
 	// 2. Create an item to share
 	var item = new Item { Text = "Xamarin.Social is the bomb.com." };

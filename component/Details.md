@@ -26,7 +26,10 @@ public override void ViewDidAppear (bool animated)
 	base.ViewDidAppear (animated);
 
 	// 1. Create the service
-	var facebook = new FacebookService { ClientId = "<App ID from developers.facebook.com/apps>" };
+	var facebook = new FacebookService {
+		ClientId = "<App ID from developers.facebook.com/apps>",
+		RedirectUrl = new System.Uri ("<Redirect URL from developers.facebook.com/apps>")
+	};
 
 	// 2. Create an item to share
 	var item = new Item { Text = "Xamarin.Social is the bomb.com." };
