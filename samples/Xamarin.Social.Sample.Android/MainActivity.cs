@@ -1,12 +1,11 @@
 using System;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.Collections.Generic;
+using Xamarin.Media;
 using Xamarin.Social.Services;
 
 namespace Xamarin.Social.Sample.Android
@@ -14,24 +13,20 @@ namespace Xamarin.Social.Sample.Android
 	[Activity (Label = "Xamarin.Social Sample", MainLauncher = true)]
 	public class MainActivity : Activity
 	{
-		List<Service> services = new List<Service> {
+		private static readonly FacebookService Facebook = new FacebookService {
+			ClientId = "App ID/API Key from https://developers.facebook.com/apps",
+			RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
+		};
 
-			new FacebookService {
-				ClientId = "App ID/API Key from https://developers.facebook.com/apps",
-				RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
-			},
+		private static readonly FlickrService Flickr = new FlickrService {
+			ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
+			ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
+		};
 
-			new FlickrService {
-				ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
-				ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
-				CallbackUrl = new Uri ("Callback URL from http://www.flickr.com/services/apps/by/me")
-			},
-
-			new TwitterService {
-				ConsumerKey = "Consumer key from https://dev.twitter.com/apps",
-				ConsumerSecret = "Consumer secret from https://dev.twitter.com/apps",
-				CallbackUrl = new Uri ("Callback URL from https://dev.twitter.com/apps")
-			},
+		private static readonly TwitterService Twitter = new TwitterService {
+			ConsumerKey = "Consumer key from https://dev.twitter.com/apps",
+			ConsumerSecret = "Consumer secret from https://dev.twitter.com/apps",
+			CallbackUrl = new Uri ("Callback URL from https://dev.twitter.com/apps")
 		};
 
 		void Share (Service service, Button shareButton)
@@ -44,16 +39,7 @@ namespace Xamarin.Social.Sample.Android
 			};
 
 			Intent intent = service.GetShareUI (this, item, shareResult => {
-				shareButton.Text = "Share (" + shareResult + ")";
-			});
-
-			StartActivity (intent);
-		}
-
-		void Authenticate (Service service)
-		{
-			Intent intent = service.GetAuthenticateUI (this, account => {
-				//
+				shareButton.Text = service.Title + " shared: " + shareResult;
 			});
 
 			StartActivity (intent);
@@ -65,54 +51,33 @@ namespace Xamarin.Social.Sample.Android
 
 			SetContentView (Resource.Layout.Main);
 
-			var layout = FindViewById<LinearLayout> (Resource.Id.ServicesLayout);
+			Button flickrButton = FindViewById<Button> (Resource.Id.Flickr);
+			flickrButton.Click += (sender, args) =>
+			{
+				var picker = new MediaPicker (this);
+				picker.PickPhotoAsync().ContinueWith (t =>
+				{
+					if (t.IsCanceled)
+						return;
 
-			// Build the UI
-			foreach (var s in services) {
-				layout.AddView (CreateServiceView (s));
-			}
-		}
+					var item = new Item ("I'm sharing great things using Xamarin!") {
+						Images = new[] { new ImageData (t.Result.Path) }
+					};
 
-		View CreateServiceView (Service service)
-		{
-			var layout = new LinearLayout (this) {
-				Orientation = Orientation.Vertical,
-				LayoutParameters = new LinearLayout.LayoutParams (320, LinearLayout.LayoutParams.WrapContent) {
-					BottomMargin = 40,
-				},
+					Intent intent = Flickr.GetShareUI (this, item, shareResult => {
+						flickrButton.Text = "Flickr shared: " + shareResult;
+					});
+
+					StartActivity (intent);
+
+				}, TaskScheduler.FromCurrentSynchronizationContext());
 			};
 
-			var title = new TextView (this) {
-				Text = service.GetType ().Name,
-				TextSize = 20,
-				LayoutParameters = new LinearLayout.LayoutParams (320, LinearLayout.LayoutParams.WrapContent) {
-					BottomMargin = 10,
-					LeftMargin = 4,
-				},
-			};
-			layout.AddView (title);
+			Button facebookButton = FindViewById<Button>(Resource.Id.Facebook);
+			facebookButton.Click += (sender, args) => Share (Facebook, facebookButton);
 
-			var shareButton = new Button (this) {
-				Text = "Share",
-			};
-			shareButton.Click += delegate {
-				Share (service, shareButton);
-			};
-			layout.AddView (shareButton);
-
-			if (service.SupportsAuthentication) {
-				var authButton = new Button (this) {
-					Text = "Authenticate",
-				};
-				authButton.Click += delegate {
-					Authenticate (service);
-				};
-				layout.AddView (authButton);
-			}
-
-			return layout;
+			Button twitterButton = FindViewById<Button> (Resource.Id.Twitter);
+			twitterButton.Click += (sender, args) => Share (Twitter, twitterButton);
 		}
 	}
 }
-
-

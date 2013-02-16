@@ -5,4 +5,20 @@
     android:layout_height="fill_parent"
     android:id="@+id/ServicesLayout"
     android:minWidth="25px"
-    android:minHeight="25px" />
+    android:minHeight="25px">
+    <Button
+        android:text="Share with Facebook"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Facebook" />
+    <Button
+        android:text="Share with Twitter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Twitter" />
+    <Button
+        android:text="Share with Flickr"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Flickr" />
+</LinearLayout>
