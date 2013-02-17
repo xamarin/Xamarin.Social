@@ -497,25 +497,17 @@ namespace Xamarin.Social
 				get { return Picker.SelectedItem; }
 			}
 
-			List<string> items;
-
 			public LabelButton ValueLabel { get; private set; }
 			public CheckedPickerView Picker { get; private set; }
 
 			public IList<string> Items {
-				get {
-					return items;
-				}
-				set {
-					items = value.ToList ();
-				}
+				get { return Picker.Items; }
+				set { Picker.Items = value; }
 			}
 
-			public ChoiceField (RectangleF frame, ShareViewController controller, string title, IEnumerable<string> items)
+			public ChoiceField (RectangleF frame, ShareViewController controller, string title)
 				: base (frame, controller, title)
 			{
-				this.items = items.ToList ();
-
 				ValueLabel = new LabelButton () {
 					BackgroundColor = UIColor.White,
 					Font = TextEditorFont,
@@ -529,7 +521,7 @@ namespace Xamarin.Social
 
 				AddSubview (ValueLabel);
 
-				Picker = new CheckedPickerView (new RectangleF (0, 0, 320, 216), this.items);
+				Picker = new CheckedPickerView (new RectangleF (0, 0, 320, 216));
 				Picker.Hidden = true;
 				Picker.SelectedItemChanged += delegate {
 					ValueLabel.Text = Picker.SelectedItem;
@@ -541,7 +533,7 @@ namespace Xamarin.Social
 
 			void HandleTouchUpInside (object sender, EventArgs e)
 			{
-				if (items.Count > 1) {
+				if (Items.Count > 1) {
 					Controller.ResignFirstResponders ();
 
 					var v = Controller.View;
