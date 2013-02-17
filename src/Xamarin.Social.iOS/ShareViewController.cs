@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
@@ -16,8 +17,9 @@ namespace Xamarin.Social
 	{
 		Service service;
 		Item item;
-		List<Account> accounts;
+		List<Account> accounts = new List<Account>();
 		Action<ShareResult> completionHandler;
+		Task<IEnumerable<Account>> futureAccounts;
 
 		UITextView textEditor;
 		ProgressLabel progress;
@@ -26,15 +28,13 @@ namespace Xamarin.Social
 		ChoiceField accountField = null;
 
 		bool sharing = false;
+		bool canceledFromOutside = false;
 
-		bool retrievedAccounts = false;
-		bool appeared = false;
-		bool checkedForAccounts = false;
 		UIAlertView accountsAlert;
 
 		static UIFont TextEditorFont = UIFont.SystemFontOfSize (18);
 		static readonly UIColor FieldColor = UIColor.FromRGB (56, 84, 135);
-
+		
 		internal ShareViewController (Service service, Item item, Action<ShareResult> completionHandler)
 		{
 			this.service = service;
@@ -45,33 +45,36 @@ namespace Xamarin.Social
 			
 			View.BackgroundColor = UIColor.White;
 
-			service.GetAccountsAsync ().ContinueWith (t => {
-				retrievedAccounts = true;
-				accounts = t.Result.ToList ();
-				BuildUI ();
+			futureAccounts = service.GetAccountsAsync ();
+		}
 
-				if (appeared && !checkedForAccounts) {
-					CheckForAccounts ();
-				}
-			}, TaskScheduler.FromCurrentSynchronizationContext ());
+		public override void ViewDidLoad()
+		{
+			BuildUI();
+			base.ViewDidLoad();
 		}
 
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
-			appeared = true;
 
-			if (retrievedAccounts && !checkedForAccounts) {
-				CheckForAccounts ();
-			} else {
-				textEditor.BecomeFirstResponder ();
-			}
+			var fa = Interlocked.Exchange (ref futureAccounts, null);
+			if (fa != null) {
+				fa.ContinueWith (t => {
+					accounts.AddRange (t.Result);
+					foreach (string username in accounts.Select (a => a.Username))
+						accountField.Items.Add (username);
+
+					CheckForAccounts();
+				}, TaskScheduler.FromCurrentSynchronizationContext());
+			} else if (canceledFromOutside)
+				canceledFromOutside = false;
+			else
+				CheckForAccounts();
 		}
 
 		void CheckForAccounts ()
 		{
-			checkedForAccounts = true;
-
 			if (accounts.Count == 0) {
 
 				var title = "No " + service.Title + " Accounts";
@@ -102,12 +105,16 @@ namespace Xamarin.Social
 		void Authenticate ()
 		{
 			var vc = service.GetAuthenticateUI (account => {
+				if (account != null)
+					accounts.Add (account);
+				else
+					canceledFromOutside = true;
+
 				DismissViewController (true, () => {
 					if (account != null) {
-						accountField.ValueLabel.Text = account.Username;
+						accountField.Items.Add (account.Username);
 						textEditor.BecomeFirstResponder ();
-					}
-					else {
+					} else {
 						completionHandler (ShareResult.Cancelled);
 					}
 				});
@@ -130,8 +137,7 @@ namespace Xamarin.Social
 			accountField = new ChoiceField (
 				new RectangleF (0, b.Y, b.Width, 33),
 				this,
-				NSBundle.MainBundle.LocalizedString ("From", "From title when sharing"),
-				accounts.Select (x => x.Username));
+				NSBundle.MainBundle.LocalizedString ("From", "From title when sharing"));
 			View.AddSubview (accountField);
 			b.Y += fieldHeight;
 			b.Height -= fieldHeight;
