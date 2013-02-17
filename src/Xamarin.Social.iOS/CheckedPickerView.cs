@@ -1,4 +1,6 @@
 using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using MonoTouch.UIKit;
 using System.Drawing;
 using System.Collections.Generic;
@@ -12,30 +14,49 @@ namespace Xamarin.Social
 
 		string selectedItem;
 
-		public IList<string> Items { get; set; }
-		
+		private ObservableCollection<string> items;
+		public IList<string> Items
+		{
+			get { return items ?? (Items = new string[0]); }
+			set {
+				if (items != null)
+					items.CollectionChanged -= OnItemsChanged;
+
+				items = new ObservableCollection<string> (value.ToList());
+				items.CollectionChanged += OnItemsChanged;
+
+				OnItemsChanged (this, new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Reset));
+			}
+		}
+
+		private void OnItemsChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (selectedItem == null || !items.Contains (selectedItem))
+				SelectedItem = items.FirstOrDefault();
+
+			ReloadAllComponents();
+		}
+
 		public string SelectedItem {
 			get { return selectedItem; }
 			set {
-				if (selectedItem != value) {
-					selectedItem = value;
+				if (this.selectedItem == value)
+					return;
 
-					var ev = SelectedItemChanged;
-					if (ev != null) {
-						ev (this, EventArgs.Empty);
-					}
+				this.selectedItem = value;
+
+				var ev = this.SelectedItemChanged;
+				if (ev != null) {
+					ev (this, EventArgs.Empty);
 				}
 			}
 		}
 
 		public event EventHandler SelectedItemChanged;
 
-		public CheckedPickerView (RectangleF frame, IEnumerable<string> items)
+		public CheckedPickerView (RectangleF frame)
 			: base (frame)
 		{
-			Items = items.ToList ();
-			selectedItem = items.FirstOrDefault ();
-
 			Delegate = new PickerDelegate ();
 			DataSource = new PickerDataSource ();
 		}
