@@ -21,6 +21,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>3.2</string>
+	<string>5.0</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Resources/Default.png</string>
+		<string>Resources/Default@2x.png</string>
+		<string>Resources/Default-568h@2x.png</string>
+	</array>
 </dict>
 </plist>

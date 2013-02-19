@@ -79,9 +79,16 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
+    <Reference Include="Xamarin.Mobile, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Components\xamarin.mobile-0.6.2\lib\ios\Xamarin.Mobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <XamarinComponent Include="xamarin.mobile">
+      <Visible>False</Visible>
+      <Version>0.6.2</Version>
+    </XamarinComponent>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -89,20 +96,24 @@
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\src\Xamarin.Social.iOS\Xamarin.Social.iOS.csproj">
-      <Project>{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}</Project>
+      <Project>{c91ef8fc-37e3-4952-a8a3-ba3a4422b0c5}</Project>
       <Name>Xamarin.Social.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
-      <Project>{9309BCCC-AA7B-4195-A130-D4572FA9488D}</Project>
+      <Project>{9309bccc-aa7b-4195-a130-d4572fa9488d}</Project>
       <Name>Xamarin.Auth.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default%402x.png" />
-    <Content Include="Default-568h%402x.png" />
-    <Content Include="Default.png" />
+    <BundleResource Include="Resources\Default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-568h%402x.png" />
   </ItemGroup>
 </Project>
