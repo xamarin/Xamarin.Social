@@ -43,8 +43,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>Components\xamarin.mobile-0.6.1.1\lib\android\Xamarin.Mobile.dll</HintPath>
+    <Reference Include="Xamarin.Mobile, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Components\xamarin.mobile-0.6.2\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +75,7 @@
   <ItemGroup>
     <XamarinComponent Include="xamarin.mobile">
       <Visible>False</Visible>
-      <Version>0.6.1.1</Version>
+      <Version>0.6.2</Version>
     </XamarinComponent>
   </ItemGroup>
 </Project>
