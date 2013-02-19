@@ -79,8 +79,7 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
-    <Reference Include="Xamarin.Mobile, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Mobile">
       <HintPath>Components\xamarin.mobile-0.6.2\lib\ios\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -89,6 +88,11 @@
       <Visible>False</Visible>
       <Version>0.6.2</Version>
     </XamarinComponent>
+    <XamarinComponentReference Include="xamarin.mobile">
+      <InstallationInProgress>False</InstallationInProgress>
+      <Version>0.6.2</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
