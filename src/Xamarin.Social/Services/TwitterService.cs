@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
@@ -52,11 +54,11 @@ namespace Xamarin.Social.Services
 			//
 			Request req;
 			if (item.Images.Count == 0) {
-				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1/statuses/update.xml"), account);
+				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1.1/statuses/update.json"), account);
 				req.Parameters["status"] = status;
 			}
 			else {
-				req = CreateRequest ("POST", new Uri ("https://upload.twitter.com/1/statuses/update_with_media.xml"), account);
+				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1.1/statuses/update_with_media.json"), account);
 				req.AddMultipartData ("status", status);
 				foreach (var i in item.Images.Take (MaxImages)) {
 					i.AddToRequest (req, "media[]");
@@ -66,12 +68,12 @@ namespace Xamarin.Social.Services
 			//
 			// Send it
 			//
-			return req.GetResponseAsync (cancellationToken).ContinueWith (reqTask => {
+			return req.GetResponseAsync (cancellationToken);/*.ContinueWith ((Task<Response> reqTask) => {
 				var content = reqTask.Result.GetResponseText ();
 				if (!content.Contains ("<status")) {
 					throw new SocialException ("Twitter did not return the expected response.");
 				}
-			});
+			});*/
 		}
 	}
 }
