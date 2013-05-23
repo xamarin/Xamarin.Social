@@ -1,8 +1,6 @@
 Xamarin.Social
 ==============
 
-# Xamarin.Social
-
 A cross-platform API for accessing social networks.
 
 This library focuses on:
@@ -13,5 +11,3 @@ This library focuses on:
 
 Please read [Getting Started](component/GettingStarted.md) to learn how to use 
 the library.
-
-Read [Details](component/Details.md) to learn how to write your own services.
