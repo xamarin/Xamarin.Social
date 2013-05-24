@@ -101,6 +101,36 @@ namespace Xamarin.Social
 		}
 #endif
 
+#if PLATFORM_IOS
+		/// <summary>
+		/// Attempts to authenticate user with this service using the web browser.
+		/// </summary>
+		/// <param name="registerUrlHandler">A function that registers a callback in HandleOpenUrl chain for given scheme.</param>
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync (WebAuthenticator.RegisterOpenUrlHandler registerUrlHandler)
+		{
+			if (registerUrlHandler == null)
+				return GetAccountsAsync ();
+
+			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
+
+			var authenticator = GetAuthenticator () as WebAuthenticator;
+			if (authenticator == null)
+				throw new NotSupportedException ("This service does not support authentication via Safari.");
+
+			authenticator.Completed += (sender, e) => {
+				if (e.IsAuthenticated) {
+					AccountStore.Create ().Save (e.Account, this.ServiceId);
+					tcs.SetResult (new [] { e.Account });
+				} else {
+					tcs.SetException (new UnauthorizedAccessException ("Authentication failed."));
+				}
+			};
+
+			authenticator.LaunchSafari (registerUrlHandler);
+			return tcs.Task;
+		}
+#endif
+
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports authenticating new accounts.
 		/// </summary>
