@@ -101,21 +101,26 @@ namespace Xamarin.Social
 		}
 #endif
 
-#if PLATFORM_IOS
 		/// <summary>
 		/// Attempts to authenticate user with this service using the web browser.
 		/// </summary>
-		/// <param name="registerUrlHandler">A function that registers a callback in HandleOpenUrl chain for given scheme.</param>
-		public virtual Task<IEnumerable<Account>> GetAccountsAsync (WebAuthenticator.RegisterOpenUrlHandler registerUrlHandler)
+		/// <param name="externalUrlManager">A function that registers a callback in HandleOpenUrl chain for given scheme.</param>
+		/// <remarks>
+		/// To implement authorication via Safari on iOS, pass <see cref="HandleOpenUrlManager.Instance"/>.
+		/// Note that it will *not* work unless you call its <c>HandleOpenUrl</c> and <c>WillEnterForeground</c> methods in your <c>AppDelegate</c>'s respective methods.
+		/// </remarks>
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync (IExternalUrlManager externalUrlManager)
 		{
-			if (registerUrlHandler == null)
-				return GetAccountsAsync ();
+			if (externalUrlManager == null)
+				throw new ArgumentNullException ("externalUrlManager", "This overload needs an external URL manager. " +
+					"For iOS, you can use HandleOpenUrlManager.Instance, given that you call " +
+					"its HandleOpenUrl and OnWentForeground methods from your AppDelegate.");
 
 			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
 
 			var authenticator = GetAuthenticator () as WebAuthenticator;
 			if (authenticator == null)
-				throw new NotSupportedException ("This service does not support authentication via Safari.");
+				throw new NotSupportedException ("This service does not support authentication via web browser.");
 
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
@@ -126,10 +131,9 @@ namespace Xamarin.Social
 				}
 			};
 
-			authenticator.LaunchSafari (registerUrlHandler);
+			authenticator.AuthenticateWithBrowser (externalUrlManager);
 			return tcs.Task;
 		}
-#endif
 
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports authenticating new accounts.
