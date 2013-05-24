@@ -8,7 +8,7 @@ using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
-	public class FacebookService : OAuth2Service
+	public class FacebookService : OAuth2Service, IFacebookService
 	{
 		public FacebookService ()
 			: base ("Facebook", "Facebook")
