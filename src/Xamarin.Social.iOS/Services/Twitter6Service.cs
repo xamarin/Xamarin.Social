@@ -15,7 +15,7 @@ namespace Xamarin.Social.Services
 
 		public override Task<string> GetOAuthTokenAsync (Account acc)
 		{
-			throw new NotImplementedException ();
+			return Task.Factory.StartNew<string> (() => { throw new NotImplementedException (); });
 		}
 	}
 }
