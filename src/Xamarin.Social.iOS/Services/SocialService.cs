@@ -14,11 +14,13 @@ namespace Xamarin.Social.Services
 	public abstract class SocialService : Service
 	{
 		private SLServiceKind kind;
+		private NSString accountTypeIdentifier;
 
-		public SocialService (string serviceId, string title, SLServiceKind kind)
+		public SocialService (string serviceId, string title, SLServiceKind kind, NSString accountTypeIdentifier)
 			: base (serviceId, title)
 		{
 			this.kind = kind;
+			this.accountTypeIdentifier = accountTypeIdentifier;
 		}
 
 
@@ -154,19 +156,23 @@ namespace Xamarin.Social.Services
 
 		ACAccountStore accountStore; // Save this reference since ACAccounts are only good so long as it's alive
 
+		protected virtual AccountStoreOptions AccountStoreOptions {
+			get { return null; }
+		}
+
 		public override Task<IEnumerable<Account>> GetAccountsAsync ()
 		{
 			if (accountStore == null) {
 				accountStore = new ACAccountStore ();
 			}
 			var store = new ACAccountStore ();
-			var at = store.FindAccountType (ACAccountType.Twitter);
+			var at = store.FindAccountType (this.accountTypeIdentifier);
 
 			var r = new List<Account> ();
 
 			var completedEvent = new ManualResetEvent (false);
 
-			store.RequestAccess (at, null, (granted, error) => {
+			store.RequestAccess (at, AccountStoreOptions, (granted, error) => {
 				if (granted) {
 					var accounts = store.FindAccounts (at);
 					foreach (var a in accounts) {
