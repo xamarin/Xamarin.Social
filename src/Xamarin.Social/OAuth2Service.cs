@@ -80,7 +80,7 @@ namespace Xamarin.Social
 					getUsernameAsync: GetUsernameAsync);
 			}
 		}
-
+		
 		protected abstract Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties);
 
 		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters, Account account)

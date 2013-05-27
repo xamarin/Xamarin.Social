@@ -1,17 +1,14 @@
 using System;
+using System.Threading.Tasks;
 using MonoTouch.Social;
 using MonoTouch.Accounts;
+using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
 	public class Facebook6Service : SocialService, IFacebookService
 	{
 		public string FacebookAppId { get; set; }
-
-		public Facebook6Service ()
-			: base ("Facebook", "Facebook", SLServiceKind.Facebook, ACAccountType.Facebook)
-		{
-		}
 
 		protected override AccountStoreOptions AccountStoreOptions {
 			get {
@@ -22,6 +19,11 @@ namespace Xamarin.Social.Services
 				options.SetPermissions (ACFacebookAudience.OnlyMe, "email");
 				return options;
 			}
+		}
+
+		public Facebook6Service ()
+			: base ("Facebook", "Facebook", SLServiceKind.Facebook, ACAccountType.Facebook)
+		{
 		}
 	}
 }

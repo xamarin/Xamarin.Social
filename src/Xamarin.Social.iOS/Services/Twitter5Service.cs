@@ -17,6 +17,10 @@ namespace Xamarin.Social.Services
 		{
 		}
 
+		public override Task<string> GetOAuthTokenAsync (Account acc)
+		{
+			throw new NotImplementedException ();
+		}
 
 		#region Share
 

@@ -139,6 +139,23 @@ namespace Xamarin.Social
 			return tcs.Task;
 		}
 
+		static readonly string [] OAuthTokenProperties = new string [] {
+			"access_token",
+			"oauth_token"
+		};
+
+		public virtual Task<string> GetOAuthTokenAsync (Account acc)
+		{
+			var tcs = new TaskCompletionSource<string> ();
+			try {
+				tcs.SetResult (acc.Properties.First (kv => OAuthTokenProperties.Contains (kv.Key)).Value);
+			} catch (Exception ex) {
+				tcs.SetException (ex);
+			}
+
+			return tcs.Task;
+		}
+
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports authenticating new accounts.
 		/// </summary>

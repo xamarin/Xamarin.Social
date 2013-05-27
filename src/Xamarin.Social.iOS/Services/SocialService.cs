@@ -23,6 +23,19 @@ namespace Xamarin.Social.Services
 			this.accountTypeIdentifier = accountTypeIdentifier;
 		}
 
+		public override Task<string> GetOAuthTokenAsync (Account acc)
+		{
+			var tcs = new TaskCompletionSource<string> ();
+			var wrapper = (ACAccountWrapper) acc;
+			var credential = wrapper.ACAccount.Credential;
+
+			if (credential != null)
+				tcs.SetResult (credential.OAuthToken);
+			else
+				tcs.SetException (new Exception ("No credential is stored for this account."));
+
+			return tcs.Task;
+		}
 
 		#region Share
 

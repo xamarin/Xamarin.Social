@@ -15,6 +15,7 @@ namespace Xamarin.Social
 #if PLATFORM_IOS
 		Task<IEnumerable<Account>> GetAccountsAsync (IExternalUrlManager externalUrlManager);
 #endif
+		Task<string> GetOAuthTokenAsync (Account acc);
 		bool SupportsAuthentication { get; }
 	}
 }
