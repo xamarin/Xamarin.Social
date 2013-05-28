@@ -17,6 +17,7 @@ namespace Xamarin.Social
 #endif
 		Task<string> GetOAuthTokenAsync (Account acc);
 		bool SupportsAuthentication { get; }
+		string Title { get; }
 	}
 }
 
