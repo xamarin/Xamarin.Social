@@ -25,7 +25,7 @@ namespace Xamarin.Social
 	/// <summary>
 	/// Social Networking Service.
 	/// </summary>
-	public abstract class Service
+	public abstract class Service : IService
 	{
 		/// <summary>
 		/// Uniquely identifies this service type.
@@ -99,6 +99,11 @@ namespace Xamarin.Social
 				return AccountStore.Create ().FindAccountsForService (ServiceId);
 			});
 		}
+
+		public void DeleteAccount (Account account)
+		{
+			AccountStore.Create ().Delete (account, ServiceId);
+		}
 #endif
 
 		/// <summary>
@@ -163,6 +168,12 @@ namespace Xamarin.Social
 		/// <c>true</c> if supports authentication; otherwise, <c>false</c>.
 		/// </value>
 		public virtual bool SupportsAuthentication {
+			get {
+				return true;
+			}
+		}
+
+		public virtual bool SupportsDeletion {
 			get {
 				return true;
 			}

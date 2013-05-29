@@ -208,6 +208,12 @@ namespace Xamarin.Social.Services
 			}
 		}
 
+		public override bool SupportsDeletion {
+			get {
+				return false;
+			}
+		}
+
 		protected override Authenticator GetAuthenticator ()
 		{
 			throw new NotSupportedException ("This service does support authenticating users. You should direct them to the Settings application.");

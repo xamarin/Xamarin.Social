@@ -189,6 +189,12 @@ namespace Xamarin.Social.Services
 			}
 		}
 
+		public override bool SupportsDeletion {
+			get {
+				return false;
+			}
+		}
+
 		protected override Authenticator GetAuthenticator ()
 		{
 			throw new NotSupportedException ("Twitter5Service does support authenticating users. You should direct them to the Settings application.");

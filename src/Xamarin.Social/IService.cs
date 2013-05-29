@@ -11,13 +11,16 @@ namespace Xamarin.Social
 		Request CreateRequest (string method, Uri url, Account account);
 		Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters);
 		Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters, Account account);
-		Task<IEnumerable<Account>> GetAccountsAsync ();
 #if PLATFORM_IOS
+		Task<IEnumerable<Account>> GetAccountsAsync ();
 		Task<IEnumerable<Account>> GetAccountsAsync (IExternalUrlManager externalUrlManager);
+		void DeleteAccount (Account account);
 #endif
 		Task<string> GetOAuthTokenAsync (Account acc);
 		bool SupportsAuthentication { get; }
+		bool SupportsDeletion { get; }
 		string Title { get; }
+		string ServiceId { get; }
 	}
 }
 
