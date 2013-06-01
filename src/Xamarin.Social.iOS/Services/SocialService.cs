@@ -204,6 +204,23 @@ namespace Xamarin.Social.Services
 			}, TaskCreationOptions.LongRunning);
 		}
 
+		public override Task<Account> Reauthorize (Account account)
+		{
+			if (accountStore == null) {
+				accountStore = new ACAccountStore ();
+			}
+
+			var wrapper = (ACAccountWrapper) account;
+			return accountStore.RenewCredentialsAsync (wrapper.ACAccount).ContinueWith (t => {
+				switch (t.Result) {
+				case ACAccountCredentialRenewResult.Renewed:
+					return account;
+				default:
+					throw new Exception (string.Format ("Could not renew account: {0}", t.Result));
+				}
+			});
+		}
+
 		public override bool SupportsAuthentication
 		{
 			get {
@@ -214,6 +231,12 @@ namespace Xamarin.Social.Services
 		public override bool SupportsDeletion {
 			get {
 				return false;
+			}
+		}
+
+		public override bool SupportsReauthorization {
+			get {
+				return true;
 			}
 		}
 
