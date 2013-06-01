@@ -143,14 +143,17 @@ namespace Xamarin.Social.Services
 
 				request.PerformRequest ((resposeData, urlResponse, err) => {
 					error = err;
-					response = new FoundationResponse (resposeData, urlResponse);
+
+					if (err == null)
+						response = new FoundationResponse (resposeData, urlResponse);
+
 					completedEvent.Set ();
 				});
 
 				return Task.Factory.StartNew (delegate {
 					completedEvent.WaitOne ();
 					if (error != null) {
-						throw new Exception (error.LocalizedDescription);
+						throw new SocialException (error.Description);
 					}
 					return response;
 				}, TaskCreationOptions.LongRunning, cancellationToken);

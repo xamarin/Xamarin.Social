@@ -18,7 +18,7 @@ namespace Xamarin.Social.Services
 
 		protected override Authenticator GetAuthenticator ()
 		{
-			return new OAuth2Authenticator (ClientId, ClientSecret, Scope, AuthorizeUrl, RedirectUrl, AccessTokenUrl, GetUsernameAsync, ResponseFormat.Json);
+			return new GoogleAuthenticator (ClientId, ClientSecret, Scope, AuthorizeUrl, RedirectUrl, AccessTokenUrl, GetUsernameAsync);
 		}
 
 		protected override Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties)
@@ -43,6 +43,44 @@ namespace Xamarin.Social.Services
 
 				return WebEx.GetValueFromJson (responseText, "id");
 			});
+		}
+
+		public override Task<Account> Reauthorize (Account account)
+		{
+			var authenticator = (GoogleAuthenticator) GetAuthenticator ();
+
+			return authenticator.RefreshAccessTokenAsync (account.Properties ["refresh_token"]).ContinueWith (t => {
+				var props = new Dictionary<string, string> (account.Properties);
+				props ["access_token"] = t.Result ["access_token"];
+				return new Account (account.Username, props, account.Cookies);
+			});
+		}
+
+		public override bool SupportsReauthorization {
+			get {
+				return true;
+			}
+		}
+
+		class GoogleAuthenticator : OAuth2Authenticator {
+			private string clientId, clientSecret;
+
+			public Task<IDictionary<string, string>> RefreshAccessTokenAsync (string refreshToken)
+			{
+				return RequestAccessTokenAsync (new Dictionary<string, string> {
+					{ "grant_type", "refresh_token" },
+					{ "client_id", clientId },
+					{ "client_secret", clientSecret },
+					{ "refresh_token", refreshToken }
+				});
+			}
+
+			public GoogleAuthenticator (string clientId, string clientSecret, string scope, Uri authorizeUrl, Uri redirectUrl, Uri accessTokenUrl, GetUsernameAsyncFunc getUsernameAsync)
+				: base (clientId, clientSecret, scope, authorizeUrl, redirectUrl, accessTokenUrl, getUsernameAsync, ResponseFormat.Json)
+			{
+				this.clientId = clientId;
+				this.clientSecret = clientSecret;
+			}
 		}
 	}
 }

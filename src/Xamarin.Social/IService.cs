@@ -15,10 +15,13 @@ namespace Xamarin.Social
 		Task<IEnumerable<Account>> GetAccountsAsync ();
 		Task<IEnumerable<Account>> GetAccountsAsync (IExternalUrlManager externalUrlManager);
 		void DeleteAccount (Account account);
+		void SaveAccount (Account account);
 #endif
+		Task<Account> Reauthorize (Account account);
 		Task<string> GetOAuthTokenAsync (Account acc);
 		bool SupportsAuthentication { get; }
 		bool SupportsDeletion { get; }
+		bool SupportsReauthorization { get; }
 		string Title { get; }
 		string ServiceId { get; }
 	}

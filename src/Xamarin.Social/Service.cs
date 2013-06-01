@@ -100,9 +100,14 @@ namespace Xamarin.Social
 			});
 		}
 
-		public void DeleteAccount (Account account)
+		public virtual void DeleteAccount (Account account)
 		{
 			AccountStore.Create ().Delete (account, ServiceId);
+		}
+
+		public virtual void SaveAccount (Account account)
+		{
+			AccountStore.Create ().Save (account, ServiceId);
 		}
 #endif
 
@@ -133,7 +138,7 @@ namespace Xamarin.Social
 
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
-					AccountStore.Create ().Save (e.Account, this.ServiceId);
+					SaveAccount (e.Account);
 					tcs.SetResult (new [] { e.Account });
 				} else {
 					tcs.SetCanceled ();
@@ -177,6 +182,17 @@ namespace Xamarin.Social
 			get {
 				return true;
 			}
+		}
+
+		public virtual bool SupportsReauthorization {
+			get {
+				return false;
+			}
+		}
+
+		public virtual Task<Account> Reauthorize (Account account)
+		{
+			throw new NotSupportedException ();
 		}
 
 		/// <summary>
@@ -231,7 +247,7 @@ namespace Xamarin.Social
 			}
 			auth.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
-					AccountStore.Create ().Save (e.Account, ServiceId);
+					SaveAccount (e.Account);
 				}
 				if (completedHandler != null) {
 					completedHandler (e.Account);
