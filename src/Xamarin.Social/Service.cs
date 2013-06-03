@@ -25,7 +25,7 @@ namespace Xamarin.Social
 	/// <summary>
 	/// Social Networking Service.
 	/// </summary>
-	public abstract class Service : IService
+	public abstract class Service
 	{
 		/// <summary>
 		/// Uniquely identifies this service type.

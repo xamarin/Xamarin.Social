@@ -6,7 +6,7 @@ using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
-	public class Facebook6Service : SocialService, IFacebookService
+	public class Facebook6Service : SocialService
 	{
 		public string FacebookAppId { get; set; }
 

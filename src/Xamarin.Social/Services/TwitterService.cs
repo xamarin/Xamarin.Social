@@ -10,7 +10,7 @@ using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
-	public class TwitterService : OAuth1Service, ITwitterService
+	public class TwitterService : OAuth1Service
 	{
 		public TwitterService ()
 			: base ("Twitter", "Twitter")

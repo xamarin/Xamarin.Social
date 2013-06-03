@@ -9,7 +9,7 @@ using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
-	public class Twitter6Service : SocialService, ITwitterService
+	public class Twitter6Service : SocialService
 	{
 		public string ConsumerKey { get; set; }
 		public string ConsumerSecret { get; set; }

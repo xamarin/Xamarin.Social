@@ -6,7 +6,7 @@ using Xamarin.Utilities;
 
 namespace Xamarin.Social.Services
 {
-	public class GoogleService : OAuth2Service, IGoogleService
+	public class GoogleService : OAuth2Service
 	{
 		public GoogleService ()
 			: base ("Google", "Google")
