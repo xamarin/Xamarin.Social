@@ -8,7 +8,7 @@ namespace Xamarin.Social
 	/// <summary>
 	/// Implements OAuth 2.0 implicit granting. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2
 	/// </summary>
-	public abstract class OAuth2Service : Service
+	public abstract class OAuth2Service : Service, ISupportScope
 	{
 		/// <summary>
 		/// Client identifier. http://tools.ietf.org/html/rfc6749#section-2.2

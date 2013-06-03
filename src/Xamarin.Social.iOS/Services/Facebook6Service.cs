@@ -6,9 +6,11 @@ using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
-	public class Facebook6Service : SocialService
+	public class Facebook6Service : SocialService, ISupportScope
 	{
 		public string FacebookAppId { get; set; }
+		public ACFacebookAudience Audience { get; set; }
+		public string Scope { get; set; }
 
 		protected override AccountStoreOptions AccountStoreOptions {
 			get {
@@ -16,7 +18,7 @@ namespace Xamarin.Social.Services
 					FacebookAppId = FacebookAppId  
 				};
 
-				options.SetPermissions (ACFacebookAudience.OnlyMe, "email");
+				options.SetPermissions (Audience, Scope);
 				return options;
 			}
 		}
@@ -24,6 +26,7 @@ namespace Xamarin.Social.Services
 		public Facebook6Service ()
 			: base ("Facebook", "Facebook", SLServiceKind.Facebook, ACAccountType.Facebook)
 		{
+			Audience = ACFacebookAudience.Everyone;
 		}
 	}
 }
