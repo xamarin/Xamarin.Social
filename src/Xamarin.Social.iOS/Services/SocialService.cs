@@ -137,27 +137,19 @@ namespace Xamarin.Social.Services
 
 			public override Task<Response> GetResponseAsync (CancellationToken cancellationToken)
 			{
-				var completedEvent = new ManualResetEvent (false);
-
-				NSError error = null;
-				Response response = null;
+				var tcs = new TaskCompletionSource<Response> ();
 
 				request.PerformRequest ((resposeData, urlResponse, err) => {
-					error = err;
-
-					if (err == null)
-						response = new FoundationResponse (resposeData, urlResponse);
-
-					completedEvent.Set ();
+					if (cancellationToken.IsCancellationRequested) {
+						tcs.SetCanceled ();
+					} else if (err == null) {
+						tcs.SetResult (new FoundationResponse (resposeData, urlResponse));
+					} else {
+						tcs.SetException (new SocialException (err.Description));
+					}
 				});
 
-				return Task.Factory.StartNew (delegate {
-					completedEvent.WaitOne ();
-					if (error != null) {
-						throw new SocialException (error.Description);
-					}
-					return response;
-				}, TaskCreationOptions.LongRunning, cancellationToken);
+				return tcs.Task;
 			}
 		}
 
