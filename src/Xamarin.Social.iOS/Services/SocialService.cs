@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using MonoTouch.Accounts;
@@ -170,7 +171,13 @@ namespace Xamarin.Social.Services
 
 		#region Authentication
 
-		ACAccountStore accountStore; // Save this reference since ACAccounts are only good so long as it's alive
+		Lazy<ACAccountStore> accountStore = new Lazy<ACAccountStore> (); // Save this reference since ACAccounts are only good so long as it's alive
+
+		ACAccountStore Store {
+			get {
+				return accountStore.Value;
+			}
+		}
 
 		protected virtual AccountStoreOptions AccountStoreOptions {
 			get { return null; }
@@ -178,40 +185,22 @@ namespace Xamarin.Social.Services
 
 		public override Task<IEnumerable<Account>> GetAccountsAsync ()
 		{
-			if (accountStore == null) {
-				accountStore = new ACAccountStore ();
-			}
-			var store = new ACAccountStore ();
-			var at = store.FindAccountType (this.accountTypeIdentifier);
+			var type = Store.FindAccountType (this.accountTypeIdentifier);
+			return Store.RequestAccessAsync (type, AccountStoreOptions).ContinueWith (t => {
+				if (!t.Result)
+					return Enumerable.Empty<Account> ();
 
-			var r = new List<Account> ();
-
-			var completedEvent = new ManualResetEvent (false);
-
-			store.RequestAccess (at, AccountStoreOptions, (granted, error) => {
-				if (granted) {
-					var accounts = store.FindAccounts (at);
-					foreach (var a in accounts) {
-						r.Add (new ACAccountWrapper (a, store));
-					}
-				}
-				completedEvent.Set ();
+				return Store
+					.FindAccounts (type)
+					.Select (acAccount => new ACAccountWrapper (acAccount, Store))
+					.ToArray ();
 			});
-
-			return Task.Factory.StartNew (delegate {
-				completedEvent.WaitOne ();
-				return (IEnumerable<Account>)r;
-			}, TaskCreationOptions.LongRunning);
 		}
 
 		public override Task<Account> Reauthorize (Account account)
 		{
-			if (accountStore == null) {
-				accountStore = new ACAccountStore ();
-			}
-
 			var wrapper = (ACAccountWrapper) account;
-			return accountStore.RenewCredentialsAsync (wrapper.ACAccount).ContinueWith (t => {
+			return Store.RenewCredentialsAsync (wrapper.ACAccount).ContinueWith (t => {
 				switch (t.Result) {
 				case ACAccountCredentialRenewResult.Renewed:
 					return account;
