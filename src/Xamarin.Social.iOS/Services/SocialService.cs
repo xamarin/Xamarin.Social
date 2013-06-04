@@ -174,7 +174,7 @@ namespace Xamarin.Social.Services
 			var at = store.FindAccountType (this.accountTypeIdentifier);
 			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
 
-			store.RequestAccess (at, (granted, error) => {
+			store.RequestAccess (at, AccountStoreOptions, (granted, error) => {
 				if (granted) {
 					var accounts = store.FindAccounts (at)
 						.Select (a => new ACAccountWrapper (a, store))
