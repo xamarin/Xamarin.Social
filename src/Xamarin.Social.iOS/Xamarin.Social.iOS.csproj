@@ -111,6 +111,7 @@
     <Compile Include="..\Xamarin.Social\ISupportScope.cs">
       <Link>ISupportScope.cs</Link>
     </Compile>
+    <Compile Include="AccountStoreExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
