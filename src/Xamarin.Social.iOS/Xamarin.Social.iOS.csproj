@@ -104,6 +104,9 @@
     <Compile Include="Services\SocialService.cs" />
     <Compile Include="Services\Twitter6Service.cs" />
     <Compile Include="Services\Facebook6Service.cs" />
+    <Compile Include="..\Xamarin.Social\Services\GoogleService.cs">
+      <Link>Services\GoogleService.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
