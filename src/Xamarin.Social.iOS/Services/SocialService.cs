@@ -189,10 +189,37 @@ namespace Xamarin.Social.Services
 			return tcs.Task;
 		}
 
+		public override Task<Account> ReauthorizeAsync (Account account)
+		{
+			if (account == null)
+				throw new ArgumentNullException ("account");
+
+			var store = accountStore.Value;
+			var wrapper = account as ACAccountWrapper;
+
+			if (wrapper == null)
+				throw new ArgumentException ("account", "Account type '" + account.GetType ().FullName + "' is not supported.")
+
+			return store.RenewCredentialsAsync (wrapper.ACAccount).ContinueWith (t => {
+				switch (t.Result) {
+				case ACAccountCredentialRenewResult.Renewed:
+					return account;
+				default:
+					throw new Exception (string.Format ("Could not renew account: {0}", t.Result));
+				}
+			});
+		}
+
 		public override bool SupportsAuthentication
 		{
 			get {
 				return false;
+			}
+		}
+
+		public override bool SupportsReauthorization {
+			get {
+				return true;
 			}
 		}
 
