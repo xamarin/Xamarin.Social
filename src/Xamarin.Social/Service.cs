@@ -150,6 +150,42 @@ namespace Xamarin.Social
 			auth.Title = Title;
 			return auth.GetUI (context);
 		}
+
+		/// <summary>
+		/// Attempts to authenticate user with this service using the system web browser.
+		/// </summary>
+		/// <param name="customUrlHandler">
+		/// A handler that will open a URL in system browser, register a custom
+		/// callback URL handler and wait for the app to go foreground.
+		/// </param>
+		/// <returns>
+		/// The task that will complete when they have signed in.
+		/// </returns>
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync (ICustomUrlHandler customUrlHandler, UIContext context)
+		{
+			if (customUrlHandler == null)
+				throw new ArgumentNullException ("customUrlHandler",
+					"This overload needs a handler to launch system browser and wait for redirect. " +
+					"You will need to supply your own implementation of ICustomUrlHandler.");
+
+			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
+
+			var authenticator = GetAuthenticator () as WebAuthenticator;
+			if (authenticator == null)
+				throw new NotSupportedException ("This service does not support authentication via web browser.");
+
+			authenticator.Completed += (sender, e) => {
+				if (e.IsAuthenticated) {
+					SaveAccount (e.Account, context);
+					tcs.SetResult (new [] { e.Account });
+				} else {
+					tcs.SetCanceled ();
+				}
+			};
+
+			authenticator.AuthenticateWithBrowser (customUrlHandler);
+			return tcs.Task;
+		}
 #else
 		/// <summary>
 		/// Presents the necessary UI for the user to sign in to their account.
@@ -174,9 +210,110 @@ namespace Xamarin.Social
 			auth.Title = Title;
 			return auth.GetUI ();
 		}
+
+		/// <summary>
+		/// Attempts to authenticate user with this service using the system web browser.
+		/// </summary>
+		/// <param name="customUrlHandler">
+		/// A handler that will open a URL in system browser, register a custom
+		/// callback URL handler and wait for the app to go foreground.
+		///
+		/// You can use <see cref="SafariUrlHandler.Instace" />, given that you call its
+		/// <c>WillEnterForeground</c> and <c>HandleOpenUrl</c> methods from your <c>AppDelegate</c>.
+		/// </param>
+		/// <returns>
+		/// The task that will complete when they have signed in.
+		/// </returns>
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync (ICustomUrlHandler customUrlHandler)
+		{
+			if (customUrlHandler == null)
+				throw new ArgumentNullException ("customUrlHandler",
+					"This overload needs a handler to launch system browser and wait for redirect. " +
+					"You can use SafariUrlHandler.Instace, given that you call its " +
+					"WillEnterForeground and HandleOpenUrl methods from your AppDelegate.");
+
+			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
+
+			var authenticator = GetAuthenticator () as WebAuthenticator;
+			if (authenticator == null)
+				throw new NotSupportedException ("This service does not support authentication via web browser.");
+
+			authenticator.Completed += (sender, e) => {
+				if (e.IsAuthenticated) {
+					SaveAccount (e.Account);
+					tcs.SetResult (new [] { e.Account });
+				} else {
+					tcs.SetCanceled ();
+				}
+			};
+
+			authenticator.AuthenticateWithBrowser (customUrlHandler);
+			return tcs.Task;
+		}
 #endif
 		#endregion
 
+		#region Account management
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports saving accounts.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if supports saving accounts; otherwise, <c>false</c>.
+		/// </value>
+		public virtual bool SupportsSave {
+			get {
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports deleting accounts.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if supports deleting accounts; otherwise, <c>false</c>.
+		/// </value>
+		public virtual bool SupportsDelete {
+			get {
+				return true;
+			}
+		}
+
+#if PLATFORM_ANDROID
+		/// <summary>
+		/// Saves an account and associates it with this service.
+		/// </summary>
+		public virtual void SaveAccount (Account account, UIContext context)
+		{
+			AccountStore.Create (context).Save (account, ServiceId);
+		}
+
+		/// <summary>
+		/// Deletes a previously saved account associated with this service.
+		/// </summary>
+		public virtual void DeleteAccount (Account account, UIContext context)
+		{
+			AccountStore.Create (context).Delete (account, ServiceId);
+		}
+#else
+		/// <summary>
+		/// Saves an account and associates it with this service.
+		/// </summary>
+		public virtual void SaveAccount (Account account)
+		{
+			AccountStore.Create ().Save (account, ServiceId);
+		}
+
+		/// <summary>
+		/// Deletes a previously saved account associated with this service.
+		/// </summary>
+		public virtual void DeleteAccount (Account account)
+		{
+			AccountStore.Create ().Delete (account, ServiceId);
+		}
+#endif
+
+		#endregion
 
 		#region Sharing
 
