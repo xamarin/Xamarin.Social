@@ -76,7 +76,7 @@ namespace Xamarin.Social.Services
 			}
 
 			public GoogleAuthenticator (string clientId, string clientSecret, string scope, Uri authorizeUrl, Uri redirectUrl, Uri accessTokenUrl, GetUsernameAsyncFunc getUsernameAsync)
-				: base (clientId, clientSecret, scope, authorizeUrl, redirectUrl, accessTokenUrl, getUsernameAsync, ResponseFormat.Json)
+				: base (clientId, clientSecret, scope, authorizeUrl, redirectUrl, accessTokenUrl, getUsernameAsync)
 			{
 				this.clientId = clientId;
 				this.clientSecret = clientSecret;

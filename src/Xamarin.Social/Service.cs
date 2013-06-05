@@ -114,14 +114,14 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Attempts to authenticate user with this service using the web browser.
 		/// </summary>
-		/// <param name="externalUrlManager">A function that registers a callback in HandleOpenUrl chain for given scheme.</param>
+		/// <param name="customUrlHandler">A function that registers a callback in HandleOpenUrl chain for given scheme.</param>
 		/// <remarks>
 		/// To implement authorication via Safari on iOS, pass <see cref="HandleOpenUrlManager.Instance"/>.
 		/// Note that it will *not* work unless you call its <c>HandleOpenUrl</c> and <c>WillEnterForeground</c> methods in your <c>AppDelegate</c>'s respective methods.
 		/// </remarks>
-		public virtual Task<IEnumerable<Account>> GetAccountsAsync (IExternalUrlManager externalUrlManager)
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync (ICustomUrlHandler customUrlHandler)
 		{
-			if (externalUrlManager == null)
+			if (customUrlHandler == null)
 				throw new ArgumentNullException ("externalUrlManager", "This overload needs an external URL manager. " +
 					"For iOS, you can use HandleOpenUrlManager.Instance, given that you call " +
 					"its HandleOpenUrl and OnWentForeground methods from your AppDelegate.");
@@ -145,7 +145,7 @@ namespace Xamarin.Social
 				}
 			};
 
-			authenticator.AuthenticateWithBrowser (externalUrlManager);
+			authenticator.AuthenticateWithBrowser (customUrlHandler);
 			return tcs.Task;
 		}
 
