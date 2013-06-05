@@ -165,7 +165,7 @@ namespace Xamarin.Social.Services
 			store.RequestAccess (at, (granted, error) => {
 				if (granted) {
 					var accounts = store.FindAccounts (at)
-						.Select (a => new ACAccountWrapper (a, store))
+						.Select (a => (Account) new ACAccountWrapper (a, store))
 						.ToList ();
 
 					tcs.SetResult (accounts);
