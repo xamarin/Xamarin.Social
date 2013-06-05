@@ -202,5 +202,31 @@ namespace Xamarin.Social.Services
 		}
 
 		#endregion
+
+		#region Account management
+
+		public override bool SupportsSave {
+			get {
+				return false;
+			}
+		}
+
+		public override bool SupportsDelete {
+			get {
+				return false;
+			}
+		}
+
+		public override void SaveAccount (Account account)
+		{
+			throw new NotSupportedException ("Twitter5Service does support saving user accounts. You should direct them to the Settings application.");
+		}
+
+		public override void DeleteAccount (Account account)
+		{
+			throw new NotSupportedException ("Twitter5Service does support deleting user accounts. You should direct them to the Settings application.");
+		}
+
+		#endregion
 	}
 }
