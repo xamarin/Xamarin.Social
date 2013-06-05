@@ -251,31 +251,6 @@ namespace Xamarin.Social
 			return tcs.Task;
 		}
 #endif
-
-		/// <summary>
-		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports reauthorizing an existing account.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if supports reauthorization; otherwise, <c>false</c>.
-		/// </value>
-		public virtual bool SupportsReauthorization {
-			get {
-				return false;
-			}
-		}
-
-		/// <summary>
-		/// Attempts to reauthorize an account.
-		/// Service implementors may request a new access token or call appropriate APIs.
-		/// </summary>
-		/// <returns>
-		/// A task that completes with a reauthorized account.
-		/// </returns>
-		public virtual Task<Account> ReauthorizeAsync (Account account)
-		{
-			throw new NotSupportedException ();
-		}
-
 		#endregion
 
 		#region Account management
