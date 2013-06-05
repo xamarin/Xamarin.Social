@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Json" />
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
@@ -51,6 +52,9 @@
     </Compile>
     <Compile Include="..\Xamarin.Social\Service.cs">
       <Link>Service.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\ISupportScope.cs">
+      <Link>ISupportScope.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\ShareResult.cs">
       <Link>ShareResult.cs</Link>
@@ -95,6 +99,9 @@
     </Compile>
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\Services\GoogleService.cs">
+      <Link>Services\GoogleService.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,6 @@
 using System;
-using System.Threading.Tasks;
-using MonoTouch.Social;
 using MonoTouch.Accounts;
+using MonoTouch.Social;
 using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
@@ -15,7 +14,7 @@ namespace Xamarin.Social.Services
 		protected override AccountStoreOptions AccountStoreOptions {
 			get {
 				var options = new AccountStoreOptions {
-					FacebookAppId = FacebookAppId  
+					FacebookAppId = FacebookAppId
 				};
 
 				options.SetPermissions (Audience, Scope);

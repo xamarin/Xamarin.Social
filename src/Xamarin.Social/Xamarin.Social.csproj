@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="ISupportScope.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ShareResult.cs" />
     <Compile Include="Services\FacebookService.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="SocialException.cs" />
     <Compile Include="OAuth2Service.cs" />
     <Compile Include="Services\AppDotNetService.cs" />
+    <Compile Include="Services\GoogleService.cs" />
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
       <Link>ExceptionEx.cs</Link>
     </Compile>

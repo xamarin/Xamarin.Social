@@ -38,8 +38,8 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
     <Reference Include="System.Json" />
+    <Reference Include="monotouch" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -51,6 +51,9 @@
     </Compile>
     <Compile Include="..\Xamarin.Social\Service.cs">
       <Link>Service.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social\ISupportScope.cs">
+      <Link>ISupportScope.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Social\ShareResult.cs">
       <Link>ShareResult.cs</Link>
@@ -104,14 +107,10 @@
     </Compile>
     <Compile Include="Services\SocialService.cs" />
     <Compile Include="Services\Twitter6Service.cs" />
+    <Compile Include="Services\Facebook6Service.cs" />
     <Compile Include="..\Xamarin.Social\Services\GoogleService.cs">
       <Link>Services\GoogleService.cs</Link>
     </Compile>
-    <Compile Include="Services\Facebook6Service.cs" />
-    <Compile Include="..\Xamarin.Social\ISupportScope.cs">
-      <Link>ISupportScope.cs</Link>
-    </Compile>
-    <Compile Include="AccountStoreExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

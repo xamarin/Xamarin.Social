@@ -12,6 +12,9 @@ using Xamarin.Auth;
 
 namespace Xamarin.Social.Services
 {
+	/// <summary>
+	/// A base service for Social.framework family of services.
+	/// </summary>
 	public abstract class SocialService : Service
 	{
 		private SLServiceKind kind;
@@ -22,20 +25,6 @@ namespace Xamarin.Social.Services
 		{
 			this.kind = kind;
 			this.accountTypeIdentifier = accountTypeIdentifier;
-		}
-
-		public override Task<string> GetOAuthTokenAsync (Account acc)
-		{
-			var tcs = new TaskCompletionSource<string> ();
-			var wrapper = (ACAccountWrapper) acc;
-			var credential = wrapper.ACAccount.Credential;
-
-			if (credential != null)
-				tcs.SetResult (credential.OAuthToken);
-			else
-				tcs.SetException (new Exception ("No credential is stored for this account."));
-
-			return tcs.Task;
 		}
 
 		#region Share
@@ -114,7 +103,7 @@ namespace Xamarin.Social.Services
 					return base.Account;
 				}
 				set {
-					base.Account = value; 
+					base.Account = value;
 
 					if (request != null) {
 						if (value == null) {
@@ -139,14 +128,21 @@ namespace Xamarin.Social.Services
 			{
 				var tcs = new TaskCompletionSource<Response> ();
 
+				cancellationToken.Register (() => tcs.TrySetCanceled ());
+
 				request.PerformRequest ((resposeData, urlResponse, err) => {
-					if (cancellationToken.IsCancellationRequested) {
-						tcs.SetCanceled ();
-					} else if (err == null) {
-						tcs.SetResult (new FoundationResponse (resposeData, urlResponse));
-					} else {
-						tcs.SetException (new SocialException (err.Description));
+					Response result = null;
+					try {
+						if (err != null)
+							throw new Exception (err.LocalizedDescription);
+
+						result = new FoundationResponse (resposeData, urlResponse);
+					} catch (Exception ex) {
+						tcs.TrySetException (ex);
+						return;
 					}
+
+					tcs.TrySetResult (result);
 				});
 
 				return tcs.Task;
@@ -165,51 +161,67 @@ namespace Xamarin.Social.Services
 
 		Lazy<ACAccountStore> accountStore = new Lazy<ACAccountStore> (); // Save this reference since ACAccounts are only good so long as it's alive
 
-		ACAccountStore Store {
-			get {
-				return accountStore.Value;
-			}
-		}
-
+		/// <summary>
+		/// Gets the account store options passed to Social.framework.
+		/// </summary>
 		protected virtual AccountStoreOptions AccountStoreOptions {
 			get { return null; }
 		}
 
 		public override Task<IEnumerable<Account>> GetAccountsAsync ()
 		{
-			var type = Store.FindAccountType (this.accountTypeIdentifier);
-			return Store.RequestAccessAsync (type, AccountStoreOptions).ContinueWith (t => {
-				if (!t.Result)
-					return Enumerable.Empty<Account> ();
+			var store = accountStore.Value;
+			var at = store.FindAccountType (this.accountTypeIdentifier);
+			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
 
-				return Store
-					.FindAccounts (type)
-					.Select (acAccount => new ACAccountWrapper (acAccount, Store))
-					.ToArray ();
-			});
-		}
+			store.RequestAccess (at, AccountStoreOptions, (granted, error) => {
+				if (granted) {
+					var accounts = store.FindAccounts (at)
+						.Select (a => new ACAccountWrapper (a, store))
+						.ToList ();
 
-		public override Task<Account> Reauthorize (Account account)
-		{
-			var wrapper = (ACAccountWrapper) account;
-			return Store.RenewCredentialsAsync (wrapper.ACAccount).ContinueWith (t => {
-				switch (t.Result) {
-				case ACAccountCredentialRenewResult.Renewed:
-					return account;
-				default:
-					throw new Exception (string.Format ("Could not renew account: {0}", t.Result));
+					tcs.SetResult (accounts);
+				} else {
+					tcs.SetResult (new Account [0]);
 				}
 			});
+
+			return tcs.Task;
+		}
+
+		public override Task<Account> ReauthorizeAsync (Account account)
+		{
+			if (account == null)
+				throw new ArgumentNullException ("account");
+
+			var store = accountStore.Value;
+			var wrapper = account as ACAccountWrapper;
+
+			if (wrapper == null)
+				throw new ArgumentException ("account", "Account type '" + account.GetType ().FullName + "' is not supported.");
+
+			var tcs = new TaskCompletionSource<Account> ();
+			store.RenewCredentials (wrapper.ACAccount, (result, error) => {
+				if (error != null) {
+					tcs.SetException (new Exception (error.LocalizedDescription));
+					return;
+				}
+
+				switch (result) {
+				case ACAccountCredentialRenewResult.Renewed:
+					tcs.SetResult (account);
+					break;
+				default:
+					tcs.SetException (new Exception (string.Format ("Could not renew account: {0}", result)));
+					break;
+				}
+			});
+
+			return tcs.Task;
 		}
 
 		public override bool SupportsAuthentication
 		{
-			get {
-				return false;
-			}
-		}
-
-		public override bool SupportsDeletion {
 			get {
 				return false;
 			}
@@ -224,6 +236,32 @@ namespace Xamarin.Social.Services
 		protected override Authenticator GetAuthenticator ()
 		{
 			throw new NotSupportedException ("This service does support authenticating users. You should direct them to the Settings application.");
+		}
+
+		#endregion
+
+		#region Account management
+
+		public override bool SupportsSave {
+			get {
+				return false;
+			}
+		}
+
+		public override bool SupportsDelete {
+			get {
+				return false;
+			}
+		}
+
+		public override void SaveAccount (Account account)
+		{
+			throw new NotSupportedException ("Twitter5Service does support saving user accounts. You should direct them to the Settings application.");
+		}
+
+		public override void DeleteAccount (Account account)
+		{
+			throw new NotSupportedException ("Twitter5Service does support deleting user accounts. You should direct them to the Settings application.");
 		}
 
 		#endregion

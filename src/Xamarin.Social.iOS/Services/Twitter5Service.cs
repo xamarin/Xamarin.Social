@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using MonoTouch.Accounts;
@@ -15,11 +16,6 @@ namespace Xamarin.Social.Services
 	{
 		public Twitter5Service ()
 		{
-		}
-
-		public override Task<string> GetOAuthTokenAsync (Account acc)
-		{
-			throw new NotImplementedException ();
 		}
 
 		#region Share
@@ -121,24 +117,26 @@ namespace Xamarin.Social.Services
 
 			public override Task<Response> GetResponseAsync (CancellationToken cancellationToken)
 			{
-				var completedEvent = new ManualResetEvent (false);
+				var tcs = new TaskCompletionSource<Response> ();
 
-				NSError error = null;
-				Response response = null;
+				cancellationToken.Register (() => tcs.TrySetCanceled ());
 
 				request.PerformRequest ((resposeData, urlResponse, err) => {
-					error = err;
-					response = new FoundationResponse (resposeData, urlResponse);
-					completedEvent.Set ();
+					Response result = null;
+					try {
+						if (err != null)
+							throw new Exception (err.LocalizedDescription);
+
+						result = new FoundationResponse (resposeData, urlResponse);
+					} catch (Exception ex) {
+						tcs.TrySetException (ex);
+						return;
+					}
+
+					tcs.TrySetResult (result);
 				});
 
-				return Task.Factory.StartNew (delegate {
-					completedEvent.WaitOne ();
-					if (error != null) {
-						throw new Exception (error.LocalizedDescription);
-					}
-					return response;
-				}, TaskCreationOptions.LongRunning, cancellationToken);
+				return tcs.Task;
 			}
 		}
 
@@ -162,24 +160,21 @@ namespace Xamarin.Social.Services
 			var store = new ACAccountStore ();
 			var at = store.FindAccountType (ACAccountType.Twitter);
 
-			var r = new List<Account> ();
-
-			var completedEvent = new ManualResetEvent (false);
+			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
 
 			store.RequestAccess (at, (granted, error) => {
 				if (granted) {
-					var accounts = store.FindAccounts (at);
-					foreach (var a in accounts) {
-						r.Add (new ACAccountWrapper (a, store));
-					}
+					var accounts = store.FindAccounts (at)
+						.Select (a => new ACAccountWrapper (a, store))
+						.ToList ();
+
+					tcs.SetResult (accounts);
+				} else {
+					tcs.SetResult (new Account [0]);
 				}
-				completedEvent.Set ();
 			});
 
-			return Task.Factory.StartNew (delegate {
-				completedEvent.WaitOne ();
-				return (IEnumerable<Account>)r;
-			}, TaskCreationOptions.LongRunning);
+			return tcs.Task;
 		}
 
 		public override bool SupportsAuthentication
@@ -189,15 +184,35 @@ namespace Xamarin.Social.Services
 			}
 		}
 
-		public override bool SupportsDeletion {
+		protected override Authenticator GetAuthenticator ()
+		{
+			throw new NotSupportedException ("Twitter5Service does support authenticating users. You should direct them to the Settings application.");
+		}
+
+		#endregion
+
+		#region Account management
+
+		public override bool SupportsSave {
 			get {
 				return false;
 			}
 		}
 
-		protected override Authenticator GetAuthenticator ()
+		public override bool SupportsDelete {
+			get {
+				return false;
+			}
+		}
+
+		public override void SaveAccount (Account account)
 		{
-			throw new NotSupportedException ("Twitter5Service does support authenticating users. You should direct them to the Settings application.");
+			throw new NotSupportedException ("Twitter5Service does support saving user accounts. You should direct them to the Settings application.");
+		}
+
+		public override void DeleteAccount (Account account)
+		{
+			throw new NotSupportedException ("Twitter5Service does support deleting user accounts. You should direct them to the Settings application.");
 		}
 
 		#endregion

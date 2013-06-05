@@ -16,16 +16,14 @@ namespace Xamarin.Social.Services
 			Scope = "https://www.googleapis.com/auth/plus.login";
 		}
 
-		protected override Authenticator GetAuthenticator ()
-		{
-			return new GoogleAuthenticator (ClientId, ClientSecret, Scope, AuthorizeUrl, RedirectUrl, AccessTokenUrl, GetUsernameAsync);
-		}
-
 		protected override Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties)
 		{
-			var request = base.CreateRequest ("GET", new Uri ("https://www.googleapis.com/plus/v1/people/me"), new Dictionary<string, string> {
-				{ "fields", "url,id" }
-			}, new Account (string.Empty, accountProperties));
+			var request = base.CreateRequest ("GET",
+				new Uri ("https://www.googleapis.com/plus/v1/people/me"),
+				new Dictionary<string, string> {
+					{ "fields", "url,id" }
+				},
+				new Account (string.Empty, accountProperties));
 
 			return request.GetResponseAsync ().ContinueWith (reqTask => {
 				var responseText = reqTask.Result.GetResponseText ();
@@ -45,7 +43,12 @@ namespace Xamarin.Social.Services
 			});
 		}
 
-		public override Task<Account> Reauthorize (Account account)
+		protected override Authenticator GetAuthenticator ()
+		{
+			return new GoogleAuthenticator (ClientId, ClientSecret, Scope, AuthorizeUrl, RedirectUrl, AccessTokenUrl, GetUsernameAsync);
+		}
+
+		public override Task<Account> ReauthorizeAsync (Account account)
 		{
 			var authenticator = (GoogleAuthenticator) GetAuthenticator ();
 
