@@ -177,6 +177,67 @@ namespace Xamarin.Social
 #endif
 		#endregion
 
+		#region Account management
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports saving accounts.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if supports saving accounts; otherwise, <c>false</c>.
+		/// </value>
+		public virtual bool SupportsSave {
+			get {
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports deleting accounts.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if supports deleting accounts; otherwise, <c>false</c>.
+		/// </value>
+		public virtual bool SupportsDelete {
+			get {
+				return true;
+			}
+		}
+
+#if PLATFORM_ANDROID
+		/// <summary>
+		/// Saves an account and associates it with this service.
+		/// </summary>
+		public virtual void SaveAccount (Account account, UIContext context)
+		{
+			AccountStore.Create (context).Save (account, ServiceId);
+		}
+
+		/// <summary>
+		/// Deletes a previously saved account associated with this service.
+		/// </summary>
+		public virtual void DeleteAccount (Account account, UIContext context)
+		{
+			AccountStore.Create (context).Delete (account, ServiceId);
+		}
+#else
+		/// <summary>
+		/// Saves an account and associates it with this service.
+		/// </summary>
+		public virtual void SaveAccount (Account account)
+		{
+			AccountStore.Create ().Save (account, ServiceId);
+		}
+
+		/// <summary>
+		/// Deletes a previously saved account associated with this service.
+		/// </summary>
+		public virtual void DeleteAccount (Account account)
+		{
+			AccountStore.Create ().Delete (account, ServiceId);
+		}
+#endif
+
+		#endregion
 
 		#region Sharing
 
