@@ -43,6 +43,11 @@ namespace Xamarin.Social.Services
 			});
 		}
 
+		protected override Authenticator GetAuthenticator ()
+		{
+			return new GoogleAuthenticator (ClientId, ClientSecret, Scope, AuthorizeUrl, RedirectUrl, AccessTokenUrl, GetUsernameAsync);
+		}
+
 		public override Task<Account> ReauthorizeAsync (Account account)
 		{
 			var authenticator = (GoogleAuthenticator) GetAuthenticator ();
