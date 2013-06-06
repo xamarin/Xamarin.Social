@@ -276,6 +276,13 @@ namespace Xamarin.Social
 			throw new NotSupportedException ();
 		}
 
+		public virtual Task<IDictionary<string, string>> GetAccessTokenAsync (Account account)
+		{
+			var tcs = new TaskCompletionSource<IDictionary<string, string>> ();
+			tcs.SetResult (account.Properties);
+			return tcs.Task;
+		}
+
 		#endregion
 
 		#region Account management
