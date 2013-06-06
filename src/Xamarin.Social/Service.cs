@@ -283,6 +283,17 @@ namespace Xamarin.Social
 			return tcs.Task;
 		}
 
+		public virtual bool SupportsVerification {
+			get {
+				return false;
+			}
+		}
+
+		public virtual Task VerifyAsync (Account account)
+		{
+			throw new NotSupportedException ();
+		}
+
 		#endregion
 
 		#region Account management

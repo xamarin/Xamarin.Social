@@ -91,6 +91,23 @@ namespace Xamarin.Social.Services
 				}
 			});
 		}
+
+		public override Task VerifyAsync (Account account)
+		{
+			return CreateRequest ("GET",
+				new Uri ("https://graph.facebook.com/me"),
+				account
+      		).GetResponseAsync ().ContinueWith (t => {
+				if (!t.Result.GetResponseText ().Contains ("\"id\""))
+					throw new SocialException ("Unrecognized Facebook response.");
+			});
+		}
+
+		public override bool SupportsVerification {
+			get {
+				return true;
+			}
+		}
 	}
 }
 
