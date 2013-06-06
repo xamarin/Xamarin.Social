@@ -238,6 +238,10 @@ namespace Xamarin.Social
 			if (authenticator == null)
 				throw new NotSupportedException ("This service does not support authentication via web browser.");
 
+			authenticator.Error += (sender, e) => {
+				tcs.SetException (e.Exception ?? new SocialException (e.Message));
+			};
+
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
 					SaveAccount (e.Account);
