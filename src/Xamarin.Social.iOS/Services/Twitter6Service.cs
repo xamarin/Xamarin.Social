@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using MonoTouch.Accounts;
 using MonoTouch.Social;
 using Xamarin.Auth;
 using Xamarin.Utilities;
-using System.Collections.Generic;
 
 namespace Xamarin.Social.Services
 {
@@ -16,6 +17,23 @@ namespace Xamarin.Social.Services
 		public Twitter6Service ()
 			: base ("Twitter", "Twitter", SLServiceKind.Twitter, ACAccountType.Twitter)
 		{
+		}
+
+		public override bool SupportsVerification {
+			get {
+				return true;
+			}
+		}
+
+		public override Task VerifyAsync (Account account)
+		{
+			return CreateRequest ("GET",
+				new Uri ("https://api.twitter.com/1/account/verify_credentials.json"),
+				account
+			).GetResponseAsync ().ContinueWith (t => {
+				if (t.Result.StatusCode != HttpStatusCode.OK)
+					throw new SocialException ("Invalid Twitter credentials.");
+			});
 		}
 
 		public override Task<IDictionary<string, string>> GetAccessTokenAsync (Account acc)
