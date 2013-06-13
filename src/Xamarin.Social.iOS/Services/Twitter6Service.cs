@@ -28,7 +28,7 @@ namespace Xamarin.Social.Services
 		public override Task VerifyAsync (Account account)
 		{
 			return CreateRequest ("GET",
-				new Uri ("https://api.twitter.com/1/account/verify_credentials.json"),
+				new Uri ("https://api.twitter.com/1.1/account/verify_credentials.json"),
 				account
 			).GetResponseAsync ().ContinueWith (t => {
 				if (t.Result.StatusCode != HttpStatusCode.OK)
