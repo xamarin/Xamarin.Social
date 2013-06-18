@@ -32,11 +32,7 @@ namespace Xamarin.Social
 		public string Scope { get; set; }
 
 		public virtual string [] Scopes {
-			set {
-				Scope = (value != null)
-					? string.Join (",", value)
-					: null;
-			}
+			set { Scope = string.Join (",", value); }
 		}
 
 		public Uri AuthorizeUrl { get; set; }

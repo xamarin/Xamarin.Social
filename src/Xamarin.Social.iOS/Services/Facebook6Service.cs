@@ -15,9 +15,7 @@ namespace Xamarin.Social.Services
 
 		public string [] Scopes {
 			set {
-				Scope = (value != null)
-					? string.Join (",", value)
-					: null;
+				Scope = string.Join (",", value);
 			}
 		}
 
