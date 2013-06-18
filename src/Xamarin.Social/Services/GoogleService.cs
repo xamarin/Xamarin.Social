@@ -16,6 +16,14 @@ namespace Xamarin.Social.Services
 			Scope = "https://www.googleapis.com/auth/plus.login";
 		}
 
+		public override string [] Scopes {
+			set {
+				Scope = (value != null)
+					? string.Join ("+", value)
+					: null;
+			}
+		}
+
 		protected override Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties)
 		{
 			var request = base.CreateRequest ("GET",
@@ -27,18 +35,6 @@ namespace Xamarin.Social.Services
 
 			return request.GetResponseAsync ().ContinueWith (reqTask => {
 				var responseText = reqTask.Result.GetResponseText ();
-				var urlFromJson = WebEx.GetValueFromJson (responseText, "url");
-
-				var prefixes = new [] {
-					"https://plus.google.com/+",
-					"https://plus.google.com/"
-				};
-
-				foreach (var prefix in prefixes) {
-					if (urlFromJson.StartsWith (prefix))
-						return urlFromJson.Substring (prefix.Length);
-				}
-
 				return WebEx.GetValueFromJson (responseText, "id");
 			});
 		}
