@@ -30,7 +30,15 @@ namespace Xamarin.Social
 		/// Access token scope. http://tools.ietf.org/html/rfc6749#section-3.3
 		/// </summary>
 		public string Scope { get; set; }
-		
+
+		public virtual string [] Scopes {
+			set {
+				Scope = (value != null)
+					? string.Join (",", value)
+					: null;
+			}
+		}
+
 		public Uri AuthorizeUrl { get; set; }
 		public Uri RedirectUrl { get; set; }
 		public Uri AccessTokenUrl { get; set; }

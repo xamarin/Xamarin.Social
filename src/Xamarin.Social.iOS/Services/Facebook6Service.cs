@@ -13,6 +13,14 @@ namespace Xamarin.Social.Services
 		public ACFacebookAudience Audience { get; set; }
 		public string Scope { get; set; }
 
+		public string [] Scopes {
+			set {
+				Scope = (value != null)
+					? string.Join (",", value)
+					: null;
+			}
+		}
+
 		protected override AccountStoreOptions AccountStoreOptions {
 			get {
 				var options = new AccountStoreOptions {
