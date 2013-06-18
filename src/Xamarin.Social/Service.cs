@@ -238,6 +238,10 @@ namespace Xamarin.Social
 			if (authenticator == null)
 				throw new NotSupportedException ("This service does not support authentication via web browser.");
 
+			authenticator.Error += (sender, e) => {
+				tcs.SetException (e.Exception ?? new SocialException (e.Message));
+			};
+
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
 					SaveAccount (e.Account);
@@ -272,6 +276,24 @@ namespace Xamarin.Social
 		/// A task that completes with a reauthorized account.
 		/// </returns>
 		public virtual Task<Account> ReauthorizeAsync (Account account)
+		{
+			throw new NotSupportedException ();
+		}
+
+		public virtual Task<IDictionary<string, string>> GetAccessTokenAsync (Account account)
+		{
+			var tcs = new TaskCompletionSource<IDictionary<string, string>> ();
+			tcs.SetResult (account.Properties);
+			return tcs.Task;
+		}
+
+		public virtual bool SupportsVerification {
+			get {
+				return false;
+			}
+		}
+
+		public virtual Task VerifyAsync (Account account)
 		{
 			throw new NotSupportedException ();
 		}

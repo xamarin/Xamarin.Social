@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
@@ -216,6 +217,24 @@ namespace Xamarin.Social.Services
 		}
 
 		#endregion
+
+		
+		public override bool SupportsVerification {
+			get {
+				return true;
+			}
+		}
+
+		public override Task VerifyAsync (Account account)
+		{
+			return CreateRequest ("GET",
+				new Uri ("https://api.twitter.com/1.1/account/verify_credentials.json"),
+				account
+			).GetResponseAsync ().ContinueWith (t => {
+				if (t.Result.StatusCode != HttpStatusCode.OK)
+					throw new SocialException ("Invalid Twitter credentials.");
+			});
+		}
 	}
 }
 

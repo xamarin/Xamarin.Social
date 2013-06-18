@@ -134,7 +134,7 @@ namespace Xamarin.Social.Services
 					Response result = null;
 					try {
 						if (err != null)
-							throw new Exception (err.LocalizedDescription);
+							throw new SocialException (err.LocalizedDescription);
 
 						result = new FoundationResponse (resposeData, urlResponse);
 					} catch (Exception ex) {
@@ -203,7 +203,7 @@ namespace Xamarin.Social.Services
 			var tcs = new TaskCompletionSource<Account> ();
 			store.RenewCredentials (wrapper.ACAccount, (result, error) => {
 				if (error != null) {
-					tcs.SetException (new Exception (error.LocalizedDescription));
+					tcs.SetException (new SocialException (error.LocalizedDescription));
 					return;
 				}
 
@@ -212,7 +212,7 @@ namespace Xamarin.Social.Services
 					tcs.SetResult (account);
 					break;
 				default:
-					tcs.SetException (new Exception (string.Format ("Could not renew account: {0}", result)));
+					tcs.SetException (new SocialException (string.Format ("Could not renew account: {0}", result)));
 					break;
 				}
 			});

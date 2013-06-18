@@ -65,6 +65,23 @@ namespace Xamarin.Social.Services
 			}
 		}
 
+		public override Task VerifyAsync (Account account)
+		{
+			return CreateRequest ("GET",
+				new Uri ("https://www.googleapis.com/plus/v1/people/me"),
+				account
+			).GetResponseAsync ().ContinueWith (t => {
+				if (!t.Result.GetResponseText ().Contains ("\"id\""))
+					throw new SocialException ("Unrecognized Google response.");
+			});
+		}
+
+		public override bool SupportsVerification {
+			get {
+				return true;
+			}
+		}
+
 		class GoogleAuthenticator : OAuth2Authenticator {
 			private string clientId, clientSecret;
 
