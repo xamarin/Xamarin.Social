@@ -71,13 +71,6 @@ namespace Xamarin.Social.Services
 			public SocialRequest (SLServiceKind kind, string method, Uri url, IDictionary<string, string> parametrs, Account account)
 				: base (method, url, parametrs, account)
 			{
-				var ps = new NSMutableDictionary ();
-				if (parametrs != null) {
-					foreach (var p in parametrs) {
-						ps.SetValueForKey (new NSString (p.Value), new NSString (p.Key));
-					}
-				}
-
 				var m = SLRequestMethod.Get;
 				switch (method.ToLowerInvariant()) {
 					case "get":
@@ -93,9 +86,20 @@ namespace Xamarin.Social.Services
 					throw new NotSupportedException ("Social framework does not support the HTTP method '" + method + "'");
 				}
 
-				request = SLRequest.Create (kind, m, new NSUrl (url.AbsoluteUri), ps);
+				request = SLRequest.Create (kind, m, new NSUrl (url.AbsoluteUri), new NSMutableDictionary ());
+				UpdateParameters (request);
 
 				Account = account;
+			}
+
+			void UpdateParameters (SLRequest request)
+			{
+				if (Parameters == null)
+					return;
+
+				foreach (var p in Parameters) {
+					request.Parameters.SetValueForKey (new NSString (p.Value), new NSString (p.Key));
+				}
 			}
 
 			public override Account Account {
@@ -127,8 +131,9 @@ namespace Xamarin.Social.Services
 			public override Task<Response> GetResponseAsync (CancellationToken cancellationToken)
 			{
 				var tcs = new TaskCompletionSource<Response> ();
-
 				cancellationToken.Register (() => tcs.TrySetCanceled ());
+
+				UpdateParameters (request);
 
 				request.PerformRequest ((resposeData, urlResponse, err) => {
 					Response result = null;
