@@ -111,6 +111,8 @@
     <Compile Include="..\Xamarin.Social\Services\GoogleService.cs">
       <Link>Services\GoogleService.cs</Link>
     </Compile>
+    <Compile Include="Services\DropboxService.cs" />
+    <Compile Include="OAuth1PreAService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
