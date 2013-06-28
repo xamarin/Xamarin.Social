@@ -24,6 +24,21 @@ namespace Xamarin.Social.Services
 			AccessTokenUrl = new Uri ("https://api.dropbox.com/1/oauth/access_token");
 		}
 
+		protected override Authenticator GetAuthenticator ()
+		{
+			bool embedded = ShowAuthController != null;
+
+			return new DropboxAuthenticator (
+				embedded: embedded,
+				consumerKey: ConsumerKey,
+				consumerSecret: ConsumerSecret,
+				requestTokenUrl: RequestTokenUrl,
+				authorizeUrl: AuthorizeUrl,
+				accessTokenUrl: AccessTokenUrl,
+				callbackUrl: CallbackUrl,
+				getUsernameAsync: GetUsernameAsync);
+		}
+
 		protected override Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties)
 		{
 			var request = base.CreateRequest ("GET",
@@ -39,6 +54,33 @@ namespace Xamarin.Social.Services
 		public override Request CreateRequest (string method, Uri url, IDictionary<string, string> parameters, Account account)
 		{
 			return new OAuth1Request (method, url, parameters, account, true);
+		}
+
+		class DropboxAuthenticator : OAuth1PreAAuthenticator
+		{
+			public bool Embedded { get; private set; }
+			public DropboxAuthenticator (bool embedded, string consumerKey, string consumerSecret, Uri requestTokenUrl, Uri authorizeUrl, Uri accessTokenUrl, Uri callbackUrl, GetUsernameAsyncFunc getUsernameAsync = null)
+				: base (consumerKey, consumerSecret, requestTokenUrl, authorizeUrl, accessTokenUrl, callbackUrl, getUsernameAsync) {
+				Embedded = embedded;
+				this.authorizeUrl = embedded ? new Uri (authorizeUrl, "?embedded=1") : authorizeUrl;
+			}
+
+			public override bool OnPageLoading (Uri url)
+			{
+				if (Embedded && url.Host == callbackUrl.Host && url.AbsolutePath == callbackUrl.AbsolutePath) {
+					GetAccessTokenAsync ().ContinueWith (getTokenTask => {
+						if (getTokenTask.IsCanceled) {
+							OnCancelled ();
+						} else if (getTokenTask.IsFaulted) {
+							OnError (getTokenTask.Exception);
+						}
+					}, TaskContinuationOptions.NotOnRanToCompletion);
+
+					return false;
+				}
+
+				return base.OnPageLoading (url);
+			}
 		}
 	}
 }

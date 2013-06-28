@@ -7,6 +7,8 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using Xamarin.Auth;
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
 
 #if PLATFORM_IOS
 using ShareUIType = MonoTouch.UIKit.UIViewController;
@@ -41,6 +43,12 @@ namespace Xamarin.Social
 		/// Text used as the title of screen when editing an item.
 		/// </summary>
 		public string ShareTitle { get; protected set; }
+
+		/// <summary>
+		/// Shows authorization controller.
+		/// </summary>
+		/// <value>The show auth controller.</value>
+		public Action<UIViewController, bool, NSAction> ShowAuthController { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Xamarin.Social.Service"/> class.
@@ -242,6 +250,8 @@ namespace Xamarin.Social
 				tcs.SetException (e.Exception ?? new SocialException (e.Message));
 			};
 
+			UIViewController authController = null;
+
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
 					SaveAccount (e.Account);
@@ -249,9 +259,18 @@ namespace Xamarin.Social
 				} else {
 					tcs.SetCanceled ();
 				}
+				if (authController != null) {
+					authController.DismissViewController (true, () => {});
+				}
 			};
 
-			authenticator.AuthenticateWithBrowser (customUrlHandler);
+			if (ShowAuthController == null) {
+				authenticator.AuthenticateWithBrowser (customUrlHandler);
+			} else {
+				authController = authenticator.GetUI ();
+				authController.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+				ShowAuthController (authController, true, () => {});
+			}
 			return tcs.Task;
 		}
 #endif
