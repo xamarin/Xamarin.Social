@@ -45,12 +45,6 @@ namespace Xamarin.Social
 		public string ShareTitle { get; protected set; }
 
 		/// <summary>
-		/// Shows authorization controller.
-		/// </summary>
-		/// <value>The show auth controller.</value>
-		public Action<UIViewController, bool, NSAction> ShowAuthController { get; set; }
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="Xamarin.Social.Service"/> class.
 		/// </summary>
 		/// <param name='serviceId'>
@@ -130,6 +124,11 @@ namespace Xamarin.Social
 		/// The authenticator or null if authentication is not supported.
 		/// </returns>
 		protected abstract Authenticator GetAuthenticator ();
+
+		protected virtual WebAuthenticator GetEmbeddedAuthenticator ()
+		{
+			return (WebAuthenticator) GetAuthenticator ();
+		}
 
 #if PLATFORM_ANDROID
 		/// <summary>
@@ -250,6 +249,34 @@ namespace Xamarin.Social
 				tcs.SetException (e.Exception ?? new SocialException (e.Message));
 			};
 
+			authenticator.Completed += (sender, e) => {
+				if (e.IsAuthenticated) {
+					SaveAccount (e.Account);
+					tcs.SetResult (new [] { e.Account });
+				} else {
+					tcs.SetCanceled ();
+				}
+			};
+
+			authenticator.AuthenticateWithBrowser (customUrlHandler);
+			return tcs.Task;
+		}
+
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync (Action<UIViewController, bool, NSAction> presentAuthController)
+		{
+			if (presentAuthController == null)
+				throw new ArgumentNullException ("presentAuthController", "This overload needs a function to present authentication controller.");
+
+			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
+
+			var authenticator = GetEmbeddedAuthenticator ();
+			if (authenticator == null)
+				throw new NotSupportedException ("This service does not support authentication via a controller.");
+
+			authenticator.Error += (sender, e) => {
+				tcs.SetException (e.Exception ?? new SocialException (e.Message));
+			};
+
 			UIViewController authController = null;
 
 			authenticator.Completed += (sender, e) => {
@@ -259,18 +286,14 @@ namespace Xamarin.Social
 				} else {
 					tcs.SetCanceled ();
 				}
-				if (authController != null) {
-					authController.DismissViewController (true, () => {});
-				}
+
+				authController.DismissViewController (true, () => {});
 			};
 
-			if (ShowAuthController == null) {
-				authenticator.AuthenticateWithBrowser (customUrlHandler);
-			} else {
-				authController = authenticator.GetUI ();
-				authController.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-				ShowAuthController (authController, true, () => {});
-			}
+			authController = authenticator.GetUI ();
+			authController.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+			presentAuthController (authController, true, () => {});
+
 			return tcs.Task;
 		}
 #endif

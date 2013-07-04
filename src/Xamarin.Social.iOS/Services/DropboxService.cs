@@ -24,12 +24,23 @@ namespace Xamarin.Social.Services
 			AccessTokenUrl = new Uri ("https://api.dropbox.com/1/oauth/access_token");
 		}
 
+		protected override WebAuthenticator GetEmbeddedAuthenticator ()
+		{
+			return new DropboxAuthenticator (
+				embedded: true,
+				consumerKey: ConsumerKey,
+				consumerSecret: ConsumerSecret,
+				requestTokenUrl: RequestTokenUrl,
+				authorizeUrl: AuthorizeUrl,
+				accessTokenUrl: AccessTokenUrl,
+				callbackUrl: CallbackUrl,
+				getUsernameAsync: GetUsernameAsync);
+		}
+
 		protected override Authenticator GetAuthenticator ()
 		{
-			bool embedded = ShowAuthController != null;
-
 			return new DropboxAuthenticator (
-				embedded: embedded,
+				embedded: false,
 				consumerKey: ConsumerKey,
 				consumerSecret: ConsumerSecret,
 				requestTokenUrl: RequestTokenUrl,
