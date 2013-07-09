@@ -46,7 +46,11 @@ namespace Xamarin.Social
 				if (k == null || o == null)
 					continue;
 
-				headers[k.ToString ()] = o.ToString ();
+				var key = k.ToString ();
+				if (key == null)
+					continue;
+
+				headers[key] = o.ToString ();
 			}
 		}
 
