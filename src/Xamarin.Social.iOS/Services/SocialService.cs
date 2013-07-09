@@ -15,8 +15,10 @@ namespace Xamarin.Social.Services
 	/// <summary>
 	/// A base service for Social.framework family of services.
 	/// </summary>
-	public abstract class SocialService : Service
+	public abstract class SocialService : Service, ISystemService
 	{
+		public bool AllowLoginUI { get; set; }
+
 		private SLServiceKind kind;
 		private NSString accountTypeIdentifier;
 
@@ -178,6 +180,15 @@ namespace Xamarin.Social.Services
 			var store = accountStore.Value;
 			var at = store.FindAccountType (this.accountTypeIdentifier);
 			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
+
+			if (!AllowLoginUI) {
+				tcs.SetResult ((store.FindAccounts (at) ?? new ACAccount [0])
+					.Select (a => (Account) new ACAccountWrapper (a, store))
+					.ToList ()
+				);
+
+				return tcs.Task;
+			}
 
 			store.RequestAccess (at, AccountStoreOptions, (granted, error) => {
 				if (granted) {
