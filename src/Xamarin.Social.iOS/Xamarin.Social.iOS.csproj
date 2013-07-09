@@ -113,6 +113,9 @@
     </Compile>
     <Compile Include="Services\DropboxService.cs" />
     <Compile Include="OAuth1PreAService.cs" />
+    <Compile Include="..\Xamarin.Social\IOSService.cs">
+      <Link>IOSService.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

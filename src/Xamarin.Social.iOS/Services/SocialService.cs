@@ -15,7 +15,7 @@ namespace Xamarin.Social.Services
 	/// <summary>
 	/// A base service for Social.framework family of services.
 	/// </summary>
-	public abstract class SocialService : Service, ISystemService
+	public abstract class SocialService : Service, IOSService
 	{
 		public bool AllowLoginUI { get; set; }
 
