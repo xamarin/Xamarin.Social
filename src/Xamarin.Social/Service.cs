@@ -184,9 +184,9 @@ namespace Xamarin.Social
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
 					SaveAccount (e.Account, context);
-					tcs.SetResult (new [] { e.Account });
+					tcs.TrySetResult (new [] { e.Account });
 				} else {
-					tcs.SetCanceled ();
+					tcs.TrySetCanceled ();
 				}
 			};
 
@@ -246,15 +246,15 @@ namespace Xamarin.Social
 				throw new NotSupportedException ("This service does not support authentication via web browser.");
 
 			authenticator.Error += (sender, e) => {
-				tcs.SetException (e.Exception ?? new SocialException (e.Message));
+				tcs.TrySetException (e.Exception ?? new SocialException (e.Message));
 			};
 
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
 					SaveAccount (e.Account);
-					tcs.SetResult (new [] { e.Account });
+					tcs.TrySetResult (new [] { e.Account });
 				} else {
-					tcs.SetCanceled ();
+					tcs.TrySetCanceled ();
 				}
 			};
 
@@ -274,7 +274,7 @@ namespace Xamarin.Social
 				throw new NotSupportedException ("This service does not support authentication via a controller.");
 
 			authenticator.Error += (sender, e) => {
-				tcs.SetException (e.Exception ?? new SocialException (e.Message));
+				tcs.TrySetException (e.Exception ?? new SocialException (e.Message));
 			};
 
 			UIViewController authController = null;
@@ -282,9 +282,9 @@ namespace Xamarin.Social
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
 					SaveAccount (e.Account);
-					tcs.SetResult (new [] { e.Account });
+					tcs.TrySetResult (new [] { e.Account });
 				} else {
-					tcs.SetCanceled ();
+					tcs.TrySetCanceled ();
 				}
 
 				authController.DismissViewController (true, () => {});
