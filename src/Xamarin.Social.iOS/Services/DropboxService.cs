@@ -70,9 +70,13 @@ namespace Xamarin.Social.Services
 		class DropboxAuthenticator : OAuth1PreAAuthenticator
 		{
 			public bool Embedded { get; private set; }
+
 			public DropboxAuthenticator (bool embedded, string consumerKey, string consumerSecret, Uri requestTokenUrl, Uri authorizeUrl, Uri accessTokenUrl, Uri callbackUrl, GetUsernameAsyncFunc getUsernameAsync = null)
-				: base (consumerKey, consumerSecret, requestTokenUrl, authorizeUrl, accessTokenUrl, callbackUrl, getUsernameAsync) {
+				: base (consumerKey, consumerSecret, requestTokenUrl, authorizeUrl, accessTokenUrl, callbackUrl, getUsernameAsync)
+			{
 				Embedded = embedded;
+				Title = "Connect Dropbox";
+
 				this.authorizeUrl = embedded ? new Uri (authorizeUrl, "?embedded=1") : authorizeUrl;
 			}
 
