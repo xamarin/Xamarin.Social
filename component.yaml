@@ -11,8 +11,8 @@ monodoc: docs/
 no_build: true
 libraries:
   ios:
-    - src/Xamarin.Social.iOS/bin/Release/XamarinSocialiOS.dll
-    - src/Xamarin.Social.iOS/bin/Release/XamarinAuthiOS.dll
+    - src/Xamarin.Social.iOS/bin/Release/Xamarin.Social.iOS.dll
+    - src/Xamarin.Social.iOS/bin/Release/Xamarin.Auth.iOS.dll
   android:
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Social.Android.dll
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Auth.Android.dll
