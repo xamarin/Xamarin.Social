@@ -62,9 +62,6 @@
     <Compile Include="..\Xamarin.Social\Services\FlickrService.cs">
       <Link>Services\FlickrService.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social\Services\PinterestService.cs">
-      <Link>Services\PinterestService.cs</Link>
-    </Compile>
     <Compile Include="..\Xamarin.Social\Services\TwitterService.cs">
       <Link>Services\TwitterService.cs</Link>
     </Compile>
