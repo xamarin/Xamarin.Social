@@ -1,0 +1,26 @@
+version: 1.1
+id: xamarin.social
+name: Xamarin.Social
+publisher: Xamarin
+publisher-url: http://xamarin.com/
+summary: Share statuses, links, and images on Facebook, Flickr, Twitter and more.
+details: component/Details.md
+license: License.md
+getting-started: component/GettingStarted.md
+monodoc: docs/
+no_build: true
+libraries:
+  ios:
+    - src/Xamarin.Social.iOS/bin/Release/Xamarin.Social.iOS.dll
+    - src/Xamarin.Social.iOS/bin/Release/Xamarin.Auth.iOS.dll
+  android:
+    - src/Xamarin.Social.Android/bin/Release/Xamarin.Social.Android.dll
+    - src/Xamarin.Social.Android/bin/Release/Xamarin.Auth.Android.dll
+samples:
+  "Android Sample": samples/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android.sln
+  "iOS Sample": samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS.sln
+screenshots:
+  - component/screenshots/00.jpg
+icons:
+  - component/icons/xamarin.social_128x128.png
+  - component/icons/xamarin.social_512x512.png
