@@ -9,7 +9,7 @@ namespace Xamarin.Social
 {
 	class FoundationResponse : Response
 	{
-		NSData responseData;
+		NSData data;
 		Dictionary<string, string> headers;
 		int statusCode;
 
@@ -27,7 +27,7 @@ namespace Xamarin.Social
 
 		public FoundationResponse (NSData responseData, NSHttpUrlResponse urlResponse)
 		{
-			this.responseData = responseData;
+			data = responseData;
 			statusCode = urlResponse.StatusCode;
 
 			headers = new Dictionary<string, string> ();
@@ -47,21 +47,23 @@ namespace Xamarin.Social
 
 		public override Stream GetResponseStream ()
 		{
-			var mutableData = responseData as NSMutableData;
+			var mutableData = data as NSMutableData;
 			if (mutableData != null) {
 				unsafe {
 					return new UnmanagedMemoryStream ((byte*)mutableData.Bytes, mutableData.Length);
 				}
 			} else {
-				return responseData.AsStream ();
+				return data.AsStream ();
 			}
 		}
 
 		protected override void Dispose (bool disposing)
 		{
-			if (responseData != null) {
-				responseData.Dispose ();
-				responseData = null;
+			if (disposing) {
+				if (data != null) {
+					data.Dispose ();
+					data = null;
+				}
 			}
 
 			base.Dispose (disposing);
