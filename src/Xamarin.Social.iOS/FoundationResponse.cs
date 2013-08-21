@@ -9,7 +9,7 @@ namespace Xamarin.Social
 {
 	class FoundationResponse : Response
 	{
-		Stream stream;
+		NSData responseData;
 		Dictionary<string, string> headers;
 		int statusCode;
 
@@ -27,17 +27,8 @@ namespace Xamarin.Social
 
 		public FoundationResponse (NSData responseData, NSHttpUrlResponse urlResponse)
 		{
+			this.responseData = responseData;
 			statusCode = urlResponse.StatusCode;
-
-			var mutableData = responseData as NSMutableData;
-			if (mutableData != null) {
-				unsafe {
-					stream = new UnmanagedMemoryStream ((byte*)mutableData.Bytes, mutableData.Length);
-				}
-			}
-			else {
-				stream = responseData.AsStream ();
-			}
 
 			headers = new Dictionary<string, string> ();
 			var hs = urlResponse.AllHeaderFields;
@@ -56,7 +47,24 @@ namespace Xamarin.Social
 
 		public override Stream GetResponseStream ()
 		{
-			return stream;
+			var mutableData = responseData as NSMutableData;
+			if (mutableData != null) {
+				unsafe {
+					return new UnmanagedMemoryStream ((byte*)mutableData.Bytes, mutableData.Length);
+				}
+			} else {
+				return responseData.AsStream ();
+			}
+		}
+
+		protected override void Dispose (bool disposing)
+		{
+			if (responseData != null) {
+				responseData.Dispose ();
+				responseData = null;
+			}
+
+			base.Dispose (disposing);
 		}
 	}
 }
