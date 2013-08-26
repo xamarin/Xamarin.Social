@@ -155,18 +155,17 @@ namespace Xamarin.Social.Services
 
 		public override Task<IEnumerable<Account>> GetAccountsAsync ()
 		{
-			if (accountStore == null) {
+			if (accountStore == null)
 				accountStore = new ACAccountStore ();
-			}
-			var store = new ACAccountStore ();
-			var at = store.FindAccountType (ACAccountType.Twitter);
+
+			var at = accountStore.FindAccountType (ACAccountType.Twitter);
 
 			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
 
-			store.RequestAccess (at, (granted, error) => {
+			accountStore.RequestAccess (at, (granted, error) => {
 				if (granted) {
-					var accounts = store.FindAccounts (at)
-						.Select (a => (Account) new ACAccountWrapper (a, store))
+					var accounts = accountStore.FindAccounts (at)
+						.Select (a => (Account) new ACAccountWrapper (a, accountStore))
 						.ToList ();
 
 					tcs.SetResult (accounts);
