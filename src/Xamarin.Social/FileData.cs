@@ -1,5 +1,5 @@
 //
-//  Copyright 2012, Xamarin Inc.
+//  Copyright 2012-2013, Xamarin Inc.
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -76,8 +76,8 @@ namespace Xamarin.Social
 			if (request == null) {
 				throw new ArgumentNullException ("request");
 			}
-			if (string.IsNullOrEmpty (name)) {
-				throw new ArgumentException ("name", "Must provide a name for the file in the request.");
+			if (string.IsNullOrWhiteSpace (name)) {
+				throw new ArgumentException ("Must provide a name for the file in the request.", "name");
 			}
 			request.AddMultipartData (name, Data, MimeType, Filename);
 		}
