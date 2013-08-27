@@ -95,6 +95,9 @@ namespace Xamarin.Social
 
 		protected virtual void Dispose (bool disposing)
 		{
+			if (!disposing)
+				return;
+
 			if (Data != null) {
 				Data.Dispose ();
 				Data = null;

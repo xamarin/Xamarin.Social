@@ -1,5 +1,5 @@
 //
-//  Copyright 2012, Xamarin Inc.
+//  Copyright 2012-2013, Xamarin Inc.
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -77,15 +77,24 @@ namespace Xamarin.Social
 		/// </param>
 		protected virtual void Dispose (bool disposing)
 		{
-			foreach (var i in Images) {
-				i.Dispose ();
-			}
-			Images.Clear ();
+			if (!disposing)
+				return;
 
-			foreach (var f in Files) {
-				f.Dispose ();
+			if (Images != null) {
+				foreach (var i in Images) {
+					i.Dispose();
+				}
+
+				Images.Clear();
 			}
-			Files.Clear ();
+
+			if (Files != null) {
+				foreach (var f in Files) {
+					f.Dispose();
+				}
+
+				Files.Clear();
+			}
 		}
 
 		/// <summary>
