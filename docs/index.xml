@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Xamarin.Social" Version="1.0.4766.16322">
+    <Assembly Name="Xamarin.Social" Version="1.0.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany("Xamarin, Inc.")</AttributeName>
@@ -30,7 +30,7 @@
     </Assembly>
   </Assemblies>
   <Remarks>To be added.</Remarks>
-  <Copyright>To be added.</Copyright>
+  <Copyright>Xamarin Inc. 2012-2013</Copyright>
   <Types>
     <Namespace Name="Xamarin.Social">
       <Type Name="FileData" Kind="Class" />

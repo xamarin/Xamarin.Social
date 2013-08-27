@@ -3,8 +3,7 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit Service extends System.Object" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
-    <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-    <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -20,8 +19,7 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string serviceId, string title) cil managed" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="serviceId" Type="System.String" />
@@ -45,8 +43,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance class System.Uri CreateAccountLink" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
@@ -62,8 +59,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -88,8 +84,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -116,8 +111,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class Xamarin.Auth.Account account) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -144,8 +138,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters, class Xamarin.Auth.Account account) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -174,8 +167,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Auth.Account&gt;&gt; GetAccountsAsync() cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Collections.Generic.IEnumerable&lt;Xamarin.Auth.Account&gt;&gt;</ReturnType>
@@ -192,8 +184,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetAuthenticateUI(class System.Action`1&lt;class Xamarin.Auth.Account&gt; completedHandler) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -217,8 +208,7 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class Xamarin.Auth.Authenticator GetAuthenticator() cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Authenticator</ReturnType>
@@ -241,8 +231,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object GetShareUI(class Xamarin.Social.Item item, class System.Action`1&lt;valuetype Xamarin.Social.ShareResult&gt; completionHandler) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -273,8 +262,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance int32 GetTextLength(class Xamarin.Social.Item item) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -301,8 +289,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool HasMaxTextLength" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -321,8 +308,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxFiles" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -338,8 +324,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxImages" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -355,8 +340,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxLinks" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -372,8 +356,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxTextLength" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -389,8 +372,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance string ServiceId" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -406,8 +388,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task ShareItemAsync(class Xamarin.Social.Item item, class Xamarin.Auth.Account account) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -437,8 +418,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task ShareItemAsync(class Xamarin.Social.Item item, class Xamarin.Auth.Account account, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -472,8 +452,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance string ShareTitle" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -489,8 +468,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool SupportsAuthentication" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -507,8 +485,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance string Title" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.4765.20756</AssemblyVersion>
-        <AssemblyVersion>1.0.4766.16322</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
