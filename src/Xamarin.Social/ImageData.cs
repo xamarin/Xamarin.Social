@@ -28,12 +28,6 @@ using System.Drawing.Imaging;
 
 namespace Xamarin.Social
 {
-	/// <summary>
-	/// Represents an image to be shared with a service.
-	/// </summary>
-	/// <remarks>
-	/// This object disposes of the Data property.
-	/// </remarks>
 	public class ImageData : FileData
 	{
 		public ImageData (Stream data, string mimeType)

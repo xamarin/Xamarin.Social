@@ -10,7 +10,8 @@
   </Base>
   <Docs>
     <summary>The result of the user trying to share an <see cref="T:Xamarin.Social.Item"/>.</summary>
-    <remarks>To be added.</remarks>
+    <remarks></remarks>
+    <altmember cref="M:Xamarin.Social.Service.GetShareUI" />
   </Docs>
   <Members>
     <Member MemberName="Cancelled">
@@ -24,10 +25,7 @@
         <ReturnType>Xamarin.Social.ShareResult</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-          The user canceled that share operation. It's possible that they encountered
-          errors and gave up by choosing to cancel.
-        </summary>
+        <summary>The user canceled the share operation.</summary>
       </Docs>
     </Member>
     <Member MemberName="Done">
@@ -41,7 +39,7 @@
         <ReturnType>Xamarin.Social.ShareResult</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The user successfully shared!</summary>
+        <summary>The user successfully shared.</summary>
       </Docs>
     </Member>
   </Members>

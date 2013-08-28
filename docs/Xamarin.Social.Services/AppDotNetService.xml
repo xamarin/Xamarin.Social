@@ -11,7 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>Access to App.Net as a <see cref="T:Xamarin.Social.Service"/>.</summary>
-    <remarks>To be added.</remarks>
+    <remarks></remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,13 +23,13 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instances of the <see cref="T:Xamarin.Social.Services.AppDotNetService" /> class.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="GetUsernameAsync">
       <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task&lt;string&gt; GetUsernameAsync (System.Collections.Generic.IDictionary&lt;string,string&gt; accountProperties);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task`1&lt;string&gt; GetUsernameAsync(class System.Collections.Generic.IDictionary`2&lt;string, string&gt; accountProperties) cil managed" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;string&gt; GetUsernameAsync(class System.Collections.Generic.IDictionary`2&lt;string, string&gt; accountProperties) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -41,10 +41,10 @@
         <Parameter Name="accountProperties" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="accountProperties">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="accountProperties">The properties of an authenticated account.</param>
+        <summary>Asynchronously retrieves the username with the given <paramref name="accountProperties" />.</summary>
+        <returns>A Task for the username.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -63,12 +63,12 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <param name="account">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item to share.</param>
+        <param name="account">The account to use to share.</param>
+        <param name="cancellationToken">Token used to cancel this operation.</param>
+        <summary>Shares the passed-in object without presenting any UI to the user.</summary>
+        <returns>A task representing the share operation.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
   </Members>

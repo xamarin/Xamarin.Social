@@ -11,7 +11,13 @@
   <Interfaces />
   <Docs>
     <summary>Access to Twitter as a <see cref="T:Xamarin.Social.Service"/>.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <para>
+        You will need to specify your <see cref="T:Xamarin.Social.OAuth1Service.ConsumerKey" />,
+        <see cref="T:Xamarin.Social.OAuth1Service.ConsumerSecret" /> and
+        <see cref="T:Xamarin.Social.OAuth1Service.CallbackUrl" />
+      </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,8 +29,8 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Social.Services.FlickrService" /> class.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="GetTextLength">
@@ -41,10 +47,10 @@
         <Parameter Name="item" Type="Xamarin.Social.Item" />
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item whose text length is to be calculated.</param>
+        <summary>Gets the calculated the text length of an item after links and other media are inlined with the text.</summary>
+        <returns>The text length after inlining media.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -63,12 +69,12 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <param name="account">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item to share.</param>
+        <param name="account">The account to use to share.</param>
+        <param name="cancellationToken">Token used to cancel this operation.</param>
+        <summary>Shares the passed-in object without presenting any UI to the user.</summary>
+        <returns>A task representing the share operation.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
   </Members>

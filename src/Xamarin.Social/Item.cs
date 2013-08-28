@@ -19,12 +19,12 @@ using System.Collections.Generic;
 namespace Xamarin.Social
 {
 	/// <summary>
-	/// Facebook Post. Twitter Status. Google+ Activity.
+	/// Represents a social moment such as status update or shared image.
 	/// </summary>
 	public class Item : IDisposable
 	{
 		/// <summary>
-		/// Textual content.
+		/// Gets or sets textual content.
 		/// </summary>
 		public string Text { get; set; }
 
@@ -110,17 +110,17 @@ namespace Xamarin.Social
 		}
 
 		/// <summary>
-		/// Attached link.
+		/// Gets or sets links attached to this item.
 		/// </summary>
 		public IList<Uri> Links { get; set; }
 
 		/// <summary>
-		/// Attached image.
+		/// Gets or sets images attached to this item.
 		/// </summary>
 		public IList<ImageData> Images { get; set; }
 
 		/// <summary>
-		/// Attached image.
+		/// Gets or sets files attached to this item.
 		/// </summary>
 		public IList<FileData> Files { get; set; }
 

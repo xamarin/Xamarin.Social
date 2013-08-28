@@ -18,12 +18,6 @@ using System.IO;
 
 namespace Xamarin.Social
 {
-	/// <summary>
-	/// Represents a file.
-	/// </summary>
-	/// <remarks>
-	/// This object disposes of the Data property.
-	/// </remarks>
 	public class FileData : IDisposable
 	{
 		public Stream Data { get; protected set; }

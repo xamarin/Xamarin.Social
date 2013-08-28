@@ -10,8 +10,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Implements OAuth 2.0 implicit granting. <format type="text/html"><a href="http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2">http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2</a></format></summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents an OAuth 2 based service.</summary>
+    <remarks></remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -26,10 +26,10 @@
         <Parameter Name="title" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="serviceId">To be added.</param>
-        <param name="title">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="serviceId">Uniquely identifies this service type.</param>
+        <param name="title">Text used to label this service in the UI.</param>
+        <summary>Constructions and initializes a new instances of the <see cref="T:Xamarin.Social.OAuth2Service"/> class.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="AccessTokenUrl">
@@ -43,9 +43,14 @@
         <ReturnType>System.Uri</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the access token URL.</summary>
+        <value>The URL that the access token is requested at.</value>
+        <remarks>
+          <para>
+            When creating your own <see cref="T:Xamarin.Social.OAuth1Service" />, you will find this URL in the authentication
+            section of the documentation for the service you're implementing.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AuthorizeUrl">
@@ -59,9 +64,14 @@
         <ReturnType>System.Uri</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the authorize URL.</summary>
+        <value>The initial url to start authorization.</value>
+        <remarks>
+          <para>
+            When creating your own <see cref="T:Xamarin.Social.OAuth1Service" />, you will find this URL in the authentication
+            section of the documentation for the service you're implementing.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ClientId">
@@ -75,9 +85,13 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Client identifier. http://tools.ietf.org/html/rfc6749#section-2.2</summary>
+        <summary>Gets or sets the client identifier.</summary>
         <value>The client identifier.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/html">
+            <a href="http://tools.ietf.org/html/rfc6749#section-2.2">http://tools.ietf.org/html/rfc6749#section-2.2</a>
+          </format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ClientSecret">
@@ -91,14 +105,18 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Optional client secret. http://tools.ietf.org/html/rfc6749#section-4.1</summary>
-        <value>The client identifier.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the client secret.</summary>
+        <value>The client secret.</value>
+        <remarks>
+          <format type="text/html">
+            <a href="http://tools.ietf.org/html/rfc6749#section-4.1">http://tools.ietf.org/html/rfc6749#section-4.1</a>
+          </format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
-      <MemberSignature Language="C#" Value="public override Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters, Xamarin.Auth.Account account);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters, class Xamarin.Auth.Account account) cil managed" />
+      <MemberSignature Language="C#" Value="public override Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters, Xamarin.Auth.Account account);"/>
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters, class Xamarin.Auth.Account account) cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -107,24 +125,30 @@
         <ReturnType>Xamarin.Auth.Request</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="method" Type="System.String" />
-        <Parameter Name="url" Type="System.Uri" />
-        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
-        <Parameter Name="account" Type="Xamarin.Auth.Account" />
+        <Parameter Name="method" Type="System.String"/>
+        <Parameter Name="url" Type="System.Uri"/>
+        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;"/>
+        <Parameter Name="account" Type="Xamarin.Auth.Account"/>
       </Parameters>
       <Docs>
-        <param name="method">To be added.</param>
-        <param name="url">To be added.</param>
-        <param name="parameters">To be added.</param>
-        <param name="account">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="method">The HTTP method to perform the request with.</param>
+        <param name="url">The URL of the request.</param>
+        <param name="parameters">
+          Parameters that will pre-populate the <see cref="P:Xamarin.Auth.Request.Parameters"/> property or <see langword="null"/>.
+        </param>
+        <param name="account">The account used to authenticate this request.</param>
+        <summary>
+          Creates a new <see cref="T:Xamarin.Auth.OAuth2Request"/>.
+        </summary>
+        <returns>
+          A new <see cref="T:Xamarin.Auth.OAuth2Request"/> instance with the given parameters.
+        </returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticator">
-      <MemberSignature Language="C#" Value="protected override Xamarin.Auth.Authenticator GetAuthenticator ();" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class Xamarin.Auth.Authenticator GetAuthenticator() cil managed" />
+      <MemberSignature Language="C#" Value="protected override Xamarin.Auth.Authenticator GetAuthenticator ();"/>
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class Xamarin.Auth.Authenticator GetAuthenticator() cil managed"/>
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -132,11 +156,39 @@
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Authenticator</ReturnType>
       </ReturnValue>
-      <Parameters />
+      <Parameters/>
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Creates a <see cref="T:Xamarin.Auth.OAuth2Authenticator"/> with the service's parameters.</summary>
+        <returns>A new <see cref="T:Xamarin.Auth.OAuth2Authenticator"/> instance.</returns>
+        <exception cref="T:System.InvalidOperationException">
+          <para>
+            The following properties must be valid or this method will throw an <see cref="T:System.InvalidOperationException"/>:
+          </para>
+          <para>
+            <list type="bullet">
+              <item>
+                <term>
+                  <see cref="P:Xamarin.Social.OAuth2Service.ClientId"/>
+                </term>
+              </item>
+              <item>
+                <term>
+                  <see cref="P:Xamarin.Social.OAuth2Service.Scope"/>
+                </term>
+              </item>
+              <item>
+                <term>
+                  <see cref="P:Xamarin.Social.OAuth2Service.AuthorizeUrl"/>
+                </term>
+              </item>
+              <item>
+                <term>
+                  <see cref="P:Xamarin.Social.OAuth2Service.RedirectUrl"/>
+                </term>
+              </item>
+            </list>
+          </para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="GetUsernameAsync">
@@ -153,10 +205,10 @@
         <Parameter Name="accountProperties" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="accountProperties">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="accountProperties">The properties of an authenticated account.</param>
+        <summary>Asynchronously retrieves the username with the given <paramref name="accountProperties" />.</summary>
+        <returns>A Task for the username.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="RedirectUrl">
@@ -170,9 +222,17 @@
         <ReturnType>System.Uri</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the redirect url.</summary>
+        <value>The URL used to indicate authorization has completed.</value>
+        <remarks>
+          <para>
+            This URL is generally supplied by you to the service when telling it about your app and is required.
+            The URL supplied to the service and the one provided here must match for a successful authentication.
+          </para>
+          <para>
+            <c>"localhost"</c> and <c>"urn:ietf:wg:oauth:2.0:oob"</c> are not supported.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Scope">
@@ -186,9 +246,13 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Access token scope. http://tools.ietf.org/html/rfc6749#section-3.3</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the scope for the requested access token.</summary>
+        <value>The scope for the access token.</value>
+        <remarks>
+          <format type="text/html">
+            <a href="http://tools.ietf.org/html/rfc6749#section-3.3">http://tools.ietf.org/html/rfc6749#section-3.3</a>
+          </format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

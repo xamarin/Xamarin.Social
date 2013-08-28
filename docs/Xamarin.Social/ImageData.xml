@@ -10,12 +10,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>
-      Represents an image to be shared with a service.
-    </summary>
-    <remarks>
-      This object disposes of the Data property.
-    </remarks>
+    <summary>Represents an image to be shared with a service.</summary>
+    <remarks></remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -31,7 +27,7 @@
       <Docs>
         <param name="image">The image in a <see cref="T:System.Drawing.Bitmap"/> .</param>
         <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -65,7 +61,7 @@
         <param name="image">An image that will be assigned to the <see cref="P:Xamarin.Social.ImageData.Image"/> property.</param>
         <param name="filename">A JPG or PNG image file whose data will be assigned to the <see cref="P:Xamarin.Social.ImageData.Data"/> property.</param>
         <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -83,7 +79,7 @@
         <param name="data">A <see cref="T:System.IO.String"/> of the image data.</param>
         <param name="mimeType">The mime type of the image.</param>
         <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -103,12 +99,12 @@
         <param name="filename">A JPG or PNG image file whose data will be assigned to the <see cref="P:Xamarin.Social.ImageData.Data"/> property.</param>
         <param name="mimeType">The mime type of the image.</param>
         <summary>Creates a new <see cref="T:Xamarin.Social.ImageData"/> to be associated with an <see cref="T:Xamarin.Social.Item"/>.</summary>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
-      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberSignature Language="C#" Value="protected virtual void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void Dispose(bool disposing) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -120,9 +116,9 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="disposing">Whether this Dispose call originated from <see cref="M:Xamarin.Social.FileData.Dispose" /> or <see cref="M:Xamarin.Social.FileData.Finalize" />.</param>
+        <summary>Releases any resoruces associated with the <see cref="T:Xamarin.Social.ImageData" />.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="Image">
@@ -137,8 +133,8 @@
       </ReturnValue>
       <Docs>
         <summary>The image in <see cref="T:System.Drawing.Bitmap"/> form.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>The image to be associated with a request.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -158,7 +154,7 @@
         <param name="image">An image that will be assigned to the <see cref="P:Xamarin.Social.ImageData.Image"/> property.</param>
         <summary>Implicit operator to create a new <see cref="T:Xamarin.Social.ImageData"/> from a <see cref="T:System.Drawing.Bitmap"/>.</summary>
         <returns>A new <see cref="T:Xamarin.Social.ImageData"/>.</returns>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -175,10 +171,10 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
+        <param name="path">The path to retrieve an image from.</param>
         <summary>Implicit operator to create a new <see cref="T:Xamarin.Social.ImageData"/> from a filepath.</summary>
         <returns>A new <see cref="T:Xamarin.Social.ImageData"/></returns>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
   </Members>

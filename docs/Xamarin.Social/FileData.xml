@@ -17,9 +17,7 @@
     <summary>
       Represents a file associated with a <see cref="T:Xamarin.Social.Item"/>.
     </summary>
-    <remarks>
-      This object disposes of the <see cref='T:Xamarin.Social.FileData.Data'/> property.
-    </remarks>
+    <remarks></remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -32,7 +30,7 @@
       <Parameters />
       <Docs>
         <summary>Instantiates a new <see cref="T:Xamarin.Social.FileData"/> object.</summary>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -48,8 +46,10 @@
       <Docs>
         <param name="path">The path to the file.</param>
         <summary>Instantiates a new <see cref="T:Xamarin.Social.FileData"/> object.</summary>
-        <remarks>Sets the <see cref="P:Xamarin.Social.FileData.MimeType"/> property as "application/octet-stream".</remarks>
-             </Docs>
+        <remarks>The file at <paramref name="path" /> must remain present until the request has been completed.</remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="data" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException"><paramref name="filename" /> is <see langword="null" /> or empty.</exception>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public FileData (System.IO.Stream data, string filename, string mimeType);" />
@@ -64,11 +64,12 @@
         <Parameter Name="mimeType" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="data">Must not be <see langword="null"/>.</param>
-        <param name="filename">The filename.</param>
-        <param name="mimeType">If <see langword="null"/>,  the <see cref="P:Xamarin.Social.FileData.MimeType"/> property will be "application/octet-stream".</param>
+        <param name="data">The actual data.</param>
+        <param name="filename">The filename associated with the data.</param>
+        <param name="mimeType">The MIME type of this file.</param>
         <summary>Instantiates a new <see cref="T:Xamarin.Social.FileData"/> object.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>The given <paramref name="data" /> must remain viable until the request is completed.</remarks>
+        <exception cref="T:String.ArgumentNullException"><paramref name="path" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddToRequest">
@@ -87,9 +88,11 @@
       </Parameters>
       <Docs>
         <param name="request">The <see cref="T:Xamarin.Auth.Request"/> to which this <see cref="T:Xamarin.Social.FileData"/> will be data.</param>
-        <param name="name">String specifying the <see cref="P:Xamarin.Auth.Request.Part.Name"/> property for this <see cref="T:Xamarin.Social.FileData"/>.</param>
-        <summary>Adds a <see cref="T:Xamarin.Social.FileData"/> to a <see cref="T:Xamarin.Auth.Request"/>.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The <see cref="P:Xamarin.Auth.Request.Part.Name"/> property for this <see cref="T:Xamarin.Social.FileData"/>.</param>
+        <summary>Adds this <see cref="T:Xamarin.Social.FileData"/> to a <see cref="T:Xamarin.Auth.Request"/>.</summary>
+        <remarks></remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="request" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException"><paramref name="name" /> is <see langword="null" />. or empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="Data">
@@ -104,8 +107,8 @@
       </ReturnValue>
       <Docs>
         <summary>The data contained within this <see cref="T:Xamarin.Social.FileData"/>.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value></value>
+        <remarks>Must remain viable until any request involving this <see cref="T:Xamarin.Social.FileData" /> is complete.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -120,8 +123,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Releases any resoruces associated with the <see cref="T:Xamarin.Social.FileData" />.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -138,9 +141,9 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="disposing">Whether this Dispose call originated from <see cref="M:Xamarin.Social.FileData.Dispose" /> or <see cref="M:Xamarin.Social.FileData.Finalize" />.</param>
+        <summary>Releases any resoruces associated with the <see cref="T:Xamarin.Social.FileData" />.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="Filename">
@@ -154,9 +157,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The filename for this <see cref="T:Xamarin.Social.FileData"/>.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the filename for this <see cref="T:Xamarin.Social.FileData"/>.</summary>
+        <value>The filename associated with this data when submitted to a service.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="Finalize">
@@ -171,8 +174,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Called by garbage collection to perform final cleanup.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -186,9 +189,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The length of the <see cref="P:Xamarin.Social.FileData.Data"/> property</summary>
-        <value>Returns <see cref="P:System.IO.Stream.Length"/> or 0 if an errror occurred.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length of the <see cref="P:Xamarin.Social.FileData.Data"/> property.</summary>
+        <value>The length in bytes of <see cref="P:Xamarin.Social.FileData.Data"/> or 0 if an errror occurred.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="MimeType">
@@ -202,9 +205,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The mime type of this <see cref="T:Xamarin.Social.FileData"/>.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the MIME type of this <see cref="T:Xamarin.Social.FileData"/>.</summary>
+        <value>The MIME type of this file, defaults to <c>"application/octet-stream"</c>.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -221,10 +224,10 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <summary>Implicit operator that instantiates an <see cref="T:Xamarin.Social.FileData"/>.</summary>
+        <param name="path">The path to the file.</param>
+        <summary>Converts a <c>string</c> into a <see cref="T:Xamarin.Social.FileData"/>.</summary>
         <returns>A new <see cref="T:Xamarin.Social.FileData"/> instance.</returns>
-        <remarks>Calls <see cref="C:Xamarin.Social.FileData(System.String)"/>.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
   </Members>

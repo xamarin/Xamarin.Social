@@ -10,8 +10,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Social Networking Service.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a social networking service.</summary>
+    <remarks></remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -35,7 +35,7 @@
         <summary>
           Initializes a new instance of the <see cref="Xamarin.Social.Service" /> class.
         </summary>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateAccountLink">
@@ -49,9 +49,9 @@
         <ReturnType>System.Uri</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Link to sign up.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the URL to a sign up page.</summary>
+        <value></value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
@@ -69,14 +69,18 @@
         <Parameter Name="url" Type="System.Uri" />
       </Parameters>
       <Docs>
-        <param name="method">To be added.</param>
-        <param name="url">To be added.</param>
-        <summary>
-          Creates a base request to access the service. This is a low-level entrypoint for those
-          who need to access resources that are not covered by this class.
-        </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="method">The HTTP method to use with the request.</param>
+        <param name="url">The url of the request.</param>
+        <summary>Creates a base request to access the service.</summary>
+        <returns>A new <see cref="T:Xamarin.Auth.Request" /> instance with the given arguments.</returns>
+        <remarks>
+          <para>
+            This is a low-level entrypoint for those who need to access resources that are not covered by this class.
+          </para>
+          <para>
+            The returned request will not be authenticated.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
@@ -95,15 +99,19 @@
         <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="method">To be added.</param>
-        <param name="url">To be added.</param>
-        <param name="parameters">To be added.</param>
-        <summary>
-          Creates a base request to access the service. This is a low-level entrypoint for those
-          who need to access resources that are not covered by this class.
-        </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="method">The HTTP method to use with the request.</param>
+        <param name="url">The url of the request.</param>
+        <param name="parameters">The parameters to populate the request with.</param>
+        <summary>Creates a base request to access the service.</summary>
+        <returns>A new <see cref="T:Xamarin.Auth.Request" /> instance with the given arguments.</returns>
+        <remarks>
+          <para>
+            This is a low-level entrypoint for those who need to access resources that are not covered by this class.
+          </para>
+          <para>
+            The returned request will not be authenticated.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
@@ -122,15 +130,19 @@
         <Parameter Name="account" Type="Xamarin.Auth.Account" />
       </Parameters>
       <Docs>
-        <param name="method">To be added.</param>
-        <param name="url">To be added.</param>
-        <param name="account">To be added.</param>
+        <param name="method">The HTTP method to use with the request.</param>
+        <param name="url">The url of the request.</param>
+        <param name="account">The account to authenticate this request with.</param>
         <summary>
           Creates a base request to access the service. This is a low-level entrypoint for those
           who need to access resources that are not covered by this class.
         </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <returns>A new <see cref="T:Xamarin.Auth.Request" /> instance with the given arguments.</returns>
+        <remarks>
+          <para>
+            This is a low-level entrypoint for those who need to access resources that are not covered by this class.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
@@ -150,16 +162,20 @@
         <Parameter Name="account" Type="Xamarin.Auth.Account" />
       </Parameters>
       <Docs>
-        <param name="method">To be added.</param>
-        <param name="url">To be added.</param>
-        <param name="parameters">To be added.</param>
-        <param name="account">To be added.</param>
+        <param name="method">The HTTP method to use with the request.</param>
+        <param name="url">The url of the request.</param>
+        <param name="parameters">The parameters to populate the request with.</param>
+        <param name="account">The account to authenticate this request with.</param>
         <summary>
           Creates a base request to access the service. This is a low-level entrypoint for those
           who need to access resources that are not covered by this class.
         </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <returns>A new <see cref="T:Xamarin.Auth.Request" /> instance with the given arguments.</returns>
+        <remarks>
+          <para>
+            This is a low-level entrypoint for those who need to access resources that are not covered by this class.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAccountsAsync">
@@ -174,9 +190,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets the saved accounts associated with this service.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Asynchronously retrieves the saved accounts associated with this service.</summary>
+        <returns>A task to a enumerable of accounts for this service.</returns>
+        <remarks></remarks>
+		<altmember cref="P:Xamarin.Social.Service.ServiceId" />
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticateUI">
@@ -193,14 +210,10 @@
         <Parameter Name="completedHandler" Type="System.Action&lt;Xamarin.Auth.Account&gt;" />
       </Parameters>
       <Docs>
-        <param name="completedHandler">To be added.</param>
-        <summary>
-          Presents the necessary UI for the user to sign in to their account.
-        </summary>
-        <returns>
-          The task that will complete when they have signed in.
-        </returns>
-        <remarks>To be added.</remarks>
+        <param name="completedHandler">A callback for when authentication has completed successfuly.</param>
+        <summary>Presents the necessary UI for the user to sign in to their account.</summary>
+        <returns>A platform-specific UI type for the user to present.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticator">
@@ -215,15 +228,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>
-          Gets the authenticator for this service. The authenticator will present
-          the user interface needed to authenticate a new account for the service.
-          This account will then be saved.
-        </summary>
-        <returns>
-          The authenticator or null if authentication is not supported.
-        </returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the authenticator for this service.</summary>
+        <returns>The authenticator or <see langword="null" /> if authentication is not supported.</returns>
+        <remarks>
+		      <para>The authenticator will present the user interface needed to authenticate a new account for the service. This account will then be saved.</para>
+		    </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetShareUI">
@@ -241,20 +250,13 @@
         <Parameter Name="completionHandler" Type="System.Action&lt;Xamarin.Social.ShareResult&gt;" />
       </Parameters>
       <Docs>
-        <param name="item">
-          The item to share.
-        </param>
-        <param name="completionHandler">
-          Handler called when the share UI has finished. You must dismiss the view controller in this method
-          as it won't dismiss itself.
-        </param>
-        <summary>
-          Gets an <see cref="MonoTouch.UIKit.UIViewController" /> that can be used to present the share UI.
-        </summary>
-        <returns>
-          The <see cref="MonoTouch.UIKit.UIViewController" />.
-        </returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item to share.</param>
+        <param name="completionHandler">Callback called when the share UI has finished.</param>
+        <summary>Gets an a platofmr UI type that can be used to present the share UI.</summary>
+        <returns>A platform-specific UI type for you to present. <see cref="T:MonoTouch.UIKit.UIViewController" /> on iOS, <see cref="T:Android.Content.Intent" /> on Android.</returns>
+        <remarks>
+          <para>On iOS, you must dismiss the view controller in the <paramref name="completionHandler" /> as it won't dismiss itself.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetTextLength">
@@ -271,17 +273,10 @@
         <Parameter Name="item" Type="Xamarin.Social.Item" />
       </Parameters>
       <Docs>
-        <param name="item">
-          The item whose text length is to be calculated.
-        </param>
-        <summary>
-          Calculate the text length of an item if links and other media need to be
-          inlined with the text.
-        </summary>
-        <returns>
-          The text length after inlining media.
-        </returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item whose text length is to be calculated.</param>
+        <summary>Gets the calculated text length of an item if links and other media need to be inlined with the text.</summary>
+        <returns>The text length after inlining media.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="HasMaxTextLength">
@@ -295,12 +290,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-          Gets a value indicating whether this instance has limit on the number of
-          characters that you can share.
-        </summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether this instance has limit on the number of characters that you can share.</summary>
+        <value>
+          <c>true</c> if the service has a maximum text length (such as Twitter), <c>false</c> otherwise.
+        </value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxFiles">
@@ -314,9 +308,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The maximum number of files that you can share.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the maximum number of files that you can share.</summary>
+        <value>The maximum number of files that can be shared; <c>0</c> if files are not supported.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxImages">
@@ -330,9 +324,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The maximum number of images that you can share.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the maximum number of images that you can share.</summary>
+        <value>The maximum number of images that can be shared; <c>0</c> if files are not supported.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxLinks">
@@ -346,9 +340,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The maximum number of links that you can share.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the maximum number of links that you can share.</summary>
+        <value>The maximum number of links that can be shared; <c>0</c> if links are not supported.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxTextLength">
@@ -362,9 +356,10 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The maximum number of characters that you can share.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the maximum number of characters that you can share.</summary>
+        <value>The maximum number of characters that can be shared.</value>
+        <remarks></remarks>
+        <altmember cref="M:Xamarin.Social.Service.GetTextLength" />
       </Docs>
     </Member>
     <Member MemberName="ServiceId">
@@ -378,9 +373,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary> Uniquely identifies this service type.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a unique identifier for the service.</summary>
+        <value>A string uniquely identifying the service for account storage.</value>
+        <remarks></remarks>
+        <altmember cref="M:Xamarin.Social.Service.GetAccountsAsync" />
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -398,19 +394,11 @@
         <Parameter Name="account" Type="Xamarin.Auth.Account" />
       </Parameters>
       <Docs>
-        <param name="item">
-          The item to share.
-        </param>
-        <param name="account">
-          The account to use to share.
-        </param>
-        <summary>
-          <para>
-            Shares the passed-in object without presenting any UI to the user.
-          </para>
-        </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item to share.</param>
+        <param name="account">The account to use to share.</param>
+        <summary>Shares the passed-in object without presenting any UI to the user.</summary>
+        <returns>A task representing the share operation.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -429,22 +417,12 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="item">
-          The item to share.
-        </param>
-        <param name="account">
-          The account to use to share.
-        </param>
-        <param name="cancellationToken">
-          Token used to cancel this operation.
-        </param>
-        <summary>
-          <para>
-            Shares the passed-in object without presenting any UI to the user.
-          </para>
-        </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item to share.</param>
+        <param name="account">The account to use to share.</param>
+        <param name="cancellationToken">Token used to cancel this operation.</param>
+        <summary>Shares the passed-in object without presenting any UI to the user.</summary>
+        <returns>A task representing the share operation.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareTitle">
@@ -458,9 +436,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Text used as the title of screen when editing an item.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets text used as the title of screen when editing an item.</summary>
+        <value><c>"Share"</c> by default.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="SupportsAuthentication">
@@ -475,9 +453,8 @@
       </ReturnValue>
       <Docs>
         <summary>Gets a value indicating whether this <see cref="Xamarin.Social.Service" /> supports authenticating new accounts.</summary>
-        <value>
-          <c>true</c> if supports authentication; otherwise, <c>false</c>.</value>
-        <remarks>To be added.</remarks>
+        <value><c>true</c> if the service supports authentication; otherwise, <c>false</c>.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="Title">
@@ -491,9 +468,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Text used to label this service in the UI.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets text used to label this service in the UI.</summary>
+        <value>A string identifying the service to the user.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
   </Members>

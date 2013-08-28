@@ -11,7 +11,13 @@
   <Interfaces />
   <Docs>
     <summary>Access to Facebook as a <see cref="T:Xamarin.Social.Service"/>.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <para>
+        Your Facebook app should specify that it integrates as a "Website with Facebook Login". You will need your
+        <see cref="P:Xamarin.Social.OAuth2Service.ClientId" /> and your <see cref="P:Xamarin.Social.OAuth2Service.RedirectUrl" />.
+        Your redirect URL is the URL you specify as your "Site URL".
+      </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,8 +29,8 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Social.Services.FacebookService" /> class.</summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="GetUsernameAsync">
@@ -41,10 +47,10 @@
         <Parameter Name="accountProperties" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="accountProperties">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="accountProperties">The properties of an authenticated account.</param>
+        <summary>Asynchronously retrieves the username with the given <paramref name="accountProperties" />.</summary>
+        <returns>A Task for the username.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -63,12 +69,12 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <param name="account">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="item">The item to share.</param>
+        <param name="account">The account to use to share.</param>
+        <param name="cancellationToken">Token used to cancel this operation.</param>
+        <summary>Shares the passed-in object without presenting any UI to the user.</summary>
+        <returns>A task representing the share operation.</returns>
+        <remarks></remarks>
       </Docs>
     </Member>
   </Members>

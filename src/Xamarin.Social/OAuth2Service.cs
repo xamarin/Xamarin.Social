@@ -1,5 +1,5 @@
 //
-//  Copyright 2012, Xamarin Inc.
+//  Copyright 2012-2013, Xamarin Inc.
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -21,29 +21,34 @@ using Xamarin.Auth;
 namespace Xamarin.Social
 {
 	/// <summary>
-	/// Implements OAuth 2.0 implicit granting. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2
+	/// Represents an OAuth 2 based service.
 	/// </summary>
 	public abstract class OAuth2Service : Service
 	{
 		/// <summary>
-		/// Client identifier. http://tools.ietf.org/html/rfc6749#section-2.2
+		/// Gets or sets the client identifier.
 		/// </summary>
-		/// <value>
-		/// The client identifier.
-		/// </value>
+		/// <value>The client identifier.</value>
+		/// <remarks>http://tools.ietf.org/html/rfc6749#section-2.2</remarks>
 		public string ClientId { get; set; }
 
 		/// <summary>
-		/// Optional client secret. http://tools.ietf.org/html/rfc6749#section-4.1
+		/// Gets or sets the client secret.
 		/// </summary>
-		/// <value>
-		/// The client identifier.
-		/// </value>
+		/// <value>The client identifier.</value>
+		/// <remarks>http://tools.ietf.org/html/rfc6749#section-4.1</remarks>
 		public string ClientSecret { get; set; }
 
 		/// <summary>
-		/// Access token scope. http://tools.ietf.org/html/rfc6749#section-3.3
+		/// Gets or sets the scope of the access token.
 		/// </summary>
+		/// <remarks>
+		/// <para>http://tools.ietf.org/html/rfc6749#section-3.3</para>
+		/// <para>
+		/// When creating your own <see cref="OAuth2Service"/>, the available options for scopes
+		/// will be listed in the documentation for the service you're implementing.
+		/// </para>
+		/// </remarks>
 		public string Scope { get; set; }
 		
 		public Uri AuthorizeUrl { get; set; }
