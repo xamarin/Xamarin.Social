@@ -50,7 +50,6 @@
       <Type Name="AppDotNetService" Kind="Class" />
       <Type Name="FacebookService" Kind="Class" />
       <Type Name="FlickrService" Kind="Class" />
-      <Type Name="PinterestService" Kind="Class" />
       <Type Name="TwitterService" Kind="Class" />
     </Namespace>
   </Types>
