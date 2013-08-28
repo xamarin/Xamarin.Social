@@ -1,4 +1,4 @@
-
+*.ide
 .DS_Store
 *.userprefs
 *.user
