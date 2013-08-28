@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Xamarin.Social" Version="1.0.0.0">
+    <Assembly Name="Xamarin.Social" Version="1.1.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany("Xamarin Inc.")</AttributeName>
@@ -13,6 +13,9 @@
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyFileVersion("1.1.0.0")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyProduct("")</AttributeName>
@@ -29,7 +32,8 @@
       </Attributes>
     </Assembly>
   </Assemblies>
-  <Remarks></Remarks>
+  <Remarks>
+  </Remarks>
   <Copyright>Xamarin Inc. 2012-2013</Copyright>
   <Types>
     <Namespace Name="Xamarin.Social">

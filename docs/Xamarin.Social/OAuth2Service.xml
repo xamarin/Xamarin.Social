@@ -4,6 +4,7 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Xamarin.Social.Service</BaseTypeName>
@@ -11,7 +12,8 @@
   <Interfaces />
   <Docs>
     <summary>Represents an OAuth 2 based service.</summary>
-    <remarks></remarks>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -20,6 +22,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="serviceId" Type="System.String" />
@@ -28,16 +31,18 @@
       <Docs>
         <param name="serviceId">Uniquely identifies this service type.</param>
         <param name="title">Text used to label this service in the UI.</param>
-        <summary>Constructions and initializes a new instances of the <see cref="T:Xamarin.Social.OAuth2Service"/> class.</summary>
-        <remarks></remarks>
+        <summary>Constructions and initializes a new instances of the <see cref="T:Xamarin.Social.OAuth2Service" /> class.</summary>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AccessTokenUrl">
-      <MemberSignature Language="C#" Value="public Uri AccessTokenUrl { get; set; }" />
+      <MemberSignature Language="C#" Value="public Uri AccessTokenUrl { set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Uri AccessTokenUrl" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
@@ -54,11 +59,12 @@
       </Docs>
     </Member>
     <Member MemberName="AuthorizeUrl">
-      <MemberSignature Language="C#" Value="public Uri AuthorizeUrl { get; set; }" />
+      <MemberSignature Language="C#" Value="public Uri AuthorizeUrl { set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Uri AuthorizeUrl" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
@@ -75,11 +81,12 @@
       </Docs>
     </Member>
     <Member MemberName="ClientId">
-      <MemberSignature Language="C#" Value="public string ClientId { get; set; }" />
+      <MemberSignature Language="C#" Value="public string ClientId { set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string ClientId" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -95,11 +102,12 @@
       </Docs>
     </Member>
     <Member MemberName="ClientSecret">
-      <MemberSignature Language="C#" Value="public string ClientSecret { get; set; }" />
+      <MemberSignature Language="C#" Value="public string ClientSecret { set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string ClientSecret" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -115,75 +123,79 @@
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
-      <MemberSignature Language="C#" Value="public override Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters, Xamarin.Auth.Account account);"/>
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters, class Xamarin.Auth.Account account) cil managed"/>
+      <MemberSignature Language="C#" Value="public override Xamarin.Auth.Request CreateRequest (string method, Uri url, System.Collections.Generic.IDictionary&lt;string,string&gt; parameters, Xamarin.Auth.Account account);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class Xamarin.Auth.Request CreateRequest(string method, class System.Uri url, class System.Collections.Generic.IDictionary`2&lt;string, string&gt; parameters, class Xamarin.Auth.Account account) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="method" Type="System.String"/>
-        <Parameter Name="url" Type="System.Uri"/>
-        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;"/>
-        <Parameter Name="account" Type="Xamarin.Auth.Account"/>
+        <Parameter Name="method" Type="System.String" />
+        <Parameter Name="url" Type="System.Uri" />
+        <Parameter Name="parameters" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" />
+        <Parameter Name="account" Type="Xamarin.Auth.Account" />
       </Parameters>
       <Docs>
         <param name="method">The HTTP method to perform the request with.</param>
         <param name="url">The URL of the request.</param>
         <param name="parameters">
-          Parameters that will pre-populate the <see cref="P:Xamarin.Auth.Request.Parameters"/> property or <see langword="null"/>.
+          Parameters that will pre-populate the <see cref="P:Xamarin.Auth.Request.Parameters" /> property or <see langword="null" />.
         </param>
         <param name="account">The account used to authenticate this request.</param>
         <summary>
-          Creates a new <see cref="T:Xamarin.Auth.OAuth2Request"/>.
+          Creates a new <see cref="T:Xamarin.Auth.OAuth2Request" />.
         </summary>
         <returns>
-          A new <see cref="T:Xamarin.Auth.OAuth2Request"/> instance with the given parameters.
+          A new <see cref="T:Xamarin.Auth.OAuth2Request" /> instance with the given parameters.
         </returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticator">
-      <MemberSignature Language="C#" Value="protected override Xamarin.Auth.Authenticator GetAuthenticator ();"/>
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class Xamarin.Auth.Authenticator GetAuthenticator() cil managed"/>
+      <MemberSignature Language="C#" Value="protected override Xamarin.Auth.Authenticator GetAuthenticator ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class Xamarin.Auth.Authenticator GetAuthenticator() cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Authenticator</ReturnType>
       </ReturnValue>
-      <Parameters/>
+      <Parameters />
       <Docs>
-        <summary>Creates a <see cref="T:Xamarin.Auth.OAuth2Authenticator"/> with the service's parameters.</summary>
-        <returns>A new <see cref="T:Xamarin.Auth.OAuth2Authenticator"/> instance.</returns>
+        <summary>Creates a <see cref="T:Xamarin.Auth.OAuth2Authenticator" /> with the service's parameters.</summary>
+        <returns>A new <see cref="T:Xamarin.Auth.OAuth2Authenticator" /> instance.</returns>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">
           <para>
-            The following properties must be valid or this method will throw an <see cref="T:System.InvalidOperationException"/>:
+            The following properties must be valid or this method will throw an <see cref="T:System.InvalidOperationException" />:
           </para>
           <para>
             <list type="bullet">
               <item>
                 <term>
-                  <see cref="P:Xamarin.Social.OAuth2Service.ClientId"/>
+                  <see cref="P:Xamarin.Social.OAuth2Service.ClientId" />
                 </term>
               </item>
               <item>
                 <term>
-                  <see cref="P:Xamarin.Social.OAuth2Service.Scope"/>
+                  <see cref="P:Xamarin.Social.OAuth2Service.Scope" />
                 </term>
               </item>
               <item>
                 <term>
-                  <see cref="P:Xamarin.Social.OAuth2Service.AuthorizeUrl"/>
+                  <see cref="P:Xamarin.Social.OAuth2Service.AuthorizeUrl" />
                 </term>
               </item>
               <item>
                 <term>
-                  <see cref="P:Xamarin.Social.OAuth2Service.RedirectUrl"/>
+                  <see cref="P:Xamarin.Social.OAuth2Service.RedirectUrl" />
                 </term>
               </item>
             </list>
@@ -208,15 +220,17 @@
         <param name="accountProperties">The properties of an authenticated account.</param>
         <summary>Asynchronously retrieves the username with the given <paramref name="accountProperties" />.</summary>
         <returns>A Task for the username.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="RedirectUrl">
-      <MemberSignature Language="C#" Value="public Uri RedirectUrl { get; set; }" />
+      <MemberSignature Language="C#" Value="public Uri RedirectUrl { set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Uri RedirectUrl" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
@@ -236,11 +250,12 @@
       </Docs>
     </Member>
     <Member MemberName="Scope">
-      <MemberSignature Language="C#" Value="public string Scope { get; set; }" />
+      <MemberSignature Language="C#" Value="public string Scope { set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Scope" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>

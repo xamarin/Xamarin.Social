@@ -4,14 +4,16 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Xamarin.Social.OAuth2Service</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Access to App.Net as a <see cref="T:Xamarin.Social.Service"/>.</summary>
-    <remarks></remarks>
+    <summary>Access to App.Net as a <see cref="T:Xamarin.Social.Service" />.</summary>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -20,11 +22,13 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instances of the <see cref="T:Xamarin.Social.Services.AppDotNetService" /> class.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetUsernameAsync">
@@ -44,7 +48,8 @@
         <param name="accountProperties">The properties of an authenticated account.</param>
         <summary>Asynchronously retrieves the username with the given <paramref name="accountProperties" />.</summary>
         <returns>A Task for the username.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -53,6 +58,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -68,7 +74,8 @@
         <param name="cancellationToken">Token used to cancel this operation.</param>
         <summary>Shares the passed-in object without presenting any UI to the user.</summary>
         <returns>A task representing the share operation.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

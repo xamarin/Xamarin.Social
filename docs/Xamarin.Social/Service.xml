@@ -4,6 +4,7 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -11,7 +12,8 @@
   <Interfaces />
   <Docs>
     <summary>Represents a social networking service.</summary>
-    <remarks></remarks>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -20,6 +22,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="serviceId" Type="System.String" />
@@ -35,23 +38,27 @@
         <summary>
           Initializes a new instance of the <see cref="Xamarin.Social.Service" /> class.
         </summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateAccountLink">
-      <MemberSignature Language="C#" Value="public Uri CreateAccountLink { get; protected set; }" />
+      <MemberSignature Language="C#" Value="public Uri CreateAccountLink { protected set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Uri CreateAccountLink" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets the URL to a sign up page.</summary>
-        <value></value>
-        <remarks></remarks>
+        <value>
+        </value>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateRequest">
@@ -60,6 +67,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -89,6 +97,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -120,6 +129,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -151,6 +161,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Request</ReturnType>
@@ -192,8 +203,9 @@
       <Docs>
         <summary>Asynchronously retrieves the saved accounts associated with this service.</summary>
         <returns>A task to a enumerable of accounts for this service.</returns>
-        <remarks></remarks>
-		<altmember cref="P:Xamarin.Social.Service.ServiceId" />
+        <remarks>
+        </remarks>
+        <altmember cref="P:Xamarin.Social.Service.ServiceId" />
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticateUI">
@@ -202,6 +214,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -213,7 +226,8 @@
         <param name="completedHandler">A callback for when authentication has completed successfuly.</param>
         <summary>Presents the necessary UI for the user to sign in to their account.</summary>
         <returns>A platform-specific UI type for the user to present.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAuthenticator">
@@ -222,6 +236,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Auth.Authenticator</ReturnType>
@@ -231,8 +246,8 @@
         <summary>Gets the authenticator for this service.</summary>
         <returns>The authenticator or <see langword="null" /> if authentication is not supported.</returns>
         <remarks>
-		      <para>The authenticator will present the user interface needed to authenticate a new account for the service. This account will then be saved.</para>
-		    </remarks>
+          <para>The authenticator will present the user interface needed to authenticate a new account for the service. This account will then be saved.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetShareUI">
@@ -241,6 +256,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -265,6 +281,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -276,7 +293,8 @@
         <param name="item">The item whose text length is to be calculated.</param>
         <summary>Gets the calculated text length of an item if links and other media need to be inlined with the text.</summary>
         <returns>The text length after inlining media.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="HasMaxTextLength">
@@ -285,6 +303,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -294,15 +313,17 @@
         <value>
           <c>true</c> if the service has a maximum text length (such as Twitter), <c>false</c> otherwise.
         </value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxFiles">
-      <MemberSignature Language="C#" Value="public int MaxFiles { get; protected set; }" />
+      <MemberSignature Language="C#" Value="public int MaxFiles { protected set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxFiles" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -310,15 +331,17 @@
       <Docs>
         <summary>Gets the maximum number of files that you can share.</summary>
         <value>The maximum number of files that can be shared; <c>0</c> if files are not supported.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxImages">
-      <MemberSignature Language="C#" Value="public int MaxImages { get; protected set; }" />
+      <MemberSignature Language="C#" Value="public int MaxImages { protected set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxImages" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -326,15 +349,17 @@
       <Docs>
         <summary>Gets the maximum number of images that you can share.</summary>
         <value>The maximum number of images that can be shared; <c>0</c> if files are not supported.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxLinks">
-      <MemberSignature Language="C#" Value="public int MaxLinks { get; protected set; }" />
+      <MemberSignature Language="C#" Value="public int MaxLinks { protected set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxLinks" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -342,15 +367,17 @@
       <Docs>
         <summary>Gets the maximum number of links that you can share.</summary>
         <value>The maximum number of links that can be shared; <c>0</c> if links are not supported.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxTextLength">
-      <MemberSignature Language="C#" Value="public int MaxTextLength { get; protected set; }" />
+      <MemberSignature Language="C#" Value="public int MaxTextLength { protected set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance int32 MaxTextLength" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -358,7 +385,8 @@
       <Docs>
         <summary>Gets the maximum number of characters that you can share.</summary>
         <value>The maximum number of characters that can be shared.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
         <altmember cref="M:Xamarin.Social.Service.GetTextLength" />
       </Docs>
     </Member>
@@ -368,6 +396,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -375,7 +404,8 @@
       <Docs>
         <summary>Gets a unique identifier for the service.</summary>
         <value>A string uniquely identifying the service for account storage.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
         <altmember cref="M:Xamarin.Social.Service.GetAccountsAsync" />
       </Docs>
     </Member>
@@ -385,6 +415,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -398,7 +429,8 @@
         <param name="account">The account to use to share.</param>
         <summary>Shares the passed-in object without presenting any UI to the user.</summary>
         <returns>A task representing the share operation.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -407,6 +439,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -422,23 +455,27 @@
         <param name="cancellationToken">Token used to cancel this operation.</param>
         <summary>Shares the passed-in object without presenting any UI to the user.</summary>
         <returns>A task representing the share operation.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareTitle">
-      <MemberSignature Language="C#" Value="public string ShareTitle { get; protected set; }" />
+      <MemberSignature Language="C#" Value="public string ShareTitle { protected set; get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string ShareTitle" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets text used as the title of screen when editing an item.</summary>
-        <value><c>"Share"</c> by default.</value>
-        <remarks></remarks>
+        <value>
+          <c>"Share"</c> by default.</value>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SupportsAuthentication">
@@ -447,14 +484,17 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets a value indicating whether this <see cref="Xamarin.Social.Service" /> supports authenticating new accounts.</summary>
-        <value><c>true</c> if the service supports authentication; otherwise, <c>false</c>.</value>
-        <remarks></remarks>
+        <value>
+          <c>true</c> if the service supports authentication; otherwise, <c>false</c>.</value>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Title">
@@ -463,6 +503,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -470,7 +511,8 @@
       <Docs>
         <summary>Gets text used to label this service in the UI.</summary>
         <value>A string identifying the service to the user.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

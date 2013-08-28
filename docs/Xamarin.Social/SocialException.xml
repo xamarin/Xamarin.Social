@@ -4,14 +4,16 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Exception</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>An <see cref='T:System.Exception'/> relating to the Xamarin.Social namespace.</summary>
-    <remarks></remarks>
+    <summary>An <see cref="T:System.Exception" /> relating to the Xamarin.Social namespace.</summary>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -20,6 +22,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="message" Type="System.String" />
@@ -27,7 +30,8 @@
       <Docs>
         <param name="message">A message explaining the reason for the error.</param>
         <summary>Constructs and intializes a new instance of the <see cref="T:Xamarin.Social.SocialException" /> class.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -36,6 +40,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="message" Type="System.String" />
@@ -45,7 +50,8 @@
         <param name="message">A message explaining the reason for the error.</param>
         <param name="innerException">The original cause of this exception.</param>
         <summary>Constructs and intializes a new instance of the <see cref="T:Xamarin.Social.SocialException" /> class.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

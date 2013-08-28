@@ -4,19 +4,19 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Xamarin.Social.OAuth1Service</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Access to Twitter as a <see cref="T:Xamarin.Social.Service"/>.</summary>
+    <summary>Access to Twitter as a <see cref="T:Xamarin.Social.Service" />.</summary>
     <remarks>
       <para>
         You will need to specify your <see cref="T:Xamarin.Social.OAuth1Service.ConsumerKey" />,
         <see cref="T:Xamarin.Social.OAuth1Service.ConsumerSecret" /> and
-        <see cref="T:Xamarin.Social.OAuth1Service.CallbackUrl" />
-      </para>
+        <see cref="T:Xamarin.Social.OAuth1Service.CallbackUrl" /></para>
     </remarks>
   </Docs>
   <Members>
@@ -26,11 +26,13 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Social.Services.FlickrService" /> class.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetTextLength">
@@ -39,6 +41,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -50,7 +53,8 @@
         <param name="item">The item whose text length is to be calculated.</param>
         <summary>Gets the calculated the text length of an item after links and other media are inlined with the text.</summary>
         <returns>The text length after inlining media.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ShareItemAsync">
@@ -59,6 +63,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -74,7 +79,8 @@
         <param name="cancellationToken">Token used to cancel this operation.</param>
         <summary>Shares the passed-in object without presenting any UI to the user.</summary>
         <returns>A task representing the share operation.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

@@ -4,13 +4,15 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Social</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>The result of the user trying to share an <see cref="T:Xamarin.Social.Item"/>.</summary>
-    <remarks></remarks>
+    <summary>The result of the user trying to share an <see cref="T:Xamarin.Social.Item" />.</summary>
+    <remarks>
+    </remarks>
     <altmember cref="M:Xamarin.Social.Service.GetShareUI" />
   </Docs>
   <Members>
@@ -20,6 +22,7 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Social.ShareResult</ReturnType>
@@ -34,6 +37,7 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Social.ShareResult</ReturnType>
