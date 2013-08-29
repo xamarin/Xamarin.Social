@@ -11,7 +11,6 @@ custom services:
  * [App.net](http://alpha.app.net)
  * [Facebook](http://facebook.com)
  * [Flickr](http://www.flickr.com)
- * [Pinterest](http://pinterest.com)
  * [Twitter](http://twitter.com)
 
 An example for sharing a link with Facebook on iOS:

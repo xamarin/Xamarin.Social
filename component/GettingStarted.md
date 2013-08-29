@@ -64,7 +64,6 @@ share items, and can be created with the following credentials:
 * [App.net](https://alpha.app.net/developer/apps/) `new AppDotNetService { ClientId }`
 * [Facebook](http://developers.facebook.com) `new FacebookService { ClientId }`
 * [Flickr](http://www.flickr.com/services/api/) `new FlickrService { ConsumerKey, ConsumerSecret }`
-* [Pinterest](http://pinterest.com) `new PinterestService ()`
 * [Twitter](http://dev.twitter.com) `new TwitterService { ConsumerKey, ConsumerSecret }`
 * [Twitter](http://dev.twitter.com)* `new Twitter5Service ()`
 
