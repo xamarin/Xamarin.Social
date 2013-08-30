@@ -23,6 +23,8 @@ using System.Text;
 using System.Linq;
 using Xamarin.Auth;
 
+using MonoTouch.CoreLocation;
+
 namespace Xamarin.Social.Services
 {
 	public class TwitterService : OAuth1Service
@@ -71,10 +73,18 @@ namespace Xamarin.Social.Services
 			if (item.Images.Count == 0) {
 				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1.1/statuses/update.json"), account);
 				req.Parameters["status"] = status;
+				if (item.Location.Latitude != 0 && item.Location.Longitude != 0) {
+					req.Parameters ["lat"] = item.Location.Latitude.ToString();
+					req.Parameters ["long"] = item.Location.Longitude.ToString();
+				}
 			}
 			else {
 				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1.1/statuses/update_with_media.json"), account);
 				req.AddMultipartData ("status", status);
+				if (item.Location.Latitude != 0 && item.Location.Longitude != 0) {
+					req.AddMultipartData ("lat", item.Location.Latitude.ToString());
+					req.AddMultipartData ("long", item.Location.Longitude.ToString());
+				}
 				foreach (var i in item.Images.Take (MaxImages)) {
 					i.AddToRequest (req, "media[]");
 				}

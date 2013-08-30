@@ -105,6 +105,9 @@
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\Location.cs">
+      <Link>Location.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
