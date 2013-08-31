@@ -23,8 +23,6 @@ using System.Text;
 using System.Linq;
 using Xamarin.Auth;
 
-using MonoTouch.CoreLocation;
-
 namespace Xamarin.Social.Services
 {
 	public class TwitterService : OAuth1Service

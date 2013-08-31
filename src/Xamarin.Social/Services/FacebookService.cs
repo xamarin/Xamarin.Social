@@ -20,6 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Xamarin.Auth;
+using System.Diagnostics;
+using System.Json;
 
 namespace Xamarin.Social.Services
 {
@@ -75,8 +77,40 @@ namespace Xamarin.Social.Services
 			return r;
 		}
 
-		public override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
+		public async override Task ShareItemAsync (Item item, Account account, CancellationToken cancellationToken)
 		{
+			string placeId = null;
+
+			if (item.Location.Latitude != 0 && item.Location.Longitude != 0)
+			{
+				Request placeRequest = CreateRequest("GET", new Uri ("https://graph.facebook.com/search"), account);
+
+				placeRequest.Parameters ["type"] = "place";
+				placeRequest.Parameters ["center"] = item.Location.Latitude.ToString() + "," + item.Location.Longitude.ToString();
+				placeRequest.Parameters ["distance"] = "100";
+
+				await placeRequest.GetResponseAsync(cancellationToken).ContinueWith(reqTask => {
+					var obj = JsonObject.Parse(reqTask.Result.GetResponseText());
+
+					if (obj.ContainsKey("data") && obj["data"].Count > 0 && obj["data"][0].ContainsKey("id"))
+						placeId = obj ["data"] [0] ["id"];
+
+					return ShareItemWithLocationAsync(item, account, placeId, cancellationToken);
+				});
+				;
+			} 
+			else
+			{
+				await ShareItemWithLocationAsync(item, account, null, cancellationToken).ContinueWith(reqTask => {
+
+					return reqTask;
+				});
+			}
+		}
+
+		public Task ShareItemWithLocationAsync (Item item, Account account, string placeId, CancellationToken cancellationToken)
+		{
+
 			Request req;
 
 			if (item.Images.Count > 0) {
@@ -96,6 +130,10 @@ namespace Xamarin.Social.Services
 				req.Parameters["message"] = item.Text;
 				if (item.Links.Count > 0) {
 					req.Parameters["link"] = item.Links.First ().AbsoluteUri;
+				}
+				if (placeId != null) {
+
+					req.Parameters.Add("place", placeId);
 				}
 			}
 
