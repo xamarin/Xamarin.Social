@@ -124,6 +124,10 @@ namespace Xamarin.Social.Services
 					message.Append (l.AbsoluteUri);
 				}
 				req.AddMultipartData ("message", message.ToString ());
+				if (placeId != null) {
+
+					req.AddMultipartData("place", placeId);
+				}
 			}
 			else {
 				req = CreateRequest ("POST", new Uri ("https://graph.facebook.com/me/feed"), account);
