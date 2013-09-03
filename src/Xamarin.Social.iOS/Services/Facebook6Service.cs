@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MonoTouch.Accounts;
 using MonoTouch.Social;
@@ -36,7 +37,7 @@ namespace Xamarin.Social.Services
 			Audience = ACFacebookAudience.Everyone;
 		}
 
-		public override Task<IDictionary<string, string>> GetAccessTokenAsync (Account account)
+		public override Task<IDictionary<string, string>> GetAccessTokenAsync (Account account, CancellationToken token)
 		{
 			var tcs = new TaskCompletionSource<IDictionary<string, string>> ();
 			tcs.SetResult (new Dictionary<string, string> {
@@ -51,15 +52,15 @@ namespace Xamarin.Social.Services
 			}
 		}
 
-		public override Task VerifyAsync (Account account)
+		public override Task VerifyAsync (Account account, CancellationToken token)
 		{
 			return CreateRequest ("GET",
       			new Uri ("https://graph.facebook.com/me"),
 	            account
-			).GetResponseAsync ().ContinueWith (t => {
+			).GetResponseAsync (token).ContinueWith (t => {
 				if (!t.Result.GetResponseText ().Contains ("\"id\""))
 					throw new SocialException ("Unrecognized Facebook response.");
-			});
+			}, token);
 		}
 	}
 }

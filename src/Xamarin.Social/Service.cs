@@ -337,7 +337,7 @@ namespace Xamarin.Social
 			throw new NotSupportedException ();
 		}
 
-		public virtual Task<IDictionary<string, string>> GetAccessTokenAsync (Account account)
+		public virtual Task<IDictionary<string, string>> GetAccessTokenAsync (Account account, CancellationToken token)
 		{
 			var tcs = new TaskCompletionSource<IDictionary<string, string>> ();
 			tcs.SetResult (account.Properties);
@@ -350,7 +350,7 @@ namespace Xamarin.Social
 			}
 		}
 
-		public virtual Task VerifyAsync (Account account)
+		public virtual Task VerifyAsync (Account account, CancellationToken token)
 		{
 			throw new NotSupportedException ();
 		}

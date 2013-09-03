@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Auth;
 using Xamarin.Utilities;
@@ -61,15 +62,15 @@ namespace Xamarin.Social.Services
 			}
 		}
 
-		public override Task VerifyAsync (Account account)
+		public override Task VerifyAsync (Account account, CancellationToken token)
 		{
 			return CreateRequest ("GET",
 				new Uri ("https://www.googleapis.com/plus/v1/people/me"),
 				account
-			).GetResponseAsync ().ContinueWith (t => {
+			).GetResponseAsync (token).ContinueWith (t => {
 				if (!t.Result.GetResponseText ().Contains ("\"id\""))
 					throw new SocialException ("Unrecognized Google response.");
-			});
+			}, token);
 		}
 
 		public override bool SupportsVerification {

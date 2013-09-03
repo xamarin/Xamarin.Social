@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using MonoTouch.Accounts;
 using MonoTouch.Social;
@@ -25,24 +26,24 @@ namespace Xamarin.Social.Services
 			}
 		}
 
-		public override Task VerifyAsync (Account account)
+		public override Task VerifyAsync (Account account, CancellationToken token)
 		{
 			return CreateRequest ("GET",
 				new Uri ("https://api.twitter.com/1.1/account/verify_credentials.json"),
 				account
-			).GetResponseAsync ().ContinueWith (t => {
+			).GetResponseAsync (token).ContinueWith (t => {
 				if (t.Result.StatusCode != HttpStatusCode.OK)
 					throw new SocialException ("Invalid Twitter credentials.");
-			});
+			}, token);
 		}
 
-		public override Task<IDictionary<string, string>> GetAccessTokenAsync (Account acc)
+		public override Task<IDictionary<string, string>> GetAccessTokenAsync (Account acc, CancellationToken token)
 		{
 			if (string.IsNullOrEmpty (ConsumerKey) || string.IsNullOrEmpty (ConsumerSecret))
 				throw new InvalidOperationException ("Cannot perform Twitter Reverse Auth without ConsumerKey and ConsumerSecret set.");
 
 			return new ReverseAuthRequest (acc, ConsumerKey, ConsumerSecret)
-				.GetResponseAsync ()
+				.GetResponseAsync (token)
 				.ContinueWith (t => {
 					var parameters = new Dictionary<string, string> {
 						{ "x_reverse_auth_target", ConsumerKey },
@@ -50,11 +51,11 @@ namespace Xamarin.Social.Services
 					};
 
 					return this.CreateRequest ("GET", new Uri ("https://api.twitter.com/oauth/access_token"), parameters, acc)
-						.GetResponseAsync ()
+						.GetResponseAsync (token)
 						.ContinueWith (tokenTask => {
 							return WebEx.FormDecode (tokenTask.Result.GetResponseText ());
-						});
-				}).Unwrap ();
+						}, token);
+				}, token).Unwrap ();
 		}
 
 		class ReverseAuthRequest : OAuth1Request {
