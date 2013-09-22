@@ -277,43 +277,51 @@ namespace Xamarin.Social
 			return tcs.Task;
 		}
 
-		public virtual Task<IEnumerable<Account>> GetAccountsAsync (Action<UIViewController, bool, NSAction> presentAuthController)
-		{
-			if (presentAuthController == null)
-				throw new ArgumentNullException ("presentAuthController", "This overload needs a function to present authentication controller.");
-
-			var tcs = new TaskCompletionSource<IEnumerable<Account>> ();
-
-			var authenticator = GetEmbeddedAuthenticator ();
-			if (authenticator == null)
-				throw new NotSupportedException ("This service does not support authentication via a controller.");
-
-			authenticator.Error += (sender, e) => {
-				tcs.TrySetException (e.Exception ?? new SocialException (e.Message));
-			};
-
-			UIViewController authController = null;
-
-			authenticator.Completed += (sender, e) => {
-				if (e.IsAuthenticated) {
-					SaveAccount (e.Account);
-					tcs.TrySetResult (new [] { e.Account });
-				} else {
-					tcs.TrySetCanceled ();
-				}
-
-				authController.DismissViewController (true, () => {});
-			};
-
-			authController = authenticator.GetUI ();
-			authController.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-			presentAuthController (authController, true, () => {});
-
-			return tcs.Task;
-		}
 #endif
 
-		/// <summary>
+#if PLATFORM_IOS
+        public virtual Task<IEnumerable<Account>> GetAccountsAsync(Action<UIViewController, bool, NSAction> presentAuthController)
+        {
+            if (presentAuthController == null)
+                throw new ArgumentNullException("presentAuthController", "This overload needs a function to present authentication controller.");
+
+            var tcs = new TaskCompletionSource<IEnumerable<Account>>();
+
+            var authenticator = GetEmbeddedAuthenticator();
+            if (authenticator == null)
+                throw new NotSupportedException("This service does not support authentication via a controller.");
+
+            authenticator.Error += (sender, e) =>
+            {
+                tcs.TrySetException(e.Exception ?? new SocialException(e.Message));
+            };
+
+            UIViewController authController = null;
+
+            authenticator.Completed += (sender, e) =>
+            {
+                if (e.IsAuthenticated)
+                {
+                    SaveAccount(e.Account);
+                    tcs.TrySetResult(new[] { e.Account });
+                }
+                else
+                {
+                    tcs.TrySetCanceled();
+                }
+
+                authController.DismissViewController(true, () => { });
+            };
+
+            authController = authenticator.GetUI();
+            authController.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+            presentAuthController(authController, true, () => { });
+
+            return tcs.Task;
+        }
+#endif
+
+        /// <summary>
 		/// Gets a value indicating whether this <see cref="Xamarin.Social.Service"/> supports reauthorizing an existing account.
 		/// </summary>
 		/// <value>
