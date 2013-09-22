@@ -22,12 +22,12 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using Xamarin.Auth;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
 
 #if PLATFORM_IOS
 using ShareUIType = MonoTouch.UIKit.UIViewController;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
 #elif PLATFORM_ANDROID
 using ShareUIType = Android.Content.Intent;
 using AuthenticateUIType = Android.Content.Intent;
