@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -85,6 +85,7 @@
     <Compile Include="..\Xamarin.Social\OAuth2Service.cs">
       <Link>OAuth2Service.cs</Link>
     </Compile>
+    <Compile Include="Services\DropboxService.cs" />
     <Compile Include="ShareViewController.cs" />
     <Compile Include="..\Xamarin.Social\Services\AppDotNetService.cs">
       <Link>Services\AppDotNetService.cs</Link>
@@ -108,14 +109,16 @@
     <Compile Include="..\Xamarin.Social\Services\GoogleService.cs">
       <Link>Services\GoogleService.cs</Link>
     </Compile>
-    <Compile Include="Services\DropboxService.cs" />
     <Compile Include="OAuth1PreAService.cs" />
     <Compile Include="..\Xamarin.Social\IOSService.cs">
       <Link>IOSService.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
+      <Project>{9309bccc-aa7b-4195-a130-d4572fa9488d}</Project>
+      <Name>Xamarin.Auth.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -128,10 +131,4 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
-      <Project>{9309BCCC-AA7B-4195-A130-D4572FA9488D}</Project>
-      <Name>Xamarin.Auth.iOS</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
