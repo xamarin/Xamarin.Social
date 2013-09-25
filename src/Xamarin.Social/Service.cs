@@ -29,6 +29,7 @@ using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 #elif PLATFORM_ANDROID
+using Android.App;
 using ShareUIType = Android.Content.Intent;
 using AuthenticateUIType = Android.Content.Intent;
 using UIContext = Android.App.Activity;
@@ -100,10 +101,10 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
-		public virtual Task<IEnumerable<Account>> GetAccountsAsync (UIContext context)
+        public virtual Task<IEnumerable<Account>> GetAccountsAsync()
 		{
 			return Task.Factory.StartNew (delegate {
-				return AccountStore.Create (context).FindAccountsForService (ServiceId);
+				return AccountStore.Create (Application.Context).FindAccountsForService (ServiceId);
 			});
 		}
 #else
@@ -198,7 +199,7 @@ namespace Xamarin.Social
 
 			authenticator.Completed += (sender, e) => {
 				if (e.IsAuthenticated) {
-					SaveAccount (e.Account, context);
+					SaveAccount (e.Account);
 					tcs.TrySetResult (new [] { e.Account });
 				} else {
 					tcs.TrySetCanceled ();
@@ -319,6 +320,45 @@ namespace Xamarin.Social
 
             return tcs.Task;
         }
+#elif PLATFORM_ANDROID
+        public virtual Task<IEnumerable<Account>> GetAccountsAsync(UIContext context)
+        {
+            //if (presentAuthController == null)
+            //    throw new ArgumentNullException("presentAuthController", "This overload needs a function to present authentication controller.");
+
+            var tcs = new TaskCompletionSource<IEnumerable<Account>>();
+
+            var authenticator = GetEmbeddedAuthenticator();
+            if (authenticator == null)
+                throw new NotSupportedException("This service does not support authentication via a controller.");
+
+            authenticator.Error += (sender, e) =>
+            {
+                tcs.TrySetException(e.Exception ?? new SocialException(e.Message));
+            };
+
+            authenticator.Completed += (sender, e) =>
+            {
+                if (e.IsAuthenticated)
+                {
+                    SaveAccount(e.Account);
+                    tcs.TrySetResult(new[] { e.Account });
+                }
+                else
+                {
+                    tcs.TrySetCanceled();
+                }
+
+                //authController.DismissViewController(true, () => { });
+            };
+
+            var authenticatorUi = authenticator.GetUI(context);
+            context.StartActivity(authenticatorUi);
+            //authController.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+            //presentAuthController(context, authenticatorUi, true, () => { });
+
+            return tcs.Task;
+        }
 #endif
 
         /// <summary>
@@ -395,17 +435,17 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Saves an account and associates it with this service.
 		/// </summary>
-		public virtual void SaveAccount (Account account, UIContext context)
+        public virtual void SaveAccount(Account account)
 		{
-			AccountStore.Create (context).Save (account, ServiceId);
+            AccountStore.Create(Application.Context).Save(account, ServiceId);
 		}
 
 		/// <summary>
 		/// Deletes a previously saved account associated with this service.
 		/// </summary>
-		public virtual void DeleteAccount (Account account, UIContext context)
+        public virtual void DeleteAccount(Account account)
 		{
-			AccountStore.Create (context).Delete (account, ServiceId);
+			AccountStore.Create (Application.Context).Delete (account, ServiceId);
 		}
 #else
 		/// <summary>
