@@ -323,9 +323,6 @@ namespace Xamarin.Social
 #elif PLATFORM_ANDROID
         public virtual Task<IEnumerable<Account>> GetAccountsAsync(UIContext context)
         {
-            //if (presentAuthController == null)
-            //    throw new ArgumentNullException("presentAuthController", "This overload needs a function to present authentication controller.");
-
             var tcs = new TaskCompletionSource<IEnumerable<Account>>();
 
             var authenticator = GetEmbeddedAuthenticator();
@@ -348,14 +345,10 @@ namespace Xamarin.Social
                 {
                     tcs.TrySetCanceled();
                 }
-
-                //authController.DismissViewController(true, () => { });
             };
 
             var authenticatorUi = authenticator.GetUI(context);
             context.StartActivity(authenticatorUi);
-            //authController.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-            //presentAuthController(context, authenticatorUi, true, () => { });
 
             return tcs.Task;
         }
