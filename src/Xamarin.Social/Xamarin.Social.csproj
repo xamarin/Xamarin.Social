@@ -64,6 +64,24 @@
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JavaScriptReader.cs">
+      <Link>JavaScriptReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JsonArray.cs">
+      <Link>JsonArray.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JsonObject.cs">
+      <Link>JsonObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JsonPrimitive.cs">
+      <Link>JsonPrimitive.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JsonType.cs">
+      <Link>JsonType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JsonValue.cs">
+      <Link>JsonValue.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
