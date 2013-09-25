@@ -15,12 +15,12 @@ namespace Xamarin.Social.Services
 	/// <summary>
 	/// A base service for Social.framework family of services.
 	/// </summary>
-	public abstract class SocialService : Service
+	public abstract class OSSocialService : Service
 	{
 		private SLServiceKind kind;
 		private NSString accountTypeIdentifier;
 
-		public SocialService (string serviceId, string title, SLServiceKind kind, NSString accountTypeIdentifier)
+		public OSSocialService (string serviceId, string title, SLServiceKind kind, NSString accountTypeIdentifier)
 			: base (serviceId, title)
 		{
 			this.kind = kind;
