@@ -121,7 +121,7 @@ namespace Xamarin.Social.Services
 
 			public override void AddMultipartData (string name, System.IO.Stream data, string mimeType, string filename)
 			{
-				request.AddMultipartData (NSData.FromStream (data), name, mimeType, string.Empty);
+				request.AddMultipartData (NSData.FromStream (data), name, mimeType, filename);
 			}
 
 			public override Task<Response> GetResponseAsync (CancellationToken cancellationToken)
