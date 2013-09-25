@@ -101,7 +101,7 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Gets the saved accounts associated with this service.
 		/// </summary>
-        public virtual Task<IEnumerable<Account>> GetAccountsAsync()
+		public virtual Task<IEnumerable<Account>> GetAccountsAsync()
 		{
 			return Task.Factory.StartNew (delegate {
 				return AccountStore.Create (Application.Context).FindAccountsForService (ServiceId);
@@ -436,7 +436,7 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Deletes a previously saved account associated with this service.
 		/// </summary>
-        public virtual void DeleteAccount(Account account)
+		public virtual void DeleteAccount(Account account)
 		{
 			AccountStore.Create (Application.Context).Delete (account, ServiceId);
 		}
