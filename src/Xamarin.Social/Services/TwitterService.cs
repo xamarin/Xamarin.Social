@@ -98,6 +98,56 @@ namespace Xamarin.Social.Services
 				}
 			});*/
 		}
+
+		public Task ShareItemWithLocationAsync (Item item, Account account, string placeId, CancellationToken cancellationToken)
+		{
+			//
+			// Combine the links into the tweet
+			//
+			var sb = new StringBuilder ();
+			sb.Append (item.Text);
+			foreach (var l in item.Links) {
+				sb.Append (" ");
+				sb.Append (l.AbsoluteUri);
+			}
+			var status = sb.ToString ();
+
+			//
+			// Create the request
+			//
+			Request req;
+			if (item.Images.Count == 0) {
+				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1.1/statuses/update.json"), account);
+				req.Parameters["status"] = status;
+				if (item.Location.Latitude != 0 && item.Location.Longitude != 0) {
+					req.Parameters ["lat"] = item.Location.Latitude.ToString();
+					req.Parameters ["long"] = item.Location.Longitude.ToString();
+					req.Parameters ["place_id"] = placeId;
+				}
+			}
+			else {
+				req = CreateRequest ("POST", new Uri ("https://api.twitter.com/1.1/statuses/update_with_media.json"), account);
+				req.AddMultipartData ("status", status);
+				if (item.Location.Latitude != 0 && item.Location.Longitude != 0) {
+					req.AddMultipartData ("lat", item.Location.Latitude.ToString());
+					req.AddMultipartData ("long", item.Location.Longitude.ToString());
+					req.AddMultipartData ("place_id", placeId);
+				}
+				foreach (var i in item.Images.Take (MaxImages)) {
+					i.AddToRequest (req, "media[]");
+				}
+			}
+
+			//
+			// Send it
+			//
+			return req.GetResponseAsync (cancellationToken);/*.ContinueWith ((Task<Response> reqTask) => {
+				var content = reqTask.Result.GetResponseText ();
+				if (!content.Contains ("<status")) {
+					throw new SocialException ("Twitter did not return the expected response.");
+				}
+			});*/
+		}
 	}
 }
 
