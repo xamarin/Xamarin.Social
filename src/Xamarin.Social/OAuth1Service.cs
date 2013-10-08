@@ -33,10 +33,6 @@ namespace Xamarin.Social
 		public OAuth1Service (string serviceId, string title)
 			: base (serviceId, title)
 		{
-			//
-			// This is a reliable URL to redirect to
-			//
-			CallbackUrl = new Uri ("http://www.facebook.com/connect/login_success.html");
 		}
 
 		protected override Authenticator GetAuthenticator ()
