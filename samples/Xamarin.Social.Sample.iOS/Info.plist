@@ -28,5 +28,9 @@
 		<string>Resources/Default@2x.png</string>
 		<string>Resources/Default-568h@2x.png</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>X.S Sample</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.xamarin.social.sample</string>
 </dict>
 </plist>
