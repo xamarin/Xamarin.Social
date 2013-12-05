@@ -60,6 +60,9 @@ namespace Xamarin.Social
 			
 			View.BackgroundColor = UIColor.White;
 
+			if (UIDevice.CurrentDevice.CheckSystemVersion (7, 0))
+				EdgesForExtendedLayout = UIRectEdge.None;
+
 			futureAccounts = service.GetAccountsAsync ();
 		}
 
