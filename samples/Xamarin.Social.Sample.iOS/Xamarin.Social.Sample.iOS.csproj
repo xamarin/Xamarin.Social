@@ -61,18 +61,13 @@
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="Xamarin.Mobile">
-      <HintPath>Components\xamarin.mobile-0.6.2\lib\ios\Xamarin.Mobile.dll</HintPath>
+      <HintPath>Components\xamarin.mobile-0.7.1\lib\ios\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <XamarinComponent Include="xamarin.mobile">
-      <Visible>False</Visible>
-      <Version>0.6.2</Version>
-    </XamarinComponent>
     <XamarinComponentReference Include="xamarin.mobile">
-      <InstallationInProgress>False</InstallationInProgress>
-      <Version>0.6.2</Version>
       <Visible>False</Visible>
+      <Version>0.7.1</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
