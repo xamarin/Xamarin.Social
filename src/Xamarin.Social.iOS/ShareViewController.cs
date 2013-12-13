@@ -23,7 +23,6 @@ using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Auth;
-using Xamarin.Controls;
 using Xamarin.Utilities.iOS;
 
 namespace Xamarin.Social

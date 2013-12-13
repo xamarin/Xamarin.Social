@@ -82,14 +82,12 @@
     <Compile Include="..\Xamarin.Social\OAuth2Service.cs">
       <Link>OAuth2Service.cs</Link>
     </Compile>
+    <Compile Include="ProgressLabel.cs" />
     <Compile Include="ShareViewController.cs" />
     <Compile Include="..\Xamarin.Social\Services\AppDotNetService.cs">
       <Link>Services\AppDotNetService.cs</Link>
     </Compile>
     <Compile Include="Services\Twitter5Service.cs" />
-    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\ProgressLabel.cs">
-      <Link>ProgressLabel.cs</Link>
-    </Compile>
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\UIViewControllerEx.cs">
       <Link>UIViewControllerEx.cs</Link>
     </Compile>
