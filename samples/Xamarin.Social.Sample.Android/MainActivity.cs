@@ -22,6 +22,7 @@ namespace Xamarin.Social.Sample.Android
 		private static readonly FlickrService Flickr = new FlickrService {
 			ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
 			ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
+			CallbackUrl = new Uri ("Callback URL from http://www.flickr.com/services/apps/by/me")
 		};
 
 		private static readonly TwitterService Twitter = new TwitterService {
