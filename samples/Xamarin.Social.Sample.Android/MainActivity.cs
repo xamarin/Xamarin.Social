@@ -13,8 +13,9 @@ namespace Xamarin.Social.Sample.Android
 	[Activity (Label = "Xamarin.Social Sample", MainLauncher = true)]
 	public class MainActivity : Activity
 	{
+
 		private static readonly FacebookService Facebook = new FacebookService {
-			ClientId = "App ID/API Key from https://developers.facebook.com/apps",
+			ClientId = "Client ID from https://developers.facebook.com/apps",
 			RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
 		};
 
@@ -54,23 +55,12 @@ namespace Xamarin.Social.Sample.Android
 			Button flickrButton = FindViewById<Button> (Resource.Id.Flickr);
 			flickrButton.Click += (sender, args) =>
 			{
+
 				var picker = new MediaPicker (this);
-				picker.PickPhotoAsync().ContinueWith (t =>
-				{
-					if (t.IsCanceled)
-						return;
 
-					var item = new Item ("I'm sharing great things using Xamarin!") {
-						Images = new[] { new ImageData (t.Result.Path) }
-					};
+				var intentPicker = picker.GetPickPhotoUI ();
 
-					Intent intent = Flickr.GetShareUI (this, item, shareResult => {
-						flickrButton.Text = "Flickr shared: " + shareResult;
-					});
-
-					StartActivity (intent);
-
-				}, TaskScheduler.FromCurrentSynchronizationContext());
+				StartActivityForResult (intentPicker, 1);
 			};
 
 			Button facebookButton = FindViewById<Button>(Resource.Id.Facebook);
@@ -78,6 +68,29 @@ namespace Xamarin.Social.Sample.Android
 
 			Button twitterButton = FindViewById<Button> (Resource.Id.Twitter);
 			twitterButton.Click += (sender, args) => Share (Twitter, twitterButton);
+		}
+
+		protected async override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+		{
+			if (requestCode != 1)
+				return;
+
+			if (resultCode == Result.Canceled)
+				return;
+
+			var file = await data.GetMediaFileExtraAsync (this);
+
+			using (var stream = file.GetStream ()) {
+				var item = new Item ("I'm sharing great things using Xamarin!") {
+					Images = new[] { new ImageData (file.Path) }
+				};
+
+				Intent intent = Flickr.GetShareUI (this, item, shareResult => {
+					FindViewById<Button> (Resource.Id.Flickr).Text = "Flickr shared: " + shareResult;
+				});
+
+				StartActivity (intent);
+			}
 		}
 	}
 }
