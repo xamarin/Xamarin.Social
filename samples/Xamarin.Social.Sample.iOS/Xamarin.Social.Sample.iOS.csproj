@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E8DFC6B6-80B5-46C2-BB2C-3D6CC0BF291F}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -66,8 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="xamarin.mobile">
-      <Visible>False</Visible>
       <Version>0.7.1</Version>
+      <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
@@ -79,11 +79,11 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\src\Xamarin.Social.iOS\Xamarin.Social.iOS.csproj">
-      <Project>{c91ef8fc-37e3-4952-a8a3-ba3a4422b0c5}</Project>
+      <Project>{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}</Project>
       <Name>Xamarin.Social.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
-      <Project>{9309bccc-aa7b-4195-a130-d4572fa9488d}</Project>
+      <Project>{9309BCCC-AA7B-4195-A130-D4572FA9488D}</Project>
       <Name>Xamarin.Auth.iOS</Name>
     </ProjectReference>
   </ItemGroup>
