@@ -24,3 +24,5 @@ screenshots:
 icons:
   - component/icons/xamarin.social_128x128.png
   - component/icons/xamarin.social_512x512.png
+build:
+    - src/Xamarin.Social.sln

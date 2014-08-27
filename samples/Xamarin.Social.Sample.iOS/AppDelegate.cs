@@ -15,25 +15,77 @@ namespace Xamarin.Social.Sample.iOS
 		UIWindow window;
 		DialogViewController dialog;
 
-		private static readonly FacebookService Facebook = new FacebookService {
-			ClientId = "App ID/API Key from https://developers.facebook.com/apps",
-			RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
-		};
+		#region Fields
 
-		private static readonly FlickrService Flickr = new FlickrService {
-			ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
-			ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
-		};
+		private static FacebookService mFacebook;
+		private static FlickrService mFlickr;
+		private static TwitterService mTwitter;
+		private static Twitter5Service mTwitter5;
+		#endregion
 
-		private static readonly TwitterService Twitter = new TwitterService {
-			ConsumerKey = "Consumer key from https://dev.twitter.com/apps",
-			ConsumerSecret = "Consumer secret from https://dev.twitter.com/apps",
-			CallbackUrl = new Uri ("Callback URL from https://dev.twitter.com/apps")
-		};
+		public static FacebookService Facebook
+		{
+			get
+			{
+				if (mFacebook == null)
+				{
+					mFacebook = new FacebookService() {
+						ClientId = "App ID/API Key from https://developers.facebook.com/apps",
+						RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
+					};
+				}
 
-		private static readonly Twitter5Service Twitter5 = new Twitter5Service();
+				return mFacebook;
+			}
+		}
 
-		void Share (Service service, StringElement button)
+		public static FlickrService Flickr
+		{
+			get
+			{
+				if (mFlickr == null)
+				{
+					mFlickr = new FlickrService() {
+						ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
+						ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
+					};
+				}
+
+				return mFlickr;
+			}
+		}
+
+		public static TwitterService Twitter
+		{
+			get
+			{
+				if (mTwitter == null)
+				{
+					mTwitter = new TwitterService {
+						ConsumerKey = "Consumer key from https://dev.twitter.com/apps",
+						ConsumerSecret = "Consumer secret from https://dev.twitter.com/apps",
+						CallbackUrl = new Uri ("Callback URL from https://dev.twitter.com/apps")
+					};
+				}
+
+				return mTwitter;
+			}
+		}
+
+		public static Twitter5Service Twitter5
+		{
+			get
+			{
+				if (mTwitter5 == null)
+				{
+					mTwitter5 = new Twitter5Service();
+				}
+
+				return mTwitter5;
+			}
+		}
+			
+		private void Share (Service service, StringElement button)
 		{
 			Item item = new Item {
 				Text = "I'm sharing great things using Xamarin!",
@@ -50,6 +102,12 @@ namespace Xamarin.Social.Sample.iOS
 			dialog.PresentViewController (vc, true, null);
 		}
 
+		private void ShowMessage(string Message)
+		{
+			var msgView = new UIAlertView("Error", Message,null,"OK", null);
+			msgView.Show();
+		}
+
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			var root = new RootElement ("Xamarin.Social Sample");
@@ -57,15 +115,46 @@ namespace Xamarin.Social.Sample.iOS
 			var section = new Section ("Services");
 
 			var facebookButton = new StringElement ("Share with Facebook");
-			facebookButton.Tapped += delegate { Share (Facebook, facebookButton); };
+			facebookButton.Tapped += delegate 
+			{
+				try
+				{
+					Share (Facebook, facebookButton); 
+				}
+				catch (Exception ex)
+				{
+					ShowMessage("Facebook: " + ex.Message);
+				}
+			};
 			section.Add (facebookButton);
 
 			var twitterButton = new StringElement ("Share with Twitter");
-			twitterButton.Tapped += delegate { Share (Twitter, twitterButton); };
+			twitterButton.Tapped += delegate 
+			{ 
+				try
+				{
+					Share (Twitter, twitterButton); 
+				}
+				catch (Exception ex)
+				{
+					ShowMessage("Twitter: " + ex.Message);
+				}
+
+			};
 			section.Add (twitterButton);
 
 			var twitter5Button = new StringElement ("Share with built-in Twitter");
-			twitter5Button.Tapped += delegate { Share (Twitter5, twitter5Button); };
+			twitter5Button.Tapped += delegate 
+			{
+				try
+				{
+					Share (Twitter5, twitter5Button); 
+				}
+				catch (Exception ex)
+				{
+					ShowMessage("Twitter5: " +ex.Message);
+				}
+			};
 			section.Add (twitter5Button);
 
 			var flickr = new StringElement ("Share with Flickr");

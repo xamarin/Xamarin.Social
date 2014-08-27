@@ -6,55 +6,54 @@ and ensure you've added `publish_stream` in the "Extended Permissions" section.
 
 To share an item, first create the service, create the item and then present the share UI:
 
-```csharp
-using Xamarin.Social;
-using Xamarin.Social.Services;
-...
-
-public override void ViewDidAppear (bool animated)
-{
-	base.ViewDidAppear (animated);
-
-	// 1. Create the service
-	var facebook = new FacebookService {
-		ClientId = "<App ID from developers.facebook.com/apps>",
-		RedirectUrl = new System.Uri ("<Redirect URL from developers.facebook.com/apps>")
-	};
-
-	// 2. Create an item to share
-	var item = new Item { Text = "Xamarin.Social is the bomb.com." };
-	item.Links.Add (new Uri ("http://github.com/xamarin/xamarin.social"));
-
-	// 3. Present the UI on iOS
-	var shareController = facebook.GetShareUI (item, result => {
-		// result lets you know if the user shared the item or canceled
-		DismissViewController (true, null);
-	});
-	PresentViewController (shareController, true, null);
-}
-```
+	
+	using Xamarin.Social;
+	using Xamarin.Social.Services;
+	...
+	
+	public override void ViewDidAppear (bool animated)
+	{
+		base.ViewDidAppear (animated);
+	
+		// 1. Create the service
+		var facebook = new FacebookService {
+			ClientId = "<App ID from developers.facebook.com/apps>",
+			RedirectUrl = new System.Uri ("<Redirect URL from developers.facebook.com/apps>")
+		};
+	
+		// 2. Create an item to share
+		var item = new Item { Text = "Xamarin.Social is the bomb.com." };
+		item.Links.Add (new Uri ("http://github.com/xamarin/xamarin.social"));
+	
+		// 3. Present the UI on iOS
+		var shareController = facebook.GetShareUI (item, result => {
+			// result lets you know if the user shared the item or canceled
+			DismissViewController (true, null);
+		});
+		PresentViewController (shareController, true, null);
+	}
 
 If you're on Android, then you should present the share UI using an intent:
 
-```csharp
-protected override void OnCreate (Bundle bundle)
-{
-	base.OnCreate (bundle);
 
-	// 1. Create the service
-	var facebook = new FacebookService { ClientId = "<App ID from developers.facebook.com/apps>" };
+	protected override void OnCreate (Bundle bundle)
+	{
+		base.OnCreate (bundle);
+	
+		// 1. Create the service
+		var facebook = new FacebookService { ClientId = "<App ID from developers.facebook.com/apps>" };
+	
+		// 2. Create an item to share
+		var item = new Item { Text = "Xamarin.Social is the bomb.com." };
+		item.Links.Add (new Uri ("http://github.com/xamarin/xamarin.social"));
+	
+		// 3. Present the UI on Android
+		var shareIntent = facebook.GetShareUI (this, item, result => {
+			// result lets you know if the user shared the item or canceled
+		});
+		StartActivityForResult (shareIntent, 42);
+	}
 
-	// 2. Create an item to share
-	var item = new Item { Text = "Xamarin.Social is the bomb.com." };
-	item.Links.Add (new Uri ("http://github.com/xamarin/xamarin.social"));
-
-	// 3. Present the UI on Android
-	var shareIntent = facebook.GetShareUI (this, item, result => {
-		// result lets you know if the user shared the item or canceled
-	});
-	StartActivityForResult (shareIntent, 42);
-}
-```
 
 ## Services
 

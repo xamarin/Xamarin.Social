@@ -14,23 +14,62 @@ namespace Xamarin.Social.Sample.Android
 	public class MainActivity : Activity
 	{
 
-		private static readonly FacebookService Facebook = new FacebookService {
-			ClientId = "Client ID from https://developers.facebook.com/apps",
-			RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
-		};
+		#region Fields
 
-		private static readonly FlickrService Flickr = new FlickrService {
-			ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
-			ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
-			CallbackUrl = new Uri ("Callback URL from http://www.flickr.com/services/apps/by/me")
-		};
+		private static FacebookService mFacebook;
+		private static FlickrService mFlickr;
+		private static TwitterService mTwitter;
+		#endregion
 
-		private static readonly TwitterService Twitter = new TwitterService {
-			ConsumerKey = "Consumer key from https://dev.twitter.com/apps",
-			ConsumerSecret = "Consumer secret from https://dev.twitter.com/apps",
-			CallbackUrl = new Uri ("Callback URL from https://dev.twitter.com/apps")
-		};
+		public static FacebookService Facebook
+		{
+			get
+			{
+				if (mFacebook == null)
+				{
+					mFacebook = new FacebookService() {
+						ClientId = "App ID/API Key from https://developers.facebook.com/apps",
+						RedirectUrl = new Uri ("Redirect URL from https://developers.facebook.com/apps")
+					};
+				}
 
+				return mFacebook;
+			}
+		}
+
+		public static FlickrService Flickr
+		{
+			get
+			{
+				if (mFlickr == null)
+				{
+					mFlickr = new FlickrService() {
+						ConsumerKey = "Key from http://www.flickr.com/services/apps/by/me",
+						ConsumerSecret = "Secret from http://www.flickr.com/services/apps/by/me",
+					};
+				}
+
+				return mFlickr;
+			}
+		}
+
+		public static TwitterService Twitter
+		{
+			get
+			{
+				if (mTwitter == null)
+				{
+					mTwitter = new TwitterService {
+						ConsumerKey = "Consumer key from https://dev.twitter.com/apps",
+						ConsumerSecret = "Consumer secret from https://dev.twitter.com/apps",
+						CallbackUrl = new Uri ("Callback URL from https://dev.twitter.com/apps")
+					};
+				}
+
+				return mTwitter;
+			}
+		}
+			
 		void Share (Service service, Button shareButton)
 		{
 			Item item = new Item {
@@ -47,6 +86,11 @@ namespace Xamarin.Social.Sample.Android
 			StartActivity (intent);
 		}
 
+		private void ShowMessage(String message)
+		{
+			Toast.MakeText(this, message, ToastLength.Long).Show();
+
+		}
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
@@ -65,10 +109,31 @@ namespace Xamarin.Social.Sample.Android
 			};
 
 			Button facebookButton = FindViewById<Button>(Resource.Id.Facebook);
-			facebookButton.Click += (sender, args) => Share (Facebook, facebookButton);
-
+			facebookButton.Click += (sender, args) =>
+			{
+				try
+				{
+					Share (Facebook, facebookButton); 
+				}
+				catch (Exception ex)
+				{
+					ShowMessage("Facebook: " + ex.Message);
+				}
+			};
+				
 			Button twitterButton = FindViewById<Button> (Resource.Id.Twitter);
-			twitterButton.Click += (sender, args) => Share (Twitter, twitterButton);
+			twitterButton.Click += (sender, args) => 
+			{
+				try
+				{
+					Share (Twitter, twitterButton);
+				}
+				catch (Exception ex)
+				{
+					ShowMessage("Twitter: " + ex.Message);
+				}
+			};
+				
 		}
 
 		protected async override void OnActivityResult (int requestCode, Result resultCode, Intent data)
@@ -81,17 +146,26 @@ namespace Xamarin.Social.Sample.Android
 
 			var file = await data.GetMediaFileExtraAsync (this);
 
-			using (var stream = file.GetStream ()) {
-				var item = new Item ("I'm sharing great things using Xamarin!") {
-					Images = new[] { new ImageData (file.Path) }
-				};
+			try
+			{
+				using (var stream = file.GetStream ()) {
+					var item = new Item ("I'm sharing great things using Xamarin!") {
+						Images = new[] { new ImageData (file.Path) }
+					};
 
-				Intent intent = Flickr.GetShareUI (this, item, shareResult => {
-					FindViewById<Button> (Resource.Id.Flickr).Text = "Flickr shared: " + shareResult;
-				});
+					Intent intent = Flickr.GetShareUI (this, item, shareResult => {
+						FindViewById<Button> (Resource.Id.Flickr).Text = "Flickr shared: " + shareResult;
+					});
 
-				StartActivity (intent);
+					StartActivity (intent);
+				}
 			}
+			catch (Exception ex)
+			{
+				ShowMessage("Facebook: " + ex.Message);
+			}
+
+
 		}
 	}
 }

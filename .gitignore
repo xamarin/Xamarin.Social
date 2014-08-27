@@ -7,3 +7,6 @@
 bin
 obj
 test-results
+components
+.xpkg
+docs
