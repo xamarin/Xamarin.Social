@@ -23,9 +23,12 @@ using System.IO;
 using System.Threading;
 using Xamarin.Auth;
 
-#if PLATFORM_IOS
+#if PLATFORM_IOS && ! __UNIFIED__
 using ShareUIType = MonoTouch.UIKit.UIViewController;
 using AuthenticateUIType = MonoTouch.UIKit.UIViewController;
+#elif PLATFORM_IOS && __UNIFIED__
+using ShareUIType = UIKit.UIViewController;
+using AuthenticateUIType = UIKit.UIViewController;
 #elif PLATFORM_ANDROID
 using ShareUIType = Android.Content.Intent;
 using AuthenticateUIType = Android.Content.Intent;
@@ -307,7 +310,11 @@ namespace Xamarin.Social
 		/// </param>
 		public virtual ShareUIType GetShareUI (Item item, Action<ShareResult> completionHandler)
 		{
+			#if ! __UNIFIED__ 
 			return new MonoTouch.UIKit.UINavigationController (new ShareViewController (this, item, completionHandler));
+			#else
+			return new UIKit.UINavigationController (new ShareViewController (this, item, completionHandler));
+			#endif
 		}
 #elif PLATFORM_ANDROID
 		/// <summary>
