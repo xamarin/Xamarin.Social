@@ -65,15 +65,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>..\..\src\Components\xamarin.mobile-0.7.4\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
-    </Reference>
     <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="Xamarin.Social.iOS">
       <HintPath>..\..\lib\ios-unified\Xamarin.Social.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Auth.iOS">
       <HintPath>..\..\lib\ios-unified\Xamarin.Auth.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\..\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -91,11 +91,5 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7.4</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
   </ItemGroup>
 </Project>

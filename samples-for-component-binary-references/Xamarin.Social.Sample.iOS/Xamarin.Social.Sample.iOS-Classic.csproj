@@ -71,14 +71,8 @@
       <HintPath>..\..\lib\ios\Xamarin.Social.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Mobile">
-      <HintPath>Components\xamarin.mobile-0.7.1\lib\ios\Xamarin.Mobile.dll</HintPath>
+      <HintPath>..\..\lib\ios\Xamarin.Mobile.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

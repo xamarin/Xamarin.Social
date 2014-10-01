@@ -71,10 +71,4 @@
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7.4</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-  </ItemGroup>
 </Project>
