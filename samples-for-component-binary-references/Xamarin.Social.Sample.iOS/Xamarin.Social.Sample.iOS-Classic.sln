@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Social.Sample.iOS-Classic", "Xamarin.Social.Sample.iOS-Classic.csproj", "{E8DFC6B6-80B5-46C2-BB2C-3D6CC0BF291F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Social.iOS-Classic", "..\..\src\Xamarin.Social.iOS\Xamarin.Social.iOS-Classic.csproj", "{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -15,18 +13,6 @@ Global
 		AppStore|iPhone = AppStore|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.AppStore|iPhone.Build.0 = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Release|iPhone.Build.0 = Release|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{E8DFC6B6-80B5-46C2-BB2C-3D6CC0BF291F}.Ad-Hoc|iPhone.ActiveCfg = Debug|iPhone
 		{E8DFC6B6-80B5-46C2-BB2C-3D6CC0BF291F}.Ad-Hoc|iPhone.Build.0 = Debug|iPhone
 		{E8DFC6B6-80B5-46C2-BB2C-3D6CC0BF291F}.AppStore|iPhone.ActiveCfg = Debug|iPhone

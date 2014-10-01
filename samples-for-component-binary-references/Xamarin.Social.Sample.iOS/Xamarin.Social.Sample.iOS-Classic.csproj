@@ -64,14 +64,14 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>Components\xamarin.mobile-0.7.1\lib\ios\Xamarin.Mobile.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Auth.iOS">
       <HintPath>..\..\lib\ios\Xamarin.Auth.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Social.iOS">
       <HintPath>..\..\lib\ios\Xamarin.Social.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>Components\xamarin.mobile-0.7.1\lib\ios\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

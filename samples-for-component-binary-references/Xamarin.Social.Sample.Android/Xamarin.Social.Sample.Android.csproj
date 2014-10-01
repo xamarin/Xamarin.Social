@@ -48,6 +48,12 @@
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\..\src\Components\xamarin.mobile-0.7.4\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Auth.Android">
+      <HintPath>..\..\lib\android\Xamarin.Auth.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Social.Android">
+      <HintPath>..\..\lib\android\Xamarin.Social.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -61,16 +67,6 @@
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Assets\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Xamarin.Social.Android\Xamarin.Social.Android.csproj">
-      <Project>{BA8CBA8B-7F55-4167-B872-0BBF09F08B8C}</Project>
-      <Name>Xamarin.Social.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.Android\Xamarin.Auth.Android.csproj">
-      <Project>{FCF02C8C-6DD3-4C59-A8A2-58BC01A4BB21}</Project>
-      <Name>Xamarin.Auth.Android</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
