@@ -16,29 +16,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using MonoTouch.UIKit;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
-
-#if __UNIFIED__
-using UIKit;
-using Foundation;
-using CoreAnimation;
-using CoreGraphics;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MonoTouch.CoreAnimation;
-using MonoTouch.CoreGraphics;
-
-using System.Drawing;
-using CGRect = global::System.Drawing.RectangleF;
-using CGPoint = global::System.Drawing.PointF;
-using CGSize = global::System.Drawing.SizeF;
-using nfloat = global::System.Single;
-using nint = global::System.Int32;
-using nuint = global::System.UInt32;
-#endif
 
 namespace Xamarin.Social
 {
@@ -97,20 +78,12 @@ namespace Xamarin.Social
 
 		class PickerDelegate : UIPickerViewDelegate
 		{
-			#if ! __UNIFIED__
 			public override UIView GetView (UIPickerView pickerView, int row, int component, UIView view)
-			#else
-			public  UIView GetView (UIPickerView pickerView, int row, int component, UIView view)
-			#endif
 			{
 				var label = view as PickerLabel;
 				
 				if (label == null) {
-					#if ! __UNIFIED__
 					label = new PickerLabel (new RectangleF (16, 0, pickerView.Bounds.Width - 32, 44));
-					#else
-					label = new PickerLabel (new RectangleF ((float)16, (float)0, (float)(pickerView.Bounds.Width - 32), (float)44));
-					#endif
 				}
 
 				var cpv = (CheckedPickerView)pickerView;
@@ -121,12 +94,8 @@ namespace Xamarin.Social
 				
 				return label;
 			}
-
-			#if ! __UNIFIED__
+			
 			public override void Selected (UIPickerView pickerView, int row, int component)
-			#else
-			public void Selected (UIPickerView pickerView, int row, int component)
-			#endif
 			{
 				var n = pickerView.RowsInComponent (0);
 
@@ -143,21 +112,13 @@ namespace Xamarin.Social
 		
 		class PickerDataSource : UIPickerViewDataSource
 		{
-			#if ! __UNIFIED__
 			public override int GetRowsInComponent (UIPickerView pickerView, int component)
-			#else
-			public override nint GetRowsInComponent (UIPickerView pickerView, nint component)
-			#endif
 			{
 				var cpv = (CheckedPickerView)pickerView;
 				return cpv.Items.Count;
 			}
 
-			#if ! __UNIFIED__
 			public override int GetComponentCount (UIPickerView pickerView)
-			#else
-			public override nint GetComponentCount (UIPickerView pickerView)
-			#endif
 			{
 				return 1;
 			}
