@@ -14,9 +14,14 @@
 //    limitations under the License.
 
 using System;
-using MonoTouch.UIKit;
 using System.IO;
+#if ! __UNIFIED__
+using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+#else
+using UIKit;
+using Foundation;
+#endif
 using System.Runtime.InteropServices;
 
 namespace Xamarin.Social
@@ -49,7 +54,12 @@ namespace Xamarin.Social
 				return 0;
 			}
 			else {
+				#if ! __UNIFIED__
 				var len = (int)Math.Min (count, data.Length - pos);
+				#else
+				var len = (int)Math.Min (count, (double)(data.Length - pos));
+				#endif
+
 				Marshal.Copy (new IntPtr (data.Bytes.ToInt64 () + pos), buffer, offset, len);
 				pos += (uint)len;
 				return len;
@@ -91,7 +101,12 @@ namespace Xamarin.Social
 
 		public override long Length {
 			get {
+				// override does not allow nint
+				#if ! __UNIFIED__
 				return data.Length;
+				#else
+				return (long) data.Length;
+				#endif
 			}
 		}
 

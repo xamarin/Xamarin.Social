@@ -17,7 +17,25 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+#if __UNIFIED__
+using UIKit;
+using Foundation;
+using CoreAnimation;
+using CoreGraphics;
+#else
+using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+using MonoTouch.CoreAnimation;
+using MonoTouch.CoreGraphics;
+
+using System.Drawing;
+using CGRect = global::System.Drawing.RectangleF;
+using CGPoint = global::System.Drawing.PointF;
+using CGSize = global::System.Drawing.SizeF;
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 using Xamarin.Auth;
 
 namespace Xamarin.Social
@@ -26,11 +44,20 @@ namespace Xamarin.Social
 	{
 		NSData data;
 		Dictionary<string, string> headers;
+
+		#if ! __UNIFIED__
 		int statusCode;
+		#else 
+		nint statusCode;
+		#endif
 
 		public override HttpStatusCode StatusCode {
 			get {
+				#if ! __UNIFIED__
 				return (HttpStatusCode)statusCode;
+				#else
+				return (HttpStatusCode) (int)statusCode;
+				#endif
 			}
 		}
 
@@ -57,7 +84,11 @@ namespace Xamarin.Social
 			var mutableData = data as NSMutableData;
 			if (mutableData != null) {
 				unsafe {
+					#if ! __UNIFIED__
 					return new UnmanagedMemoryStream ((byte*)mutableData.Bytes, mutableData.Length);
+					#else
+					return new UnmanagedMemoryStream ((byte*)mutableData.Bytes, (long) mutableData.Length);
+					#endif
 				}
 			} else {
 				return data.AsStream ();

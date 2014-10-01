@@ -1,28 +1,30 @@
-version: 1.1.3
-id: xamarin.social
+version: 1.1.5
 name: Xamarin.Social
 publisher: Xamarin
+id: xamarin.social
 publisher-url: http://xamarin.com/
 summary: Share statuses, links, and images on Facebook, Flickr, Twitter and more.
-details: component/Details.md
-license: License.md
-getting-started: component/GettingStarted.md
-monodocs: docs/
-no_build: true
+monodoc: source/docs/
 libraries:
-  ios:
-    - src/Xamarin.Social.iOS/bin/Release/Xamarin.Social.iOS.dll
-    - src/Xamarin.Social.iOS/bin/Release/Xamarin.Auth.iOS.dll
-  android:
+  ios: 
+    - src/Xamarin.Social.iOS/bin/classic/AnyCPU/Release/Xamarin.Social.iOS.dll
+    - src/Xamarin.Social.iOS/bin/classic/AnyCPU/Release/Xamarin.Auth.iOS.dll
+  ios-unified: 
+    - src/Xamarin.Social.iOS/bin/unified/AnyCPU/Release/Xamarin.Social.iOS.dll
+    - src/Xamarin.Social.iOS/bin/unified/AnyCPU/Release/Xamarin.Auth.iOS.dll
+  android: 
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Social.Android.dll
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Auth.Android.dll
 samples:
-  "Android Sample": samples/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android.sln
-  "iOS Sample": samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS.sln
-screenshots:
-  - component/screenshots/00.jpg
-icons:
-  - component/icons/xamarin.social_128x128.png
-  - component/icons/xamarin.social_512x512.png
+  - name: "Android Sample"
+    path: samples-for-component-binary-references/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android.sln
+    nobuild: true
+  - name: "iOS Classic Sample"
+    path: samples-for-component-binary-references/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Classic.sln
+    nobuild: true
+  - name: "iOS Unified Sample"
+    path: samples-for-component-binary-references/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS.sln
 build:
-    - src/Xamarin.Social.sln
+  - src/Xamarin.Social.iOS/Xamarin.Social.iOS.sln
+  - src/Xamarin.Social.iOS/Xamarin.Social.iOS-Classic.sln
+  - src/Xamarin.Social.Android/Xamarin.Social.Android.sln

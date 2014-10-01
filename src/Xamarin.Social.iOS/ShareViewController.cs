@@ -19,9 +19,27 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MonoTouch.CoreGraphics;
-using MonoTouch.Foundation;
+#if __UNIFIED__
+using UIKit;
+using Foundation;
+using CoreAnimation;
+using CoreGraphics;
+
+using CGRect = global::System.Drawing.RectangleF;
+#else
 using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreAnimation;
+using MonoTouch.CoreGraphics;
+
+using System.Drawing;
+using CGRect = global::System.Drawing.RectangleF;
+using CGPoint = global::System.Drawing.PointF;
+using CGSize = global::System.Drawing.SizeF;
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 using Xamarin.Auth;
 using Xamarin.Utilities.iOS;
 
@@ -152,7 +170,11 @@ namespace Xamarin.Social
 			var fieldHeight = 33;
 
 			accountField = new ChoiceField (
+				#if ! __UNIFIED__
 				new RectangleF (0, b.Y, b.Width, 33),
+				#else
+				new RectangleF (0, (float)b.Y, (float)b.Width, 33),
+				#endif
 				this,
 				NSBundle.MainBundle.LocalizedString ("From", "From title when sharing"));
 			View.AddSubview (accountField);
@@ -166,7 +188,13 @@ namespace Xamarin.Social
 			if (service.HasMaxTextLength || item.Links.Count > 0) {
 				editorHeight -= statusHeight;
 			}
-			textEditor = new UITextView (new RectangleF (0, b.Y, b.Width, editorHeight)) {
+			textEditor = new UITextView (
+				#if ! __UNIFIED__
+				new RectangleF (0, b.Y, b.Width, editorHeight)) 
+				#else
+				new RectangleF (0, (float) b.Y, (float) b.Width, (float)editorHeight)) 
+				#endif
+				{
 				Font = TextEditorFont,
 				AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
 				Text = item.Text,
@@ -183,17 +211,26 @@ namespace Xamarin.Social
 				RectangleF f;
 				var x = b.Right - AttachmentIcon.Size - 8 - rem*(item.Images.Count - 1);
 				var y = textEditor.Frame.Y + 8;
-
+				#if ! __UNIFIED__
 				f = textEditor.Frame;
 				f.Width = x - 8 - f.X;
+				#else
+				f = (RectangleF)textEditor.Frame;
+				f.Width = (float)x - 8 - f.X;
+				#endif
 				textEditor.Frame = f;
 
 				foreach (var i in item.Images) {
 					var icon = new ImageIcon (i.Image);
-
+					#if ! __UNIFIED__
 					f = icon.Frame;
 					f.X = x;
 					f.Y = y;
+					#else
+					f = (RectangleF) icon.Frame;
+					f.X = (float)x;
+					f.Y = (float)y;
+					#endif
 					icon.Frame = f;
 
 					View.AddSubview (icon);
@@ -208,7 +245,11 @@ namespace Xamarin.Social
 			//
 			if (service.HasMaxTextLength) {
 				textLengthLabel = new TextLengthLabel (
+					#if ! __UNIFIED__
 					new RectangleF (4, b.Bottom - statusHeight, textEditor.Frame.Width - 8, statusHeight),
+					#else
+					new RectangleF (4, (float)(b.Bottom - statusHeight), (float)(textEditor.Frame.Width - 8), statusHeight),
+					#endif
 					service.MaxTextLength) {
 					TextLength = service.GetTextLength (item),
 				};
@@ -220,7 +261,11 @@ namespace Xamarin.Social
 			//
 			if (item.Links.Count > 0) {
 				linksLabel = new UILabel (
+					#if ! __UNIFIED__
 					new RectangleF (4, b.Bottom - statusHeight, textEditor.Frame.Width - 66, statusHeight)) {
+					#else
+					new RectangleF (4, (float)(b.Bottom - statusHeight), (float)(textEditor.Frame.Width - 66), statusHeight)) {
+					#endif
 					TextColor = UIColor.FromRGB (124, 124, 124),
 					AutoresizingMask =
 						UIViewAutoresizing.FlexibleTopMargin |
@@ -496,12 +541,19 @@ namespace Xamarin.Social
 				};
 
 				var w = TitleLabel.StringSize (TitleLabel.Text, TextEditorFont).Width + 8;
+				#if ! __UNIFIED__
 				TitleLabel.Frame = new RectangleF (8, 0, w, frame.Height - 1);
-
+				#else
+				TitleLabel.Frame = new RectangleF (8, 0, (float)w, frame.Height - 1);
+				#endif
 				AddSubview (TitleLabel);
 			}
 
+			#if ! __UNIFIED__
 			public override void Draw (RectangleF rect)
+			#else
+			public void Draw (RectangleF rect)
+			#endif
 			{
 				var b = Bounds;
 				using (var c = UIGraphics.GetCurrentContext ()) {
@@ -538,8 +590,11 @@ namespace Xamarin.Social
 					AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
 				};				
 				var tf = TitleLabel.Frame;
+				#if ! __UNIFIED__
 				ValueLabel.Frame = new RectangleF (tf.Right, 0, frame.Width - tf.Right, frame.Height - 1);
-
+				#else
+				ValueLabel.Frame = new RectangleF ((float)tf.Right, 0, (float)((nfloat)frame.Width - tf.Right), (float)(frame.Height - 1));
+				#endif
 				ValueLabel.TouchUpInside += HandleTouchUpInside;
 
 				AddSubview (ValueLabel);
@@ -562,7 +617,11 @@ namespace Xamarin.Social
 					var v = Controller.View;
 
 					Picker.Hidden = false;
+					#if ! __UNIFIED__
 					Picker.Frame = new RectangleF (0, v.Bounds.Bottom - 216, 320, 216);
+					#else
+					Picker.Frame = new RectangleF (0, (float)(v.Bounds.Bottom - 216), 320, 216);
+					#endif
 					v.BringSubviewToFront (Picker);
 				}
 			}
