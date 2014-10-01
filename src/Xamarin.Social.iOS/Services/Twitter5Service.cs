@@ -4,33 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
-
-
-#if __UNIFIED__
-using UIKit;
-using Foundation;
-using CoreAnimation;
-using CoreGraphics;
-
-using Accounts;
-using Twitter;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MonoTouch.CoreAnimation;
-using MonoTouch.CoreGraphics;
-
-using System.Drawing;
-using CGRect = global::System.Drawing.RectangleF;
-using CGPoint = global::System.Drawing.PointF;
-using CGSize = global::System.Drawing.SizeF;
-using nfloat = global::System.Single;
-using nint = global::System.Int32;
-using nuint = global::System.UInt32;
-
 using MonoTouch.Accounts;
+using MonoTouch.Foundation;
 using MonoTouch.Twitter;
-#endif
+using MonoTouch.UIKit;
 using Xamarin.Auth;
 
 namespace Xamarin.Social.Services

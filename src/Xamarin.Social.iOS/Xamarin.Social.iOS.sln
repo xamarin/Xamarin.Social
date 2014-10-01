@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Social.iOS", "Xamarin.Social.iOS.csproj", "{6D2E4130-354F-4F59-ADCA-701C7E4A0437}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Social.iOS", "Xamarin.Social.iOS.csproj", "{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Auth.iOS", "..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj", "{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Auth.iOS", "..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj", "{9309BCCC-AA7B-4195-A130-D4572FA9488D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D2E4130-354F-4F59-ADCA-701C7E4A0437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D2E4130-354F-4F59-ADCA-701C7E4A0437}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D2E4130-354F-4F59-ADCA-701C7E4A0437}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D2E4130-354F-4F59-ADCA-701C7E4A0437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9309BCCC-AA7B-4195-A130-D4572FA9488D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9309BCCC-AA7B-4195-A130-D4572FA9488D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9309BCCC-AA7B-4195-A130-D4572FA9488D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9309BCCC-AA7B-4195-A130-D4572FA9488D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Xamarin.Social.iOS.csproj

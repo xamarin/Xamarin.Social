@@ -17,17 +17,14 @@ using System;
 using System.IO;
 using System.Linq;
 
-#if PLATFORM_IOS && ! __UNIFIED__
+#if PLATFORM_IOS
 using MonoTouch.UIKit;
-#elif PLATFORM_IOS && __UNIFIED__
-using UIKit;
 #elif PLATFORM_ANDROID
 using Android.Graphics;
 #else
 using System.Drawing;
 using System.Drawing.Imaging;
 #endif
-
 
 namespace Xamarin.Social
 {

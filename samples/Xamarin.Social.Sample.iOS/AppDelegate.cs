@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-#if ! __UNIFIED__
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-#else
-using Foundation;
-using UIKit;
-#endif
 using MonoTouch.Dialog;
 using Xamarin.Media;
 using Xamarin.Social.Services;
