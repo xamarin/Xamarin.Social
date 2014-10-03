@@ -45,14 +45,14 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>..\..\src\Components\xamarin.mobile-0.7.4\lib\android\Xamarin.Mobile.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Auth.Android">
       <HintPath>..\..\lib\android\Xamarin.Auth.Android.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Social.Android">
       <HintPath>..\..\lib\android\Xamarin.Social.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\..\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
