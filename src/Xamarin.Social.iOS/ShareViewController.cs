@@ -540,10 +540,11 @@ namespace Xamarin.Social
 					TextColor = UIColor.Gray,
 				};
 
-				var w = TitleLabel.StringSize (TitleLabel.Text, TextEditorFont).Width + 8;
 				#if ! __UNIFIED__
+				var w = TitleLabel.StringSize (TitleLabel.Text, TextEditorFont).Width + 8;
 				TitleLabel.Frame = new RectangleF (8, 0, w, frame.Height - 1);
 				#else
+				var w = UIStringDrawing.StringSize (TitleLabel.Text, TextEditorFont).Width + 8;
 				TitleLabel.Frame = new RectangleF (8, 0, (float)w, frame.Height - 1);
 				#endif
 				AddSubview (TitleLabel);

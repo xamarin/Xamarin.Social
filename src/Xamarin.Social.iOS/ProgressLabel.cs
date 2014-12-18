@@ -54,7 +54,11 @@ namespace Xamarin.Social
 			AddSubview (label);
 			
 			var f = Frame;
+			#if __UNIFIED__
+			f.Width = label.Frame.X + UIStringDrawing.StringSize (label.Text, label.Font).Width;
+			#else
 			f.Width = label.Frame.X + label.StringSize (label.Text, label.Font).Width;
+			#endif
 			Frame = f;
 		}
 		

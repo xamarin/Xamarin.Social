@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{60BE34F8-EDDE-4AF9-96C6-485E08F3ED17}</ProjectGuid>
-    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{E8DFC6B6-80B5-46C2-BB2C-3D6CC0BF291F}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>Xamarin.Social.Sample.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
@@ -16,14 +16,14 @@
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
-    <DefineConstants>DEBUG;__UNIFIED__;</DefineConstants>
+    <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>True</MtouchDebug>
-    <IntermediateOutputPath>obj\unified\iPhoneSimulator\Debug\</IntermediateOutputPath>
-    <OutputPath>bin\unified\iPhoneSimulator\Debug\</OutputPath>
+    <IntermediateOutputPath>obj\classic\iPhoneSimulator\Debug\</IntermediateOutputPath>
+    <OutputPath>bin\classic\iPhoneSimulator\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -32,9 +32,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchLink>None</MtouchLink>
-    <DefineConstants>__UNIFIED__;</DefineConstants>
-    <IntermediateOutputPath>obj\unified\iPhoneSimulator\Release\</IntermediateOutputPath>
-    <OutputPath>bin\unified\iPhoneSimulator\Release\</OutputPath>
+    <IntermediateOutputPath>obj\classic\iPhoneSimulator\Release\</IntermediateOutputPath>
+    <OutputPath>bin\classic\iPhoneSimulator\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>True</DebugSymbols>
@@ -46,8 +45,8 @@
     <ConsolePause>False</ConsolePause>
     <MtouchDebug>True</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <IntermediateOutputPath>obj\unified\iPhone\Debug\</IntermediateOutputPath>
-    <OutputPath>bin\unified\iPhone\Debug\</OutputPath>
+    <IntermediateOutputPath>obj\classic\iPhone\Debug\</IntermediateOutputPath>
+    <OutputPath>bin\classic\iPhone\Debug\</OutputPath>
     <MtouchLink>None</MtouchLink>
     <MtouchI18n>
     </MtouchI18n>
@@ -60,9 +59,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <DefineConstants>__UNIFIED__;</DefineConstants>
-    <IntermediateOutputPath>obj\unified\iPhone\Release\</IntermediateOutputPath>
-    <OutputPath>bin\unified\iPhone\Release\</OutputPath>
+    <IntermediateOutputPath>obj\classic\iPhone\Release\</IntermediateOutputPath>
+    <OutputPath>bin\classic\iPhone\Release\</OutputPath>
     <MtouchLink>None</MtouchLink>
     <MtouchI18n>
     </MtouchI18n>
@@ -72,11 +70,17 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>..\..\src\Components\xamarin.mobile-0.7.4\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
-    </Reference>
+    <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
+    <Reference Include="Xamarin.Auth.iOS">
+      <HintPath>..\..\lib\ios\Xamarin.Auth.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Social.iOS">
+      <HintPath>..\..\lib\ios\Xamarin.Social.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\..\lib\ios\Xamarin.Mobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -84,17 +88,7 @@
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Xamarin.Social.iOS\Xamarin.Social.iOS.csproj">
-      <Project>{6D2E4130-354F-4F59-ADCA-701C7E4A0437}</Project>
-      <Name>Xamarin.Social.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
-      <Project>{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}</Project>
-      <Name>Xamarin.Auth.iOS</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
   </ItemGroup>
@@ -103,11 +97,5 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7.4</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
   </ItemGroup>
 </Project>
