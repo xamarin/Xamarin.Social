@@ -45,9 +45,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Json" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="Xamarin.Auth.iOS">
-      <HintPath>..\..\lib\ios-unified\Xamarin.Auth.iOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -108,5 +105,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
+      <Project>{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}</Project>
+      <Name>Xamarin.Auth.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

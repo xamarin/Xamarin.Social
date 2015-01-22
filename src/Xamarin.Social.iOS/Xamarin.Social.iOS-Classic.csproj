@@ -42,9 +42,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Json" />
     <Reference Include="monotouch" />
-    <Reference Include="Xamarin.Auth.iOS">
-      <HintPath>..\..\lib\ios\Xamarin.Auth.iOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
@@ -105,5 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS-Classic.csproj">
+      <Project>{9309BCCC-AA7B-4195-A130-D4572FA9488D}</Project>
+      <Name>Xamarin.Auth.iOS-Classic</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
