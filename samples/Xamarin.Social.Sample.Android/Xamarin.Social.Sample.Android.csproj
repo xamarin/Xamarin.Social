@@ -71,4 +71,14 @@
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.Android\Xamarin.Auth.Android.csproj">
+      <Project>{FCF02C8C-6DD3-4C59-A8A2-58BC01A4BB21}</Project>
+      <Name>Xamarin.Auth.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Social.Android\Xamarin.Social.Android.csproj">
+      <Project>{BA8CBA8B-7F55-4167-B872-0BBF09F08B8C}</Project>
+      <Name>Xamarin.Social.Android</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

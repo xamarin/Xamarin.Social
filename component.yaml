@@ -12,16 +12,19 @@ libraries:
   ios: 
     - src/Xamarin.Social.iOS/bin/classic/AnyCPU/Release/Xamarin.Social.iOS.dll
     - src/Xamarin.Social.iOS/bin/classic/AnyCPU/Release/Xamarin.Auth.iOS.dll
+    - src/Components/xamarin.mobile-0.7.5/lib/ios/Xamarin.Mobile.dll
   ios-unified: 
     - src/Xamarin.Social.iOS/bin/unified/AnyCPU/Release/Xamarin.Social.iOS.dll
     - src/Xamarin.Social.iOS/bin/unified/AnyCPU/Release/Xamarin.Auth.iOS.dll
+    - src/Components/xamarin.mobile-0.7.5/lib/ios-unified/Xamarin.Mobile.dll
   android: 
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Social.Android.dll
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Auth.Android.dll
-samples:
+    - src/Components/xamarin.mobile-0.7.5/lib/android/Xamarin.Mobile.dll
+samples:	
   - name: "Android Sample"
     path: samples/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android-Component.sln
-  - name: "iOS Classic Sample"
+  - name: "iOS Classic Sample" 
     path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Classic-Component.sln
   - name: "iOS Unified Sample"
     path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Component.sln

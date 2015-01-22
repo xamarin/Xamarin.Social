@@ -64,21 +64,15 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>Components\xamarin.mobile-0.7.1\lib\ios\Xamarin.Mobile.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Auth.iOS">
       <HintPath>..\..\src\Xamarin.Social.iOS\bin\classic\AnyCPU\Release\Xamarin.Auth.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Social.iOS">
       <HintPath>..\..\src\Xamarin.Social.iOS\bin\classic\AnyCPU\Release\Xamarin.Social.iOS.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>Components\xamarin.mobile-0.7.5\lib\ios\Xamarin.Mobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

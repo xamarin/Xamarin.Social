@@ -46,7 +46,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
     <Reference Include="Xamarin.Mobile">
-      <HintPath>..\..\src\Components\xamarin.mobile-0.7.4\lib\android\Xamarin.Mobile.dll</HintPath>
+      <HintPath>Components\xamarin.mobile-0.7.5\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Auth.Android">
       <HintPath>..\..\src\Xamarin.Social.Android\bin\Release\Xamarin.Auth.Android.dll</HintPath>
@@ -70,11 +70,5 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7.4</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
   </ItemGroup>
 </Project>

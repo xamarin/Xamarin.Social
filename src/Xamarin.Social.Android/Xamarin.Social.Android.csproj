@@ -40,6 +40,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Json" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\Components\xamarin.mobile-0.7.5\lib\android\Xamarin.Mobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -102,5 +105,11 @@
       <Project>{FCF02C8C-6DD3-4C59-A8A2-58BC01A4BB21}</Project>
       <Name>Xamarin.Auth.Android</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="xamarin.mobile">
+      <Version>0.7.5</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>
