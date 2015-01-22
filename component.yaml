@@ -17,13 +17,13 @@ libraries:
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Auth.Android.dll
 samples:
   - name: "Android Sample"
-    path: samples-for-component-binary-references/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android.sln
+    path: samples/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android.sln
     nobuild: true
   - name: "iOS Classic Sample"
-    path: samples-for-component-binary-references/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Classic.sln
+    path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Classic.sln
     nobuild: true
   - name: "iOS Unified Sample"
-    path: samples-for-component-binary-references/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS.sln
+    path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS.sln
 build:
   - src/Xamarin.Social.iOS/Xamarin.Social.iOS.sln
   - src/Xamarin.Social.iOS/Xamarin.Social.iOS-Classic.sln
