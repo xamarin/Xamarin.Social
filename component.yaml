@@ -1,10 +1,13 @@
-version: 1.1.5
+version: 1.1.7
 name: Xamarin.Social
 publisher: Xamarin
 id: xamarin.social
 publisher-url: http://xamarin.com/
 summary: Share statuses, links, and images on Facebook, Flickr, Twitter and more.
 monodoc: source/docs/
+details: component/Details.md 
+getting-started: component/GettingStarted.md
+license: License.md
 libraries:
   ios: 
     - src/Xamarin.Social.iOS/bin/classic/AnyCPU/Release/Xamarin.Social.iOS.dll
@@ -17,13 +20,11 @@ libraries:
     - src/Xamarin.Social.Android/bin/Release/Xamarin.Auth.Android.dll
 samples:
   - name: "Android Sample"
-    path: samples/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android.sln
-    nobuild: true
+    path: samples/Xamarin.Social.Sample.Android/Xamarin.Social.Sample.Android-Component.sln
   - name: "iOS Classic Sample"
-    path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Classic.sln
-    nobuild: true
+    path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Classic-Component.sln
   - name: "iOS Unified Sample"
-    path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS.sln
+    path: samples/Xamarin.Social.Sample.iOS/Xamarin.Social.Sample.iOS-Component.sln
 build:
   - src/Xamarin.Social.iOS/Xamarin.Social.iOS.sln
   - src/Xamarin.Social.iOS/Xamarin.Social.iOS-Classic.sln

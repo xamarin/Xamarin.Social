@@ -84,16 +84,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Xamarin.Social.iOS\Xamarin.Social.iOS.csproj">
-      <Project>{6D2E4130-354F-4F59-ADCA-701C7E4A0437}</Project>
-      <Name>Xamarin.Social.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
-      <Project>{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}</Project>
-      <Name>Xamarin.Auth.iOS</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
   </ItemGroup>
   <ItemGroup>
