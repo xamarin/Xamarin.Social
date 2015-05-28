@@ -583,16 +583,18 @@ namespace Xamarin.Social
 				: base (frame, controller, title)
 			{
 				ValueLabel = new LabelButton () {
-					BackgroundColor = UIColor.White,
+					BackgroundColor = UIColor.Clear,
 					Font = TextEditorFont,
 					TextColor = UIColor.DarkTextColor,
+					TextAlignment = UITextAlignment.Right,
 					AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
 				};				
 				var tf = TitleLabel.Frame;
 				#if ! __UNIFIED__
 				ValueLabel.Frame = new RectangleF (tf.Right, 0, frame.Width - tf.Right, frame.Height - 1);
 				#else
-				ValueLabel.Frame = new RectangleF ((float)tf.Right, 0, (float)((nfloat)frame.Width - tf.Right), (float)(frame.Height - 1));
+				// ValueLabel.Frame = new RectangleF ((float)tf.Right, 0, (float)((nfloat)frame.Width - tf.Right), (float)(frame.Height - 1));
+				ValueLabel.Frame = new RectangleF (0, 0, (float)((nfloat)frame.Width - tf.Left), (float)(frame.Height - 1));
 				#endif
 				ValueLabel.TouchUpInside += HandleTouchUpInside;
 
