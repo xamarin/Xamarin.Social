@@ -46,7 +46,7 @@
     <Reference Include="System.Json" />
     <Reference Include="Xamarin.iOS" />
     <Reference Include="Xamarin.Mobile">
-      <HintPath>..\Components\xamarin.mobile-0.7.5\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
+      <HintPath>..\..\..\..\Components\xamarin.mobile-0.7.6\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -120,7 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7.5</Version>
+      <Version>0.7.6</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
