@@ -101,10 +101,19 @@ namespace Xamarin.Social.Services
 			} 
 			else
 			{
-				await ShareItemWithLocationAsync(item, account, null, cancellationToken).ContinueWith(reqTask => {
+                try
+                {
+    				await ShareItemWithLocationAsync(item, account, null, cancellationToken).ContinueWith(reqTask => {
 
-					return reqTask;
-				});
+    					return reqTask;
+    				});
+                }
+                catch(Exception e)
+                {
+                    #if DEBUG
+                    throw(e);
+                    #endif
+                }
 			}
 		}
 
@@ -146,7 +155,7 @@ namespace Xamarin.Social.Services
 				if (!content.Contains ("\"id\"")) {
 					throw new SocialException ("Facebook returned an unrecognized response.");
 				}
-			});
+            });
 		}
 	}
 }
