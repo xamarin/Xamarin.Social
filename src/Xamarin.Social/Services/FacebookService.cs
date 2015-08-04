@@ -89,24 +89,22 @@ namespace Xamarin.Social.Services
 				placeRequest.Parameters ["center"] = item.Location.Latitude.ToString() + "," + item.Location.Longitude.ToString();
 				placeRequest.Parameters ["distance"] = "100";
 
-				await placeRequest.GetResponseAsync(cancellationToken).ContinueWith(reqTask => {
-					var obj = JsonObject.Parse(reqTask.Result.GetResponseText());
+                var reqTask = await placeRequest.GetResponseAsync(cancellationToken).ConfigureAwait(false);
 
-					if (obj.ContainsKey("data") && obj["data"].Count > 0 && obj["data"][0].ContainsKey("id"))
-						placeId = obj ["data"] [0] ["id"];
+                var obj = JsonObject.Parse(reqTask.GetResponseText());
 
-					return ShareItemWithLocationAsync(item, account, placeId, cancellationToken);
-				});
-				;
+				if (obj.ContainsKey("data") && obj["data"].Count > 0 && obj["data"][0].ContainsKey("id"))
+					placeId = obj ["data"] [0] ["id"];
+
+                await ShareItemWithLocationAsync(item, account, placeId, cancellationToken).ConfigureAwait(false);
+
+                return;
 			} 
 			else
 			{
                 try
                 {
-    				await ShareItemWithLocationAsync(item, account, null, cancellationToken).ContinueWith(reqTask => {
-
-    					return reqTask;
-    				});
+                    await ShareItemWithLocationAsync(item, account, null, cancellationToken).ConfigureAwait(false);
                 }
                 catch(Exception e)
                 {
@@ -114,6 +112,7 @@ namespace Xamarin.Social.Services
                     throw(e);
                     #endif
                 }
+                return;
 			}
 		}
 
