@@ -37,7 +37,7 @@ namespace Xamarin.Social.Services
 			AuthorizeUrl = new Uri ("https://m.facebook.com/dialog/oauth/");
 			RedirectUrl = new Uri ("http://www.facebook.com/connect/login_success.html");
 
-			Scope = "publish_stream";
+			Scope = "publish_actions";
 		}
 
 		protected override Task<string> GetUsernameAsync (IDictionary<string, string> accountProperties)
