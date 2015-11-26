@@ -64,9 +64,6 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>..\..\src\Components\xamarin.mobile-0.7.1\lib\ios\Xamarin.Mobile.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="xamarin.mobile">
@@ -91,10 +88,6 @@
     <BundleResource Include="Resources\Default-568h%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS-Classic.csproj">
-      <Project>{9309BCCC-AA7B-4195-A130-D4572FA9488D}</Project>
-      <Name>Xamarin.Auth.iOS-Classic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Social.iOS\Xamarin.Social.iOS-Classic.csproj">
       <Project>{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}</Project>
       <Name>Xamarin.Social.iOS-Classic</Name>

@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6D2E4130-354F-4F59-ADCA-701C7E4A0437}</ProjectGuid>
-    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{C91EF8FC-37E3-4952-A8A3-BA3A4422B0C5}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Xamarin.Social</RootNamespace>
     <AssemblyName>Xamarin.Social.iOS</AssemblyName>
@@ -15,41 +15,35 @@
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;PLATFORM_IOS;__UNIFIED__;</DefineConstants>
+    <DefineConstants>DEBUG;PLATFORM_IOS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentation>True</GenerateDocumentation>
-    <IntermediateOutputPath>obj\unified\AnyCPU\Debug\</IntermediateOutputPath>
-    <OutputPath>bin\unified\AnyCPU\Debug\</OutputPath>
+    <IntermediateOutputPath>obj\classic\AnyCPU\Debug\</IntermediateOutputPath>
+    <OutputPath>bin\classic\AnyCPU\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <DefineConstants>PLATFORM_IOS</DefineConstants>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentation>True</GenerateDocumentation>
-    <DefineConstants>PLATFORM_IOS;__UNIFIED__;</DefineConstants>
-    <IntermediateOutputPath>obj\unified\AnyCPU\Release\</IntermediateOutputPath>
-    <OutputPath>bin\unified\AnyCPU\Release\</OutputPath>
+    <IntermediateOutputPath>obj\classic\AnyCPU\Release\</IntermediateOutputPath>
+    <OutputPath>bin\classic\AnyCPU\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Json" />
-    <Reference Include="Xamarin.iOS" />
-    <Reference Include="Xamarin.Mobile">
-      <HintPath>..\Components\xamarin.mobile-0.7.5\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
-    </Reference>
+    <Reference Include="monotouch" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <Compile Include="..\Xamarin.Social\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
@@ -108,12 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\Xamarin.Auth.iOS.csproj">
-      <Project>{19A091BD-B0E7-49FC-BF83-4118D91A7DC3}</Project>
-      <Name>Xamarin.Auth.iOS</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="xamarin.mobile">
