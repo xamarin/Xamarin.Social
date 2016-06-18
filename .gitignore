@@ -7,6 +7,9 @@
 bin
 obj
 test-results
-components
-.xpkg
-docs
+src/Components
+samples/
+ components
+ .xpkg
+ docs
+StyleCop.Cache
