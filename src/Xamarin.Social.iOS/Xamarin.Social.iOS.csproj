@@ -10,6 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Xamarin.Social</RootNamespace>
     <AssemblyName>Xamarin.Social.iOS</AssemblyName>
+    <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
