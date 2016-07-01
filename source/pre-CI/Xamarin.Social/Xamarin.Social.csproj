@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2CAFD7AE-C52F-4F01-9E25-58656DD8476D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Xamarin.Social</RootNamespace>
@@ -40,6 +38,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <!--
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JavaScriptReader.cs">
       <Link>System.Json\JavaScriptReader.cs</Link>
     </Compile>
@@ -58,6 +57,7 @@
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\System.Json\JsonValue.cs">
       <Link>System.Json\JsonValue.cs</Link>
     </Compile>
+    -->
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Item.cs" />
@@ -71,19 +71,20 @@
     <Compile Include="OAuth1Service.cs" />
     <Compile Include="SocialException.cs" />
     <Compile Include="OAuth2Service.cs" />
+    <!--
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
-      <Link>ExceptionEx.cs</Link>
+      <Link>SourceLinks.Xamarin.Auth\ExceptionEx.cs</Link>
     </Compile>
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
-      <Link>WebEx.cs</Link>
+      <Link>SourceLinks.Xamarin.Auth\WebEx.cs</Link>
     </Compile>
+    -->
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Auth\src\Xamarin.Auth\Xamarin.Auth.csproj">
-      <Project>{C9FF1919-78DD-4084-976D-BDABC0A7E80B}</Project>
-      <Name>Xamarin.Auth</Name>
+    <ProjectReference Include="..\..\..\externals\Xamarin.Auth\source\Xamarin.Auth.LinkSource\Xamarin.Auth.LinkSource.csproj">
+      <Project>{EDE30D4F-FC0D-458A-A358-A745FC138DF3}</Project>
+      <Name>Xamarin.Auth.LinkSource</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

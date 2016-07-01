@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Xamarin Inc.")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("2012-2014 Xamarin Inc.")]
+[assembly: AssemblyCopyright("2012-2015 Xamarin Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

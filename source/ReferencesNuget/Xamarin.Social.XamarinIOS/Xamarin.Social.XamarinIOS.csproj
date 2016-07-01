@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{07B67CB8-4C21-43C5-92D5-C62BA184C022}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Xamarin.Social.XamarinIOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Xamarin.Social.XamarinIOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Xamarin.Social.LinkSource\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\Item.cs">
+      <Link>Item.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\Service.cs">
+      <Link>Service.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\ShareResult.cs">
+      <Link>ShareResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\Services\FacebookService.cs">
+      <Link>Services\FacebookService.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\Services\TwitterService.cs">
+      <Link>Services\TwitterService.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\ImageData.cs">
+      <Link>ImageData.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\FileData.cs">
+      <Link>FileData.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\Services\FlickrService.cs">
+      <Link>Services\FlickrService.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\OAuth1Service.cs">
+      <Link>OAuth1Service.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\SocialException.cs">
+      <Link>SocialException.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\OAuth2Service.cs">
+      <Link>OAuth2Service.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.LinkSource\Services\AppDotNetService.cs">
+      <Link>Services\AppDotNetService.cs</Link>
+    </Compile>
+    <!--
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\UIViewControllerEx.cs">
+      <Link>UIViewControllerEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
+      <Link>ExceptionEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
+      <Link>WebEx.cs</Link>
+    </Compile>
+    -->
+    <Compile Include="NSDataStream.cs" />
+    <Compile Include="CheckedPickerView.cs" />
+    <Compile Include="FoundationResponse.cs" />
+    <Compile Include="ProgressLabel.cs" />
+    <Compile Include="ShareViewController.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\externals\Xamarin.Auth\source\Xamarin.Auth.XamarinIOS\Xamarin.Auth.XamarinIOS.csproj">
+      <Project>{15BE2387-8E72-4C0B-8A6A-460EF5FA4539}</Project>
+      <Name>Xamarin.Auth.XamarinIOS</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
