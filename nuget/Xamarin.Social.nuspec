@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <!--
+    https://docs.nuget.org/create/nuspec-reference#specifying-dependencies
+    -->
+	<metadata minClientVersion="2.8.1">
+		<id>
+			Xamarin.Social
+		</id>
+		<!--
+		SemVer - Semantic Versioning
+		http://semver.org/
+		-->
+		<version>
+			1.1.8-alpha-01
+		</version>
+		<title>
+			Xamarin.Social
+		</title>
+		<authors>
+			Xamarin
+		</authors>
+		<owners>
+			Xamarin
+		</owners>
+		<copyright>
+			Copyright 2013-2016
+		</copyright>
+		<licenseUrl>
+			https://github.com/xamarin/Xamarin.Social/blob/master/License.md
+		</licenseUrl>
+		<projectUrl>
+			https://github.com/xamarin/Xamarin.Social
+		</projectUrl>
+		<iconUrl>
+			https://xamarin-component-icons.s3.amazonaws.com/Xamarin.Social.png
+		</iconUrl>
+		<requireLicenseAcceptance>
+			false
+		</requireLicenseAcceptance>
+		<description>
+			Share statuses, links, and images on Facebook, Flickr, Twitter and more.
+		</description>
+		<summary>
+		Xamarin.Social posts statuses, links, images, and other media to social networks using
+		a simple, cross-platform API. With Xamarin.Social, you can easily:
+
+		Share text and images on social networks.
+		Access social network APIs using authenticated requests.
+		Automatically and securely store user credentials using Xamarin.Auth.
+		
+		Xamarin.Social currently works with these social networks, and can be extended 
+		to support custom services:
+
+		App.net
+		Facebook
+		Flickr
+		Twitter
+		</summary>
+		<tags>
+			xamarin,
+			pcl,
+			android, monoandroid, monodroid, xamarin.android,
+			ios,  monotouch, xamarin.ios
+			windows phone, winphone, wp, 
+			windows phone 8 silverlight, winphone 8 sl, wp8 sl
+			windows phone 8.1 silverlight, winphone 8.1 sl, wp81 sl
+			windows 8.1, windows 8.1 winrt, win81
+			windows phone 8.1 winrt, winphone 8.1 winrt, wpa81
+			<!--
+			universal windows platform, uwp, windows 10
+			plugin for xamarin, plugin,
+			xamarin.forms,
+			-->
+		</tags>
+	</metadata>
+	<files>
+		<!--
+		src
+			on windows with \
+			on macosx with /
+		-->
+		<!--
+			Core - Portable
+		-->
+		<file
+			src="source/output/pcl/Xamarin.Social.dll"
+			target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+XamarinIOS10\Xamarin.Social.dll"
+			>
+		</file>
+
+		<!--
+			Xamarin.Android
+		-->
+		<file
+			src="source/output/android/Xamarin.Social.dll"
+			target="lib\MonoAndroid10\Xamarin.Social.dll"
+			>
+		</file>
+
+		<!--
+			Xamarin.iOS
+				Unified
+		-->
+		<file
+			src="source/output/ios-unified/Xamarin.Social.dll"
+			target="lib\Xamarin.iOS10\Xamarin.Social.dll"
+			>
+		</file>
+
+		<!--
+			Xamarin.iOS Classic
+		-->
+		<file
+			src="source/output/ios/Xamarin.Social.dll"
+			target="lib\MonoTouch10\Xamarin.Social.dll"
+			>
+		</file>
+
+		<!--
+			Windows Phone 8 Silverlight
+		<file
+			src="source/output/wp80/Xamarin.Social.dll"
+			target="lib\wp8\Xamarin.Social.dll"
+			>
+		</file>
+		-->
+
+		<!--
+			Windows Phone 8.1 WinRT
+		<file
+			src="source/output/wpa81/Xamarin.Social.dll"
+			target="lib\wpa81\Xamarin.Social.dll"
+			>
+		</file>
+		-->
+
+		<!--
+			Windows 8.1 WinRT
+			Windows Store
+		<file
+			src="source/output/win81/Xamarin.Social.dll"
+			target="lib\win81\Xamarin.Social.dll"
+			>
+		</file>
+		-->
+		<!--
+			Universal Windows Platform, UWP
+			Windows 10
+		<file
+			src="source/output/uwp/Xamarin.Social.dll"
+			target="lib\uwp\Xamarin.Social.dll"
+			>
+		</file>
+		-->
+
+	</files>
+</package>
