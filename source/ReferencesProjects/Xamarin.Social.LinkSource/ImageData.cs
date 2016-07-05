@@ -25,7 +25,7 @@ using UIKit;
 using UIKit;
 #elif __IOS__ && ! __UNIFIED__
 using MonoTouch.UIKit;
-#elif PLATFORM_ANDROID
+#elif PLATFORM_ANDROID || __ANDROID__
 using Android.Graphics;
 #elif __PORTABLE__
 #else
