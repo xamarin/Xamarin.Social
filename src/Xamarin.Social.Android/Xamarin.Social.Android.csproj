@@ -55,6 +55,9 @@
     <Compile Include="..\Xamarin.Social\Service.cs">
       <Link>Service.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\ISupportScope.cs">
+      <Link>ISupportScope.cs</Link>
+    </Compile>
     <Compile Include="..\Xamarin.Social\ShareResult.cs">
       <Link>ShareResult.cs</Link>
     </Compile>
