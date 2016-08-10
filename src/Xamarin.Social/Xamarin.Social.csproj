@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="ISupportScope.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Services\AppDotNetService.cs" />
     <Compile Include="Services\FacebookService.cs" />

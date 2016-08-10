@@ -60,6 +60,9 @@
     <Compile Include="..\Xamarin.Social\Service.cs">
       <Link>Service.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Social\ISupportScope.cs">
+      <Link>ISupportScope.cs</Link>
+    </Compile>
     <Compile Include="..\Xamarin.Social\ShareResult.cs">
       <Link>ShareResult.cs</Link>
     </Compile>
@@ -105,6 +108,9 @@
     <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
       <Link>WebEx.cs</Link>
     </Compile>
+    <Compile Include="Services\SocialService.cs" />
+    <Compile Include="Services\Twitter6Service.cs" />
+    <Compile Include="Services\Facebook6Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

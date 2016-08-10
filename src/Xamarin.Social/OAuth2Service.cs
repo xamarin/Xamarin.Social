@@ -23,7 +23,7 @@ namespace Xamarin.Social
 	/// <summary>
 	/// Represents an OAuth 2 based service.
 	/// </summary>
-	public abstract class OAuth2Service : Service
+	public abstract class OAuth2Service : Service, ISupportScope
 	{
 		/// <summary>
 		/// Gets or sets the client identifier.
