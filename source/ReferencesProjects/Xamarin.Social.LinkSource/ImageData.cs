@@ -104,7 +104,7 @@ namespace Xamarin.Social
 			return new ImageData (path);
 		}
 
-#elif PLATFORM_ANDROID
+#elif PLATFORM_ANDROID || __ANDROID__
 
 		public Bitmap Image { get; private set; }
 		
@@ -166,7 +166,7 @@ namespace Xamarin.Social
 		}
 		
 		public ImageData (string path)
-			: this (new Bitmap (path), Path.GetFileName (path))
+			: this (new Bitmap (path), System.IO.Path.GetFileName (path))
 		{
 		}
 		

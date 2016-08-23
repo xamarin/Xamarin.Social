@@ -15,16 +15,17 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>__MOBILE__;__IOS__;DEBUG;PLATFORM_IOS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
+    <DebugType></DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>__MOBILE__;__IOS__;PLATFORM_IOS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -89,6 +90,18 @@
     -->
     <Compile Include="..\Xamarin.Social.XamarinIOS\NSDataStream.cs">
       <Link>NSDataStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.XamarinIOS\CheckedPickerView.cs">
+      <Link>CheckedPickerView.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.XamarinIOS\FoundationResponse.cs">
+      <Link>FoundationResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.XamarinIOS\ProgressLabel.cs">
+      <Link>ProgressLabel.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Social.XamarinIOS\ShareViewController.cs">
+      <Link>ShareViewController.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
