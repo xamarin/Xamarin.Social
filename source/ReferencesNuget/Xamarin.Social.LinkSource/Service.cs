@@ -212,11 +212,11 @@ namespace Xamarin.Social
 			}
 		}
 
-#if PLATFORM_ANDROID
+#if PLATFORM_ANDROID || __ANDROID__
 		/// <summary>
 		/// Saves an account and associates it with this service.
 		/// </summary>
-		public virtual void SaveAccount (Android.Content.Context context, Account account)
+		public virtual void SaveAccount (global::Android.Content.Context context, Account account)
 		{
 			AccountStore.Create (context).Save (account, ServiceId);
 		}
@@ -224,7 +224,7 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Deletes a previously saved account associated with this service.
 		/// </summary>
-		public virtual void DeleteAccount (Android.Content.Context context, Account account)
+		public virtual void DeleteAccount (global::Android.Content.Context context, Account account)
 		{
 			AccountStore.Create (context).Delete (account, ServiceId);
 		}
@@ -316,7 +316,7 @@ namespace Xamarin.Social
 			return new UIKit.UINavigationController (new ShareViewController (this, item, completionHandler));
 			#endif
 		}
-#elif PLATFORM_ANDROID
+#elif PLATFORM_ANDROID || __ANDROID__
 		/// <summary>
 		/// Gets an <see cref="Android.Content.Intent"/> that can be used to start the share activity.
 		/// </summary>
@@ -334,7 +334,7 @@ namespace Xamarin.Social
 		/// </param>
 		public virtual ShareUIType GetShareUI (UIContext activity, Item item, Action<ShareResult> completionHandler)
 		{
-			var intent = new Android.Content.Intent (activity, typeof (ShareActivity));
+			var intent = new global::Android.Content.Intent (activity, typeof (ShareActivity));
 			var state = new ShareActivity.State {
 				Service = this,
 				Item = item,
