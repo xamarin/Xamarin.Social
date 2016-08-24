@@ -66,11 +66,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="..\..\ReferencesProjects\Xamarin.Social.XamarinAndroid\ShareActivity.cs">
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinAndroid\ShareActivity.cs">
       <Link>ShareActivity.cs</Link>
     </Compile>
-    <Compile Include="..\..\ReferencesProjects\Xamarin.Social.XamarinAndroid\ToolbarView.cs">
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinAndroid\ToolbarView.cs">
       <Link>ToolbarView.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinAndroid\ShareActivity.cs">
+      <Link>PlatformSpecific\ShareActivity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinAndroid\ToolbarView.cs">
+      <Link>PlatformSpecific\ToolbarView.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -81,56 +87,47 @@
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Xamarin.Social.LinkSource\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Item.cs">
-      <Link>Item.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Service.cs">
-      <Link>Service.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\ShareResult.cs">
-      <Link>ShareResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\FacebookService.cs">
-      <Link>Services\FacebookService.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\TwitterService.cs">
-      <Link>Services\TwitterService.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\ImageData.cs">
-      <Link>ImageData.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\FileData.cs">
+    <Folder Include="Properties\" />
+    <Folder Include="Services\" />
+    <Folder Include="PlatformSpecific\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\FileData.cs">
       <Link>FileData.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\FlickrService.cs">
-      <Link>Services\FlickrService.cs</Link>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\ImageData.cs">
+      <Link>ImageData.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\OAuth1Service.cs">
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Item.cs">
+      <Link>Item.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\OAuth1Service.cs">
       <Link>OAuth1Service.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\SocialException.cs">
-      <Link>SocialException.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\OAuth2Service.cs">
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\OAuth2Service.cs">
       <Link>OAuth2Service.cs</Link>
     </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\AppDotNetService.cs">
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Service.cs">
+      <Link>Service.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\ShareResult.cs">
+      <Link>ShareResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\SocialException.cs">
+      <Link>SocialException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\AppDotNetService.cs">
       <Link>Services\AppDotNetService.cs</Link>
     </Compile>
-    <!--
-    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\UIViewControllerEx.cs">
-      <Link>UIViewControllerEx.cs</Link>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\FacebookService.cs">
+      <Link>Services\FacebookService.cs</Link>
     </Compile>
-    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
-      <Link>ExceptionEx.cs</Link>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\FlickrService.cs">
+      <Link>Services\FlickrService.cs</Link>
     </Compile>
-    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
-      <Link>WebEx.cs</Link>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\TwitterService.cs">
+      <Link>Services\TwitterService.cs</Link>
     </Compile>
-    -->
   </ItemGroup>
 	
   <ItemGroup>

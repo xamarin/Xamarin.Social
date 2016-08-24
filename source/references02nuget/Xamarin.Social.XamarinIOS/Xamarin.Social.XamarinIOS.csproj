@@ -53,74 +53,72 @@
     <Reference Include="PCLCrypto">
       <HintPath>..\packages\PCLCrypto.2.0.147\lib\xamarinios10\PCLCrypto.dll</HintPath>
     </Reference>
+    <Reference Include="System.Json" />
     <Reference Include="Xamarin.Auth">
       <HintPath>..\packages\Xamarin.Auth.1.3.1.1\lib\Xamarin.iOS10\Xamarin.Auth.dll</HintPath>
     </Reference>
-    <Reference Include="System.Json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Properties\" />
+    <Folder Include="PlatformSpecific\" />
+    <Folder Include="Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\Xamarin.Social.LinkSource\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Item.cs">
-      <Link>Item.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Service.cs">
-      <Link>Service.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\ShareResult.cs">
-      <Link>ShareResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\FacebookService.cs">
-      <Link>Services\FacebookService.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\TwitterService.cs">
-      <Link>Services\TwitterService.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\ImageData.cs">
-      <Link>ImageData.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\FileData.cs">
-      <Link>FileData.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\FlickrService.cs">
-      <Link>Services\FlickrService.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\OAuth1Service.cs">
-      <Link>OAuth1Service.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\SocialException.cs">
-      <Link>SocialException.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\OAuth2Service.cs">
-      <Link>OAuth2Service.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Social.LinkSource\Services\AppDotNetService.cs">
-      <Link>Services\AppDotNetService.cs</Link>
-    </Compile>
-    <!--
-    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth.iOS\UIViewControllerEx.cs">
-      <Link>UIViewControllerEx.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\ExceptionEx.cs">
-      <Link>ExceptionEx.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Xamarin.Auth\src\Xamarin.Auth\WebEx.cs">
-      <Link>WebEx.cs</Link>
-    </Compile>
-    -->
-    <Compile Include="NSDataStream.cs" />
-    <Compile Include="CheckedPickerView.cs" />
-    <Compile Include="FoundationResponse.cs" />
-    <Compile Include="ProgressLabel.cs" />
-    <Compile Include="ShareViewController.cs" />
-  </ItemGroup>
-  <ItemGroup>
+ <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\FileData.cs">
+      <Link>FileData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\ImageData.cs">
+      <Link>ImageData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Item.cs">
+      <Link>Item.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\OAuth1Service.cs">
+      <Link>OAuth1Service.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\OAuth2Service.cs">
+      <Link>OAuth2Service.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Service.cs">
+      <Link>Service.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\ShareResult.cs">
+      <Link>ShareResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\SocialException.cs">
+      <Link>SocialException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\AppDotNetService.cs">
+      <Link>Services\AppDotNetService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\FacebookService.cs">
+      <Link>Services\FacebookService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\FlickrService.cs">
+      <Link>Services\FlickrService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.LinkSource\Services\TwitterService.cs">
+      <Link>Services\TwitterService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinIOS\CheckedPickerView.cs">
+      <Link>PlatformSpecific\CheckedPickerView.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinIOS\FoundationResponse.cs">
+      <Link>PlatformSpecific\FoundationResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinIOS\NSDataStream.cs">
+      <Link>PlatformSpecific\NSDataStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinIOS\ProgressLabel.cs">
+      <Link>PlatformSpecific\ProgressLabel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\references01projects\Xamarin.Social.XamarinIOS\ShareViewController.cs">
+      <Link>PlatformSpecific\ShareViewController.cs</Link>
+    </Compile>
+  </ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
