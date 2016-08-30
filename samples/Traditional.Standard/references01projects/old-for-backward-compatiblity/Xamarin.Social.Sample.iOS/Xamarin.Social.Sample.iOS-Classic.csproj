@@ -91,7 +91,7 @@
     <BundleResource Include="Resources\Default-568h%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\source\ReferencesProjects\Xamarin.Social.XamarinIOS-Classic\Xamarin.Social.XamarinIOS-Classic.csproj">
+    <ProjectReference Include="..\..\..\..\..\source\references01projects\Xamarin.Social.XamarinIOS-Classic\Xamarin.Social.XamarinIOS-Classic.csproj">
       <Project>{FB2F8A28-E3F8-43FD-8173-5C0B9BC882BA}</Project>
       <Name>Xamarin.Social.XamarinIOS-Classic</Name>
     </ProjectReference>

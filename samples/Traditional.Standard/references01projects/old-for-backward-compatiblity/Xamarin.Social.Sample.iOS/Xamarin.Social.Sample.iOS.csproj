@@ -93,7 +93,7 @@
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\source\ReferencesProjects\Xamarin.Social.XamarinIOS\Xamarin.Social.XamarinIOS.csproj">
+    <ProjectReference Include="..\..\..\..\..\source\references01projects\Xamarin.Social.XamarinIOS\Xamarin.Social.XamarinIOS.csproj">
       <Project>{07B67CB8-4C21-43C5-92D5-C62BA184C022}</Project>
       <Name>Xamarin.Social.XamarinIOS</Name>
     </ProjectReference>

@@ -25,7 +25,7 @@ namespace Xamarin.Social.Sample.iOS
 		private static FacebookService mFacebook;
 		private static FlickrService mFlickr;
 		private static TwitterService mTwitter;
-		private static Twitter5Service mTwitter5;
+		private static TwitterService mTwitter5;
 		#endregion
 
 		public static FacebookService Facebook
@@ -77,13 +77,13 @@ namespace Xamarin.Social.Sample.iOS
 			}
 		}
 
-		public static Twitter5Service Twitter5
+		public static TwitterService Twitter5
 		{
 			get
 			{
 				if (mTwitter5 == null)
 				{
-					mTwitter5 = new Twitter5Service();
+					mTwitter5 = new TwitterService();
 				}
 
 				return mTwitter5;
