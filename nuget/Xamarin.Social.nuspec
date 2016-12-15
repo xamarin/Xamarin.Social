@@ -112,15 +112,6 @@
 		</file>
 
 		<!--
-			Xamarin.iOS Classic
-		-->
-		<file
-			src="source/output/ios/Xamarin.Social.dll"
-			target="lib\MonoTouch10\Xamarin.Social.dll"
-			>
-		</file>
-
-		<!--
 			Windows Phone 8 Silverlight
 		<file
 			src="source/output/wp80/Xamarin.Social.dll"

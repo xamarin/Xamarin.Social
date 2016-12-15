@@ -9,10 +9,6 @@ details: component/Details.md
 getting-started: component/GettingStarted.md
 license: License.md
 libraries:
-  ios: 
-    - src/Xamarin.Social.iOS/bin/classic/AnyCPU/Release/Xamarin.Social.iOS.dll
-    - src/Xamarin.Social.iOS/bin/classic/AnyCPU/Release/Xamarin.Auth.iOS.dll
-    - src/Components/xamarin.mobile-0.7.5/lib/ios/Xamarin.Mobile.dll
   ios-unified: 
     - src/Xamarin.Social.iOS/bin/unified/AnyCPU/Release/Xamarin.Social.iOS.dll
     - src/Xamarin.Social.iOS/bin/unified/AnyCPU/Release/Xamarin.Auth.iOS.dll
