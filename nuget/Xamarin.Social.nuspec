@@ -12,7 +12,7 @@
 		http://semver.org/
 		-->
 		<version>
-			1.1.8-alpha-01
+			1.1.8
 		</version>
 		<title>
 			Xamarin.Social
@@ -24,7 +24,7 @@
 			Xamarin
 		</owners>
 		<copyright>
-			Copyright 2013-2016
+			Copyright 2013-2017
 		</copyright>
 		<licenseUrl>
 			https://github.com/xamarin/Xamarin.Social/blob/master/License.md
