@@ -22,6 +22,7 @@ using System.Text;
 using System.Collections.Generic;
 
 using Xamarin.Auth;
+using System.Globalization;
 
 namespace Xamarin.Social.Services
 {
@@ -69,7 +70,21 @@ namespace Xamarin.Social.Services
 				sb.AppendLine ();
 				sb.AppendLine ();
 				foreach (var l in item.Links) {
-					sb.AppendFormat ("<a href=\"{0}\">{0}</a>", Utilities.WebEx.HtmlEncode (l.AbsoluteUri));
+                    sb.AppendFormat 
+                        (
+                            "<a href=\"{0}\">{0}</a>", 
+                            // TODO: INVESTIGATE?!?!?
+                            // ./Services/FlickrService.cs(65,65): 
+                            // Error CS0103:
+                            // The name 
+                            //      'WebEx'
+                            // does not exist in the current context
+                            // Navigate/GoTo Definition - Works
+                            // compile fails
+                            // WebEx.HtmlEncode (l.AbsoluteUri)
+                            // TEMP FIX - copied code here!!
+                            FlickrService.HtmlEncode(l.AbsoluteUri)
+                        );
 					sb.AppendLine ();
 				}
 			}
@@ -98,6 +113,51 @@ namespace Xamarin.Social.Services
 
 			}, cancellationToken);
 		}
+
+
+        public static string HtmlEncode(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return "";
+            }
+
+            var sb = new StringBuilder(text.Length);
+
+            int len = text.Length;
+            for (int i = 0; i < len; i++)
+            {
+                switch (text[i])
+                {
+                    case '<':
+                        sb.Append("&lt;");
+                        break;
+                    case '>':
+                        sb.Append("&gt;");
+                        break;
+                    case '"':
+                        sb.Append("&quot;");
+                        break;
+                    case '&':
+                        sb.Append("&amp;");
+                        break;
+                    default:
+                        if (text[i] > 159)
+                        {
+                            sb.Append("&#");
+                            sb.Append(((int)text[i]).ToString(CultureInfo.InvariantCulture));
+                            sb.Append(";");
+                        }
+                        else
+                        {
+                            sb.Append(text[i]);
+                        }
+                        break;
+                }
+            }
+
+            return sb.ToString();
+        }
 	}
 }
 
