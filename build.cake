@@ -1,110 +1,238 @@
 /*
-	http://cakebuild.net/docs
-*/
-#addin "Cake.Xamarin"
-#addin "Cake.XCode"
+#########################################################################################
+Installing
 
-#load "./common.cake"
+	Windows - powershell
+		
+        Invoke-WebRequest http://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1
+        .\build.ps1
+
+	Windows - cmd.exe prompt	
+	
+        powershell ^
+			Invoke-WebRequest http://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1
+        powershell ^
+			.\build.ps1
+	
+	Mac OSX 
+
+        rm -fr tools/; mkdir ./tools/ ; \
+        cp cake.packages.config ./tools/packages.config ; \
+        curl -Lsfo build.sh http://cakebuild.net/download/bootstrapper/osx ; \
+        chmod +x ./build.sh ;
+        ./build.sh
+
+	Linux
+
+        curl -Lsfo build.sh http://cakebuild.net/download/bootstrapper/linux
+        chmod +x ./build.sh && ./build.sh
+
+Running Cake to Build Xamarin.Auth targets
+
+	Windows
+
+		tools\Cake\Cake.exe --verbosity=diagnostic --target=libs
+		tools\Cake\Cake.exe --verbosity=diagnostic --target=nuget
+		tools\Cake\Cake.exe --verbosity=diagnostic --target=samples
+
+		tools\Cake\Cake.exe -experimental --verbosity=diagnostic --target=libs
+		tools\Cake\Cake.exe -experimental --verbosity=diagnostic --target=nuget
+		tools\Cake\Cake.exe -experimental --verbosity=diagnostic --target=samples
+		
+	Mac OSX 
+	
+		mono tools/Cake/Cake.exe --verbosity=diagnostic --target=libs
+		mono tools/Cake/Cake.exe --verbosity=diagnostic --target=nuget
+		
+NuGet Publish patterns
+
+		BEFORE PASTING:
+		NOTE: ** / 
+		** /output/Xamarin.Auth.1.5.0-alpha-12.nupkg,
+		** /output/Xamarin.Auth.XamarinForms.1.5.0-alpha-12.nupkg,
+		** /output/Xamarin.Auth.Extensions.1.5.0-alpha-12.nupkg
+		
+
+#########################################################################################
+*/	
+#addin nuget:?package=Cake.Xamarin
+#addin nuget:?package=Cake.Xamarin.Build
+#addin nuget:?package=Cake.FileHelpers
+#tool nuget:?package=vswhere
+
 
 var TARGET = Argument ("t", Argument ("target", "Default"));
 
-BuildSpec buildSpec = new BuildSpec 
+Task ("externals-cake-build")
+	.Does 
+	(
+		() => 
+		{
+			// Xamarin.Auth preparation
+			CakeExecuteScript
+						(
+							"./externals/Xamarin.Auth/build.cake", 
+							new CakeSettings
+							{ 
+								Arguments = new Dictionary<string, string>()
+								{
+									{"target", "libs"},
+									{"verbosity", "diagnostic"},
+								}
+							}
+						);
+		}
+	);
+
+Task ("nuget-restore")
+	.Does 
+	(
+		() => 
+		{
+			FilePathCollection solutions = null;
+			
+			solutions = GetFiles("./externals/Xamarin.Auth/source/**/*.sln");
+			foreach (FilePath source_solution in solutions)
+			{
+				NuGetRestore
+					(
+						source_solution, 
+						new NuGetRestoreSettings 
+						{ 
+							Verbosity = NuGetVerbosity.Detailed,
+						}
+					); 
+			}
+
+			solutions = GetFiles("./source/**/*.sln");
+			foreach (FilePath source_solution in solutions)
+			{
+				NuGetRestore
+					(
+						source_solution, 
+						new NuGetRestoreSettings 
+						{ 
+							Verbosity = NuGetVerbosity.Detailed,
+						}
+					); 
+			}
+			
+			solutions = GetFiles("./samples/**/*.sln");
+			foreach (FilePath source_solution in solutions)
+			{
+				NuGetRestore
+					(
+						source_solution, 
+						new NuGetRestoreSettings 
+						{ 
+							Verbosity = NuGetVerbosity.Detailed,
+						}
+					); 
+			}
+			
+			return;
+		}
+	);
+
+var buildSpec = new BuildSpec () 
 {
-	Libs = new ISolutionBuilder [] 
+	Libs = new [] 
 	{
-		// trigger Xamarin.Auth compilation to restore nuget packages
 		new DefaultSolutionBuilder 
 		{
-			//SolutionPath = WIN_SLN_PATH,
-			SolutionPath = "./externals/Xamarin.Auth/source/Xamarin.Auth-Library-MacOSX-Xamarin.Studio.sln",
-			BuildsOn = BuildPlatforms.Mac | BuildPlatforms.Windows,
-		},
-		new DefaultSolutionBuilder 
-		{
-			SolutionPath = "./source/references01projects/Xamarin.Social-Xamarin.Studio-MacOSX.sln",
-			Targets = new [] 
+			SolutionPath = "./source/Xamarin.Social.sln",
+			OutputFiles = new [] 
 			{ 
-				"Xamarin_Social_Portable",
-			},
-			BuildsOn = BuildPlatforms.Mac | BuildPlatforms.Windows,
-			OutputFiles = new [] 
-			{
 				new OutputFileCopy 
-				{
-					FromFile = "./source/references01projects/Xamarin.Social.Portable/bin/Release/Xamarin.Social.dll",
-					ToDirectory= "./output/pcl/"
+				{ 
+					FromFile = "./source/Xamarin.Social.Portable/bin/Release/Xamarin.Social.dll",
+					ToDirectory = "./output/pcl/"
+				},
+				new OutputFileCopy 
+				{ 
+					FromFile = "./source/Xamarin.Social.XamarinAndroid/bin/Release/Xamarin.Social.dll",
+					ToDirectory = "./output/android/",
+				},
+				new OutputFileCopy 
+				{ 
+					FromFile = "./source/Xamarin.Social.XamarinIOS/bin/Release/Xamarin.Social.dll",
+					ToDirectory = "./output/ios-unified/",
 				},
 			}
-		},
+		},	
 		new DefaultSolutionBuilder 
 		{
-			SolutionPath = "./source/references01projects/Xamarin.Social-Xamarin.Studio-MacOSX.sln",
-			Targets = new [] { "Xamarin_Social_XamarinAndroid" },
+			SolutionPath = "./source/Xamarin.Social-Xamarin.Studio-MacOSX.sln",
 			OutputFiles = new [] 
-			{
-				new OutputFileCopy
-				{
-					FromFile = "./source/references01projects/Xamarin.Social.XamarinAndroid/bin/Release/Xamarin.Social.dll",
-					ToDirectory= "./output/android/"
+			{ 
+				new OutputFileCopy 
+				{ 
+					FromFile = "./source/Xamarin.Social.Portable/bin/Release/Xamarin.Social.dll" 
+				},
+				new OutputFileCopy 
+				{ 
+					FromFile = "./source/Xamarin.Social.XamarinAndroid/bin/Release/Xamarin.Social.dll" 
+				},
+				new OutputFileCopy 
+				{ 
+					FromFile = "./source/Xamarin.Social.XamarinIOS/bin/Release/Xamarin.Social.dll" 
 				},
 			}
-		},
-		new IOSSolutionBuilder
-		{
-			// everything on MacOSX with Xamarin.Studio
-			SolutionPath = "./source/references01projects/Xamarin.Social-Xamarin.Studio-MacOSX.sln",
-			OutputFiles = new []
-			{
-				new OutputFileCopy
-				{
-					FromFile = "./source/references01projects/Xamarin.Social.XamarinAndroid/bin/Release/Xamarin.Social.dll",
-					ToDirectory= "./output/android/"
-				},
-				new OutputFileCopy
-				{
-					FromFile = "./source/references01projects/Xamarin.Social.XamarinIOS/bin/Release/Xamarin.Social.dll",
-					ToDirectory= "./output/ios-unified/"
-				},
-			}
-		},
-		/*
-		new IOSSolutionBuilder
-		{
-			// everything on MacOSX with Xamarin.Studio
-			SolutionPath = "./source/references02nuget/Xamarin.Social.sln",
-		},
-		new DefaultSolutionBuilder
-		{
-			// everything on MacOSX with Xamarin.Studio
-			SolutionPath = "./source/ReferencesNuget/Xamarin.Social.sln",
-		},
-		*/
+		},	
 	},
-	Samples = new ISolutionBuilder []
-	{
-		new IOSSolutionBuilder 
-		{
-			SolutionPath = @"./samples/Traditional.Standard/references01projects/old-for-backward-compatiblity/Xamarin.Social.Samples.sln"
-		},
-		new DefaultSolutionBuilder 
-		{
-			SolutionPath = @"./samples/Traditional.Standard/references01projects/old-for-backward-compatiblity/Xamarin.Social.Samples.sln"
-		},
-	},
+
+	// Samples = new [] 
+	// {
+	// 	new DefaultSolutionBuilder 
+	// 	{ 
+	// 		SolutionPath = "samples/Stripe.UIExamples/Stripe.UIExamples.sln",  
+	// 		Configuration = "Release" 
+	// 	},
+	// },
+
 	NuGets = new [] 
 	{
 		new NuGetInfo 
 		{ 
-			NuSpec = "./nuget/Xamarin.Social.nuspec"
+			NuSpec = "./nuget/Xamarin.Social.nuspec", 
 		},
-	},	
+	},
 };
 
-//DefineDefaultTasks ();
+Task ("externals")
+	.IsDependentOn ("externals-base")
+	//.WithCriteria (!FileExists ("./externals/stripe-android.aar"))
+	.Does 
+	(
+		() =>
+		{
+			EnsureDirectoryExists ("./externals");
+			
+			// DownloadFile (ANDROIDURL, "./externals/stripe-android.aar");
+			// DownloadFile (ANDROIDPAYURL, "./externals/stripe-android-pay.aar");
+			// 
+			// DownloadFile (ANDROIDDOCSURL, "./externals/stripe-android-javadoc.jar");
+			// Unzip ("./externals/stripe-android-javadoc.jar", "./externals/stripe-android-javadoc/");
+			// 
+			// DownloadFile (ANDROIDPAYDOCSURL, "./externals/stripe-android-pay-javadoc.jar");
+			// Unzip ("./externals/stripe-android-pay-javadoc.jar", "./externals/stripe-android-pay-javadoc/");
+		}
+	);
+
+Task ("clean")
+	.IsDependentOn ("clean-base")
+	.Does 
+	(
+		() =>
+		{
+			if (DirectoryExists ("./externals"))
+			{
+				DeleteDirectory ("./externals", true);
+			}
+		}
+	);
+
 SetupXamarinBuildTasks (buildSpec, Tasks, Task);
 
-Task ("ci-osx")
-    .IsDependentOn ("libs")
-    .IsDependentOn ("nuget");
-
+RunTarget("externals-cake-build");
 RunTarget (TARGET);
