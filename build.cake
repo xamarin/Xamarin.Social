@@ -69,6 +69,8 @@ Task ("externals-cake-build")
 		() => 
 		{
 			// Xamarin.Auth preparation
+			CopyDirectory("./tools/", "./externals/Xamarin.Auth/tools/");
+			
 			CakeExecuteScript
 						(
 							"./externals/Xamarin.Auth/build.cake", 
@@ -231,6 +233,27 @@ Task ("clean")
 			}
 		}
 	);
+
+//=================================================================================================
+// Put those 2 CI targets at the end of the file after all targets
+// If those targets are before 1st RunTarget() call following error occusrs on 
+//		*	MacOSX under Mono
+//		*	Windows
+// 
+//	Task 'ci-osx' is dependent on task 'libs' which do not exist.
+//
+// Xamarin CI - Jenkins job targets
+Task ("ci-osx")
+    .IsDependentOn ("libs")
+    .IsDependentOn ("nuget")
+    //.IsDependentOn ("samples")
+	;
+Task ("ci-windows")
+    .IsDependentOn ("libs")
+    .IsDependentOn ("nuget")
+    //.IsDependentOn ("samples")
+	;	
+//=================================================================================================
 
 SetupXamarinBuildTasks (buildSpec, Tasks, Task);
 
