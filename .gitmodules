@@ -1,3 +1,0 @@
-[submodule "externals/Xamarin.Auth"]
-	path = externals/Xamarin.Auth
-	url = https://github.com/xamarin/Xamarin.Auth.git
