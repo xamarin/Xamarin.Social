@@ -33,7 +33,7 @@
 			https://github.com/xamarin/Xamarin.Social
 		</projectUrl>
 		<iconUrl>
-			https://xamarin-component-icons.s3.amazonaws.com/Xamarin.Social.png
+			https://github.com/xamarin/Xamarin.Social/raw/master/component/icons/xamarin.social_128x128.png
 		</iconUrl>
 		<requireLicenseAcceptance>
 			false
