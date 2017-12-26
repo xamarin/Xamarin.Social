@@ -91,6 +91,18 @@ Task ("externals-cake-build")
             else
             {
                 Information("NOT building submodules (Xamarin.Auth)...");
+                CakeExecuteScript
+                            (
+                                "./externals/Xamarin.Auth/build.cake", 
+                                new CakeSettings
+                                { 
+                                    Arguments = new Dictionary<string, string>()
+                                    {
+                                        {"target", "nuget-restore"},
+                                        {"verbosity", "diagnostic"},
+                                    }
+                                }
+                            );
             }
 
             return;
