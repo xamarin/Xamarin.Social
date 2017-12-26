@@ -36,10 +36,30 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="PCLCrypto">
+      <HintPath>..\packages\PCLCrypto.2.0.147\lib\xamarinios10\PCLCrypto.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json" />
+    <Reference Include="PInvoke.Windows.Core">
+      <HintPath>..\packages\PInvoke.Windows.Core.0.5.111\lib\portable-net45+win8+wpa81\PInvoke.Windows.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PInvoke.Kernel32">
+      <HintPath>..\packages\PInvoke.Kernel32.0.5.111\lib\portable-net45+win8+wpa81\PInvoke.Kernel32.dll</HintPath>
+    </Reference>
+    <Reference Include="PInvoke.BCrypt">
+      <HintPath>..\packages\PInvoke.BCrypt.0.5.111\lib\portable-net45+win8+wpa81\PInvoke.BCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="PInvoke.NCrypt">
+      <HintPath>..\packages\PInvoke.NCrypt.0.5.111\lib\portable-net45+win8+wpa81\PInvoke.NCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="Validation">
+      <HintPath>..\packages\Validation.2.4.18\lib\netstandard1.3\Validation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Properties\" />
+    <Folder Include="Xamarin.Social.Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Social.LinkSource\AssemblyInfo.cs">
@@ -97,12 +117,43 @@
     <Compile Include="FoundationResponse.cs" />
     <Compile Include="ProgressLabel.cs" />
     <Compile Include="ShareViewController.cs" />
+    <Compile Include="..\Xamarin.Social.LinkSource\Xamarin.Social.Utilities\WebEx.cs">
+      <Link>Xamarin.Social.Utilities\WebEx.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\..\externals\Xamarin.Auth\source\Xamarin.Auth.XamarinIOS\Xamarin.Auth.XamarinIOS.csproj">
-      <Project>{15BE2387-8E72-4C0B-8A6A-460EF5FA4539}</Project>
-      <Name>Xamarin.Auth.XamarinIOS</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
+  <!--
+  ==================================================================================================
+  If projects for references can be found use ProjectReferences otherwise use NuGet references
+  http://laurentkempe.com/2009/12/03/ProjectReference-with-Condition-in-your-MSBuild-project-files/
+  msbuild Choose When ProjectReference Reference Include
+  -->
+  <Choose>
+    <When Condition="! exists('..\..\externals\Xamarin.Auth\source\Core\Xamarin.Auth.XamarinIOS\Xamarin.Auth.XamarinIOS.csproj')">
+      <!-- nuget packages (dll) refs -->
+      <ItemGroup>
+        <Reference Include="Xamarin.Auth NuGet Bait-n-Switch">
+          <HintPath>..\packages\Xamarin.Auth.1.5.0.3\lib\Xamarin.iOS10\Xamarin.Auth.dll</HintPath>
+          <Name>Xamarin.Auth.XamarinIOS NuGet Bait-n-Switch</Name>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <!-- project refs -->
+      <ItemGroup>
+        <ProjectReference Include="..\..\externals\Xamarin.Auth\source\Core\Xamarin.Auth.XamarinIOS\Xamarin.Auth.XamarinIOS.csproj">
+          <Project>{15BE2387-8E72-4C0B-8A6A-460EF5FA4539}</Project>
+          <Name>Xamarin.Auth.XamarinIOS</Name>
+        </ProjectReference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <!--
+  If projects for references can be found use ProjectReferences otherwise use NuGet references
+  ==================================================================================================
+  -->
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
 </Project>

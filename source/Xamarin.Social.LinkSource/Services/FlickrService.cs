@@ -69,7 +69,7 @@ namespace Xamarin.Social.Services
 				sb.AppendLine ();
 				sb.AppendLine ();
 				foreach (var l in item.Links) {
-					sb.AppendFormat ("<a href=\"{0}\">{0}</a>", Utilities.WebEx.HtmlEncode (l.AbsoluteUri));
+					sb.AppendFormat ("<a href=\"{0}\">{0}</a>", Social.Utilities.WebEx.HtmlEncode (l.AbsoluteUri));
 					sb.AppendLine ();
 				}
 			}
