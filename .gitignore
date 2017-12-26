@@ -235,3 +235,9 @@ lib/**
 /source/Extensions/Xamarin.Auth.Extensions.XamarinAndroid/*.bak
 
 /tools
+
+#------------------------------------------
+# MFractor
+**/.droidres/
+#------------------------------------------
+
