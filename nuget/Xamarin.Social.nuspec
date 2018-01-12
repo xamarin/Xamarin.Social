@@ -12,7 +12,7 @@
 		http://semver.org/
 		-->
 		<version>
-			1.1.8-alpha-01
+			1.1.8
 		</version>
 		<title>
 			Xamarin.Social
@@ -24,7 +24,7 @@
 			Xamarin
 		</owners>
 		<copyright>
-			Copyright 2013-2016
+			Copyright 2013-2017
 		</copyright>
 		<licenseUrl>
 			https://github.com/xamarin/Xamarin.Social/blob/master/License.md
@@ -62,12 +62,12 @@
 			pcl,
 			android, monoandroid, monodroid, xamarin.android,
 			ios,  monotouch, xamarin.ios
+			<!--
 			windows phone, winphone, wp, 
 			windows phone 8 silverlight, winphone 8 sl, wp8 sl
 			windows phone 8.1 silverlight, winphone 8.1 sl, wp81 sl
 			windows 8.1, windows 8.1 winrt, win81
 			windows phone 8.1 winrt, winphone 8.1 winrt, wpa81
-			<!--
 			universal windows platform, uwp, windows 10
 			plugin for xamarin, plugin,
 			xamarin.forms,
