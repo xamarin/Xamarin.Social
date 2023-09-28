@@ -124,6 +124,22 @@ namespace Xamarin.Social
 		/// </summary>
 		public IList<FileData> Files { get; set; }
 
+        private Location location = null;
+		/// <summary>
+		/// Gets or sets the location associated with this item.
+		/// </summary>
+		public Location Location { 
+			get {
+				if (location == null) {
+					location = new Location ();
+				}
+				return location;
+			} 
+			set {
+				location = value;
+			}
+		}
+
 #if SUPPORT_VIDEO
 		/// <summary>
 		/// Attached video.
